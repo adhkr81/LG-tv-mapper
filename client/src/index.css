@@ -1,0 +1,209 @@
+/* ============================================
+   LG TV UI Mapper — Design System
+   ============================================ */
+
+:root {
+  /* Colors */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-surface: #1a1a26;
+  --bg-elevated: #22222e;
+  --bg-glass: rgba(26, 26, 38, 0.75);
+
+  --text-primary: #e8e8f0;
+  --text-secondary: #8a8a9e;
+  --text-muted: #5a5a6e;
+
+  --accent: #00e5ff;
+  --accent-dim: rgba(0, 229, 255, 0.15);
+  --accent-glow: rgba(0, 229, 255, 0.4);
+
+  --amber: #ffab00;
+  --amber-dim: rgba(255, 171, 0, 0.15);
+
+  --danger: #ff4466;
+  --danger-dim: rgba(255, 68, 102, 0.15);
+
+  --success: #00e676;
+  --success-dim: rgba(0, 230, 118, 0.15);
+
+  --border: rgba(255, 255, 255, 0.06);
+  --border-accent: rgba(0, 229, 255, 0.3);
+
+  /* Typography */
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* Transitions */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration: 200ms;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Utility classes */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration) var(--ease);
+  white-space: nowrap;
+}
+
+.btn:hover {
+  background: var(--bg-surface);
+  border-color: var(--text-muted);
+}
+
+.btn-accent {
+  background: var(--accent-dim);
+  border-color: var(--border-accent);
+  color: var(--accent);
+}
+
+.btn-accent:hover {
+  background: rgba(0, 229, 255, 0.25);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.btn-danger {
+  background: var(--danger-dim);
+  border-color: rgba(255, 68, 102, 0.3);
+  color: var(--danger);
+}
+
+.btn-danger:hover {
+  background: rgba(255, 68, 102, 0.25);
+}
+
+.btn-sm {
+  padding: var(--space-xs) var(--space-sm);
+  font-size: 11px;
+}
+
+.input {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: 13px;
+  outline: none;
+  transition: border-color var(--duration) var(--ease);
+  width: 100%;
+}
+
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-dim);
+}
+
+.label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-xs);
+}
+
+/* Pulse animation for hotspots */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 6px var(--accent-glow), 0 0 12px transparent;
+  }
+  50% {
+    box-shadow: 0 0 10px var(--accent-glow), 0 0 24px var(--accent-glow);
+  }
+}
+
+@keyframes pulse-amber {
+  0%, 100% {
+    box-shadow: 0 0 6px rgba(255, 171, 0, 0.4), 0 0 12px transparent;
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(255, 171, 0, 0.4), 0 0 24px rgba(255, 171, 0, 0.3);
+  }
+}
+
+/* Status dots */
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--danger);
+}
+
+.status-dot.connected {
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success);
+}
+
+.status-dot.connecting {
+  background: var(--amber);
+  animation: pulse-amber 1.5s ease-in-out infinite;
+}

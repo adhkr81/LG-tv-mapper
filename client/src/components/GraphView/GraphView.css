@@ -1,0 +1,201 @@
+/* ============================================
+   GraphView + ScreenNode + Modals
+   ============================================ */
+
+.graph-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: var(--bg-primary);
+}
+
+.graph-view__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+}
+
+.graph-view__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.3px;
+}
+
+.graph-view__actions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.graph-view__canvas {
+  flex: 1;
+}
+
+/* Override React Flow theme */
+.graph-view__canvas .react-flow__background {
+  background: var(--bg-primary) !important;
+}
+
+.graph-view__controls .react-flow__controls-button {
+  background: var(--bg-elevated) !important;
+  border-color: var(--border) !important;
+  fill: var(--text-secondary) !important;
+}
+
+.graph-view__controls .react-flow__controls-button:hover {
+  background: var(--bg-surface) !important;
+  fill: var(--text-primary) !important;
+}
+
+/* ---- Screen Node ---- */
+
+.screen-node {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  cursor: pointer;
+  transition: all var(--duration) var(--ease);
+  position: relative;
+  min-width: 160px;
+}
+
+.screen-node:hover {
+  border-color: var(--text-muted);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.screen-node--selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-dim), 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.screen-node__handle {
+  background: var(--accent) !important;
+  width: 8px !important;
+  height: 8px !important;
+  border: 2px solid var(--bg-surface) !important;
+}
+
+.screen-node__thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--bg-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.screen-node__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.screen-node__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+.screen-node__label {
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.screen-node__badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--accent);
+  color: var(--bg-primary);
+  font-size: 10px;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---- Modal ---- */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  min-width: 380px;
+  max-width: 440px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+}
+
+.modal__title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: var(--space-xl);
+  color: var(--text-primary);
+}
+
+.modal__field {
+  margin-bottom: var(--space-lg);
+}
+
+.modal__dropzone {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all var(--duration) var(--ease);
+}
+
+.modal__dropzone:hover {
+  border-color: var(--accent);
+  color: var(--text-secondary);
+  background: var(--accent-dim);
+}
+
+.modal__filename {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  margin-top: var(--space-xl);
+}
