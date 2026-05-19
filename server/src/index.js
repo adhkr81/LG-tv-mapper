@@ -3,6 +3,7 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import config from './config.js';
+import { startUSBWatcher } from './services/usb-watcher.js';
 
 import serialRoutes from './routes/serial.js';
 import captureRoutes from './routes/capture.js';
@@ -36,3 +37,6 @@ app.get('/api/health', (req, res) => {
 app.listen(config.port, () => {
   console.log(`[Server] Running on http://localhost:${config.port}`);
 });
+
+// Start USB watcher if configured
+startUSBWatcher();

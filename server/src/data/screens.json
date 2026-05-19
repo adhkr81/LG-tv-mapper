@@ -1,1 +1,19 @@
-{ "screens": [] }
+{
+  "screens": [
+    {
+      "id": "home",
+      "image": "home.jpg",
+      "buttons": []
+    },
+    {
+      "id": "app",
+      "image": "app.jpg",
+      "buttons": []
+    },
+    {
+      "id": "dasdas",
+      "image": "dasdas.jpg",
+      "buttons": []
+    }
+  ]
+}

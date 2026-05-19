@@ -13,5 +13,8 @@
   },
   "devDependencies": {
     "concurrently": "^9.1.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
   }
 }
