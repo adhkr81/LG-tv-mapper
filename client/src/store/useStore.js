@@ -10,6 +10,7 @@ const useStore = create((set, get) => ({
   isCapturing: false,
   isAddingHotspot: false,
   serialStatus: 'disconnected',
+  saveToLaptop: false,
 
   // ---- Actions ----
 
@@ -25,7 +26,8 @@ const useStore = create((set, get) => ({
   captureScreen: async (screenId) => {
     set({ isCapturing: true });
     try {
-      await api.captureScreen(screenId);
+      const saveToLaptop = get().saveToLaptop;
+      await api.captureScreen(screenId, saveToLaptop);
       await get().fetchScreens();
     } catch (err) {
       console.error('Capture failed:', err);
@@ -34,6 +36,8 @@ const useStore = create((set, get) => ({
       set({ isCapturing: false });
     }
   },
+
+  setSaveToLaptop: (val) => set({ saveToLaptop: !!val }),
 
   importScreen: async (screenId, file) => {
     set({ isCapturing: true });

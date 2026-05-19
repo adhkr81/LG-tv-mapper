@@ -16,6 +16,8 @@ export default function SidebarEditor() {
   const screen = screens.find((s) => s.id === selectedScreenId);
   const [editingName, setEditingName] = useState(false);
   const [nameValue, setNameValue] = useState('');
+  const saveToLaptop = useStore((s) => s.saveToLaptop);
+  const setSaveToLaptop = useStore((s) => s.setSaveToLaptop);
 
   useEffect(() => {
     if (screen) setNameValue(screen.id);
@@ -60,6 +62,12 @@ export default function SidebarEditor() {
           ) : serialStatus === 'connecting' ? null : (
             <button className="btn btn-sm btn-danger" onClick={disconnectSerial}>Disconnect</button>
           )}
+        </div>
+        <div className="sidebar__serial-toggle">
+          <label className="label">
+            <input type="checkbox" checked={saveToLaptop} onChange={(e) => setSaveToLaptop(e.target.checked)} />
+            <span>Save captures to laptop</span>
+          </label>
         </div>
       </div>
 

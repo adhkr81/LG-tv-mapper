@@ -20,6 +20,7 @@ export default function GraphView() {
   const selectScreen = useStore((s) => s.selectScreen);
   const importScreen = useStore((s) => s.importScreen);
   const captureScreen = useStore((s) => s.captureScreen);
+  const saveToLaptop = useStore((s) => s.saveToLaptop);
   const serialStatus = useStore((s) => s.serialStatus);
   const isCapturing = useStore((s) => s.isCapturing);
 
@@ -102,7 +103,7 @@ export default function GraphView() {
   const handleCapture = async () => {
     if (!newScreenId.trim()) return;
     try {
-      await captureScreen(newScreenId.trim());
+      await captureScreen(newScreenId.trim(), saveToLaptop);
       setShowCaptureModal(false);
       setNewScreenId('');
     } catch (err) {
@@ -181,6 +182,12 @@ export default function GraphView() {
                 placeholder="e.g. home, settings, apps"
                 autoFocus
               />
+            </div>
+
+            <div className="modal__field">
+              <label className="label">
+                <input type="checkbox" checked={saveToLaptop} readOnly /> Save captures to laptop
+              </label>
             </div>
 
             <div className="modal__field">

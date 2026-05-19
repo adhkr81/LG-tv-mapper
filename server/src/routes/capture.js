@@ -2,7 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { captureFromTV, importScreenshot } from '../services/capture.js';
+import { captureFromTV, captureFromTVStream, importScreenshot } from '../services/capture.js';
 import { createScreen, getScreenshotsDir } from '../services/screens.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -14,11 +14,17 @@ const router = Router();
 router.post('/', async (req, res) => {
   try {
     const { screenId } = req.body;
+    const saveToLaptop = req.body.saveToLaptop === 'true' || req.body.saveToLaptop === true;
     if (!screenId) {
       return res.status(400).json({ error: 'screenId is required' });
     }
 
-    const filename = await captureFromTV(screenId);
+    let filename;
+    if (saveToLaptop) {
+      filename = await captureFromTVStream(screenId);
+    } else {
+      filename = await captureFromTV(screenId);
+    }
     const screen = createScreen({ id: screenId, image: filename });
     res.json(screen);
   } catch (err) {

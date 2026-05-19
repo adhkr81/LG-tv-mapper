@@ -8,6 +8,8 @@ let port = null;
 let parser = null;
 /** @type {'disconnected' | 'connecting' | 'connected' | 'shell-ready'} */
 let status = 'disconnected';
+/** Stored reference to the parser's data handler so we can remove/re-add it */
+let parserDataHandler = null;
 
 /**
  * Get current serial connection status.
@@ -33,6 +35,10 @@ export function connect() {
         path: config.serial.port,
         baudRate: config.serial.baudRate,
         autoOpen: false,
+        // Enable RTS/CTS hardware flow control to help with large transfers
+        rtscts: true,
+        // Increase read buffer
+        highWaterMark: 64 * 1024,
       });
 
       parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
@@ -47,10 +53,11 @@ export function connect() {
         status = 'disconnected';
       });
 
-      // Collect incoming data for debugging
-      parser.on('data', (line) => {
+      // Store and attach the parser's data handler
+      parserDataHandler = (line) => {
         console.log('[Serial RX]', line);
-      });
+      };
+      parser.on('data', parserDataHandler);
 
       port.open((err) => {
         if (err) {
@@ -180,6 +187,116 @@ export function execute(command, timeoutMs = 5000) {
         parser.removeListener('data', onData);
         resolve(lines.join('\n'));
       }, timeoutMs);
+    });
+  });
+}
+
+/**
+ * Execute a command and stream raw data until a terminator marker is seen.
+ * Useful for receiving base64-encoded file contents over the shell.
+ * @param {string} command
+ * @param {string} terminator
+ * @param {number} [timeoutMs=60000]
+ * @returns {Promise<Buffer>} collected raw data (as Buffer) up to the terminator
+ */
+export function executeStream(command, terminator = '__END__', timeoutMs = 60000, beginMarker = null) {
+  return new Promise((resolve, reject) => {
+    if (!port || !port.isOpen) {
+      reject(new Error('Serial port not connected'));
+      return;
+    }
+
+    if (status !== 'shell-ready' && status !== 'connected') {
+      reject(new Error(`Serial not ready (status: ${status})`));
+      return;
+    }
+
+    let buffers = [];
+    let totalLen = 0;
+    const termBuf = Buffer.from(terminator, 'utf8');
+    const beginBuf = beginMarker ? Buffer.from(beginMarker, 'utf8') : null;
+    let started = !beginBuf;
+
+    const onData = (chunk) => {
+      try {
+        const buf = Buffer.isBuffer(chunk) ? chunk : Buffer.from(String(chunk), 'utf8');
+        buffers.push(buf);
+        totalLen += buf.length;
+
+        const collected = Buffer.concat(buffers, totalLen);
+
+        if (!started && beginBuf) {
+          const bi = collected.indexOf(beginBuf);
+          if (bi !== -1) {
+            // drop everything up to and including beginBuf
+            const rest = collected.slice(bi + beginBuf.length);
+            buffers = [rest];
+            totalLen = rest.length;
+            started = true;
+          }
+        }
+
+        if (started) {
+          const ti = collected.indexOf(termBuf);
+          if (ti !== -1) {
+            port.removeListener('data', onData);
+            clearTimeout(timer);
+            // Pause and re-pipe the parser to resume normal line-based reading
+            try {
+              port.pause();
+              port.pipe(parser);
+              if (parserDataHandler) parser.on('data', parserDataHandler);
+            } catch (e) {
+              console.error('[Serial] Failed to re-pipe parser:', e.message);
+            }
+            const result = collected.slice(0, ti);
+            resolve(result);
+          }
+        }
+      } catch (err) {
+        // ignore
+      }
+    };
+
+    // Remove parser's listener and unpipe to get raw data directly
+    try {
+      if (parserDataHandler) parser.removeListener('data', parserDataHandler);
+      port.unpipe(parser);
+      // Resume the port data flow after unpiping
+      port.resume();
+    } catch (e) {
+      console.error('[Serial] Failed to unpipe parser:', e.message);
+    }
+
+    const timer = setTimeout(() => {
+      port.removeListener('data', onData);
+      try {
+        port.pause();
+        port.pipe(parser);
+        if (parserDataHandler) parser.on('data', parserDataHandler);
+      } catch (e) {
+        console.error('[Serial] Failed to re-pipe on timeout:', e.message);
+      }
+      reject(new Error('Stream timed out'));
+    }, timeoutMs);
+
+    port.on('data', onData);
+
+    port.write(command + '\r\n', (err) => {
+      if (err) {
+        port.removeListener('data', onData);
+        clearTimeout(timer);
+        try {
+          port.pause();
+          port.pipe(parser);
+          if (parserDataHandler) parser.on('data', parserDataHandler);
+        } catch (e) {
+          console.error('[Serial] Failed to re-pipe on error:', e.message);
+        }
+        reject(err);
+        return;
+      }
+      console.log('[Serial TX]', command);
     });
   });
 }

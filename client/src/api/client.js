@@ -18,8 +18,8 @@ export const connectSerial = () => request('/api/serial/connect', { method: 'POS
 export const disconnectSerial = () => request('/api/serial/disconnect', { method: 'POST' });
 
 // Capture
-export const captureScreen = (screenId) =>
-  request('/api/capture', { method: 'POST', body: JSON.stringify({ screenId }) });
+export const captureScreen = (screenId, saveToLaptop = false) =>
+  request('/api/capture', { method: 'POST', body: JSON.stringify({ screenId, saveToLaptop }) });
 
 export const importScreen = async (screenId, file) => {
   const formData = new FormData();
