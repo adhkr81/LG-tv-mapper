@@ -9,8 +9,10 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import ScreenNode from './ScreenNode.jsx';
+import SectionBar from '../SectionBar/SectionBar.jsx';
 import useStore from '../../store/useStore.js';
 import { rectCenteredAt } from '../../utils/buttonRect.js';
+import { getSectionGraphScreens, suggestScreenId } from '../../utils/sectionGraph.js';
 import './GraphView.css';
 
 const nodeTypes = { screenNode: ScreenNode };
@@ -28,6 +30,7 @@ function getSavedPosition(screen, index) {
 
 export default function GraphView() {
   const screens = useStore((s) => s.screens);
+  const activeSectionId = useStore((s) => s.activeSectionId);
   const selectedScreenId = useStore((s) => s.selectedScreenId);
   const selectScreen = useStore((s) => s.selectScreen);
   const importScreen = useStore((s) => s.importScreen);
@@ -42,41 +45,79 @@ export default function GraphView() {
   const [newScreenId, setNewScreenId] = useState('');
   const [importFile, setImportFile] = useState(null);
   const fileInputRef = useRef(null);
+  const flowRef = useRef(null);
 
-  // Build React Flow nodes from screens
+  const { primary, external } = useMemo(
+    () => getSectionGraphScreens(screens, activeSectionId),
+    [screens, activeSectionId]
+  );
+
+  const visibleScreens = useMemo(
+    () => [...primary, ...external],
+    [primary, external]
+  );
+
+  const externalIds = useMemo(
+    () => new Set(external.map((s) => s.id)),
+    [external]
+  );
+
+  const maxPrimaryX = useMemo(() => {
+    if (primary.length === 0) return 0;
+    return Math.max(...primary.map((s, i) => getSavedPosition(s, i).x));
+  }, [primary]);
+
+  // Build React Flow nodes from visible screens
   const initialNodes = useMemo(() => {
-    return screens.map((screen, i) => ({
-      id: screen.id,
-      type: 'screenNode',
-      position: getSavedPosition(screen, i),
-      data: {
-        label: screen.id,
-        image: screen.image,
-        buttonCount: screen.buttons.length,
-      },
-      selected: screen.id === selectedScreenId,
-    }));
-  }, [screens, selectedScreenId]);
+    return visibleScreens.map((screen, i) => {
+      const isExternal = externalIds.has(screen.id);
+      let position = getSavedPosition(screen, i);
+      if (isExternal && activeSectionId) {
+        const extIndex = external.findIndex((s) => s.id === screen.id);
+        position = {
+          x: maxPrimaryX + 280,
+          y: extIndex * 185,
+        };
+      }
+      return {
+        id: screen.id,
+        type: 'screenNode',
+        position,
+        data: {
+          label: screen.id,
+          image: screen.image,
+          buttonCount: screen.buttons.length,
+          isExternal,
+        },
+        selected: screen.id === selectedScreenId,
+      };
+    });
+  }, [visibleScreens, externalIds, activeSectionId, maxPrimaryX, selectedScreenId, external]);
 
-  // Build edges from button targets
+  // Build edges from button targets (within visible set)
   const initialEdges = useMemo(() => {
     const edges = [];
-    const screenIds = new Set(screens.map((s) => s.id));
+    const screenIds = new Set(visibleScreens.map((s) => s.id));
 
-    screens.forEach((screen) => {
+    visibleScreens.forEach((screen) => {
       screen.buttons.forEach((btn) => {
         if (btn.target && screenIds.has(btn.target)) {
+          const crossSection = externalIds.has(screen.id) || externalIds.has(btn.target);
           edges.push({
             id: `e-${btn.id}`,
             source: screen.id,
             target: btn.target,
             label: btn.label,
-            animated: true,
-            style: { stroke: '#00e5ff', strokeWidth: 2 },
+            animated: !crossSection,
+            style: {
+              stroke: crossSection ? '#ffab00' : '#00e5ff',
+              strokeWidth: 2,
+              strokeDasharray: crossSection ? '6 4' : undefined,
+            },
             labelStyle: { fill: '#8a8a9e', fontSize: 11 },
             markerEnd: {
               type: MarkerType.ArrowClosed,
-              color: '#00e5ff',
+              color: crossSection ? '#ffab00' : '#00e5ff',
               width: 16,
               height: 16,
             },
@@ -86,7 +127,7 @@ export default function GraphView() {
     });
 
     return edges;
-  }, [screens]);
+  }, [visibleScreens, externalIds]);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -104,6 +145,27 @@ export default function GraphView() {
     );
     setEdges(initialEdges);
   }, [initialNodes, initialEdges, setNodes, setEdges]);
+
+  useEffect(() => {
+    if (!flowRef.current) return;
+    const t = setTimeout(() => flowRef.current?.fitView({ padding: 0.25 }), 80);
+    return () => clearTimeout(t);
+  }, [activeSectionId, visibleScreens.length]);
+
+  const openCaptureModal = () => {
+    setNewScreenId(
+      activeSectionId ? suggestScreenId(activeSectionId, screens) : ''
+    );
+    setShowCaptureModal(true);
+  };
+
+  const openImportModal = () => {
+    setNewScreenId(
+      activeSectionId ? suggestScreenId(activeSectionId, screens) : ''
+    );
+    setImportFile(null);
+    setShowImportModal(true);
+  };
 
   const onNodeClick = useCallback((_, node) => {
     selectScreen(node.id);
@@ -165,7 +227,8 @@ export default function GraphView() {
 
   return (
     <div className="graph-view">
-      {/* Toolbar */}
+      <SectionBar />
+
       <div className="graph-view__toolbar">
         <div className="graph-view__title">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -178,7 +241,7 @@ export default function GraphView() {
         <div className="graph-view__actions">
           <button
             className="btn btn-accent"
-            onClick={() => { setShowCaptureModal(true); setNewScreenId(''); }}
+            onClick={openCaptureModal}
             disabled={serialStatus !== 'shell-ready' && serialStatus !== 'connected'}
             title={serialStatus !== 'shell-ready' ? 'Connect serial first' : 'Capture from TV'}
           >
@@ -191,7 +254,7 @@ export default function GraphView() {
 
           <button
             className="btn"
-            onClick={() => { setShowImportModal(true); setNewScreenId(''); setImportFile(null); }}
+            onClick={openImportModal}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -213,6 +276,7 @@ export default function GraphView() {
         isValidConnection={isValidConnection}
         onNodeClick={onNodeClick}
         onNodeDragStop={onNodeDragStop}
+        onInit={(instance) => { flowRef.current = instance; }}
         nodeTypes={nodeTypes}
         fitView
         fitViewOptions={{ padding: 0.2 }}
@@ -228,6 +292,9 @@ export default function GraphView() {
         <div className="modal-overlay" onClick={() => setShowImportModal(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h3 className="modal__title">Import Screenshot</h3>
+            {activeSectionId && (
+              <p className="graph-view__section-note">Adds to section: {activeSectionId}</p>
+            )}
 
             <div className="modal__field">
               <label className="label">Screen Name</label>
@@ -286,6 +353,9 @@ export default function GraphView() {
         <div className="modal-overlay" onClick={() => setShowCaptureModal(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h3 className="modal__title">Capture from TV</h3>
+            {activeSectionId && (
+              <p className="graph-view__section-note">Adds to section: {activeSectionId}</p>
+            )}
 
             <div className="modal__field">
               <label className="label">Screen Name</label>

@@ -18,13 +18,17 @@ export const connectSerial = () => request('/api/serial/connect', { method: 'POS
 export const disconnectSerial = () => request('/api/serial/disconnect', { method: 'POST' });
 
 // Capture
-export const captureScreen = (screenId, saveToLaptop = false) =>
-  request('/api/capture', { method: 'POST', body: JSON.stringify({ screenId, saveToLaptop }) });
+export const captureScreen = (screenId, saveToLaptop = false, sectionId = null) =>
+  request('/api/capture', {
+    method: 'POST',
+    body: JSON.stringify({ screenId, saveToLaptop, sectionId }),
+  });
 
-export const importScreen = async (screenId, file) => {
+export const importScreen = async (screenId, file, sectionId = null) => {
   const formData = new FormData();
   formData.append('screenId', screenId);
   formData.append('file', file);
+  if (sectionId) formData.append('sectionId', sectionId);
   const res = await fetch(`${API}/api/capture/import`, { method: 'POST', body: formData });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
@@ -55,3 +59,12 @@ export const deleteButtonApi = (screenId, buttonId) =>
 
 // Graph
 export const getGraph = () => request('/api/graph');
+
+// Sections
+export const getSections = () => request('/api/sections');
+export const createSection = (data) =>
+  request('/api/sections', { method: 'POST', body: JSON.stringify(data) });
+export const updateSection = (id, data) =>
+  request(`/api/sections/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+export const deleteSection = (id) =>
+  request(`/api/sections/${id}`, { method: 'DELETE' });

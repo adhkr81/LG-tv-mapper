@@ -10,6 +10,7 @@ import captureRoutes from './routes/capture.js';
 import screenRoutes from './routes/screens.js';
 import buttonRoutes from './routes/buttons.js';
 import graphRoutes from './routes/graph.js';
+import sectionRoutes from './routes/sections.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -28,6 +29,7 @@ app.use('/api/capture', captureRoutes);
 app.use('/api/screens', screenRoutes);
 app.use('/api/screens/:id/buttons', buttonRoutes);
 app.use('/api/graph', graphRoutes);
+app.use('/api/sections', sectionRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

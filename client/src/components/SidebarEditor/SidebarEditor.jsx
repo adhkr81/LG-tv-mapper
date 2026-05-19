@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import useStore from '../../store/useStore.js';
 import { normalizeButton } from '../../utils/buttonRect.js';
+import { getSectionGraphScreens } from '../../utils/sectionGraph.js';
+import '../SectionBar/SectionBar.css';
 import './SidebarEditor.css';
 
 export default function SidebarEditor() {
   const screens = useStore((s) => s.screens);
+  const sections = useStore((s) => s.sections);
+  const activeSectionId = useStore((s) => s.activeSectionId);
   const selectedScreenId = useStore((s) => s.selectedScreenId);
+  const selectScreen = useStore((s) => s.selectScreen);
+  const assignScreenToSection = useStore((s) => s.assignScreenToSection);
   const serialStatus = useStore((s) => s.serialStatus);
   const connectSerial = useStore((s) => s.connectSerial);
   const disconnectSerial = useStore((s) => s.disconnectSerial);
@@ -17,6 +23,37 @@ export default function SidebarEditor() {
   const selectButton = useStore((s) => s.selectButton);
 
   const screen = screens.find((s) => s.id === selectedScreenId);
+  const activeSection = sections.find((s) => s.id === activeSectionId);
+
+  const { primary, external } = useMemo(
+    () => getSectionGraphScreens(screens, activeSectionId),
+    [screens, activeSectionId]
+  );
+
+  const sectionScreens = useMemo(() => {
+    if (!activeSectionId) return [];
+    const rootId = activeSection?.rootScreenId;
+    const sorted = [...primary].sort((a, b) => {
+      if (a.id === rootId) return -1;
+      if (b.id === rootId) return 1;
+      return a.id.localeCompare(b.id);
+    });
+    return sorted;
+  }, [primary, activeSectionId, activeSection?.rootScreenId]);
+
+  const targetOptions = useMemo(() => {
+    if (!activeSectionId) {
+      return { inSection: [], other: screens.filter((s) => s.id !== screen?.id) };
+    }
+    const inSection = screens.filter(
+      (s) => s.sectionId === activeSectionId && s.id !== screen?.id
+    );
+    const other = screens.filter(
+      (s) => s.sectionId !== activeSectionId && s.id !== screen?.id
+    );
+    return { inSection, other };
+  }, [screens, activeSectionId, screen?.id]);
+
   const [editingName, setEditingName] = useState(false);
   const [nameValue, setNameValue] = useState('');
   useEffect(() => {
@@ -73,11 +110,58 @@ export default function SidebarEditor() {
         </div>
       </div>
 
+      {activeSectionId && (
+        <div className="sidebar__section">
+          <div className="sidebar__section-title">
+            Section: {activeSection?.name || activeSectionId}
+          </div>
+          {sectionScreens.length === 0 ? (
+            <div className="sidebar__empty">
+              No screens yet. Capture or import while this section is selected.
+            </div>
+          ) : (
+            <div className="sidebar__section-screens">
+              {sectionScreens.map((s) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  className={`sidebar__section-screen ${s.id === selectedScreenId ? 'sidebar__section-screen--active' : ''} ${s.id === activeSection?.rootScreenId ? 'sidebar__section-screen--root' : ''}`}
+                  onClick={() => selectScreen(s.id)}
+                >
+                  {s.id}
+                </button>
+              ))}
+              {external.map((s) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  className={`sidebar__section-screen sidebar__section-screen--external ${s.id === selectedScreenId ? 'sidebar__section-screen--active' : ''}`}
+                  onClick={() => selectScreen(s.id)}
+                  title="Outside this section (linked)"
+                >
+                  {s.id}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Screen info */}
       {screen ? (
         <>
           <div className="sidebar__section">
             <div className="sidebar__section-title">Screen</div>
+
+            {activeSectionId && screen.sectionId !== activeSectionId && (
+              <button
+                type="button"
+                className="btn btn-sm btn-accent sidebar__assign-section"
+                onClick={() => assignScreenToSection(screen.id, activeSectionId)}
+              >
+                Add to section {activeSectionId}
+              </button>
+            )}
 
             {editingName ? (
               <div className="sidebar__rename">
@@ -148,9 +232,20 @@ export default function SidebarEditor() {
                         onChange={(e) => handleTargetChange(btn.id, e.target.value)}
                       >
                         <option value="">— none —</option>
-                        {screens.filter(s => s.id !== screen.id).map(s => (
-                          <option key={s.id} value={s.id}>{s.id}</option>
-                        ))}
+                        {targetOptions.inSection.length > 0 && (
+                          <optgroup label="This section">
+                            {targetOptions.inSection.map((s) => (
+                              <option key={s.id} value={s.id}>{s.id}</option>
+                            ))}
+                          </optgroup>
+                        )}
+                        {targetOptions.other.length > 0 && (
+                          <optgroup label="Other screens">
+                            {targetOptions.other.map((s) => (
+                              <option key={s.id} value={s.id}>{s.id}</option>
+                            ))}
+                          </optgroup>
+                        )}
                       </select>
                     </div>
                     <ButtonRectInputs

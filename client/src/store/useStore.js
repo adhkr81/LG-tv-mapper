@@ -1,11 +1,21 @@
 import { create } from 'zustand';
 import * as api from '../api/client.js';
 
+const SECTION_STORAGE_KEY = 'lg-mapper-active-section';
+
 const useStore = create((set, get) => ({
   // Data
   screens: [],
+  sections: [],
 
   // UI state
+  activeSectionId: (() => {
+    try {
+      return localStorage.getItem(SECTION_STORAGE_KEY) || null;
+    } catch {
+      return null;
+    }
+  })(),
   selectedScreenId: null,
   selectedButtonId: null,
   isCapturing: false,
@@ -16,17 +26,53 @@ const useStore = create((set, get) => ({
 
   fetchScreens: async () => {
     try {
-      const screens = await api.getScreens();
-      set({ screens });
+      const [screens, sections] = await Promise.all([
+        api.getScreens(),
+        api.getSections(),
+      ]);
+      set({ screens, sections });
     } catch (err) {
       console.error('Failed to fetch screens:', err);
     }
   },
 
+  setActiveSection: (sectionId) => {
+    try {
+      if (sectionId) localStorage.setItem(SECTION_STORAGE_KEY, sectionId);
+      else localStorage.removeItem(SECTION_STORAGE_KEY);
+    } catch {
+      // ignore
+    }
+    set({ activeSectionId: sectionId });
+  },
+
+  createSection: async (data) => {
+    const section = await api.createSection(data);
+    set({ sections: [...get().sections, section] });
+    return section;
+  },
+
+  updateSection: async (id, updates) => {
+    const section = await api.updateSection(id, updates);
+    set({
+      sections: get().sections.map((s) => (s.id === id ? section : s)),
+    });
+    if (updates.id && get().activeSectionId === id) {
+      get().setActiveSection(updates.id);
+    }
+    return section;
+  },
+
+  assignScreenToSection: async (screenId, sectionId) => {
+    await api.updateScreen(screenId, { sectionId: sectionId || null });
+    await get().fetchScreens();
+  },
+
   captureScreen: async (screenId) => {
+    const sectionId = get().activeSectionId;
     set({ isCapturing: true });
     try {
-      const result = await api.captureScreen(screenId);
+      const result = await api.captureScreen(screenId, false, sectionId);
       if (result?.serialStatus) {
         set({ serialStatus: result.serialStatus });
       }
@@ -41,9 +87,10 @@ const useStore = create((set, get) => ({
   },
 
   importScreen: async (screenId, file) => {
+    const sectionId = get().activeSectionId;
     set({ isCapturing: true });
     try {
-      await api.importScreen(screenId, file);
+      await api.importScreen(screenId, file, sectionId);
       await get().fetchScreens();
     } catch (err) {
       console.error('Import failed:', err);

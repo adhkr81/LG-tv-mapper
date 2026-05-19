@@ -9,16 +9,29 @@ const DATA_FILE = path.join(__dirname, '..', 'data', 'screens.json');
 function readData() {
   try {
     const raw = fs.readFileSync(DATA_FILE, 'utf-8');
-    return JSON.parse(raw).screens || [];
+    const parsed = JSON.parse(raw);
+    return {
+      sections: parsed.sections || [],
+      screens: parsed.screens || [],
+    };
   } catch {
-    return [];
+    return { sections: [], screens: [] };
   }
 }
 
 function writeData(screens) {
+  const data = readData();
   const tmp = DATA_FILE + '.tmp';
-  fs.writeFileSync(tmp, JSON.stringify({ screens }, null, 2), 'utf-8');
+  fs.writeFileSync(
+    tmp,
+    JSON.stringify({ sections: data.sections, screens }, null, 2),
+    'utf-8'
+  );
   fs.renameSync(tmp, DATA_FILE);
+}
+
+function readScreens() {
+  return readData().screens;
 }
 
 const DEFAULT_BUTTON_SIZE = { width: 120, height: 60 };
@@ -53,7 +66,7 @@ function normalizeButton(btn) {
  * @returns {Array}
  */
 export function getButtons(screenId) {
-  const screen = readData().find((s) => s.id === screenId);
+  const screen = readScreens().find((s) => s.id === screenId);
   return screen ? screen.buttons.map(normalizeButton) : [];
 }
 
@@ -63,7 +76,7 @@ export function getButtons(screenId) {
  * @param {{ label: string, target: string, x: number, y: number }} data
  */
 export function addButton(screenId, data) {
-  const screens = readData();
+  const screens = readScreens();
   const screen = screens.find((s) => s.id === screenId);
   if (!screen) throw new Error(`Screen "${screenId}" not found`);
 
@@ -102,7 +115,7 @@ export function addButton(screenId, data) {
  * @param {Object} updates
  */
 export function updateButton(screenId, buttonId, updates) {
-  const screens = readData();
+  const screens = readScreens();
   const screen = screens.find((s) => s.id === screenId);
   if (!screen) throw new Error(`Screen "${screenId}" not found`);
 
@@ -136,7 +149,7 @@ export function updateButton(screenId, buttonId, updates) {
  * @param {string} buttonId
  */
 export function deleteButton(screenId, buttonId) {
-  const screens = readData();
+  const screens = readScreens();
   const screen = screens.find((s) => s.id === screenId);
   if (!screen) throw new Error(`Screen "${screenId}" not found`);
 

@@ -17,6 +17,11 @@
 
 .sidebar__section--grow { flex: 1; border-bottom: none; }
 
+.sidebar__assign-section {
+  margin-bottom: var(--space-md);
+  width: 100%;
+}
+
 .sidebar__section-title {
   font-size: 11px;
   font-weight: 700;

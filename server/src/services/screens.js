@@ -12,27 +12,43 @@ const DATA_FILE = path.join(__dirname, '..', 'data', 'screens.json');
 function readData() {
   try {
     const raw = fs.readFileSync(DATA_FILE, 'utf-8');
-    return JSON.parse(raw).screens || [];
+    const parsed = JSON.parse(raw);
+    return {
+      sections: parsed.sections || [],
+      screens: parsed.screens || [],
+    };
   } catch {
-    return [];
+    return { sections: [], screens: [] };
   }
 }
 
-/**
- * Write screens array to the JSON file (atomic).
- * @param {Array} screens
- */
-function writeData(screens) {
+function writeData({ sections, screens }) {
   const tmp = DATA_FILE + '.tmp';
-  fs.writeFileSync(tmp, JSON.stringify({ screens }, null, 2), 'utf-8');
+  const data = readData();
+  fs.writeFileSync(
+    tmp,
+    JSON.stringify(
+      {
+        sections: sections ?? data.sections,
+        screens: screens ?? data.screens,
+      },
+      null,
+      2
+    ),
+    'utf-8'
+  );
   fs.renameSync(tmp, DATA_FILE);
+}
+
+function readScreens() {
+  return readData().screens;
 }
 
 /**
  * Get all screens.
  */
 export function getAllScreens() {
-  return readData();
+  return readScreens();
 }
 
 /**
@@ -40,28 +56,44 @@ export function getAllScreens() {
  * @param {string} id
  */
 export function getScreen(id) {
-  return readData().find((s) => s.id === id) || null;
+  return readScreens().find((s) => s.id === id) || null;
 }
 
 /**
  * Create a new screen.
  * @param {{ id: string, image: string }} data
  */
-export function createScreen({ id, image }) {
-  const screens = readData();
+function layoutForSection(screens, sectionId) {
+  const inSection = screens.filter((s) => s.sectionId === sectionId);
+  const i = inSection.length;
+  const col = i % 4;
+  const row = Math.floor(i / 4);
+  return {
+    graphX: col * 220,
+    graphY: row * 185,
+  };
+}
+
+export function createScreen({ id, image, sectionId = null }) {
+  const data = readData();
+  const { screens } = data;
   if (screens.find((s) => s.id === id)) {
     throw new Error(`Screen "${id}" already exists`);
   }
   const i = screens.length;
+  const layout = sectionId
+    ? layoutForSection(screens, sectionId)
+    : { graphX: (i % 4) * 220, graphY: Math.floor(i / 4) * 185 };
+
   const screen = {
     id,
     image,
     buttons: [],
-    graphX: (i % 4) * 220,
-    graphY: Math.floor(i / 4) * 185,
+    sectionId: sectionId || null,
+    ...layout,
   };
   screens.push(screen);
-  writeData(screens);
+  writeData({ ...data, screens });
   return screen;
 }
 
@@ -71,26 +103,34 @@ export function createScreen({ id, image }) {
  * @param {{ id?: string }} updates
  */
 export function updateScreen(id, updates) {
-  const screens = readData();
+  const data = readData();
+  const { screens, sections } = data;
   const idx = screens.findIndex((s) => s.id === id);
   if (idx === -1) throw new Error(`Screen "${id}" not found`);
 
   if (updates.id && updates.id !== id) {
-    // Rename: update id and also update all buttons' screenId
     if (screens.find((s) => s.id === updates.id)) {
       throw new Error(`Screen "${updates.id}" already exists`);
     }
-    screens[idx].id = updates.id;
+    const newId = updates.id;
+    screens[idx].id = newId;
     screens[idx].buttons = screens[idx].buttons.map((b) => ({
       ...b,
-      screenId: updates.id,
+      screenId: newId,
     }));
+    sections.forEach((sec) => {
+      if (sec.rootScreenId === id) sec.rootScreenId = newId;
+    });
+    id = newId;
   }
 
   if (updates.graphX !== undefined) screens[idx].graphX = updates.graphX;
   if (updates.graphY !== undefined) screens[idx].graphY = updates.graphY;
+  if (updates.sectionId !== undefined) {
+    screens[idx].sectionId = updates.sectionId || null;
+  }
 
-  writeData(screens);
+  writeData({ sections, screens });
   return screens[idx];
 }
 
@@ -99,20 +139,24 @@ export function updateScreen(id, updates) {
  * @param {string} id
  */
 export function deleteScreen(id) {
-  const screens = readData();
+  const data = readData();
+  const { screens, sections } = data;
   const idx = screens.findIndex((s) => s.id === id);
   if (idx === -1) throw new Error(`Screen "${id}" not found`);
 
   const screen = screens[idx];
 
-  // Delete screenshot file
   const imgPath = path.join(__dirname, '..', 'data', 'screenshots', screen.image);
   if (fs.existsSync(imgPath)) {
     fs.unlinkSync(imgPath);
   }
 
+  sections.forEach((sec) => {
+    if (sec.rootScreenId === id) sec.rootScreenId = null;
+  });
+
   screens.splice(idx, 1);
-  writeData(screens);
+  writeData({ sections, screens });
 }
 
 /**

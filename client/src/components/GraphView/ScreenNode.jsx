@@ -3,10 +3,12 @@ import { Handle, Position } from '@xyflow/react';
 import './GraphView.css';
 
 function ScreenNode({ data, selected }) {
-  const { label, image, buttonCount } = data;
+  const { label, image, buttonCount, isExternal } = data;
 
   return (
-    <div className={`screen-node ${selected ? 'screen-node--selected' : ''}`}>
+    <div
+      className={`screen-node ${selected ? 'screen-node--selected' : ''} ${isExternal ? 'screen-node--external' : ''}`}
+    >
       <Handle type="target" position={Position.Top} className="screen-node__handle" />
 
       <div className="screen-node__thumb">

@@ -80,6 +80,23 @@
   box-shadow: 0 0 0 2px var(--accent-dim), 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
+.screen-node--external {
+  opacity: 0.75;
+  border-style: dashed;
+  border-color: var(--amber);
+  width: 160px;
+}
+
+.screen-node--external .screen-node__label {
+  font-size: 11px;
+}
+
+.graph-view__section-note {
+  font-size: 12px;
+  color: var(--accent);
+  margin: 0 0 var(--space-md);
+}
+
 .screen-node__handle {
   background: var(--accent) !important;
   width: 10px !important;
