@@ -10,6 +10,62 @@ let parser = null;
 let status = 'disconnected';
 /** Stored reference to the parser's data handler so we can remove/re-add it */
 let parserDataHandler = null;
+/** True while reading raw bytes directly from the port (file transfer). */
+let rawMode = false;
+/** Serialize serial commands so overlapping execute/stream calls cannot corrupt state. */
+let commandChain = Promise.resolve();
+
+function enqueueSerial(fn) {
+  const run = commandChain.then(fn, fn);
+  commandChain = run.catch(() => {});
+  return run;
+}
+
+/**
+ * Restore line-based parser mode after a raw byte transfer.
+ */
+function leaveRawMode() {
+  if (!port || !parser) return;
+  try {
+    if (port.isPaused) port.resume();
+    try {
+      port.unpipe(parser);
+    } catch {
+      // not piped
+    }
+    port.pipe(parser);
+    if (parserDataHandler) {
+      parser.removeListener('data', parserDataHandler);
+      parser.on('data', parserDataHandler);
+    }
+    rawMode = false;
+  } catch (e) {
+    console.error('[Serial] Failed to restore parser:', e.message);
+  }
+}
+
+function enterRawMode() {
+  if (!port || !parser || rawMode) return;
+  if (parserDataHandler) parser.removeListener('data', parserDataHandler);
+  try {
+    port.unpipe(parser);
+  } catch {
+    // ignore
+  }
+  if (port.isPaused) port.resume();
+  rawMode = true;
+}
+
+/**
+ * Re-open the serial port if it was closed (e.g. after a server restart or stream error).
+ */
+export async function ensureConnected() {
+  if (port && port.isOpen) {
+    leaveRawMode();
+    return getStatus();
+  }
+  return connect();
+}
 
 /**
  * Get current serial connection status.
@@ -50,6 +106,9 @@ export function connect() {
 
       port.on('close', () => {
         console.log('[Serial] Port closed');
+        port = null;
+        parser = null;
+        rawMode = false;
         status = 'disconnected';
       });
 
@@ -142,6 +201,7 @@ export function disconnect() {
       if (err) console.error('[Serial] Close error:', err.message);
       port = null;
       parser = null;
+      rawMode = false;
       status = 'disconnected';
       resolve({ status });
     });
@@ -155,16 +215,18 @@ export function disconnect() {
  * @returns {Promise<string>} collected output
  */
 export function execute(command, timeoutMs = 5000) {
-  return new Promise((resolve, reject) => {
+  return enqueueSerial(async () => {
+    await ensureConnected();
+
     if (!port || !port.isOpen) {
-      reject(new Error('Serial port not connected'));
-      return;
+      throw new Error('Serial port not connected');
     }
 
     if (status !== 'shell-ready' && status !== 'connected') {
-      reject(new Error(`Serial not ready (status: ${status})`));
-      return;
+      throw new Error(`Serial not ready (status: ${status})`);
     }
+
+    leaveRawMode();
 
     const lines = [];
     const onData = (line) => {
@@ -173,20 +235,21 @@ export function execute(command, timeoutMs = 5000) {
 
     parser.on('data', onData);
 
-    port.write(command + '\r\n', (err) => {
-      if (err) {
-        parser.removeListener('data', onData);
-        reject(err);
-        return;
-      }
+    return new Promise((resolve, reject) => {
+      port.write(command + '\r\n', (err) => {
+        if (err) {
+          parser.removeListener('data', onData);
+          reject(err);
+          return;
+        }
 
-      console.log('[Serial TX]', command);
+        console.log('[Serial TX]', command);
 
-      // Wait for response to accumulate
-      setTimeout(() => {
-        parser.removeListener('data', onData);
-        resolve(lines.join('\n'));
-      }, timeoutMs);
+        setTimeout(() => {
+          parser.removeListener('data', onData);
+          resolve(lines.join('\n'));
+        }, timeoutMs);
+      });
     });
   });
 }
@@ -200,103 +263,193 @@ export function execute(command, timeoutMs = 5000) {
  * @returns {Promise<Buffer>} collected raw data (as Buffer) up to the terminator
  */
 export function executeStream(command, terminator = '__END__', timeoutMs = 60000, beginMarker = null) {
-  return new Promise((resolve, reject) => {
+  return enqueueSerial(async () => {
+    await ensureConnected();
+
     if (!port || !port.isOpen) {
-      reject(new Error('Serial port not connected'));
-      return;
+      throw new Error('Serial port not connected');
     }
 
     if (status !== 'shell-ready' && status !== 'connected') {
-      reject(new Error(`Serial not ready (status: ${status})`));
-      return;
+      throw new Error(`Serial not ready (status: ${status})`);
     }
 
-    let buffers = [];
-    let totalLen = 0;
-    const termBuf = Buffer.from(terminator, 'utf8');
-    const beginBuf = beginMarker ? Buffer.from(beginMarker, 'utf8') : null;
-    let started = !beginBuf;
+    enterRawMode();
 
-    const onData = (chunk) => {
-      try {
-        const buf = Buffer.isBuffer(chunk) ? chunk : Buffer.from(String(chunk), 'utf8');
-        buffers.push(buf);
-        totalLen += buf.length;
+    return new Promise((resolve, reject) => {
+      let buffers = [];
+      let totalLen = 0;
+      const termBuf = Buffer.from(terminator, 'utf8');
+      const beginBuf = beginMarker ? Buffer.from(beginMarker, 'utf8') : null;
+      let started = !beginBuf;
 
-        const collected = Buffer.concat(buffers, totalLen);
-
-        if (!started && beginBuf) {
-          const bi = collected.indexOf(beginBuf);
-          if (bi !== -1) {
-            // drop everything up to and including beginBuf
-            const rest = collected.slice(bi + beginBuf.length);
-            buffers = [rest];
-            totalLen = rest.length;
-            started = true;
-          }
-        }
-
-        if (started) {
-          const ti = collected.indexOf(termBuf);
-          if (ti !== -1) {
-            port.removeListener('data', onData);
-            clearTimeout(timer);
-            // Pause and re-pipe the parser to resume normal line-based reading
-            try {
-              port.pause();
-              port.pipe(parser);
-              if (parserDataHandler) parser.on('data', parserDataHandler);
-            } catch (e) {
-              console.error('[Serial] Failed to re-pipe parser:', e.message);
-            }
-            const result = collected.slice(0, ti);
-            resolve(result);
-          }
-        }
-      } catch (err) {
-        // ignore
-      }
-    };
-
-    // Remove parser's listener and unpipe to get raw data directly
-    try {
-      if (parserDataHandler) parser.removeListener('data', parserDataHandler);
-      port.unpipe(parser);
-      // Resume the port data flow after unpiping
-      port.resume();
-    } catch (e) {
-      console.error('[Serial] Failed to unpipe parser:', e.message);
-    }
-
-    const timer = setTimeout(() => {
-      port.removeListener('data', onData);
-      try {
-        port.pause();
-        port.pipe(parser);
-        if (parserDataHandler) parser.on('data', parserDataHandler);
-      } catch (e) {
-        console.error('[Serial] Failed to re-pipe on timeout:', e.message);
-      }
-      reject(new Error('Stream timed out'));
-    }, timeoutMs);
-
-    port.on('data', onData);
-
-    port.write(command + '\r\n', (err) => {
-      if (err) {
+      const cleanup = () => {
         port.removeListener('data', onData);
         clearTimeout(timer);
+        leaveRawMode();
+      };
+
+      const onData = (chunk) => {
         try {
-          port.pause();
-          port.pipe(parser);
-          if (parserDataHandler) parser.on('data', parserDataHandler);
-        } catch (e) {
-          console.error('[Serial] Failed to re-pipe on error:', e.message);
+          const buf = Buffer.isBuffer(chunk) ? chunk : Buffer.from(String(chunk), 'utf8');
+          buffers.push(buf);
+          totalLen += buf.length;
+
+          const collected = Buffer.concat(buffers, totalLen);
+
+          if (!started && beginBuf) {
+            const bi = collected.indexOf(beginBuf);
+            if (bi !== -1) {
+              const rest = collected.slice(bi + beginBuf.length);
+              buffers = [rest];
+              totalLen = rest.length;
+              started = true;
+            }
+          }
+
+          if (started) {
+            const ti = collected.indexOf(termBuf);
+            if (ti !== -1) {
+              cleanup();
+              resolve(collected.slice(0, ti));
+            }
+          }
+        } catch {
+          // ignore
         }
-        reject(err);
-        return;
-      }
-      console.log('[Serial TX]', command);
+      };
+
+      const timer = setTimeout(() => {
+        cleanup();
+        reject(new Error('Stream timed out'));
+      }, timeoutMs);
+
+      port.on('data', onData);
+
+      port.write(command + '\r\n', (err) => {
+        if (err) {
+          cleanup();
+          reject(err);
+          return;
+        }
+        console.log('[Serial TX]', command);
+      });
+    });
+  });
+}
+
+/**
+ * Execute a command and collect raw output until enough payload is received or the stream idles.
+ * Does not start the idle timer until the first byte arrives (avoids empty early completion).
+ * @param {string} command
+ * @param {object} [opts]
+ * @param {number} [opts.targetChars=0] - encoded payload length to wait for (base64/hex chars)
+ * @param {number} [opts.idleMs=2500]
+ * @param {number} [opts.graceMs=20000] - max wait for first byte before failing
+ * @param {number} [opts.timeoutMs=180000]
+ * @returns {Promise<Buffer>}
+ */
+export function executeStreamUntilIdle(command, opts = {}) {
+  const targetChars = opts.targetChars || 0;
+  const idleMs = opts.idleMs ?? 2500;
+  const graceMs = opts.graceMs ?? 20000;
+  const timeoutMs = opts.timeoutMs ?? 180000;
+
+  return enqueueSerial(async () => {
+    await ensureConnected();
+
+    if (!port || !port.isOpen) {
+      throw new Error('Serial port not connected');
+    }
+
+    if (status !== 'shell-ready' && status !== 'connected') {
+      throw new Error(`Serial not ready (status: ${status})`);
+    }
+
+    enterRawMode();
+
+    return new Promise((resolve, reject) => {
+      let buffers = [];
+      let totalLen = 0;
+      let idleTimer = null;
+      let graceTimer = null;
+      let sawData = false;
+
+      const resultBuffer = () => (totalLen > 0 ? Buffer.concat(buffers, totalLen) : Buffer.alloc(0));
+
+      const finish = (err, result) => {
+        port.removeListener('data', onData);
+        clearTimeout(maxTimer);
+        if (idleTimer) clearTimeout(idleTimer);
+        if (graceTimer) clearTimeout(graceTimer);
+        leaveRawMode();
+        if (err) reject(err);
+        else resolve(result);
+      };
+
+      const payloadCharCount = () => {
+        const s = resultBuffer().toString('utf8');
+        const b64 = (s.match(/[A-Za-z0-9+/=]/g) || []).length;
+        const hex = (s.match(/[0-9a-fA-F]/g) || []).length;
+        return Math.max(b64, hex);
+      };
+
+      const hasEnoughPayload = () => {
+        if (targetChars <= 0) return false;
+        return payloadCharCount() >= Math.floor(targetChars * 0.98);
+      };
+
+      const scheduleIdle = () => {
+        if (!sawData) return;
+        if (idleTimer) clearTimeout(idleTimer);
+        idleTimer = setTimeout(() => {
+          finish(null, resultBuffer());
+        }, idleMs);
+      };
+
+      const onData = (chunk) => {
+        try {
+          const buf = Buffer.isBuffer(chunk) ? chunk : Buffer.from(String(chunk), 'utf8');
+          if (!sawData) {
+            sawData = true;
+            if (graceTimer) clearTimeout(graceTimer);
+          }
+          buffers.push(buf);
+          totalLen += buf.length;
+
+          if (hasEnoughPayload()) {
+            finish(null, resultBuffer());
+            return;
+          }
+          scheduleIdle();
+        } catch {
+          // ignore
+        }
+      };
+
+      graceTimer = setTimeout(() => {
+        if (!sawData) {
+          finish(new Error('No data received from TV (is the screenshot file readable?)'));
+        }
+      }, graceMs);
+
+      const maxTimer = setTimeout(() => {
+        if (totalLen > 0) {
+          finish(null, resultBuffer());
+        } else {
+          finish(new Error('Stream timed out'));
+        }
+      }, timeoutMs);
+
+      port.on('data', onData);
+
+      port.write(command + '\r\n', (err) => {
+        if (err) {
+          finish(err);
+          return;
+        }
+        console.log('[Serial TX]', command);
+      });
     });
   });
 }

@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { captureFromTV, captureFromTVStream, importScreenshot } from '../services/capture.js';
 import { createScreen, getScreenshotsDir } from '../services/screens.js';
+import { ensureConnected, getStatus } from '../services/serial.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const upload = multer({ dest: path.join(__dirname, '..', 'data', 'screenshots', '.tmp') });
@@ -19,6 +20,8 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: 'screenId is required' });
     }
 
+    await ensureConnected();
+
     let filename;
     if (saveToLaptop) {
       filename = await captureFromTVStream(screenId);
@@ -26,9 +29,9 @@ router.post('/', async (req, res) => {
       filename = await captureFromTV(screenId);
     }
     const screen = createScreen({ id: screenId, image: filename });
-    res.json(screen);
+    res.json({ ...screen, serialStatus: getStatus().status });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.message, serialStatus: getStatus().status });
   }
 });
 

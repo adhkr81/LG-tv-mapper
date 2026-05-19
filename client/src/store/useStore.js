@@ -27,10 +27,14 @@ const useStore = create((set, get) => ({
     set({ isCapturing: true });
     try {
       const saveToLaptop = get().saveToLaptop;
-      await api.captureScreen(screenId, saveToLaptop);
+      const result = await api.captureScreen(screenId, saveToLaptop);
+      if (result?.serialStatus) {
+        set({ serialStatus: result.serialStatus });
+      }
       await get().fetchScreens();
     } catch (err) {
       console.error('Capture failed:', err);
+      await get().fetchSerialStatus();
       throw err;
     } finally {
       set({ isCapturing: false });
