@@ -3,7 +3,44 @@
     {
       "id": "1",
       "image": "1.jpg",
-      "buttons": []
+      "buttons": [
+        {
+          "id": "a56df558-60e6-4712-a335-37ccbd73432e",
+          "screenId": "1",
+          "label": "→ 2",
+          "target": "2",
+          "left": 325,
+          "top": 1656,
+          "width": 237,
+          "height": 250
+        },
+        {
+          "id": "bb53970b-bdd0-40d5-89f8-f8f92f023517",
+          "screenId": "1",
+          "label": "→ 3",
+          "target": "3",
+          "left": 2963,
+          "top": 1653,
+          "width": 240,
+          "height": 253
+        }
+      ],
+      "graphX": 0,
+      "graphY": 0
+    },
+    {
+      "id": "2",
+      "image": "2.jpg",
+      "buttons": [],
+      "graphX": -12,
+      "graphY": 206
+    },
+    {
+      "id": "3",
+      "image": "3.jpg",
+      "buttons": [],
+      "graphX": 234,
+      "graphY": 207
     }
   ]
 }

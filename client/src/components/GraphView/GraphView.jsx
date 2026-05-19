@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useState, useRef } from 'react';
+import React, { useMemo, useCallback, useState, useRef, useEffect } from 'react';
 import {
   ReactFlow,
   Background,
@@ -10,9 +10,21 @@ import {
 import '@xyflow/react/dist/style.css';
 import ScreenNode from './ScreenNode.jsx';
 import useStore from '../../store/useStore.js';
+import { rectCenteredAt } from '../../utils/buttonRect.js';
 import './GraphView.css';
 
 const nodeTypes = { screenNode: ScreenNode };
+
+function defaultNodePosition(index) {
+  return { x: (index % 4) * 220, y: Math.floor(index / 4) * 185 };
+}
+
+function getSavedPosition(screen, index) {
+  if (screen.graphX != null && screen.graphY != null) {
+    return { x: screen.graphX, y: screen.graphY };
+  }
+  return defaultNodePosition(index);
+}
 
 export default function GraphView() {
   const screens = useStore((s) => s.screens);
@@ -20,7 +32,8 @@ export default function GraphView() {
   const selectScreen = useStore((s) => s.selectScreen);
   const importScreen = useStore((s) => s.importScreen);
   const captureScreen = useStore((s) => s.captureScreen);
-  const saveToLaptop = useStore((s) => s.saveToLaptop);
+  const addButton = useStore((s) => s.addButton);
+  const updateScreenGraphPosition = useStore((s) => s.updateScreenGraphPosition);
   const serialStatus = useStore((s) => s.serialStatus);
   const isCapturing = useStore((s) => s.isCapturing);
 
@@ -35,7 +48,7 @@ export default function GraphView() {
     return screens.map((screen, i) => ({
       id: screen.id,
       type: 'screenNode',
-      position: { x: (i % 4) * 260, y: Math.floor(i / 4) * 220 },
+      position: getSavedPosition(screen, i),
       data: {
         label: screen.id,
         image: screen.image,
@@ -78,15 +91,54 @@ export default function GraphView() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
-  // Sync when screens change
-  useMemo(() => {
-    setNodes(initialNodes);
+  // Sync data when screens change; keep dragged positions until server state catches up
+  useEffect(() => {
+    setNodes((current) =>
+      initialNodes.map((node) => {
+        const prev = current.find((n) => n.id === node.id);
+        return {
+          ...node,
+          position: prev?.position ?? node.position,
+        };
+      })
+    );
     setEdges(initialEdges);
-  }, [initialNodes, initialEdges]);
+  }, [initialNodes, initialEdges, setNodes, setEdges]);
 
   const onNodeClick = useCallback((_, node) => {
     selectScreen(node.id);
   }, [selectScreen]);
+
+  const onNodeDragStop = useCallback(
+    (_, node) => {
+      updateScreenGraphPosition(node.id, node.position.x, node.position.y);
+    },
+    [updateScreenGraphPosition]
+  );
+
+  const isValidConnection = useCallback(
+    (connection) => connection.source !== connection.target,
+    []
+  );
+
+  const onConnect = useCallback(
+    async (connection) => {
+      const { source, target } = connection;
+      if (!source || !target) return;
+
+      const label = `→ ${target}`;
+      try {
+        await addButton(source, {
+          label,
+          target,
+          ...rectCenteredAt(960, 540),
+        });
+      } catch (err) {
+        alert('Failed to create link: ' + err.message);
+      }
+    },
+    [addButton]
+  );
 
   const handleImport = async () => {
     if (!newScreenId.trim() || !importFile) return;
@@ -103,7 +155,7 @@ export default function GraphView() {
   const handleCapture = async () => {
     if (!newScreenId.trim()) return;
     try {
-      await captureScreen(newScreenId.trim(), saveToLaptop);
+      await captureScreen(newScreenId.trim());
       setShowCaptureModal(false);
       setNewScreenId('');
     } catch (err) {
@@ -157,9 +209,13 @@ export default function GraphView() {
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        isValidConnection={isValidConnection}
         onNodeClick={onNodeClick}
+        onNodeDragStop={onNodeDragStop}
         nodeTypes={nodeTypes}
         fitView
+        fitViewOptions={{ padding: 0.2 }}
         className="graph-view__canvas"
         proOptions={{ hideAttribution: true }}
       >
@@ -182,12 +238,6 @@ export default function GraphView() {
                 placeholder="e.g. home, settings, apps"
                 autoFocus
               />
-            </div>
-
-            <div className="modal__field">
-              <label className="label">
-                <input type="checkbox" checked={saveToLaptop} readOnly /> Save captures to laptop
-              </label>
             </div>
 
             <div className="modal__field">

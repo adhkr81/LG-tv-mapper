@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useStore from '../../store/useStore.js';
+import { normalizeButton } from '../../utils/buttonRect.js';
 import './SidebarEditor.css';
 
 export default function SidebarEditor() {
@@ -12,13 +13,12 @@ export default function SidebarEditor() {
   const deleteButton = useStore((s) => s.deleteButton);
   const updateButton = useStore((s) => s.updateButton);
   const updateScreenName = useStore((s) => s.updateScreenName);
+  const selectedButtonId = useStore((s) => s.selectedButtonId);
+  const selectButton = useStore((s) => s.selectButton);
 
   const screen = screens.find((s) => s.id === selectedScreenId);
   const [editingName, setEditingName] = useState(false);
   const [nameValue, setNameValue] = useState('');
-  const saveToLaptop = useStore((s) => s.saveToLaptop);
-  const setSaveToLaptop = useStore((s) => s.setSaveToLaptop);
-
   useEffect(() => {
     if (screen) setNameValue(screen.id);
   }, [screen?.id]);
@@ -44,6 +44,14 @@ export default function SidebarEditor() {
     }
   };
 
+  const handleRectChange = async (buttonId, updates) => {
+    try {
+      await updateButton(screen.id, buttonId, updates);
+    } catch (err) {
+      alert('Update failed: ' + err.message);
+    }
+  };
+
   const statusLabel =
     serialStatus === 'shell-ready' ? 'Shell Ready' :
     serialStatus === 'connected' ? 'Connected' :
@@ -62,12 +70,6 @@ export default function SidebarEditor() {
           ) : serialStatus === 'connecting' ? null : (
             <button className="btn btn-sm btn-danger" onClick={disconnectSerial}>Disconnect</button>
           )}
-        </div>
-        <div className="sidebar__serial-toggle">
-          <label className="label">
-            <input type="checkbox" checked={saveToLaptop} onChange={(e) => setSaveToLaptop(e.target.checked)} />
-            <span>Save captures to laptop</span>
-          </label>
         </div>
       </div>
 
@@ -121,17 +123,24 @@ export default function SidebarEditor() {
             ) : (
               <div className="sidebar__button-list">
                 {screen.buttons.map((btn) => (
-                  <div key={btn.id} className="sidebar__button-item">
+                  <div
+                    key={btn.id}
+                    className={`sidebar__button-item ${btn.id === selectedButtonId ? 'sidebar__button-item--selected' : ''}`}
+                    onClick={() => selectButton(btn.id)}
+                  >
                     <div className="sidebar__button-header">
                       <span className={`sidebar__button-dot ${btn.target && screens.some(s => s.id === btn.target) ? 'linked' : 'unlinked'}`} />
                       <span className="sidebar__button-name">{btn.label}</span>
                       <button
                         className="sidebar__button-delete"
-                        onClick={() => deleteButton(screen.id, btn.id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteButton(screen.id, btn.id);
+                        }}
                         title="Delete button"
                       >✕</button>
                     </div>
-                    <div className="sidebar__button-target">
+                    <div className="sidebar__button-target" onClick={(e) => e.stopPropagation()}>
                       <label className="label">Target</label>
                       <select
                         className="input"
@@ -144,9 +153,10 @@ export default function SidebarEditor() {
                         ))}
                       </select>
                     </div>
-                    <div className="sidebar__button-coords">
-                      ({btn.x}, {btn.y})
-                    </div>
+                    <ButtonRectInputs
+                      button={btn}
+                      onUpdate={(updates) => handleRectChange(btn.id, updates)}
+                    />
                   </div>
                 ))}
               </div>
@@ -160,6 +170,100 @@ export default function SidebarEditor() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function ButtonRectInputs({ button, onUpdate }) {
+  const rect = normalizeButton(button);
+  const [fields, setFields] = useState({
+    top: rect.top,
+    left: rect.left,
+    width: rect.width,
+    height: rect.height,
+  });
+
+  useEffect(() => {
+    const next = normalizeButton(button);
+    setFields({
+      top: next.top,
+      left: next.left,
+      width: next.width,
+      height: next.height,
+    });
+  }, [button.id, button.left, button.top, button.width, button.height, button.x, button.y]);
+
+  const commit = (next) => {
+    onUpdate({
+      left: next.left,
+      top: next.top,
+      width: next.width,
+      height: next.height,
+    });
+  };
+
+  const handleChange = (key, raw) => {
+    const min = key === 'width' || key === 'height' ? 1 : 0;
+    const value = raw === '' ? min : Math.max(min, parseInt(raw, 10) || 0);
+    setFields((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const handleBlur = () => commit(fields);
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') e.currentTarget.blur();
+  };
+
+  return (
+    <div className="sidebar__button-rect" onClick={(e) => e.stopPropagation()}>
+      <label className="sidebar__rect-field">
+        <span className="label">Top</span>
+        <input
+          className="input"
+          type="number"
+          min="0"
+          value={fields.top}
+          onChange={(e) => handleChange('top', e.target.value)}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+        />
+      </label>
+      <label className="sidebar__rect-field">
+        <span className="label">Left</span>
+        <input
+          className="input"
+          type="number"
+          min="0"
+          value={fields.left}
+          onChange={(e) => handleChange('left', e.target.value)}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+        />
+      </label>
+      <label className="sidebar__rect-field">
+        <span className="label">Width</span>
+        <input
+          className="input"
+          type="number"
+          min="1"
+          value={fields.width}
+          onChange={(e) => handleChange('width', e.target.value)}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+        />
+      </label>
+      <label className="sidebar__rect-field">
+        <span className="label">Height</span>
+        <input
+          className="input"
+          type="number"
+          min="1"
+          value={fields.height}
+          onChange={(e) => handleChange('height', e.target.value)}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+        />
+      </label>
     </div>
   );
 }

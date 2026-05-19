@@ -25,7 +25,7 @@ function enqueueSerial(fn) {
  * Restore line-based parser mode after a raw byte transfer.
  */
 function leaveRawMode() {
-  if (!port || !parser) return;
+  if (!port || !parser || !rawMode) return;
   try {
     if (port.isPaused) port.resume();
     try {
@@ -61,7 +61,7 @@ function enterRawMode() {
  */
 export async function ensureConnected() {
   if (port && port.isOpen) {
-    leaveRawMode();
+    if (rawMode) leaveRawMode();
     return getStatus();
   }
   return connect();
@@ -101,6 +101,9 @@ export function connect() {
 
       port.on('error', (err) => {
         console.error('[Serial] Error:', err.message);
+        port = null;
+        parser = null;
+        rawMode = false;
         status = 'disconnected';
       });
 
@@ -226,7 +229,7 @@ export function execute(command, timeoutMs = 5000) {
       throw new Error(`Serial not ready (status: ${status})`);
     }
 
-    leaveRawMode();
+    if (rawMode) leaveRawMode();
 
     const lines = [];
     const onData = (line) => {

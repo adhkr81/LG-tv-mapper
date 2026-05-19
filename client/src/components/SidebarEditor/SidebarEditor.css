@@ -93,6 +93,17 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: var(--space-md);
+  cursor: pointer;
+  transition: border-color var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+}
+
+.sidebar__button-item:hover {
+  border-color: var(--text-muted);
+}
+
+.sidebar__button-item--selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-dim);
 }
 
 .sidebar__button-header {
@@ -145,8 +156,24 @@
   padding: var(--space-xs) var(--space-sm);
 }
 
-.sidebar__button-coords {
+.sidebar__button-rect {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+.sidebar__rect-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.sidebar__rect-field .label {
   font-size: 10px;
-  color: var(--text-muted);
-  font-family: monospace;
+}
+
+.sidebar__rect-field .input {
+  font-size: 12px;
+  padding: var(--space-xs) var(--space-sm);
 }

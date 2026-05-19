@@ -7,10 +7,10 @@ const useStore = create((set, get) => ({
 
   // UI state
   selectedScreenId: null,
+  selectedButtonId: null,
   isCapturing: false,
   isAddingHotspot: false,
   serialStatus: 'disconnected',
-  saveToLaptop: false,
 
   // ---- Actions ----
 
@@ -26,8 +26,7 @@ const useStore = create((set, get) => ({
   captureScreen: async (screenId) => {
     set({ isCapturing: true });
     try {
-      const saveToLaptop = get().saveToLaptop;
-      const result = await api.captureScreen(screenId, saveToLaptop);
+      const result = await api.captureScreen(screenId);
       if (result?.serialStatus) {
         set({ serialStatus: result.serialStatus });
       }
@@ -40,8 +39,6 @@ const useStore = create((set, get) => ({
       set({ isCapturing: false });
     }
   },
-
-  setSaveToLaptop: (val) => set({ saveToLaptop: !!val }),
 
   importScreen: async (screenId, file) => {
     set({ isCapturing: true });
@@ -67,10 +64,35 @@ const useStore = create((set, get) => ({
   },
 
   updateButton: async (screenId, buttonId, updates) => {
+    const prevScreens = get().screens;
+    set({
+      screens: prevScreens.map((s) =>
+        s.id !== screenId
+          ? s
+          : {
+              ...s,
+              buttons: s.buttons.map((b) =>
+                b.id === buttonId ? { ...b, ...updates } : b
+              ),
+            }
+      ),
+    });
     try {
-      await api.updateButton(screenId, buttonId, updates);
-      await get().fetchScreens();
+      const updated = await api.updateButton(screenId, buttonId, updates);
+      set({
+        screens: get().screens.map((s) =>
+          s.id !== screenId
+            ? s
+            : {
+                ...s,
+                buttons: s.buttons.map((b) =>
+                  b.id === buttonId ? { ...b, ...updated } : b
+                ),
+              }
+        ),
+      });
     } catch (err) {
+      set({ screens: prevScreens });
       console.error('Update button failed:', err);
       throw err;
     }
@@ -79,9 +101,28 @@ const useStore = create((set, get) => ({
   deleteButton: async (screenId, buttonId) => {
     try {
       await api.deleteButtonApi(screenId, buttonId);
+      if (get().selectedButtonId === buttonId) {
+        set({ selectedButtonId: null });
+      }
       await get().fetchScreens();
     } catch (err) {
       console.error('Delete button failed:', err);
+      throw err;
+    }
+  },
+
+  updateScreenGraphPosition: async (screenId, graphX, graphY) => {
+    const rounded = { graphX: Math.round(graphX), graphY: Math.round(graphY) };
+    set({
+      screens: get().screens.map((s) =>
+        s.id === screenId ? { ...s, ...rounded } : s
+      ),
+    });
+    try {
+      await api.updateScreen(screenId, rounded);
+    } catch (err) {
+      console.error('Update graph position failed:', err);
+      await get().fetchScreens();
       throw err;
     }
   },
@@ -114,7 +155,11 @@ const useStore = create((set, get) => ({
   },
 
   selectScreen: (screenId) => {
-    set({ selectedScreenId: screenId, isAddingHotspot: false });
+    set({ selectedScreenId: screenId, selectedButtonId: null, isAddingHotspot: false });
+  },
+
+  selectButton: (buttonId) => {
+    set({ selectedButtonId: buttonId ?? null });
   },
 
   setAddingHotspot: (val) => {

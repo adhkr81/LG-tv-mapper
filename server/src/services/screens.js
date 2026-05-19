@@ -52,7 +52,14 @@ export function createScreen({ id, image }) {
   if (screens.find((s) => s.id === id)) {
     throw new Error(`Screen "${id}" already exists`);
   }
-  const screen = { id, image, buttons: [] };
+  const i = screens.length;
+  const screen = {
+    id,
+    image,
+    buttons: [],
+    graphX: (i % 4) * 220,
+    graphY: Math.floor(i / 4) * 185,
+  };
   screens.push(screen);
   writeData(screens);
   return screen;
@@ -79,6 +86,9 @@ export function updateScreen(id, updates) {
       screenId: updates.id,
     }));
   }
+
+  if (updates.graphX !== undefined) screens[idx].graphX = updates.graphX;
+  if (updates.graphY !== undefined) screens[idx].graphY = updates.graphY;
 
   writeData(screens);
   return screens[idx];

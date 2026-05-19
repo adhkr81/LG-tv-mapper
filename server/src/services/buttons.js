@@ -21,6 +21,32 @@ function writeData(screens) {
   fs.renameSync(tmp, DATA_FILE);
 }
 
+const DEFAULT_BUTTON_SIZE = { width: 120, height: 60 };
+
+function normalizeButton(btn) {
+  if (
+    btn.left != null &&
+    btn.top != null &&
+    btn.width != null &&
+    btn.height != null
+  ) {
+    return btn;
+  }
+
+  const width = btn.width ?? DEFAULT_BUTTON_SIZE.width;
+  const height = btn.height ?? DEFAULT_BUTTON_SIZE.height;
+  const x = btn.x ?? 0;
+  const y = btn.y ?? 0;
+
+  return {
+    ...btn,
+    left: Math.round(x - width / 2),
+    top: Math.round(y - height / 2),
+    width,
+    height,
+  };
+}
+
 /**
  * Get all buttons for a screen.
  * @param {string} screenId
@@ -28,7 +54,7 @@ function writeData(screens) {
  */
 export function getButtons(screenId) {
   const screen = readData().find((s) => s.id === screenId);
-  return screen ? screen.buttons : [];
+  return screen ? screen.buttons.map(normalizeButton) : [];
 }
 
 /**
@@ -36,18 +62,32 @@ export function getButtons(screenId) {
  * @param {string} screenId
  * @param {{ label: string, target: string, x: number, y: number }} data
  */
-export function addButton(screenId, { label, target, x, y }) {
+export function addButton(screenId, data) {
   const screens = readData();
   const screen = screens.find((s) => s.id === screenId);
   if (!screen) throw new Error(`Screen "${screenId}" not found`);
 
+  const { label, target, left, top, width, height, x, y } = data;
+  const normalized = normalizeButton({
+    label,
+    target: target || '',
+    left,
+    top,
+    width,
+    height,
+    x,
+    y,
+  });
+
   const button = {
     id: uuidv4(),
     screenId,
-    label,
-    target: target || '',
-    x,
-    y,
+    label: normalized.label,
+    target: normalized.target,
+    left: normalized.left,
+    top: normalized.top,
+    width: normalized.width,
+    height: normalized.height,
   };
 
   screen.buttons.push(button);
@@ -71,11 +111,23 @@ export function updateButton(screenId, buttonId, updates) {
 
   if (updates.label !== undefined) btn.label = updates.label;
   if (updates.target !== undefined) btn.target = updates.target;
-  if (updates.x !== undefined) btn.x = updates.x;
-  if (updates.y !== undefined) btn.y = updates.y;
+  if (updates.left !== undefined) btn.left = updates.left;
+  if (updates.top !== undefined) btn.top = updates.top;
+  if (updates.width !== undefined) btn.width = updates.width;
+  if (updates.height !== undefined) btn.height = updates.height;
+
+  if (updates.x !== undefined || updates.y !== undefined) {
+    const merged = normalizeButton({ ...btn, x: updates.x ?? btn.x, y: updates.y ?? btn.y });
+    btn.left = merged.left;
+    btn.top = merged.top;
+    btn.width = merged.width;
+    btn.height = merged.height;
+    delete btn.x;
+    delete btn.y;
+  }
 
   writeData(screens);
-  return btn;
+  return normalizeButton(btn);
 }
 
 /**
