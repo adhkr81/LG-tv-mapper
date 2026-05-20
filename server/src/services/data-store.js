@@ -471,9 +471,6 @@ export function updateButton(screenId, buttonId, updates) {
 
     if (patch.label !== undefined) {
       btn.label = patch.label;
-      if (btn.popover) {
-        btn.popover = { ...btn.popover, title: patch.label };
-      }
     }
     if (patch.target !== undefined) btn.target = patch.target;
     if (patch.left !== undefined) btn.left = patch.left;

@@ -2,29 +2,47 @@
   "sections": [],
   "screens": {
     "1": {
-      "graphX": -13,
-      "graphY": 11,
+      "graphX": -313,
+      "graphY": -18,
       "sectionId": null,
       "buttonIds": [
-        "a56df558-60e6-4712-a335-37ccbd73432e",
-        "bb53970b-bdd0-40d5-89f8-f8f92f023517"
+        "3070e47f-f878-469b-b788-7f8efc9c23b3",
+        "2ce7f622-1e2a-44ca-88ea-75e009b6a1b3"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
     "2": {
-      "graphX": -84,
-      "graphY": 299,
+      "graphX": -337,
+      "graphY": 191,
       "sectionId": null,
-      "buttonIds": []
+      "buttonIds": [
+        "a12922cd-99b0-481e-a7a5-3e2c7855a0d6",
+        "82814793-3087-44f3-885e-15d18c540fc7",
+        "317f1e9d-f640-47c3-8660-28b1ad0e9796"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "3": {
-      "graphX": 150,
-      "graphY": 307,
+      "graphX": 15,
+      "graphY": 208,
       "sectionId": null,
       "buttonIds": [],
       "sourceWidth": 3840,
       "sourceHeight": 2160
+    },
+    "settngs_doindd": {
+      "graphX": -237,
+      "graphY": 447,
+      "sectionId": null,
+      "buttonIds": []
+    },
+    "ggsgsg": {
+      "graphX": -499,
+      "graphY": 457,
+      "sectionId": null,
+      "buttonIds": []
     }
   },
   "config": {

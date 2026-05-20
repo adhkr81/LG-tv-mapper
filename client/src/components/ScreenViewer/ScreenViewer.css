@@ -53,7 +53,7 @@
 }
 
 .screen-viewer--crosshair,
-.screen-viewer--crosshair .screen-viewer__image { cursor: crosshair; }
+.screen-viewer--crosshair .screen-viewer__image { cursor: pointer; }
 
 .screen-viewer__stage {
   position: relative;

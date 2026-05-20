@@ -29,6 +29,9 @@
   letter-spacing: 0.8px;
   color: var(--text-secondary);
   margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
 }
 
 .sidebar__serial-row {

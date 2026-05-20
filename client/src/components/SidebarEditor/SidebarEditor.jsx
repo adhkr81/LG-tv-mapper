@@ -20,6 +20,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const deleteScreen = useStore((s) => s.deleteScreen);
   const deleteButton = useStore((s) => s.deleteButton);
   const updateButton = useStore((s) => s.updateButton);
+  const addButton = useStore((s) => s.addButton);
   const imageConfig = useStore((s) => s.imageConfig);
   const updateScreenName = useStore((s) => s.updateScreenName);
   const selectedButtonId = useStore((s) => s.selectedButtonId);
@@ -59,6 +60,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
 
   const [editingName, setEditingName] = useState(false);
   const [nameValue, setNameValue] = useState('');
+  const [popoverUIOpen, setPopoverUIOpen] = useState({});
   useEffect(() => {
     if (screen) setNameValue(screen.id);
   }, [screen?.id]);
@@ -92,6 +94,68 @@ export default function SidebarEditor({ mode = 'viewer' }) {
     }
   };
 
+  const handleAddButton = async () => {
+    if (!screen) return;
+    try {
+      const newButtonData = {
+        label: `Button ${screen.buttons.length + 1}`,
+        left: 10,
+        top: 10,
+        width: 50,
+        height: 50,
+      };
+      await addButton(screen.id, newButtonData);
+    } catch (err) {
+      alert('Failed to add button: ' + err.message);
+    }
+  };
+
+  const handlePopoverToggle = async (buttonId, hasPopover) => {
+    if (hasPopover) {
+      // Just open the UI, don't save yet
+      setPopoverUIOpen((prev) => ({ ...prev, [buttonId]: true }));
+    } else {
+      // Closing - remove popover from DB
+      setPopoverUIOpen((prev) => ({ ...prev, [buttonId]: false }));
+      try {
+        await updateButton(screen.id, buttonId, { popover: null });
+      } catch (err) {
+        alert('Failed to update popover: ' + err.message);
+      }
+    }
+  };
+
+  const handlePopoverChange = async (buttonId, field, value) => {
+    try {
+      const btn = screen.buttons.find(b => b.id === buttonId);
+      if (!btn) return;
+
+      // Get or create popover structure
+      let popover = btn.popover || {
+        title: '',
+        text: '',
+        style: { top: '0%', left: '0%' },
+      };
+
+      // Update the field
+      if (field.startsWith('style.')) {
+        const styleField = field.split('.')[1];
+        popover.style = { ...popover.style, [styleField]: value };
+      } else {
+        popover[field] = value;
+      }
+
+      // Check if popover has any content
+      const hasContent = popover.title?.trim() || popover.text?.trim();
+
+      // Only save if it has content, otherwise remove it
+      const updates = hasContent ? { popover } : { popover: null };
+      await updateButton(screen.id, buttonId, updates);
+    } catch (err) {
+      alert('Failed to update popover: ' + err.message);
+    }
+  };
+
   const statusLabel =
     serialStatus === 'shell-ready' ? 'Shell Ready' :
     serialStatus === 'connected' ? 'Connected' :
@@ -113,7 +177,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
         </div>
       </div>
 
-      <ImageConfigSection />
+      {mode === 'graph' && <ImageConfigSection />}
 
       {activeSectionId && (
         <div className="sidebar__section">
@@ -202,9 +266,17 @@ export default function SidebarEditor({ mode = 'viewer' }) {
           </div>
 
           {/* Buttons list */}
-          <div className="sidebar__section sidebar__section--grow">
+          <div className="sidebar__section">
             <div className="sidebar__section-title">
-              Buttons ({screen.buttons.length})
+              <span>Buttons ({screen.buttons.length})</span>
+              <button
+                className="btn btn-sm btn-accent"
+                onClick={handleAddButton}
+                title="Add new button"
+                style={{ marginLeft: 'auto' }}
+              >
+                +
+              </button>
             </div>
 
             {screen.buttons.length === 0 ? (
@@ -217,9 +289,9 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                     className={`sidebar__button-item ${btn.id === selectedButtonId ? 'sidebar__button-item--selected' : ''}`}
                     onClick={() => selectButton(btn.id)}
                   >
-                    <div className="sidebar__button-header">
+                  <div className="sidebar__button-header">
                       <span className={`sidebar__button-dot ${btn.target && screens.some(s => s.id === btn.target) ? 'linked' : 'unlinked'}`} />
-                      <span className="sidebar__button-name">{btn.label}</span>
+                      <span className="sidebar__button-name">{btn.target || '— none —'}</span>
                       <button
                         className="sidebar__button-delete"
                         onClick={(e) => {
@@ -229,12 +301,26 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                         title="Delete button"
                       >✕</button>
                     </div>
-                    <div className="sidebar__button-target" onClick={(e) => e.stopPropagation()}>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Selected button details */}
+          {selectedButtonId && screen.buttons.find(b => b.id === selectedButtonId) && (
+            <div className="sidebar__section sidebar__section--grow">
+              <div className="sidebar__section-title">Button Details</div>
+              {(() => {
+                const selectedBtn = screen.buttons.find(b => b.id === selectedButtonId);
+                return (
+                  <>
+                    <div className="sidebar__button-target">
                       <label className="label">Target</label>
                       <select
                         className="input"
-                        value={btn.target || ''}
-                        onChange={(e) => handleTargetChange(btn.id, e.target.value)}
+                        value={selectedBtn.target || ''}
+                        onChange={(e) => handleTargetChange(selectedBtn.id, e.target.value)}
                       >
                         <option value="">— none —</option>
                         {targetOptions.inSection.length > 0 && (
@@ -253,15 +339,83 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                         )}
                       </select>
                     </div>
+                    <div className="sidebar__button-target">
+                      <label className="label">Type</label>
+                      <select
+                        className="input"
+                        value={selectedBtn.type || ''}
+                        onChange={(e) => handleRectChange(selectedBtn.id, { type: e.target.value || null })}
+                      >
+                        <option value="">— default —</option>
+                        <option value="arrow-right">arrow-right</option>
+                        <option value="arrow-left">arrow-left</option>
+                        <option value="arrow-up">arrow-up</option>
+                        <option value="arrow-down">arrow-down</option>
+                        <option value="arrow-up-disabled">arrow-up-disabled</option>
+                        <option value="arrow-down-disabled">arrow-down-disabled</option>
+                      </select>
+                    </div>
                     <ButtonRectInputs
-                      button={btn}
-                      onUpdate={(updates) => handleRectChange(btn.id, updates)}
+                      button={selectedBtn}
+                      onUpdate={(updates) => handleRectChange(selectedBtn.id, updates)}
                     />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+                    <div style={{ marginTop: 'var(--space-md)', paddingTop: 'var(--space-md)', borderTop: '1px solid var(--border)' }}>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-sm)', cursor: 'pointer', marginBottom: 'var(--space-md)' }}>
+                        <input
+                          type="checkbox"
+                          checked={popoverUIOpen[selectedBtn.id] || (selectedBtn.popover && (selectedBtn.popover.title?.trim() || selectedBtn.popover.text?.trim()))}
+                          onChange={(e) => handlePopoverToggle(selectedBtn.id, e.target.checked)}
+                        />
+                        <span className="label" style={{ margin: 0 }}>Add Popover</span>
+                      </label>
+                      {(popoverUIOpen[selectedBtn.id] || (selectedBtn.popover && (selectedBtn.popover.title?.trim() || selectedBtn.popover.text?.trim()))) && (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
+                          <label className="sidebar__rect-field">
+                            <span className="label">Title</span>
+                            <input
+                              className="input"
+                              type="text"
+                              value={selectedBtn.popover.title || ''}
+                              onChange={(e) => handlePopoverChange(selectedBtn.id, 'title', e.target.value)}
+                            />
+                          </label>
+                          <label className="sidebar__rect-field">
+                            <span className="label">Text</span>
+                            <textarea
+                              className="input"
+                              value={selectedBtn.popover.text || ''}
+                              onChange={(e) => handlePopoverChange(selectedBtn.id, 'text', e.target.value)}
+                              style={{ minHeight: '60px', resize: 'vertical' }}
+                            />
+                          </label>
+                          <label className="sidebar__rect-field">
+                            <span className="label">Top Position</span>
+                            <input
+                              className="input"
+                              type="text"
+                              value={selectedBtn.popover.style?.top || ''}
+                              onChange={(e) => handlePopoverChange(selectedBtn.id, 'style.top', e.target.value)}
+                              placeholder="e.g., 0%, 10px"
+                            />
+                          </label>
+                          <label className="sidebar__rect-field">
+                            <span className="label">Left Position</span>
+                            <input
+                              className="input"
+                              type="text"
+                              value={selectedBtn.popover.style?.left || ''}
+                              onChange={(e) => handlePopoverChange(selectedBtn.id, 'style.left', e.target.value)}
+                              placeholder="e.g., 0%, 10px"
+                            />
+                          </label>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                );
+              })()}
+            </div>
+          )}
         </>
       ) : !isEditMode ? (
         <div className="sidebar__section sidebar__section--grow">
