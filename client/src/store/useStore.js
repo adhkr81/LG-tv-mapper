@@ -3,6 +3,39 @@ import * as api from '../api/client.js';
 import { DEFAULT_IMAGE_CONFIG, normalizeImageConfig } from '../utils/coords.js';
 
 const SECTION_STORAGE_KEY = 'lg-mapper-active-section';
+const BUTTON_RECT_CLIPBOARD_KEY = 'lg-mapper-button-rect-clipboard';
+
+function loadButtonRectClipboard() {
+  try {
+    const raw = localStorage.getItem(BUTTON_RECT_CLIPBOARD_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    const nums = ['top', 'left', 'width', 'height'].every(
+      (k) => typeof parsed[k] === 'number' && Number.isFinite(parsed[k])
+    );
+    if (!nums) return null;
+    return {
+      top: parsed.top,
+      left: parsed.left,
+      width: parsed.width,
+      height: parsed.height,
+    };
+  } catch {
+    return null;
+  }
+}
+
+function persistButtonRectClipboard(clip) {
+  try {
+    if (clip) {
+      localStorage.setItem(BUTTON_RECT_CLIPBOARD_KEY, JSON.stringify(clip));
+    } else {
+      localStorage.removeItem(BUTTON_RECT_CLIPBOARD_KEY);
+    }
+  } catch {
+    /* ignore quota / private mode */
+  }
+}
 
 /** One in-flight save per button so rapid drags do not overlap PUTs. */
 const buttonUpdateChains = new Map();
@@ -23,7 +56,11 @@ const useStore = create((set, get) => ({
   })(),
   selectedScreenId: null,
   selectedButtonId: null,
+  importCompareScreenId: null,
+  importSourceButtonId: null,
+  buttonRectClipboard: loadButtonRectClipboard(),
   isCapturing: false,
+  captureProgress: null,
   isAddingHotspot: false,
   serialStatus: 'disconnected',
 
@@ -107,19 +144,30 @@ const useStore = create((set, get) => ({
 
   captureScreen: async (screenId) => {
     const sectionId = get().activeSectionId;
-    set({ isCapturing: true });
+    set({
+      isCapturing: true,
+      captureProgress: { phase: 'requesting', percent: 0, label: 'Starting capture…' },
+    });
     try {
-      const result = await api.captureScreen(screenId, false, sectionId);
+      const result = await api.captureScreenWithProgress(
+        screenId,
+        false,
+        sectionId,
+        (progress) => set({ captureProgress: progress })
+      );
       if (result?.serialStatus) {
         set({ serialStatus: result.serialStatus });
       }
+      set({
+        captureProgress: { phase: 'complete', percent: 100, label: 'Done' },
+      });
       await get().fetchScreens();
     } catch (err) {
       console.error('Capture failed:', err);
       await get().fetchSerialStatus();
       throw err;
     } finally {
-      set({ isCapturing: false });
+      set({ isCapturing: false, captureProgress: null });
     }
   },
 
@@ -143,6 +191,16 @@ const useStore = create((set, get) => ({
       await get().fetchScreens();
     } catch (err) {
       console.error('Add button failed:', err);
+      throw err;
+    }
+  },
+
+  importButtonsFromScreen: async (targetScreenId, sourceScreenId, options = {}) => {
+    try {
+      await api.importButtons(targetScreenId, sourceScreenId, options);
+      await get().fetchScreens();
+    } catch (err) {
+      console.error('Import buttons failed:', err);
       throw err;
     }
   },
@@ -254,7 +312,21 @@ const useStore = create((set, get) => ({
   },
 
   selectScreen: (screenId) => {
-    set({ selectedScreenId: screenId, selectedButtonId: null, isAddingHotspot: false });
+    set({
+      selectedScreenId: screenId,
+      selectedButtonId: null,
+      isAddingHotspot: false,
+      importCompareScreenId: null,
+      importSourceButtonId: null,
+    });
+  },
+
+  setImportCompareScreenId: (screenId) => {
+    set({ importCompareScreenId: screenId || null, importSourceButtonId: null });
+  },
+
+  setImportSourceButtonId: (buttonId) => {
+    set({ importSourceButtonId: buttonId || null });
   },
 
   selectButton: (buttonId) => {
@@ -263,6 +335,22 @@ const useStore = create((set, get) => ({
 
   setAddingHotspot: (val) => {
     set({ isAddingHotspot: val });
+  },
+
+  copyButtonRect: ({ top, left, width, height }) => {
+    const clip = {
+      top: Math.round(top),
+      left: Math.round(left),
+      width: Math.round(width),
+      height: Math.round(height),
+    };
+    persistButtonRectClipboard(clip);
+    set({ buttonRectClipboard: clip });
+  },
+
+  clearButtonRectClipboard: () => {
+    persistButtonRectClipboard(null);
+    set({ buttonRectClipboard: null });
   },
 
   // Serial

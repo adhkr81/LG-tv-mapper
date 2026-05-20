@@ -511,6 +511,55 @@ export function deleteButton(screenId, buttonId) {
   });
 }
 
+export function importButtonsFromScreen(
+  targetScreenId,
+  sourceScreenId,
+  { includeTargets = true, buttonIds = null } = {}
+) {
+  return runSerialized(() => {
+    if (targetScreenId === sourceScreenId) {
+      throw new Error('Cannot import buttons from the same screen');
+    }
+    const { sections, screens } = readAll();
+    const target = screens.find((s) => s.id === targetScreenId);
+    const source = screens.find((s) => s.id === sourceScreenId);
+    if (!target) throw new Error(`Screen "${targetScreenId}" not found`);
+    if (!source) throw new Error(`Screen "${sourceScreenId}" not found`);
+    if (source.buttons.length === 0) {
+      throw new Error(`Screen "${sourceScreenId}" has no buttons to import`);
+    }
+
+    const idSet = buttonIds?.length ? new Set(buttonIds) : null;
+    const templates = idSet
+      ? source.buttons.filter((b) => idSet.has(b.id))
+      : source.buttons;
+    if (templates.length === 0) {
+      throw new Error('No matching buttons to import');
+    }
+
+    const imported = templates.map((template) => {
+      const normalized = normalizeMapperButton(targetScreenId, template);
+      const button = {
+        id: uuidv4(),
+        screenId: targetScreenId,
+        label: normalized.label,
+        target: includeTargets ? normalized.target : '',
+        left: normalized.left,
+        top: normalized.top,
+        width: normalized.width,
+        height: normalized.height,
+        ...(normalized.popover ? { popover: normalized.popover } : {}),
+        ...(normalized.type ? { type: normalized.type } : {}),
+      };
+      target.buttons.push(button);
+      return button;
+    });
+
+    writeAll(screens, sections);
+    return imported;
+  });
+}
+
 export function getAllSections() {
   return readAll().sections;
 }

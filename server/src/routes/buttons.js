@@ -9,6 +9,23 @@ router.get('/', (req, res) => {
   res.json(buttons);
 });
 
+// POST /api/screens/:id/buttons/import
+router.post('/import', async (req, res) => {
+  try {
+    const buttons = await buttonService.importButtonsFromScreen(
+      req.params.id,
+      req.body.fromScreenId,
+      {
+        includeTargets: req.body.includeTargets !== false,
+        buttonIds: Array.isArray(req.body.buttonIds) ? req.body.buttonIds : null,
+      }
+    );
+    res.status(201).json(buttons);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 // POST /api/screens/:id/buttons
 router.post('/', async (req, res) => {
   try {

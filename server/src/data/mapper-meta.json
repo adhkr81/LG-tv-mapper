@@ -14,7 +14,7 @@
     },
     "2": {
       "graphX": -337,
-      "graphY": 191,
+      "graphY": 192,
       "sectionId": null,
       "buttonIds": [
         "a12922cd-99b0-481e-a7a5-3e2c7855a0d6",
@@ -28,19 +28,20 @@
       "graphX": 15,
       "graphY": 208,
       "sectionId": null,
-      "buttonIds": [],
+      "buttonIds": [
+        "988f8a5f-a22b-4500-9d26-0874fc42d157",
+        "5fedd4fd-e2c4-4344-886b-afd192401e62",
+        "0ff74e2c-2a6d-43ba-8578-78dd3c456a75",
+        "d57a949b-9437-460c-b4ea-a132f5a10532",
+        "d281930d-65fb-4c48-b66a-41cf369058ee",
+        "a5b5f83d-36f0-4b97-9563-b5f7ad13ac8c"
+      ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
     "settngs_doindd": {
-      "graphX": -237,
-      "graphY": 447,
-      "sectionId": null,
-      "buttonIds": []
-    },
-    "ggsgsg": {
-      "graphX": -499,
-      "graphY": 457,
+      "graphX": -229,
+      "graphY": 446,
       "sectionId": null,
       "buttonIds": []
     }

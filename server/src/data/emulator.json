@@ -40,8 +40,60 @@
     "preset": 0,
     "buttons": [
       {
-        "left": "18px",
-        "top": "201px",
+        "left": "17px",
+        "top": "248px",
+        "width": "46px",
+        "height": "47px",
+        "target": "ggsgsg",
+        "popover": {
+          "title": "→ ggsgsg",
+          "text": "",
+          "style": {
+            "top": "0%",
+            "left": "0%"
+          }
+        }
+      },
+      {
+        "left": "17px",
+        "top": "33px",
+        "width": "43px",
+        "height": "34px",
+        "target": "settngs_doindd",
+        "popover": {
+          "title": "→ settngs_doindd",
+          "text": "",
+          "style": {
+            "top": "0%",
+            "left": "0%"
+          }
+        }
+      },
+      {
+        "left": "537px",
+        "top": "526px",
+        "width": "50px",
+        "height": "50px",
+        "target": "settngs_doindd",
+        "type": "arrow-down",
+        "popover": {
+          "title": "Button 3",
+          "text": "",
+          "style": {
+            "top": "0%",
+            "left": "0%"
+          }
+        }
+      }
+    ]
+  },
+  "3": {
+    "img_filename": "3",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "122px",
+        "top": "142px",
         "width": "46px",
         "height": "47px",
         "target": "ggsgsg",
@@ -84,21 +136,54 @@
             "left": "0%"
           }
         }
+      },
+      {
+        "left": "672px",
+        "top": "435px",
+        "width": "133px",
+        "height": "40px",
+        "popover": {
+          "title": "→ 2",
+          "text": "",
+          "style": {
+            "top": "0%",
+            "left": "0%"
+          }
+        }
+      },
+      {
+        "left": "671px",
+        "top": "392px",
+        "width": "135px",
+        "height": "40px",
+        "popover": {
+          "title": "→ 3",
+          "text": "",
+          "style": {
+            "top": "0%",
+            "left": "0%"
+          }
+        }
+      },
+      {
+        "left": "17px",
+        "top": "248px",
+        "width": "46px",
+        "height": "47px",
+        "target": "ggsgsg",
+        "popover": {
+          "title": "→ ggsgsg",
+          "text": "",
+          "style": {
+            "top": "0%",
+            "left": "0%"
+          }
+        }
       }
     ]
   },
-  "3": {
-    "img_filename": "3",
-    "preset": 0,
-    "buttons": []
-  },
   "settngs_doindd": {
     "img_filename": "settngs_doindd",
-    "preset": 0,
-    "buttons": []
-  },
-  "ggsgsg": {
-    "img_filename": "ggsgsg",
     "preset": 0,
     "buttons": []
   }

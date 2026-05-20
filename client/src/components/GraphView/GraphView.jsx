@@ -41,6 +41,7 @@ export default function GraphView() {
   const updateScreenGraphPosition = useStore((s) => s.updateScreenGraphPosition);
   const serialStatus = useStore((s) => s.serialStatus);
   const isCapturing = useStore((s) => s.isCapturing);
+  const captureProgress = useStore((s) => s.captureProgress);
 
   const [showImportModal, setShowImportModal] = useState(false);
   const [showCaptureModal, setShowCaptureModal] = useState(false);
@@ -348,7 +349,12 @@ export default function GraphView() {
 
       {/* Capture Modal */}
       {showCaptureModal && (
-        <div className="modal-overlay" onClick={() => setShowCaptureModal(false)}>
+        <div
+          className="modal-overlay"
+          onClick={() => {
+            if (!isCapturing) setShowCaptureModal(false);
+          }}
+        >
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h3 className="modal__title">Capture from TV</h3>
             {activeSectionId && (
@@ -363,17 +369,46 @@ export default function GraphView() {
                 onChange={(e) => setNewScreenId(e.target.value)}
                 placeholder="e.g. 1, 2, 3"
                 autoFocus
+                disabled={isCapturing}
               />
             </div>
 
+            {isCapturing && captureProgress && (
+              <div className="capture-progress" role="status" aria-live="polite">
+                <div className="capture-progress__header">
+                  <span className="capture-progress__label">{captureProgress.label}</span>
+                  <span className="capture-progress__percent">{captureProgress.percent}%</span>
+                </div>
+                <div
+                  className="capture-progress__track"
+                  role="progressbar"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={captureProgress.percent}
+                  aria-label={captureProgress.label}
+                >
+                  <div
+                    className="capture-progress__bar"
+                    style={{ width: `${captureProgress.percent}%` }}
+                  />
+                </div>
+              </div>
+            )}
+
             <div className="modal__actions">
-              <button className="btn" onClick={() => setShowCaptureModal(false)}>Cancel</button>
+              <button
+                className="btn"
+                onClick={() => setShowCaptureModal(false)}
+                disabled={isCapturing}
+              >
+                Cancel
+              </button>
               <button
                 className="btn btn-accent"
                 onClick={handleCapture}
                 disabled={!newScreenId.trim() || isCapturing}
               >
-                {isCapturing ? 'Capturing...' : 'Capture'}
+                {isCapturing ? 'Capturing…' : 'Capture'}
               </button>
             </div>
           </div>

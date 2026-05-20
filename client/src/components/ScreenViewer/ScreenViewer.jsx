@@ -15,6 +15,7 @@ export default function ScreenViewer() {
   const screens = useStore((s) => s.screens);
   const selectedScreenId = useStore((s) => s.selectedScreenId);
   const selectedButtonId = useStore((s) => s.selectedButtonId);
+  const importCompareScreenId = useStore((s) => s.importCompareScreenId);
   const selectButton = useStore((s) => s.selectButton);
   const isAddingHotspot = useStore((s) => s.isAddingHotspot);
   const setAddingHotspot = useStore((s) => s.setAddingHotspot);
@@ -22,20 +23,42 @@ export default function ScreenViewer() {
   const updateButton = useStore((s) => s.updateButton);
   const imageConfig = useStore((s) => s.imageConfig);
   const reportScreenSourceSize = useStore((s) => s.reportScreenSourceSize);
-  const [sourceSize, setSourceSize] = useState({ width: 1031, height: 580 });
+  const buttonRectClipboard = useStore((s) => s.buttonRectClipboard);
+  const importSourceButtonId = useStore((s) => s.importSourceButtonId);
+  const setImportSourceButtonId = useStore((s) => s.setImportSourceButtonId);
 
   const screen = screens.find((s) => s.id === selectedScreenId);
+  const compareScreen = importCompareScreenId
+    ? screens.find((s) => s.id === importCompareScreenId)
+    : null;
+  const isCompareMode = !!compareScreen;
   const hotspotSize = useMemo(() => defaultButtonSize(imageConfig), [imageConfig]);
+  const placementSize = useMemo(
+    () =>
+      buttonRectClipboard
+        ? {
+            width: buttonRectClipboard.width,
+            height: buttonRectClipboard.height,
+          }
+        : hotspotSize,
+    [buttonRectClipboard, hotspotSize]
+  );
 
-  useEffect(() => {
-    if (screen?.sourceWidth && screen?.sourceHeight) {
-      setSourceSize({ width: screen.sourceWidth, height: screen.sourceHeight });
-    }
-  }, [screen?.id, screen?.sourceWidth, screen?.sourceHeight]);
+  const handleHotspotUpdate = useCallback(
+    async (buttonId, updates) => {
+      if (!screen) return;
+      try {
+        await updateButton(screen.id, buttonId, updates);
+      } catch (err) {
+        alert('Update failed: ' + err.message);
+      }
+    },
+    [screen, updateButton]
+  );
 
   const handleImageClick = useCallback(
-    (e) => {
-      if (!isAddingHotspot || !screen) return;
+    (e, targetScreen, setSourceSize) => {
+      if (!isAddingHotspot || !targetScreen || isCompareMode) return;
 
       const rect = e.currentTarget.getBoundingClientRect();
       const img = e.currentTarget;
@@ -52,38 +75,27 @@ export default function ScreenViewer() {
       const target = prompt('Target screen name (leave empty if unknown):') || '';
 
       const screenForCoords = {
-        ...screen,
+        ...targetScreen,
         sourceWidth: img.naturalWidth,
         sourceHeight: img.naturalHeight,
       };
+      setSourceSize({ width: img.naturalWidth, height: img.naturalHeight });
       const intrinsicRect = centerFromSourceClick(
         x,
         y,
-        hotspotSize,
+        placementSize,
         screenForCoords,
         imageConfig
       );
 
-      addButton(screen.id, {
+      addButton(targetScreen.id, {
         label,
         target,
         ...intrinsicRect,
       });
       setAddingHotspot(false);
     },
-    [isAddingHotspot, screen, addButton, setAddingHotspot, imageConfig, hotspotSize]
-  );
-
-  const handleHotspotUpdate = useCallback(
-    async (buttonId, updates) => {
-      if (!screen) return;
-      try {
-        await updateButton(screen.id, buttonId, updates);
-      } catch (err) {
-        alert('Update failed: ' + err.message);
-      }
-    },
-    [screen, updateButton]
+    [isAddingHotspot, isCompareMode, addButton, setAddingHotspot, imageConfig, placementSize]
   );
 
   if (!screen) {
@@ -102,42 +114,144 @@ export default function ScreenViewer() {
   }
 
   return (
-    <div className="screen-viewer">
+    <div className={`screen-viewer ${isCompareMode ? 'screen-viewer--compare' : ''}`}>
       <div className="screen-viewer__header">
-        <h3 className="screen-viewer__title">{screen.id}</h3>
-        <button
-          className={`btn btn-sm ${isAddingHotspot ? 'btn-accent' : ''}`}
-          onClick={() => setAddingHotspot(!isAddingHotspot)}
-        >
-          {isAddingHotspot ? '✕ Cancel' : '+ Add Hotspot'}
-        </button>
+        {isCompareMode ? (
+          <h3 className="screen-viewer__title">
+            Compare: <span className="screen-viewer__title-current">{screen.id}</span>
+            {' vs '}
+            <span className="screen-viewer__title-compare">{compareScreen.id}</span>
+          </h3>
+        ) : (
+          <h3 className="screen-viewer__title">{screen.id}</h3>
+        )}
+        {!isCompareMode && (
+          <button
+            className={`btn btn-sm ${isAddingHotspot ? 'btn-accent' : ''}`}
+            onClick={() => setAddingHotspot(!isAddingHotspot)}
+          >
+            {isAddingHotspot ? '✕ Cancel' : '+ Add Hotspot'}
+          </button>
+        )}
       </div>
 
-      <p className="screen-viewer__size-hint">
-        Screenshot {sourceSize.width}×{sourceSize.height} → product{' '}
-        {imageConfig.intrinsicWidth}×{imageConfig.intrinsicHeight} px
-      </p>
+      {isCompareMode ? (
+        <div className="screen-viewer__compare">
+          <ComparePane
+            label={`Current — ${screen.id}`}
+            screen={screen}
+            imageConfig={imageConfig}
+            editable
+            selectedButtonId={selectedButtonId}
+            isAddingHotspot={false}
+            onSelectButton={() => selectButton(null)}
+            onSelectHotspot={selectButton}
+            onHotspotUpdate={handleHotspotUpdate}
+            onImageClick={handleImageClick}
+            reportSourceSize={reportScreenSourceSize}
+          />
+          <div className="screen-viewer__compare-divider" aria-hidden="true" />
+          <ComparePane
+            label={`Import from — ${compareScreen.id}`}
+            screen={compareScreen}
+            imageConfig={imageConfig}
+            editable={false}
+            pickable
+            selectedButtonId={importSourceButtonId}
+            isAddingHotspot={false}
+            onSelectButton={() => setImportSourceButtonId(null)}
+            onSelectHotspot={setImportSourceButtonId}
+            onHotspotUpdate={() => {}}
+            onImageClick={() => {}}
+            reportSourceSize={null}
+          />
+        </div>
+      ) : (
+        <ComparePane
+          label={null}
+          screen={screen}
+          imageConfig={imageConfig}
+          editable
+          selectedButtonId={selectedButtonId}
+          isAddingHotspot={isAddingHotspot}
+          onSelectButton={() => selectButton(null)}
+          onSelectHotspot={selectButton}
+          onHotspotUpdate={handleHotspotUpdate}
+          onImageClick={handleImageClick}
+          reportSourceSize={reportScreenSourceSize}
+          showSizeHint
+          showAddHint={isAddingHotspot}
+          hotspotSize={placementSize}
+        />
+      )}
+    </div>
+  );
+}
 
+function ComparePane({
+  label,
+  screen,
+  imageConfig,
+  editable,
+  pickable = false,
+  selectedButtonId,
+  isAddingHotspot,
+  onSelectButton,
+  onSelectHotspot,
+  onHotspotUpdate,
+  onImageClick,
+  reportSourceSize,
+  showSizeHint = false,
+  showAddHint = false,
+  hotspotSize,
+}) {
+  const [sourceSize, setSourceSize] = useState({
+    width: screen?.sourceWidth || imageConfig.intrinsicWidth,
+    height: screen?.sourceHeight || imageConfig.intrinsicHeight,
+  });
+
+  useEffect(() => {
+    if (screen?.sourceWidth && screen?.sourceHeight) {
+      setSourceSize({ width: screen.sourceWidth, height: screen.sourceHeight });
+    } else {
+      setSourceSize({
+        width: imageConfig.intrinsicWidth,
+        height: imageConfig.intrinsicHeight,
+      });
+    }
+  }, [screen?.id, screen?.sourceWidth, screen?.sourceHeight, imageConfig.intrinsicWidth, imageConfig.intrinsicHeight]);
+
+  const handleLoad = (e) => {
+    const { naturalWidth, naturalHeight } = e.currentTarget;
+    if (!naturalWidth || !naturalHeight) return;
+    setSourceSize({ width: naturalWidth, height: naturalHeight });
+    if (reportSourceSize && screen) {
+      reportSourceSize(screen.id, naturalWidth, naturalHeight);
+    }
+  };
+
+  const content = (
+    <>
+      {label && <div className="screen-viewer__compare-label">{label}</div>}
+      {showSizeHint && (
+        <p className="screen-viewer__size-hint">
+          Screenshot {sourceSize.width}×{sourceSize.height} → product{' '}
+          {imageConfig.intrinsicWidth}×{imageConfig.intrinsicHeight} px
+        </p>
+      )}
       <div
-        className={`screen-viewer__image-container ${isAddingHotspot ? 'screen-viewer--crosshair' : ''}`}
-        onClick={() => selectButton(null)}
+        className={`screen-viewer__image-container ${isAddingHotspot ? 'screen-viewer--crosshair' : ''} ${!editable ? 'screen-viewer__image-container--readonly' : ''}`}
+        onClick={editable ? onSelectButton : undefined}
       >
         <div className="screen-viewer__stage">
           <img
             src={`/screenshots/${screen.image}`}
             alt={screen.id}
             className="screen-viewer__image"
-            onClick={handleImageClick}
-            onLoad={(e) => {
-              const { naturalWidth, naturalHeight } = e.currentTarget;
-              if (naturalWidth && naturalHeight) {
-                setSourceSize({ width: naturalWidth, height: naturalHeight });
-                reportScreenSourceSize(screen.id, naturalWidth, naturalHeight);
-              }
-            }}
+            onClick={editable ? (e) => onImageClick(e, screen, setSourceSize) : undefined}
+            onLoad={handleLoad}
             draggable={false}
           />
-
           {screen.buttons.map((btn) => (
             <HotspotRegion
               key={btn.id}
@@ -145,22 +259,28 @@ export default function ScreenViewer() {
               screen={screen}
               imageConfig={imageConfig}
               imageSize={sourceSize}
-              selected={btn.id === selectedButtonId}
-              draggable={!isAddingHotspot}
-              onSelect={() => selectButton(btn.id)}
-              onUpdate={handleHotspotUpdate}
+              selected={btn.id === selectedButtonId && (editable || pickable)}
+              draggable={editable && !isAddingHotspot}
+              readonly={!editable}
+              pickable={pickable}
+              onSelect={() => onSelectHotspot(btn.id)}
+              onUpdate={onHotspotUpdate}
             />
           ))}
         </div>
       </div>
-
-      {isAddingHotspot && (
+      {showAddHint && (
         <div className="screen-viewer__hint">
           Click on the image to place a hotspot ({hotspotSize.width}×{hotspotSize.height} product px)
         </div>
       )}
-    </div>
+    </>
   );
+
+  if (label) {
+    return <div className="screen-viewer__compare-pane">{content}</div>;
+  }
+  return content;
 }
 
 function getStageScale(stage, imageSize) {
@@ -178,6 +298,8 @@ function HotspotRegion({
   imageSize,
   selected,
   draggable,
+  readonly,
+  pickable = false,
   onSelect,
   onUpdate,
 }) {
@@ -334,11 +456,12 @@ function HotspotRegion({
 
   return (
     <div
-      className={`hotspot-region ${hasTarget ? 'hotspot-region--linked' : 'hotspot-region--unlinked'} ${selected ? 'hotspot-region--selected' : ''} ${draftRect ? 'hotspot-region--dragging' : ''}`}
+      className={`hotspot-region ${hasTarget ? 'hotspot-region--linked' : 'hotspot-region--unlinked'} ${selected ? 'hotspot-region--selected' : ''} ${draftRect ? 'hotspot-region--dragging' : ''} ${readonly ? 'hotspot-region--readonly' : ''} ${pickable ? 'hotspot-region--pickable' : ''}`}
       style={style}
       title={`${savedIntrinsic.label}${savedIntrinsic.target ? ` → ${savedIntrinsic.target}` : ''}`}
-      onPointerDown={handleMovePointerDown}
+      onPointerDown={draggable ? handleMovePointerDown : undefined}
       onClick={(e) => {
+        if (readonly && !pickable) return;
         e.stopPropagation();
         if (!didDragRef.current) onSelect();
       }}

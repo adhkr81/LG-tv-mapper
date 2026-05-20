@@ -231,3 +231,42 @@
   gap: var(--space-sm);
   margin-top: var(--space-xl);
 }
+
+.capture-progress {
+  margin-bottom: var(--space-lg);
+}
+
+.capture-progress__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.capture-progress__label {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.capture-progress__percent {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.capture-progress__track {
+  height: 8px;
+  background: var(--bg-elevated);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.capture-progress__bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #7c9eff);
+  border-radius: 999px;
+  transition: width 0.25s var(--ease);
+}

@@ -21,10 +21,17 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const deleteButton = useStore((s) => s.deleteButton);
   const updateButton = useStore((s) => s.updateButton);
   const addButton = useStore((s) => s.addButton);
+  const importButtonsFromScreen = useStore((s) => s.importButtonsFromScreen);
   const imageConfig = useStore((s) => s.imageConfig);
   const updateScreenName = useStore((s) => s.updateScreenName);
   const selectedButtonId = useStore((s) => s.selectedButtonId);
   const selectButton = useStore((s) => s.selectButton);
+  const importCompareScreenId = useStore((s) => s.importCompareScreenId);
+  const setImportCompareScreenId = useStore((s) => s.setImportCompareScreenId);
+  const importSourceButtonId = useStore((s) => s.importSourceButtonId);
+  const setImportSourceButtonId = useStore((s) => s.setImportSourceButtonId);
+  const buttonRectClipboard = useStore((s) => s.buttonRectClipboard);
+  const copyButtonRect = useStore((s) => s.copyButtonRect);
 
   const screen = screens.find((s) => s.id === selectedScreenId);
   const activeSection = sections.find((s) => s.id === activeSectionId);
@@ -58,12 +65,43 @@ export default function SidebarEditor({ mode = 'viewer' }) {
     return { inSection, other };
   }, [screens, activeSectionId, screen?.id]);
 
+  const parentScreenIds = useMemo(() => {
+    if (!screen?.id) return new Set();
+    const ids = new Set();
+    screens.forEach((s) => {
+      if (s.buttons.some((btn) => btn.target === screen.id)) ids.add(s.id);
+    });
+    return ids;
+  }, [screens, screen?.id]);
+
+  const formatTargetLabel = (screenId) =>
+    parentScreenIds.has(screenId) ? `${screenId} (parent)` : screenId;
+
+  const importSourceOptions = useMemo(() => {
+    if (!screen?.id) return [];
+    return screens
+      .filter((s) => s.id !== screen.id && s.buttons.length > 0)
+      .sort((a, b) => a.id.localeCompare(b.id));
+  }, [screens, screen?.id]);
+
   const [editingName, setEditingName] = useState(false);
   const [nameValue, setNameValue] = useState('');
   const [popoverUIOpen, setPopoverUIOpen] = useState({});
+  const [isImportingButtons, setIsImportingButtons] = useState(false);
+  const [importIncludeTargets, setImportIncludeTargets] = useState(true);
+  const [importAllButtons, setImportAllButtons] = useState(true);
+
   useEffect(() => {
     if (screen) setNameValue(screen.id);
   }, [screen?.id]);
+
+  useEffect(() => {
+    setImportCompareScreenId(null);
+  }, [screen?.id, setImportCompareScreenId]);
+
+  useEffect(() => {
+    if (importSourceButtonId) setImportAllButtons(false);
+  }, [importSourceButtonId]);
 
   const handleRename = async () => {
     if (!nameValue.trim() || nameValue === screen.id) {
@@ -94,21 +132,87 @@ export default function SidebarEditor({ mode = 'viewer' }) {
     }
   };
 
+  const handleCopyButtonRect = (btn) => {
+    const rect = normalizeButton(btn);
+    copyButtonRect({
+      top: rect.top,
+      left: rect.left,
+      width: rect.width,
+      height: rect.height,
+    });
+  };
+
+  const handlePasteButtonRect = async (buttonId) => {
+    if (!screen || !buttonRectClipboard) return;
+    try {
+      await handleRectChange(buttonId, { ...buttonRectClipboard });
+    } catch {
+      /* handleRectChange alerts on failure */
+    }
+  };
+
   const handleAddButton = async () => {
     if (!screen) return;
     try {
       const newButtonData = {
         label: `Button ${screen.buttons.length + 1}`,
-        left: 10,
-        top: 10,
-        width: 50,
-        height: 50,
+        ...(buttonRectClipboard
+          ? { ...buttonRectClipboard }
+          : { left: 10, top: 10, width: 50, height: 50 }),
       };
       await addButton(screen.id, newButtonData);
     } catch (err) {
       alert('Failed to add button: ' + err.message);
     }
   };
+
+  const handleImportButtons = async () => {
+    if (!screen || !importCompareScreenId) return;
+    const source = screens.find((s) => s.id === importCompareScreenId);
+    if (!source?.buttons.length) return;
+
+    if (!importAllButtons && !importSourceButtonId) {
+      alert('Select a button on the import screen (right panel), or enable Import all.');
+      return;
+    }
+
+    const count = importAllButtons ? source.buttons.length : 1;
+    const selectedSourceBtn = importSourceButtonId
+      ? source.buttons.find((b) => b.id === importSourceButtonId)
+      : null;
+    const buttonLabel =
+      !importAllButtons && selectedSourceBtn
+        ? selectedSourceBtn.target || selectedSourceBtn.label || 'button'
+        : null;
+
+    const message =
+      screen.buttons.length > 0
+        ? `Import ${count} button${count === 1 ? '' : 's'}${buttonLabel ? ` (${buttonLabel})` : ''} from "${importCompareScreenId}"? They will be added to the ${screen.buttons.length} existing button${screen.buttons.length === 1 ? '' : 's'} on this screen.`
+        : `Import ${count} button${count === 1 ? '' : 's'}${buttonLabel ? ` (${buttonLabel})` : ''} from "${importCompareScreenId}"?`;
+
+    if (!confirm(message)) return;
+
+    setIsImportingButtons(true);
+    try {
+      await importButtonsFromScreen(screen.id, importCompareScreenId, {
+        includeTargets: importIncludeTargets,
+        buttonIds: importAllButtons ? null : [importSourceButtonId],
+      });
+      if (importAllButtons) {
+        setImportCompareScreenId(null);
+      }
+      setImportSourceButtonId(null);
+    } catch (err) {
+      alert('Import failed: ' + err.message);
+    } finally {
+      setIsImportingButtons(false);
+    }
+  };
+
+  const importDisabled =
+    !importCompareScreenId ||
+    isImportingButtons ||
+    (!importAllButtons && !importSourceButtonId);
 
   const handlePopoverToggle = async (buttonId, hasPopover) => {
     if (hasPopover) {
@@ -176,6 +280,68 @@ export default function SidebarEditor({ mode = 'viewer' }) {
           )}
         </div>
       </div>
+
+      {screen && isEditMode && importSourceOptions.length > 0 && (
+        <div className="sidebar__section">
+          <div className="sidebar__section-title">Import buttons</div>
+          <div className="sidebar__button-import">
+            <label className="label">From screen</label>
+            <div className="sidebar__button-import-row">
+              <select
+                className="input"
+                value={importCompareScreenId || ''}
+                onChange={(e) => setImportCompareScreenId(e.target.value || null)}
+                disabled={isImportingButtons}
+              >
+                <option value="">— select screen —</option>
+                {importSourceOptions.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.id} ({s.buttons.length})
+                  </option>
+                ))}
+              </select>
+              <button
+                type="button"
+                className="btn btn-sm btn-accent"
+                onClick={handleImportButtons}
+                disabled={importDisabled}
+              >
+                {isImportingButtons ? 'Importing…' : 'Import'}
+              </button>
+            </div>
+            <div className="sidebar__import-options">
+              <label className="sidebar__import-targets">
+                <input
+                  type="checkbox"
+                  checked={importAllButtons}
+                  onChange={(e) => {
+                    setImportAllButtons(e.target.checked);
+                    if (e.target.checked) setImportSourceButtonId(null);
+                  }}
+                  disabled={isImportingButtons}
+                />
+                <span>Import all</span>
+              </label>
+              <label className="sidebar__import-targets">
+                <input
+                  type="checkbox"
+                  checked={importIncludeTargets}
+                  onChange={(e) => setImportIncludeTargets(e.target.checked)}
+                  disabled={isImportingButtons}
+                />
+                <span>Import targets</span>
+              </label>
+            </div>
+            {importCompareScreenId && !importAllButtons && (
+              <p className="sidebar__import-pick-hint">
+                {importSourceButtonId
+                  ? '1 button selected in the right panel. Click Import to add it.'
+                  : 'Click a button on the right panel to import it.'}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
 
       {mode === 'graph' && <ImageConfigSection />}
 
@@ -326,14 +492,14 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                         {targetOptions.inSection.length > 0 && (
                           <optgroup label="This section">
                             {targetOptions.inSection.map((s) => (
-                              <option key={s.id} value={s.id}>{s.id}</option>
+                              <option key={s.id} value={s.id}>{formatTargetLabel(s.id)}</option>
                             ))}
                           </optgroup>
                         )}
                         {targetOptions.other.length > 0 && (
                           <optgroup label="Other screens">
                             {targetOptions.other.map((s) => (
-                              <option key={s.id} value={s.id}>{s.id}</option>
+                              <option key={s.id} value={s.id}>{formatTargetLabel(s.id)}</option>
                             ))}
                           </optgroup>
                         )}
@@ -359,6 +525,35 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                       button={selectedBtn}
                       onUpdate={(updates) => handleRectChange(selectedBtn.id, updates)}
                     />
+                    <div className="sidebar__rect-clipboard">
+                      <button
+                        type="button"
+                        className="btn btn-sm"
+                        onClick={() => handleCopyButtonRect(selectedBtn)}
+                        title="Save this button's position and size for reuse"
+                      >
+                        Copy size
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-accent"
+                        onClick={() => handlePasteButtonRect(selectedBtn.id)}
+                        disabled={!buttonRectClipboard}
+                        title={
+                          buttonRectClipboard
+                            ? `Apply ${buttonRectClipboard.top}, ${buttonRectClipboard.left}, ${buttonRectClipboard.width}×${buttonRectClipboard.height}`
+                            : 'Copy a button size first'
+                        }
+                      >
+                        Paste size
+                      </button>
+                    </div>
+                    {buttonRectClipboard && (
+                      <p className="sidebar__rect-clipboard-hint">
+                        Saved: top {buttonRectClipboard.top}, left {buttonRectClipboard.left},{' '}
+                        {buttonRectClipboard.width}×{buttonRectClipboard.height}
+                      </p>
+                    )}
                     <div style={{ marginTop: 'var(--space-md)', paddingTop: 'var(--space-md)', borderTop: '1px solid var(--border)' }}>
                       <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-sm)', cursor: 'pointer', marginBottom: 'var(--space-md)' }}>
                         <input

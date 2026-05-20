@@ -11,8 +11,15 @@ const upload = multer({ dest: path.join(__dirname, '..', 'data', 'screenshots', 
 
 const router = Router();
 
-// POST /api/capture — capture via serial
+function writeNdjson(res, payload) {
+  res.write(`${JSON.stringify(payload)}\n`);
+  if (typeof res.flush === 'function') res.flush();
+}
+
+// POST /api/capture — capture via serial (?stream=1 for progress NDJSON)
 router.post('/', async (req, res) => {
+  const streamProgress = req.query.stream === '1' || req.query.stream === 'true';
+
   try {
     const { screenId, sectionId } = req.body;
     const saveToLaptop = req.body.saveToLaptop === 'true' || req.body.saveToLaptop === true;
@@ -22,15 +29,46 @@ router.post('/', async (req, res) => {
 
     await ensureConnected();
 
+    const onProgress = streamProgress
+      ? (progress) => writeNdjson(res, { type: 'progress', ...progress })
+      : undefined;
+
+    if (streamProgress) {
+      res.setHeader('Content-Type', 'application/x-ndjson');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.setHeader('Connection', 'keep-alive');
+    }
+
     let filename;
     if (saveToLaptop) {
-      filename = await captureFromTVStream(screenId);
+      filename = await captureFromTVStream(screenId, onProgress);
     } else {
-      filename = await captureFromTV(screenId);
+      filename = await captureFromTV(screenId, onProgress);
     }
+
+    onProgress?.({
+      phase: 'finishing',
+      percent: 98,
+      label: 'Registering screen…',
+    });
+
     const screen = createScreen({ id: screenId, image: filename, sectionId: sectionId || null });
-    res.json({ ...screen, serialStatus: getStatus().status });
+    const result = { ...screen, serialStatus: getStatus().status };
+
+    if (streamProgress) {
+      writeNdjson(res, { type: 'done', ...result });
+      return res.end();
+    }
+
+    res.json(result);
   } catch (err) {
+    if (streamProgress && !res.headersSent) {
+      res.setHeader('Content-Type', 'application/x-ndjson');
+    }
+    if (streamProgress && res.headersSent) {
+      writeNdjson(res, { type: 'error', error: err.message, serialStatus: getStatus().status });
+      return res.end();
+    }
     res.status(500).json({ error: err.message, serialStatus: getStatus().status });
   }
 });

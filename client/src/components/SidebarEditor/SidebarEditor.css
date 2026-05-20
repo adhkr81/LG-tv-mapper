@@ -155,6 +155,56 @@
   background: var(--danger-dim);
 }
 
+.sidebar__button-import {
+  margin-bottom: 0;
+}
+
+.sidebar__button-import .label {
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.sidebar__button-import-row {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.sidebar__button-import-row select {
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.sidebar__import-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.sidebar__import-targets {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: 0;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.sidebar__import-targets input {
+  cursor: pointer;
+}
+
+.sidebar__import-pick-hint {
+  margin: var(--space-xs) 0 0;
+  font-size: 11px;
+  color: var(--amber);
+  line-height: 1.4;
+}
+
 .sidebar__button-target {
   margin-bottom: var(--space-xs);
 }
@@ -169,6 +219,18 @@
   grid-template-columns: 1fr 1fr;
   gap: var(--space-sm);
   margin-top: var(--space-sm);
+}
+
+.sidebar__rect-clipboard {
+  display: flex;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.sidebar__rect-clipboard-hint {
+  margin: var(--space-xs) 0 0;
+  font-size: 11px;
+  color: var(--text-muted);
 }
 
 .sidebar__rect-field {

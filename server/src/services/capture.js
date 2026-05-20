@@ -10,42 +10,96 @@ const JPEG_EOI = Buffer.from([0xff, 0xd9]);
 const STREAM_CAPTURE_WIDTH = 1920;
 const STREAM_CAPTURE_HEIGHT = 1080;
 const CHUNK_BYTES = 4096;
+const USB_POLL_MS = 200;
+const USB_POLL_MAX = 40;
+
+function formatBytes(n) {
+  if (n < 1024) return `${n} B`;
+  if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
+  return `${(n / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function parseTvFileSizeOutput(out) {
+  const lines = String(out).trim().split(/\r?\n/).filter(Boolean);
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const m = lines[i].trim().match(/^(\d+)$/);
+    if (m) {
+      const size = parseInt(m[1], 10);
+      if (Number.isFinite(size) && size >= 0 && size < 50 * 1024 * 1024) {
+        return size;
+      }
+    }
+  }
+  return 0;
+}
+
+/**
+ * Poll the TV until the screenshot file exists on USB (or timeout).
+ * @param {string} tvPath
+ * @param {(progress: { phase: string, percent: number, label: string }) => void} [onProgress]
+ * @returns {Promise<number>} file size in bytes, or 0 if not found
+ */
+async function waitForTvFile(tvPath, onProgress) {
+  const pollCmd = `test -s "${tvPath}" && wc -c < "${tvPath}" 2>/dev/null | tr -d ' ' || echo 0`;
+
+  for (let i = 0; i < USB_POLL_MAX; i++) {
+    const out = await execute(pollCmd, 4000);
+    const size = parseTvFileSizeOutput(out);
+
+    if (size > 0) {
+      onProgress?.({
+        phase: 'waiting_usb',
+        percent: 100,
+        label: `Saved to USB (${formatBytes(size)})`,
+      });
+      return size;
+    }
+
+    const percent = Math.min(92, 12 + Math.round(((i + 1) / USB_POLL_MAX) * 80));
+    onProgress?.({
+      phase: 'waiting_usb',
+      percent,
+      label: 'Writing screenshot to USB drive…',
+    });
+
+    await new Promise((r) => setTimeout(r, USB_POLL_MS));
+  }
+
+  return 0;
+}
 
 /**
  * Capture a screenshot from the TV via serial command.
  * The image is saved to the USB drive on the TV.
  */
-export async function captureFromTV(screenId) {
+export async function captureFromTV(screenId, onProgress) {
   const filename = `${screenId}.jpg`;
   const tvPath = `/tmp/usb/sda/sda1/${filename}`;
+
+  onProgress?.({
+    phase: 'requesting',
+    percent: 5,
+    label: 'Sending capture command to TV…',
+  });
 
   const command = `luna-send -n 1 luna://com.webos.service.capture/executeOneShot '{"path":"${tvPath}", "method":"DISPLAY", "width":3840, "height":2160, "format":"JPEG"}'`;
 
   const output = await execute(command, 8000);
   console.log('[Capture] TV response:', output);
 
-  return filename;
-}
+  onProgress?.({
+    phase: 'waiting_usb',
+    percent: 10,
+    label: 'Waiting for USB save…',
+  });
 
-/**
- * @param {string} tvPath
- * @returns {Promise<number>}
- */
-async function waitForTvFile(tvPath) {
-  const cmd = `i=0; while [ ! -s "${tvPath}" ] && [ $i -lt 40 ]; do i=$((i+1)); sleep 0.2; done; wc -c < "${tvPath}" 2>/dev/null | tr -d ' '`;
-  const out = await execute(cmd, 15000);
-  const lines = String(out).trim().split(/\r?\n/).filter(Boolean);
-  // Use the last line that is only digits (wc output), not shell prompts with stray numbers
-  for (let i = lines.length - 1; i >= 0; i--) {
-    const m = lines[i].trim().match(/^(\d+)$/);
-    if (m) {
-      const size = parseInt(m[1], 10);
-      if (Number.isFinite(size) && size > 0 && size < 50 * 1024 * 1024) {
-        return size;
-      }
-    }
+  const fileBytes = await waitForTvFile(tvPath, onProgress);
+  if (fileBytes <= 0) {
+    throw new Error(`Screenshot not found on TV USB at ${tvPath}. Check the pen drive is mounted.`);
   }
-  return 0;
+
+  console.log(`[Capture] USB file ready: ${fileBytes} bytes`);
+  return filename;
 }
 
 function stripShellNoise(raw, tvPath) {
@@ -162,7 +216,7 @@ function isAcceptableJpeg(jpeg, expectedBytes) {
  * @param {number} fileBytes
  * @returns {Promise<Buffer | null>}
  */
-async function transferChunkedBase64(tvPath, fileBytes) {
+async function transferChunkedBase64(tvPath, fileBytes, onProgress) {
   const chunks = Math.ceil(fileBytes / CHUNK_BYTES);
   const b64Parts = [];
   let decodedLen = 0;
@@ -186,6 +240,11 @@ async function transferChunkedBase64(tvPath, fileBytes) {
       // keep going
     }
     console.log(`[Capture] Chunk ${i + 1}/${chunks} (${decodedLen}/${fileBytes} bytes)`);
+    onProgress?.({
+      phase: 'transferring',
+      percent: Math.min(99, Math.round(((i + 1) / chunks) * 100)),
+      label: `Copying to laptop… ${i + 1}/${chunks}`,
+    });
     if (decodedLen >= fileBytes * 0.98) break;
   }
 
@@ -200,15 +259,27 @@ async function transferChunkedBase64(tvPath, fileBytes) {
 /**
  * Capture and stream the screenshot file from the TV over serial.
  */
-export async function captureFromTVStream(screenId) {
+export async function captureFromTVStream(screenId, onProgress) {
   const filename = `${screenId}.jpg`;
   const tvPath = `/tmp/usb/sda/sda1/${filename}`;
+
+  onProgress?.({
+    phase: 'requesting',
+    percent: 5,
+    label: 'Sending capture command to TV…',
+  });
 
   const captureCmd = `luna-send -n 1 luna://com.webos.service.capture/executeOneShot '{"path":"${tvPath}", "method":"DISPLAY", "width":${STREAM_CAPTURE_WIDTH}, "height":${STREAM_CAPTURE_HEIGHT}, "format":"JPEG"}'`;
   console.log(`[Capture] Requesting ${STREAM_CAPTURE_WIDTH}x${STREAM_CAPTURE_HEIGHT} screenshot on TV`);
   await execute(captureCmd, 10000);
 
-  const expectedBytes = await waitForTvFile(tvPath);
+  onProgress?.({
+    phase: 'waiting_usb',
+    percent: 10,
+    label: 'Waiting for USB save…',
+  });
+
+  const expectedBytes = await waitForTvFile(tvPath, onProgress);
   if (expectedBytes <= 0) {
     throw new Error(`Screenshot file not found on TV at ${tvPath}`);
   }
@@ -220,7 +291,7 @@ export async function captureFromTVStream(screenId) {
   // 1) Chunked base64 — most reliable over 115200 serial
   if (hasBase64) {
     try {
-      const fileBuf = await transferChunkedBase64(tvPath, expectedBytes);
+      const fileBuf = await transferChunkedBase64(tvPath, expectedBytes, onProgress);
       const jpeg = fileBuf ? extractJpeg(fileBuf) : null;
       if (jpeg && jpeg.length >= 200) {
         const destPath = path.join(getScreenshotsDir(), filename);
