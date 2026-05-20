@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import GraphView from './components/GraphView/GraphView.jsx';
 import ScreenViewer from './components/ScreenViewer/ScreenViewer.jsx';
+import ScreenPreview from './components/ScreenPreview/ScreenPreview.jsx';
 import SidebarEditor from './components/SidebarEditor/SidebarEditor.jsx';
 import useStore from './store/useStore.js';
 import './App.css';
 
 export default function App() {
   const fetchScreens = useStore((s) => s.fetchScreens);
+  const fetchConfig = useStore((s) => s.fetchConfig);
   const fetchSerialStatus = useStore((s) => s.fetchSerialStatus);
   const selectedScreenId = useStore((s) => s.selectedScreenId);
 
-  // Panels: 'graph' or 'viewer'
+  // Panels: 'graph' | 'viewer' | 'preview'
   const [activePanel, setActivePanel] = useState('graph');
 
   useEffect(() => {
     fetchScreens();
+    fetchConfig();
     fetchSerialStatus();
   }, []);
-
-  // Switch to viewer when a screen is selected
-  useEffect(() => {
-    if (selectedScreenId) setActivePanel('viewer');
-  }, [selectedScreenId]);
 
   return (
     <div className="app">
@@ -41,6 +39,16 @@ export default function App() {
           Graph
         </button>
         <button
+          className={`app__tab ${activePanel === 'preview' ? 'app__tab--active' : ''}`}
+          onClick={() => setActivePanel('preview')}
+          disabled={!selectedScreenId}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <polygon points="5 3 19 12 5 21 5 3" />
+          </svg>
+          Preview
+        </button>
+        <button
           className={`app__tab ${activePanel === 'viewer' ? 'app__tab--active' : ''}`}
           onClick={() => setActivePanel('viewer')}
           disabled={!selectedScreenId}
@@ -57,9 +65,11 @@ export default function App() {
       {/* Main content area */}
       <div className="app__content">
         <div className="app__main">
-          {activePanel === 'graph' ? <GraphView /> : <ScreenViewer />}
+          {activePanel === 'graph' && <GraphView />}
+          {activePanel === 'preview' && <ScreenPreview />}
+          {activePanel === 'viewer' && <ScreenViewer />}
         </div>
-        <SidebarEditor />
+        <SidebarEditor mode={activePanel} />
       </div>
     </div>
   );

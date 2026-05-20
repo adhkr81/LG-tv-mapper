@@ -1,0 +1,55 @@
+.screen-preview {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: var(--bg-secondary);
+}
+
+.screen-preview--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen-preview__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  flex-wrap: wrap;
+}
+
+.screen-preview__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.screen-preview__title {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.screen-preview__hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* Preview hotspots reuse .hotspot-region from ScreenViewer; override editor-only styles */
+.preview-hotspot {
+  cursor: pointer;
+}
+
+.preview-hotspot.hotspot-region--unlinked {
+  cursor: not-allowed;
+  opacity: 0.55;
+  pointer-events: none;
+}

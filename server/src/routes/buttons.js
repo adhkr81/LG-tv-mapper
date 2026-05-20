@@ -10,9 +10,9 @@ router.get('/', (req, res) => {
 });
 
 // POST /api/screens/:id/buttons
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   try {
-    const button = buttonService.addButton(req.params.id, req.body);
+    const button = await buttonService.addButton(req.params.id, req.body);
     res.status(201).json(button);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -20,9 +20,13 @@ router.post('/', (req, res) => {
 });
 
 // PUT /api/screens/:id/buttons/:buttonId
-router.put('/:buttonId', (req, res) => {
+router.put('/:buttonId', async (req, res) => {
   try {
-    const button = buttonService.updateButton(req.params.id, req.params.buttonId, req.body);
+    const button = await buttonService.updateButton(
+      req.params.id,
+      req.params.buttonId,
+      req.body
+    );
     res.json(button);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -30,9 +34,9 @@ router.put('/:buttonId', (req, res) => {
 });
 
 // DELETE /api/screens/:id/buttons/:buttonId
-router.delete('/:buttonId', (req, res) => {
+router.delete('/:buttonId', async (req, res) => {
   try {
-    buttonService.deleteButton(req.params.id, req.params.buttonId);
+    await buttonService.deleteButton(req.params.id, req.params.buttonId);
     res.json({ ok: true });
   } catch (err) {
     res.status(400).json({ error: err.message });

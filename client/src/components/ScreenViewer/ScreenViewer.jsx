@@ -1,9 +1,14 @@
-import React, { useCallback, useState, useEffect, useRef } from 'react';
+import React, { useCallback, useState, useEffect, useRef, useMemo } from 'react';
 import useStore from '../../store/useStore.js';
-import { normalizeButton, rectCenteredAt, DEFAULT_BUTTON_SIZE } from '../../utils/buttonRect.js';
+import { normalizeButton } from '../../utils/buttonRect.js';
+import {
+  centerFromSourceClick,
+  defaultButtonSize,
+  toIntrinsicRect,
+  toSourceRect,
+} from '../../utils/coords.js';
 import './ScreenViewer.css';
 
-const DEFAULT_IMAGE_SIZE = { width: 1920, height: 1080 };
 const MIN_HOTSPOT_SIZE = 20;
 
 export default function ScreenViewer() {
@@ -15,13 +20,18 @@ export default function ScreenViewer() {
   const setAddingHotspot = useStore((s) => s.setAddingHotspot);
   const addButton = useStore((s) => s.addButton);
   const updateButton = useStore((s) => s.updateButton);
-  const [imageSize, setImageSize] = useState(DEFAULT_IMAGE_SIZE);
+  const imageConfig = useStore((s) => s.imageConfig);
+  const reportScreenSourceSize = useStore((s) => s.reportScreenSourceSize);
+  const [sourceSize, setSourceSize] = useState({ width: 1031, height: 580 });
 
   const screen = screens.find((s) => s.id === selectedScreenId);
+  const hotspotSize = useMemo(() => defaultButtonSize(imageConfig), [imageConfig]);
 
   useEffect(() => {
-    setImageSize(DEFAULT_IMAGE_SIZE);
-  }, [screen?.id, screen?.image]);
+    if (screen?.sourceWidth && screen?.sourceHeight) {
+      setSourceSize({ width: screen.sourceWidth, height: screen.sourceHeight });
+    }
+  }, [screen?.id, screen?.sourceWidth, screen?.sourceHeight]);
 
   const handleImageClick = useCallback(
     (e) => {
@@ -41,14 +51,27 @@ export default function ScreenViewer() {
 
       const target = prompt('Target screen name (leave empty if unknown):') || '';
 
+      const screenForCoords = {
+        ...screen,
+        sourceWidth: img.naturalWidth,
+        sourceHeight: img.naturalHeight,
+      };
+      const intrinsicRect = centerFromSourceClick(
+        x,
+        y,
+        hotspotSize,
+        screenForCoords,
+        imageConfig
+      );
+
       addButton(screen.id, {
         label,
         target,
-        ...rectCenteredAt(x, y),
+        ...intrinsicRect,
       });
       setAddingHotspot(false);
     },
-    [isAddingHotspot, screen, addButton, setAddingHotspot]
+    [isAddingHotspot, screen, addButton, setAddingHotspot, imageConfig, hotspotSize]
   );
 
   const handleHotspotUpdate = useCallback(
@@ -90,6 +113,11 @@ export default function ScreenViewer() {
         </button>
       </div>
 
+      <p className="screen-viewer__size-hint">
+        Screenshot {sourceSize.width}×{sourceSize.height} → product{' '}
+        {imageConfig.intrinsicWidth}×{imageConfig.intrinsicHeight} px
+      </p>
+
       <div
         className={`screen-viewer__image-container ${isAddingHotspot ? 'screen-viewer--crosshair' : ''}`}
         onClick={() => selectButton(null)}
@@ -103,7 +131,8 @@ export default function ScreenViewer() {
             onLoad={(e) => {
               const { naturalWidth, naturalHeight } = e.currentTarget;
               if (naturalWidth && naturalHeight) {
-                setImageSize({ width: naturalWidth, height: naturalHeight });
+                setSourceSize({ width: naturalWidth, height: naturalHeight });
+                reportScreenSourceSize(screen.id, naturalWidth, naturalHeight);
               }
             }}
             draggable={false}
@@ -113,7 +142,9 @@ export default function ScreenViewer() {
             <HotspotRegion
               key={btn.id}
               button={btn}
-              imageSize={imageSize}
+              screen={screen}
+              imageConfig={imageConfig}
+              imageSize={sourceSize}
               selected={btn.id === selectedButtonId}
               draggable={!isAddingHotspot}
               onSelect={() => selectButton(btn.id)}
@@ -125,7 +156,7 @@ export default function ScreenViewer() {
 
       {isAddingHotspot && (
         <div className="screen-viewer__hint">
-          Click on the image to place a hotspot ({DEFAULT_BUTTON_SIZE.width}×{DEFAULT_BUTTON_SIZE.height})
+          Click on the image to place a hotspot ({hotspotSize.width}×{hotspotSize.height} product px)
         </div>
       )}
     </div>
@@ -140,27 +171,56 @@ function getStageScale(stage, imageSize) {
   };
 }
 
-function HotspotRegion({ button, imageSize, selected, draggable, onSelect, onUpdate }) {
+function HotspotRegion({
+  button,
+  screen,
+  imageConfig,
+  imageSize,
+  selected,
+  draggable,
+  onSelect,
+  onUpdate,
+}) {
   const screens = useStore((s) => s.screens);
-  const saved = normalizeButton(button);
-  const hasTarget = saved.target && screens.some((s) => s.id === saved.target);
+  const savedIntrinsic = normalizeButton(button);
+  const hasTarget = savedIntrinsic.target && screens.some((s) => s.id === savedIntrinsic.target);
+
+  const screenForCoords = useMemo(
+    () => ({
+      ...screen,
+      sourceWidth: imageSize.width,
+      sourceHeight: imageSize.height,
+    }),
+    [screen, imageSize.width, imageSize.height]
+  );
+
+  const saved = useMemo(
+    () => toSourceRect(savedIntrinsic, screenForCoords, imageConfig),
+    [
+      savedIntrinsic.left,
+      savedIntrinsic.top,
+      savedIntrinsic.width,
+      savedIntrinsic.height,
+      screenForCoords.sourceWidth,
+      screenForCoords.sourceHeight,
+      imageConfig,
+    ]
+  );
 
   const [draftRect, setDraftRect] = useState(null);
   const draftRef = useRef(null);
+  const savedRef = useRef(saved);
   const didDragRef = useRef(false);
   const interactionRef = useRef(null);
+
+  savedRef.current = saved;
 
   const rect = draftRect ? { ...saved, ...draftRect } : saved;
 
   useEffect(() => {
-    if (!draftRect) return;
-    const synced =
-      (draftRect.left == null || draftRect.left === saved.left) &&
-      (draftRect.top == null || draftRect.top === saved.top) &&
-      (draftRect.width == null || draftRect.width === saved.width) &&
-      (draftRect.height == null || draftRect.height === saved.height);
-    if (synced) setDraftRect(null);
-  }, [saved.left, saved.top, saved.width, saved.height, draftRect]);
+    if (interactionRef.current) return;
+    setDraftRect(null);
+  }, [button.id, saved.left, saved.top, saved.width, saved.height]);
 
   const style = {
     left: `${(rect.left / imageSize.width) * 100}%`,
@@ -179,6 +239,12 @@ function HotspotRegion({ button, imageSize, selected, draggable, onSelect, onUpd
     height: Math.round(Math.max(MIN_HOTSPOT_SIZE, Math.min(imageSize.height - top, height))),
   });
 
+  const commitSourceRect = (partial) => {
+    const fullSource = { ...savedRef.current, ...partial };
+    const intrinsic = toIntrinsicRect(fullSource, screenForCoords, imageConfig);
+    onUpdate(button.id, intrinsic);
+  };
+
   const endInteraction = (commit, captureTarget, pointerId) => {
     window.removeEventListener('pointermove', interactionRef.current?.onMove);
     window.removeEventListener('pointerup', interactionRef.current?.onUp);
@@ -190,12 +256,9 @@ function HotspotRegion({ button, imageSize, selected, draggable, onSelect, onUpd
       }
     }
     if (commit && draftRef.current) {
-      const committed = { ...draftRef.current };
-      setDraftRect(committed);
-      onUpdate(button.id, committed);
-    } else {
-      setDraftRect(null);
+      commitSourceRect(draftRef.current);
     }
+    setDraftRect(null);
     draftRef.current = null;
     interactionRef.current = null;
   };
@@ -208,10 +271,10 @@ function HotspotRegion({ button, imageSize, selected, draggable, onSelect, onUpd
 
     const startX = e.clientX;
     const startY = e.clientY;
-    const startLeft = rect.left;
-    const startTop = rect.top;
-    const startWidth = rect.width;
-    const startHeight = rect.height;
+    const startLeft = savedRef.current.left;
+    const startTop = savedRef.current.top;
+    const startWidth = savedRef.current.width;
+    const startHeight = savedRef.current.height;
     const stage = e.currentTarget.parentElement;
     const captureTarget = e.currentTarget;
     const pointerId = e.pointerId;
@@ -243,10 +306,10 @@ function HotspotRegion({ button, imageSize, selected, draggable, onSelect, onUpd
 
     const startX = e.clientX;
     const startY = e.clientY;
-    const startWidth = rect.width;
-    const startHeight = rect.height;
-    const anchorLeft = rect.left;
-    const anchorTop = rect.top;
+    const startWidth = savedRef.current.width;
+    const startHeight = savedRef.current.height;
+    const anchorLeft = savedRef.current.left;
+    const anchorTop = savedRef.current.top;
     const stage = e.currentTarget.closest('.screen-viewer__stage');
     const captureTarget = e.currentTarget;
     const pointerId = e.pointerId;
@@ -273,7 +336,7 @@ function HotspotRegion({ button, imageSize, selected, draggable, onSelect, onUpd
     <div
       className={`hotspot-region ${hasTarget ? 'hotspot-region--linked' : 'hotspot-region--unlinked'} ${selected ? 'hotspot-region--selected' : ''} ${draftRect ? 'hotspot-region--dragging' : ''}`}
       style={style}
-      title={`${saved.label}${saved.target ? ` → ${saved.target}` : ''}`}
+      title={`${savedIntrinsic.label}${savedIntrinsic.target ? ` → ${savedIntrinsic.target}` : ''}`}
       onPointerDown={handleMovePointerDown}
       onClick={(e) => {
         e.stopPropagation();
@@ -281,9 +344,9 @@ function HotspotRegion({ button, imageSize, selected, draggable, onSelect, onUpd
       }}
     >
       {hasTarget ? (
-        <span className="hotspot-region__tag">→ {saved.target}</span>
+        <span className="hotspot-region__tag">→ {savedIntrinsic.target}</span>
       ) : (
-        <span className="hotspot-region__tag">{saved.label}</span>
+        <span className="hotspot-region__tag">{savedIntrinsic.label}</span>
       )}
       {draggable && (
         <span

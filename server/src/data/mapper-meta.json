@@ -1,0 +1,36 @@
+{
+  "sections": [],
+  "screens": {
+    "1": {
+      "graphX": -13,
+      "graphY": 11,
+      "sectionId": null,
+      "buttonIds": [
+        "a56df558-60e6-4712-a335-37ccbd73432e",
+        "bb53970b-bdd0-40d5-89f8-f8f92f023517"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "2": {
+      "graphX": -84,
+      "graphY": 299,
+      "sectionId": null,
+      "buttonIds": []
+    },
+    "3": {
+      "graphX": 150,
+      "graphY": 307,
+      "sectionId": null,
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    }
+  },
+  "config": {
+    "imageSize": {
+      "intrinsicWidth": 1031,
+      "intrinsicHeight": 580
+    }
+  }
+}

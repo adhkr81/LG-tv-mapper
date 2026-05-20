@@ -31,6 +31,24 @@ export function getSectionGraphScreens(screens, activeSectionId) {
   return { primary, external };
 }
 
+/** Next unused screen id that is a plain integer (1, 2, 3…), based on all emulator keys. */
+export function getNextNumericScreenId(screens) {
+  const existing = new Set(screens.map((s) => s.id));
+  let max = 0;
+  for (const id of existing) {
+    if (/^\d+$/.test(id)) {
+      max = Math.max(max, parseInt(id, 10));
+    }
+  }
+  let n = max + 1;
+  let id = String(n);
+  while (existing.has(id)) {
+    n += 1;
+    id = String(n);
+  }
+  return id;
+}
+
 export function suggestScreenId(sectionId, screens) {
   const prefix = `${sectionId}_`;
   const inSection = screens.filter((s) => s.sectionId === sectionId);

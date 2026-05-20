@@ -11,6 +11,7 @@ import screenRoutes from './routes/screens.js';
 import buttonRoutes from './routes/buttons.js';
 import graphRoutes from './routes/graph.js';
 import sectionRoutes from './routes/sections.js';
+import configRoutes from './routes/config.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -30,6 +31,7 @@ app.use('/api/screens', screenRoutes);
 app.use('/api/screens/:id/buttons', buttonRoutes);
 app.use('/api/graph', graphRoutes);
 app.use('/api/sections', sectionRoutes);
+app.use('/api/config', configRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

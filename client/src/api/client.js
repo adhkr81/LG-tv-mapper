@@ -1,12 +1,30 @@
 const API = '';
 
-async function request(url, options = {}) {
-  const res = await fetch(`${API}${url}`, {
-    headers: { 'Content-Type': 'application/json', ...options.headers },
-    ...options,
-  });
+const RETRYABLE_STATUSES = new Set([500, 502, 503, 504]);
+
+async function request(url, options = {}, attempt = 0) {
+  let res;
+  try {
+    res = await fetch(`${API}${url}`, {
+      headers: { 'Content-Type': 'application/json', ...options.headers },
+      ...options,
+    });
+  } catch (err) {
+    if (attempt < 2) {
+      await new Promise((r) => setTimeout(r, 150 * (attempt + 1)));
+      return request(url, options, attempt + 1);
+    }
+    throw new Error(
+      'Could not reach the API server. If you were dragging hotspots, wait a moment and try again.'
+    );
+  }
+
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
+    if (attempt < 2 && RETRYABLE_STATUSES.has(res.status)) {
+      await new Promise((r) => setTimeout(r, 150 * (attempt + 1)));
+      return request(url, options, attempt + 1);
+    }
     throw new Error(body.error || `Request failed: ${res.status}`);
   }
   return res.json();
@@ -59,6 +77,11 @@ export const deleteButtonApi = (screenId, buttonId) =>
 
 // Graph
 export const getGraph = () => request('/api/graph');
+
+// Config
+export const getConfig = () => request('/api/config');
+export const updateConfig = (imageSize) =>
+  request('/api/config', { method: 'PUT', body: JSON.stringify({ imageSize }) });
 
 // Sections
 export const getSections = () => request('/api/sections');

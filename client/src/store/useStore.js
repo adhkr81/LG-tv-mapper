@@ -1,12 +1,17 @@
 import { create } from 'zustand';
 import * as api from '../api/client.js';
+import { DEFAULT_IMAGE_CONFIG, normalizeImageConfig } from '../utils/coords.js';
 
 const SECTION_STORAGE_KEY = 'lg-mapper-active-section';
+
+/** One in-flight save per button so rapid drags do not overlap PUTs. */
+const buttonUpdateChains = new Map();
 
 const useStore = create((set, get) => ({
   // Data
   screens: [],
   sections: [],
+  imageConfig: { ...DEFAULT_IMAGE_CONFIG },
 
   // UI state
   activeSectionId: (() => {
@@ -34,6 +39,38 @@ const useStore = create((set, get) => ({
     } catch (err) {
       console.error('Failed to fetch screens:', err);
     }
+  },
+
+  fetchConfig: async () => {
+    try {
+      const data = await api.getConfig();
+      set({ imageConfig: normalizeImageConfig(data.imageSize) });
+    } catch (err) {
+      console.error('Failed to fetch config:', err);
+    }
+  },
+
+  updateImageConfig: async (imageSize) => {
+    const data = await api.updateConfig(imageSize);
+    set({ imageConfig: normalizeImageConfig(data.imageSize) });
+    return data.imageSize;
+  },
+
+  reportScreenSourceSize: async (screenId, sourceWidth, sourceHeight) => {
+    const screen = get().screens.find((s) => s.id === screenId);
+    if (
+      screen?.sourceWidth === sourceWidth &&
+      screen?.sourceHeight === sourceHeight
+    ) {
+      return;
+    }
+    await api.updateScreen(screenId, { sourceWidth, sourceHeight });
+    set({
+      screens: get().screens.map((s) =>
+        s.id === screenId ? { ...s, sourceWidth, sourceHeight } : s
+      ),
+    });
+    await get().fetchScreens();
   },
 
   setActiveSection: (sectionId) => {
@@ -111,37 +148,52 @@ const useStore = create((set, get) => ({
   },
 
   updateButton: async (screenId, buttonId, updates) => {
-    const prevScreens = get().screens;
-    set({
-      screens: prevScreens.map((s) =>
-        s.id !== screenId
-          ? s
-          : {
-              ...s,
-              buttons: s.buttons.map((b) =>
-                b.id === buttonId ? { ...b, ...updates } : b
-              ),
-            }
-      ),
-    });
-    try {
-      const updated = await api.updateButton(screenId, buttonId, updates);
-      set({
-        screens: get().screens.map((s) =>
-          s.id !== screenId
-            ? s
-            : {
-                ...s,
-                buttons: s.buttons.map((b) =>
-                  b.id === buttonId ? { ...b, ...updated } : b
-                ),
-              }
-        ),
+    const chainKey = `${screenId}:${buttonId}`;
+    const previous = buttonUpdateChains.get(chainKey) || Promise.resolve();
+    const task = previous
+      .catch(() => {})
+      .then(async () => {
+        const prevScreens = get().screens;
+        set({
+          screens: prevScreens.map((s) =>
+            s.id !== screenId
+              ? s
+              : {
+                  ...s,
+                  buttons: s.buttons.map((b) =>
+                    b.id === buttonId ? { ...b, ...updates } : b
+                  ),
+                }
+          ),
+        });
+        try {
+          const updated = await api.updateButton(screenId, buttonId, updates);
+          set({
+            screens: get().screens.map((s) =>
+              s.id !== screenId
+                ? s
+                : {
+                    ...s,
+                    buttons: s.buttons.map((b) =>
+                      b.id === buttonId ? { ...b, ...updated } : b
+                    ),
+                  }
+            ),
+          });
+        } catch (err) {
+          set({ screens: prevScreens });
+          console.error('Update button failed:', err);
+          throw err;
+        }
       });
-    } catch (err) {
-      set({ screens: prevScreens });
-      console.error('Update button failed:', err);
-      throw err;
+
+    buttonUpdateChains.set(chainKey, task);
+    try {
+      await task;
+    } finally {
+      if (buttonUpdateChains.get(chainKey) === task) {
+        buttonUpdateChains.delete(chainKey);
+      }
     }
   },
 

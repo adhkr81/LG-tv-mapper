@@ -1,13 +1,27 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import { Handle, Position } from '@xyflow/react';
+import useStore from '../../store/useStore.js';
 import './GraphView.css';
 
-function ScreenNode({ data, selected }) {
+function ScreenNode({ id, data }) {
   const { label, image, buttonCount, isExternal } = data;
+  const selectedScreenId = useStore((s) => s.selectedScreenId);
+  const selectScreen = useStore((s) => s.selectScreen);
+  const selected = id === selectedScreenId;
+
+  const handleSelect = useCallback(
+    (e) => {
+      if (e.button !== 0) return;
+      if (e.target.closest('.react-flow__handle')) return;
+      selectScreen(id);
+    },
+    [id, selectScreen]
+  );
 
   return (
     <div
       className={`screen-node ${selected ? 'screen-node--selected' : ''} ${isExternal ? 'screen-node--external' : ''}`}
+      onPointerDown={handleSelect}
     >
       <Handle type="target" position={Position.Top} className="screen-node__handle" />
 

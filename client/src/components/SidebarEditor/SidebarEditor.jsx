@@ -2,10 +2,12 @@ import React, { useState, useEffect, useMemo } from 'react';
 import useStore from '../../store/useStore.js';
 import { normalizeButton } from '../../utils/buttonRect.js';
 import { getSectionGraphScreens } from '../../utils/sectionGraph.js';
+import ImageConfigSection from '../ImageConfig/ImageConfigSection.jsx';
 import '../SectionBar/SectionBar.css';
 import './SidebarEditor.css';
 
-export default function SidebarEditor() {
+export default function SidebarEditor({ mode = 'viewer' }) {
+  const isEditMode = mode === 'viewer';
   const screens = useStore((s) => s.screens);
   const sections = useStore((s) => s.sections);
   const activeSectionId = useStore((s) => s.activeSectionId);
@@ -18,6 +20,7 @@ export default function SidebarEditor() {
   const deleteScreen = useStore((s) => s.deleteScreen);
   const deleteButton = useStore((s) => s.deleteButton);
   const updateButton = useStore((s) => s.updateButton);
+  const imageConfig = useStore((s) => s.imageConfig);
   const updateScreenName = useStore((s) => s.updateScreenName);
   const selectedButtonId = useStore((s) => s.selectedButtonId);
   const selectButton = useStore((s) => s.selectButton);
@@ -110,6 +113,8 @@ export default function SidebarEditor() {
         </div>
       </div>
 
+      <ImageConfigSection />
+
       {activeSectionId && (
         <div className="sidebar__section">
           <div className="sidebar__section-title">
@@ -147,8 +152,8 @@ export default function SidebarEditor() {
         </div>
       )}
 
-      {/* Screen info */}
-      {screen ? (
+      {/* Screen / button editing — viewer only */}
+      {screen && isEditMode ? (
         <>
           <div className="sidebar__section">
             <div className="sidebar__section-title">Screen</div>
@@ -258,13 +263,13 @@ export default function SidebarEditor() {
             )}
           </div>
         </>
-      ) : (
+      ) : !isEditMode ? (
         <div className="sidebar__section sidebar__section--grow">
           <div className="sidebar__empty">
             Select a screen from the graph to edit its details and buttons.
           </div>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }
@@ -298,12 +303,30 @@ function ButtonRectInputs({ button, onUpdate }) {
   };
 
   const handleChange = (key, raw) => {
+    if (raw === '') {
+      setFields((prev) => ({ ...prev, [key]: '' }));
+      return;
+    }
     const min = key === 'width' || key === 'height' ? 1 : 0;
-    const value = raw === '' ? min : Math.max(min, parseInt(raw, 10) || 0);
+    const value = Math.max(min, parseInt(raw, 10) || 0);
     setFields((prev) => ({ ...prev, [key]: value }));
   };
 
-  const handleBlur = () => commit(fields);
+  const normalizeFields = (draft) => {
+    const minSize = 1;
+    return {
+      top: draft.top === '' ? 0 : Math.max(0, Number(draft.top) || 0),
+      left: draft.left === '' ? 0 : Math.max(0, Number(draft.left) || 0),
+      width: draft.width === '' ? minSize : Math.max(minSize, Number(draft.width) || minSize),
+      height: draft.height === '' ? minSize : Math.max(minSize, Number(draft.height) || minSize),
+    };
+  };
+
+  const handleBlur = () => {
+    const next = normalizeFields(fields);
+    setFields(next);
+    commit(next);
+  };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') e.currentTarget.blur();

@@ -40,6 +40,18 @@
   flex: 1;
 }
 
+/* Edges sit above nodes in the SVG layer; disable hit-testing so clicks reach nodes (esp. hub/root). */
+.graph-view__canvas .react-flow__edge,
+.graph-view__canvas .react-flow__edge-path,
+.graph-view__canvas .react-flow__edge-text,
+.graph-view__canvas .react-flow__edge-textbg {
+  pointer-events: none;
+}
+
+.graph-view__canvas .react-flow__node {
+  z-index: 1;
+}
+
 /* Override React Flow theme */
 .graph-view__canvas .react-flow__background {
   background: var(--bg-primary) !important;
@@ -64,7 +76,8 @@
   border-radius: var(--radius-md);
   padding: var(--space-sm);
   cursor: pointer;
-  transition: all var(--duration) var(--ease);
+  /* Only animate hover lift — border/box-shadow (selection) must be instant */
+  transition: transform var(--duration) var(--ease);
   position: relative;
   width: 200px;
 }

@@ -35,6 +35,13 @@
 
 .screen-viewer__title { font-size: 14px; font-weight: 700; }
 
+.screen-viewer__size-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 0 var(--space-lg) var(--space-sm);
+  margin: 0;
+}
+
 .screen-viewer__image-container {
   flex: 1;
   position: relative;

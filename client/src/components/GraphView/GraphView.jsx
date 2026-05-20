@@ -12,7 +12,11 @@ import ScreenNode from './ScreenNode.jsx';
 import SectionBar from '../SectionBar/SectionBar.jsx';
 import useStore from '../../store/useStore.js';
 import { rectCenteredAt } from '../../utils/buttonRect.js';
-import { getSectionGraphScreens, suggestScreenId } from '../../utils/sectionGraph.js';
+import {
+  getSectionGraphScreens,
+  getNextNumericScreenId,
+  suggestScreenId,
+} from '../../utils/sectionGraph.js';
 import './GraphView.css';
 
 const nodeTypes = { screenNode: ScreenNode };
@@ -31,8 +35,6 @@ function getSavedPosition(screen, index) {
 export default function GraphView() {
   const screens = useStore((s) => s.screens);
   const activeSectionId = useStore((s) => s.activeSectionId);
-  const selectedScreenId = useStore((s) => s.selectedScreenId);
-  const selectScreen = useStore((s) => s.selectScreen);
   const importScreen = useStore((s) => s.importScreen);
   const captureScreen = useStore((s) => s.captureScreen);
   const addButton = useStore((s) => s.addButton);
@@ -89,10 +91,9 @@ export default function GraphView() {
           buttonCount: screen.buttons.length,
           isExternal,
         },
-        selected: screen.id === selectedScreenId,
       };
     });
-  }, [visibleScreens, externalIds, activeSectionId, maxPrimaryX, selectedScreenId, external]);
+  }, [visibleScreens, externalIds, activeSectionId, maxPrimaryX, external]);
 
   // Build edges from button targets (within visible set)
   const initialEdges = useMemo(() => {
@@ -153,9 +154,7 @@ export default function GraphView() {
   }, [activeSectionId, visibleScreens.length]);
 
   const openCaptureModal = () => {
-    setNewScreenId(
-      activeSectionId ? suggestScreenId(activeSectionId, screens) : ''
-    );
+    setNewScreenId(getNextNumericScreenId(screens));
     setShowCaptureModal(true);
   };
 
@@ -166,10 +165,6 @@ export default function GraphView() {
     setImportFile(null);
     setShowImportModal(true);
   };
-
-  const onNodeClick = useCallback((_, node) => {
-    selectScreen(node.id);
-  }, [selectScreen]);
 
   const onNodeDragStop = useCallback(
     (_, node) => {
@@ -274,10 +269,13 @@ export default function GraphView() {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         isValidConnection={isValidConnection}
-        onNodeClick={onNodeClick}
         onNodeDragStop={onNodeDragStop}
         onInit={(instance) => { flowRef.current = instance; }}
         nodeTypes={nodeTypes}
+        elementsSelectable={false}
+        nodesFocusable={false}
+        defaultEdgeOptions={{ interactionWidth: 0 }}
+        selectNodesOnDrag={false}
         fitView
         fitViewOptions={{ padding: 0.2 }}
         className="graph-view__canvas"
@@ -363,7 +361,7 @@ export default function GraphView() {
                 className="input"
                 value={newScreenId}
                 onChange={(e) => setNewScreenId(e.target.value)}
-                placeholder="e.g. home, settings, apps"
+                placeholder="e.g. 1, 2, 3"
                 autoFocus
               />
             </div>

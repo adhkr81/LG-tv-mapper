@@ -76,7 +76,7 @@ This tool allows you to:
 │  │ Service  │  │ Service  │  │ Service  │  │   Service    │ │
 │  └────┬─────┘  └──────────┘  └────┬─────┘  └──────────────┘ │
 │       │                           │                           │
-│  RS232 Serial                 screens.json                    │
+│  RS232 Serial              emulator.json + mapper-meta.json   │
 │  (115200 baud)                + screenshots/                  │
 │       │                                                       │
 └───────┼───────────────────────────────────────────────────────┘
@@ -209,43 +209,72 @@ Use this when the TV is connected via RS232 serial cable.
 
 ## Data Model
 
-### Screen
+The mapper saves **emulator-native JSON** on every edit. There is no separate export step.
+
+### On disk (emulator format)
+
+`emulator.json` is an object keyed by screen ID:
 
 ```json
 {
-  "id": "home",
-  "image": "home.jpg",
-  "buttons": [ ... ]
+  "homescreen": {
+    "img_filename": "homescreen",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "107px",
+        "top": "13px",
+        "width": "31px",
+        "height": "31px",
+        "target": "account-main",
+        "popover": {
+          "title": "Profile",
+          "text": "…",
+          "style": { "top": "2%", "left": "7%" }
+        }
+      }
+    ]
+  }
 }
 ```
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `id` | string | Unique screen identifier (e.g., `"home"`, `"settings"`) |
-| `image` | string | Screenshot filename stored in `server/src/data/screenshots/` |
-| `buttons` | array | List of interactive button hotspots on this screen |
+| `img_filename` | string | Screenshot base name (file lives in `screenshots/`) |
+| `preset` | number | Emulator display preset (default `0`) |
+| `buttons[].left/top/width/height` | string | Hotspot box as CSS pixels (`"107px"`) |
+| `buttons[].target` | string | Destination screen ID |
+| `buttons[].popover` | object | Optional tour copy (`title`, `text`, `style`) |
+| `buttons[].type` | string | Optional arrow hotspots (`arrow-right`, etc.) |
 
-### Button
+### Mapper sidecar (`mapper-meta.json`)
+
+Editor-only data (graph layout, sections, stable button UUIDs) is kept separate so `emulator.json` stays clean for the emulator:
+
+- `sections` — mapping workspaces
+- `config.imageSize` — product dimensions (default 1031×580 px)
+- `screens.<id>.graphX` / `graphY` — React Flow node positions
+- `screens.<id>.buttonIds` — UUIDs aligned with each button index
+- `screens.<id>.sourceWidth` / `sourceHeight` — screenshot file size for coordinate scaling
+
+### API / UI (in memory)
+
+The REST API still exposes screens as an array with numeric hotspot coordinates and `label` (mapped from `popover.title` when present). The client is unchanged.
+
+### Button (API)
 
 ```json
 {
   "id": "a1b2c3d4-...",
   "screenId": "home",
-  "label": "settings_btn",
+  "label": "Profile",
   "target": "settings",
-  "x": 1200,
-  "y": 300
+  "left": 107,
+  "top": 13,
+  "width": 31,
+  "height": 31
 }
 ```
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `id` | string | Auto-generated UUID |
-| `screenId` | string | Parent screen ID |
-| `label` | string | Human-readable button name |
-| `target` | string | Destination screen ID (creates a graph edge) |
-| `x` | number | X coordinate on the original screenshot (pixels, relative to 3840×2160) |
-| `y` | number | Y coordinate on the original screenshot (pixels, relative to 3840×2160) |
 
 ### Graph Relationships
 
@@ -376,7 +405,8 @@ LG-emulator-mapper/
 │       │   ├── screens.js      # Screen data access (JSON)
 │       │   └── buttons.js      # Button data access (JSON)
 │       └── data/
-│           ├── screens.json    # Persisted screen + button data
+│           ├── emulator.json   # Emulator config (native format)
+│           ├── mapper-meta.json # Graph layout + sections
 │           └── screenshots/    # Captured/imported screenshot images
 │
 └── client/                     # Frontend — React + Vite
@@ -454,10 +484,20 @@ All state mutations go through the API — the store calls the backend, then re-
 
 All data is stored in flat files — no database required:
 
-- **`server/src/data/screens.json`** — Array of all screens with their buttons
-- **`server/src/data/screenshots/`** — Directory of screenshot image files
+- **`server/src/data/emulator.json`** — Canonical emulator config (object keyed by screen ID)
+- **`server/src/data/mapper-meta.json`** — Graph layout, sections, button UUIDs
+- **`server/src/data/screenshots/`** — Screenshot image files (`{img_filename}.jpg`, etc.)
 
-Writes are atomic: data is written to a `.tmp` file first, then renamed to the target path, preventing corruption on crash.
+Configure paths in `.env`:
+
+```bash
+EMULATOR_DATA_PATH=../context/emulator.json   # optional: point at your emulator bundle
+MAPPER_META_PATH=./server/src/data/mapper-meta.json
+```
+
+On first run, legacy **`screens.json`** is migrated to `emulator.json` and renamed to `screens.json.bak`.
+
+Writes are atomic: data is written to a `.tmp` file first, then renamed, preventing corruption on crash.
 
 ---
 
@@ -488,6 +528,7 @@ Writes are atomic: data is written to a `.tmp` file first, then renamed to the t
 
 ### Hotspot positions look wrong
 
-- Hotspot coordinates are recorded relative to the original image resolution (3840×2160)
-- The overlay scales positions using percentage-based positioning
-- If your screenshots are a different resolution, the markers may appear offset
+- Hotspot coordinates in `emulator.json` use **intrinsic** product size (default 1031×580), not your screenshot resolution
+- Set sizes in the sidebar under **Product image size** to match the LG simroom asset
+- Open each screen in the viewer once so the app records screenshot dimensions and can scale overlays
+- If hotspots were mapped before this setting existed, re-open the screen in the viewer to auto-convert when coordinates look too large
