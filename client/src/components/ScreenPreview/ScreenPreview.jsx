@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import useStore from '../../store/useStore.js';
 import { normalizeButton } from '../../utils/buttonRect.js';
 import { toSourceRect } from '../../utils/coords.js';
+import { screenshotUrl } from '../../utils/screenshotUrl.js';
 import '../ScreenViewer/ScreenViewer.css';
 import './ScreenPreview.css';
 
@@ -20,6 +21,9 @@ export default function ScreenPreview() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const imgRef = useRef(null);
   const reportScreenSourceSize = useStore((s) => s.reportScreenSourceSize);
+  const imageVersion = useStore((s) =>
+    currentScreenId ? (s.imageVersions[currentScreenId] ?? 0) : 0
+  );
 
   useEffect(() => {
     if (selectedScreenId) {
@@ -147,7 +151,8 @@ export default function ScreenPreview() {
         <div className="screen-viewer__stage">
           <img
             ref={imgRef}
-            src={`/screenshots/${screen.image}`}
+            key={`${screen.image}-${imageVersion}`}
+            src={screenshotUrl(screen.image, imageVersion)}
             alt={screen.id}
             className="screen-viewer__image"
             draggable={false}

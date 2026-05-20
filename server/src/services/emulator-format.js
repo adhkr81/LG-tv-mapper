@@ -32,15 +32,7 @@ export function buttonToEmulator(btn) {
   };
   if (btn.target) out.target = btn.target;
   if (btn.type) out.type = btn.type;
-  if (btn.popover) {
-    out.popover = btn.popover;
-  } else if (btn.label) {
-    out.popover = {
-      title: btn.label,
-      text: '',
-      style: { top: '0%', left: '0%' },
-    };
-  }
+  if (btn.popover) out.popover = btn.popover;
   return out;
 }
 

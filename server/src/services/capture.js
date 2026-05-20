@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { execute, executeStreamUntilIdle } from './serial.js';
-import { getScreenshotsDir } from './screens.js';
+import { getScreen, createScreen, updateScreen, getScreenshotsDir } from './screens.js';
 
 const JPEG_SOI = Buffer.from([0xff, 0xd8]);
 const JPEG_EOI = Buffer.from([0xff, 0xd9]);
@@ -374,4 +374,14 @@ export function importScreenshot(screenId, sourcePath) {
   }
 
   return filename;
+}
+
+/** Copy screenshot file and attach it to an existing screen or create a new one. */
+export function registerScreenshotImport(screenId, sourcePath, { sectionId = null } = {}) {
+  const filename = importScreenshot(screenId, sourcePath);
+  const existing = getScreen(screenId);
+  if (existing) {
+    return updateScreen(screenId, { image: filename });
+  }
+  return createScreen({ id: screenId, image: filename, sectionId });
 }

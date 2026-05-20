@@ -1,53 +1,21 @@
 {
-  "sections": [],
-  "screens": {
-    "1": {
-      "graphX": 3,
-      "graphY": -61,
-      "sectionId": null,
-      "buttonIds": [
-        "702c2f24-d87c-408e-9859-42e6ca102ff6",
-        "4b5c2635-e44c-4f5d-82f3-01c747dcb031"
-      ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+  "sections": [
+    {
+      "id": "Sound",
+      "name": "Sound Menu",
+      "rootScreenId": null,
+      "bandX": 518,
+      "bandY": 938
     },
-    "2": {
-      "graphX": -134,
-      "graphY": 179,
-      "sectionId": null,
-      "buttonIds": [],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
-    },
-    "3": {
-      "graphX": 135,
-      "graphY": 177,
-      "sectionId": null,
-      "buttonIds": [
-        "37d56faf-f6ae-4f83-852f-9d7a46b1a785",
-        "af3b7ebd-52da-4fba-b50b-2f34f51d8f61"
-      ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
-    },
-    "4": {
-      "graphX": 278,
-      "graphY": 408,
-      "sectionId": null,
-      "buttonIds": [],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
-    },
-    "5": {
-      "graphX": 17,
-      "graphY": 404,
-      "sectionId": null,
-      "buttonIds": [],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+    {
+      "id": "Connections",
+      "name": "Connections",
+      "rootScreenId": null,
+      "bandX": -174,
+      "bandY": 788
     }
-  },
+  ],
+  "screens": {},
   "config": {
     "imageSize": {
       "intrinsicWidth": 1031,

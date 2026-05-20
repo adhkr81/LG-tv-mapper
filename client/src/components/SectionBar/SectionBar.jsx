@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import useStore from '../../store/useStore.js';
-import { sectionProgress } from '../../utils/sectionGraph.js';
+import { sectionProgress, sectionIdFromName } from '../../utils/sectionGraph.js';
 import './SectionBar.css';
 
 export default function SectionBar() {
@@ -14,8 +14,7 @@ export default function SectionBar() {
   const updateSection = useStore((s) => s.updateSection);
 
   const [showCreate, setShowCreate] = useState(false);
-  const [newId, setNewId] = useState('');
-  const [newName, setNewName] = useState('');
+  const [newSectionName, setNewSectionName] = useState('');
 
   const activeSection = sections.find((s) => s.id === activeSectionId);
   const progress = activeSectionId
@@ -23,13 +22,14 @@ export default function SectionBar() {
     : null;
 
   const handleCreate = async () => {
-    if (!newId.trim()) return;
+    const name = newSectionName.trim();
+    if (!name) return;
     try {
-      await createSection({ id: newId.trim(), name: newName.trim() || newId.trim() });
-      setActiveSection(newId.trim());
+      const id = sectionIdFromName(name, sections);
+      await createSection({ id, name });
+      setActiveSection(id);
       setShowCreate(false);
-      setNewId('');
-      setNewName('');
+      setNewSectionName('');
     } catch (err) {
       alert('Failed to create section: ' + err.message);
     }
@@ -108,27 +108,18 @@ export default function SectionBar() {
               is selected are grouped here.
             </p>
             <div className="modal__field">
-              <label className="label">Section ID</label>
+              <label className="label">Section name</label>
               <input
                 className="input"
-                value={newId}
-                onChange={(e) => setNewId(e.target.value)}
-                placeholder="e.g. settings, apps, hdmi"
-                autoFocus
-              />
-            </div>
-            <div className="modal__field">
-              <label className="label">Display name</label>
-              <input
-                className="input"
-                value={newName}
-                onChange={(e) => setNewName(e.target.value)}
+                value={newSectionName}
+                onChange={(e) => setNewSectionName(e.target.value)}
                 placeholder="e.g. Settings menu"
+                autoFocus
               />
             </div>
             <div className="modal__actions">
               <button type="button" className="btn" onClick={() => setShowCreate(false)}>Cancel</button>
-              <button type="button" className="btn btn-accent" onClick={handleCreate} disabled={!newId.trim()}>
+              <button type="button" className="btn btn-accent" onClick={handleCreate} disabled={!newSectionName.trim()}>
                 Create
               </button>
             </div>

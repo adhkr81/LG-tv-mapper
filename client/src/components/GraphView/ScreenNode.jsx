@@ -1,47 +1,62 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { Handle, Position } from '@xyflow/react';
 import useStore from '../../store/useStore.js';
+import { screenshotUrl } from '../../utils/screenshotUrl.js';
 import './GraphView.css';
 
-function ScreenNode({ id, data }) {
+function ScreenNode({ id, data, selected }) {
   const { label, image, buttonCount, isExternal } = data;
-  const selectedScreenId = useStore((s) => s.selectedScreenId);
-  const selectScreen = useStore((s) => s.selectScreen);
-  const selected = id === selectedScreenId;
+  const imageVersion = useStore((s) => s.imageVersions[id] ?? 0);
+  const capturingScreenId = useStore((s) => s.capturingScreenId);
+  const captureProgress = useStore((s) => s.captureProgress);
+  const isCapturing = id === capturingScreenId && captureProgress;
+  const [imageFailed, setImageFailed] = useState(false);
+  const hasImage = Boolean(image?.trim());
 
-  const handleSelect = useCallback(
-    (e) => {
-      if (e.button !== 0) return;
-      if (e.target.closest('.react-flow__handle')) return;
-      e.stopPropagation();
-      selectScreen(id);
-    },
-    [id, selectScreen]
-  );
+  useEffect(() => {
+    setImageFailed(false);
+  }, [image, imageVersion]);
 
   return (
     <div
-      className={`screen-node ${selected ? 'screen-node--selected' : ''} ${isExternal ? 'screen-node--external' : ''}`}
-      onPointerDown={handleSelect}
-      onClick={handleSelect}
+      className={`screen-node ${selected ? 'screen-node--selected' : ''} ${isExternal ? 'screen-node--external' : ''} ${isCapturing ? 'screen-node--capturing' : ''}`}
     >
       <Handle type="target" position={Position.Top} className="screen-node__handle" />
 
       <div className="screen-node__thumb">
-        {image ? (
+        {hasImage && !imageFailed ? (
           <img
-            src={`/screenshots/${image}`}
+            key={`${image}-${imageVersion}`}
+            src={screenshotUrl(image, imageVersion)}
             alt={label}
             className="screen-node__img"
             draggable={false}
+            onError={() => setImageFailed(true)}
           />
         ) : (
           <div className="screen-node__placeholder">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <rect x="3" y="3" width="18" height="18" rx="2" />
-              <circle cx="8.5" cy="8.5" r="1.5" />
-              <path d="m21 15-5-5L5 21" />
-            </svg>
+            <span className="screen-node__no-image">no image</span>
+          </div>
+        )}
+        {isCapturing && (
+          <div className="screen-node__capture-progress" role="status" aria-live="polite">
+            <div className="screen-node__capture-progress-header">
+              <span className="screen-node__capture-progress-label">{captureProgress.label}</span>
+              <span className="screen-node__capture-progress-percent">{captureProgress.percent}%</span>
+            </div>
+            <div
+              className="screen-node__capture-progress-track"
+              role="progressbar"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={captureProgress.percent}
+              aria-label={captureProgress.label}
+            >
+              <div
+                className="screen-node__capture-progress-bar"
+                style={{ width: `${captureProgress.percent}%` }}
+              />
+            </div>
           </div>
         )}
       </div>

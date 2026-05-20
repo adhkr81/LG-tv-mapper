@@ -25,7 +25,7 @@ const SCREENSHOTS_DIR = path.join(DATA_DIR, 'screenshots');
 
 const DEFAULT_BUTTON_SIZE = { width: 120, height: 60 };
 
-/** @typedef {{ id: string, name: string, rootScreenId: string | null }} Section */
+/** @typedef {{ id: string, name: string, rootScreenId: string | null, bandX?: number | null, bandY?: number | null }} Section */
 /** @typedef {{ graphX?: number, graphY?: number, sectionId?: string | null, buttonIds?: string[] }} ScreenMeta */
 /**
  * @typedef {Object} MapperButton
@@ -292,12 +292,45 @@ function normalizeMapperButton(screenId, btn) {
   });
 }
 
+const LAYOUT_NODE_W = 200;
+const LAYOUT_NODE_H = 185;
+const LAYOUT_COL_STEP = 220;
+const LAYOUT_ROW_STEP = 185;
+
+function positionsOverlapLayout(a, b) {
+  return (
+    Math.abs(a.x - b.x) < LAYOUT_NODE_W &&
+    Math.abs(a.y - b.y) < LAYOUT_NODE_H
+  );
+}
+
 function layoutForSection(screens, sectionId) {
   const inSection = screens.filter((s) => s.sectionId === sectionId);
-  const i = inSection.length;
-  const col = i % 4;
-  const row = Math.floor(i / 4);
-  return { graphX: col * 220, graphY: row * 185 };
+  const occupied = inSection.map((s) => ({
+    x: s.graphX ?? 0,
+    y: s.graphY ?? 0,
+  }));
+
+  for (let n = 0; n < 200; n += 1) {
+    const col = n % 4;
+    const row = Math.floor(n / 4);
+    const candidate = { graphX: col * LAYOUT_COL_STEP, graphY: row * LAYOUT_ROW_STEP };
+    const overlaps = occupied.some((p) =>
+      positionsOverlapLayout(
+        { x: candidate.graphX, y: candidate.graphY },
+        p
+      )
+    );
+    if (!overlaps) return candidate;
+  }
+
+  const maxX = occupied.length
+    ? Math.max(...occupied.map((p) => p.x))
+    : 0;
+  return {
+    graphX: maxX + 280,
+    graphY: inSection.length * LAYOUT_ROW_STEP,
+  };
 }
 
 function renameScreenIdInTargets(screens, oldId, newId) {
@@ -388,6 +421,11 @@ export function updateScreen(id, updates) {
     screens[idx].sectionId = updates.sectionId || null;
   }
   if (updates.preset !== undefined) screens[idx].preset = updates.preset;
+  if (updates.image !== undefined) {
+    screens[idx].image = updates.image;
+    screens[idx].img_filename =
+      stripImageExtension(updates.image) || screens[idx].id;
+  }
 
   const imageConfig = readMetaFile().config.imageSize;
   let sourceChanged = false;
@@ -599,6 +637,14 @@ export function updateSection(id, updates) {
   if (updates.name !== undefined) sections[idx].name = updates.name;
   if (updates.rootScreenId !== undefined) {
     sections[idx].rootScreenId = updates.rootScreenId || null;
+  }
+  if (updates.bandX !== undefined) {
+    sections[idx].bandX =
+      updates.bandX === null ? null : Math.round(Number(updates.bandX));
+  }
+  if (updates.bandY !== undefined) {
+    sections[idx].bandY =
+      updates.bandY === null ? null : Math.round(Number(updates.bandY));
   }
 
   writeAll(screens, sections);

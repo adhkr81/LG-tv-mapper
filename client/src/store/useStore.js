@@ -1,6 +1,10 @@
 import { create } from 'zustand';
 import * as api from '../api/client.js';
 import { DEFAULT_IMAGE_CONFIG, normalizeImageConfig } from '../utils/coords.js';
+import {
+  buildGraphPositionUpdates,
+  buildSectionBandUpdates,
+} from '../utils/graphFlow.js';
 
 const SECTION_STORAGE_KEY = 'lg-mapper-active-section';
 const BUTTON_RECT_CLIPBOARD_KEY = 'lg-mapper-button-rect-clipboard';
@@ -45,6 +49,8 @@ const useStore = create((set, get) => ({
   screens: [],
   sections: [],
   imageConfig: { ...DEFAULT_IMAGE_CONFIG },
+  /** Per-screen cache-bust counter when screenshot file is replaced (same filename). */
+  imageVersions: {},
 
   // UI state
   activeSectionId: (() => {
@@ -55,16 +61,28 @@ const useStore = create((set, get) => ({
     }
   })(),
   selectedScreenId: null,
+  selectedScreenIds: [],
   selectedButtonId: null,
   importCompareScreenId: null,
   importSourceButtonIds: [],
   buttonRectClipboard: loadButtonRectClipboard(),
   isCapturing: false,
+  capturingScreenId: null,
   captureProgress: null,
   isAddingHotspot: false,
   serialStatus: 'disconnected',
 
   // ---- Actions ----
+
+  bumpImageVersions: (screenIds) => {
+    const ids = (Array.isArray(screenIds) ? screenIds : [screenIds]).filter(Boolean);
+    if (!ids.length) return;
+    const imageVersions = { ...get().imageVersions };
+    for (const id of ids) {
+      imageVersions[id] = (imageVersions[id] ?? 0) + 1;
+    }
+    set({ imageVersions });
+  },
 
   fetchScreens: async () => {
     try {
@@ -146,6 +164,7 @@ const useStore = create((set, get) => ({
     const sectionId = get().activeSectionId;
     set({
       isCapturing: true,
+      capturingScreenId: screenId,
       captureProgress: { phase: 'requesting', percent: 0, label: 'Starting capture…' },
     });
     try {
@@ -162,21 +181,30 @@ const useStore = create((set, get) => ({
         captureProgress: { phase: 'complete', percent: 100, label: 'Done' },
       });
       await get().fetchScreens();
+      get().bumpImageVersions(screenId);
     } catch (err) {
       console.error('Capture failed:', err);
       await get().fetchSerialStatus();
       throw err;
     } finally {
-      set({ isCapturing: false, captureProgress: null });
+      set({ isCapturing: false, capturingScreenId: null, captureProgress: null });
     }
   },
 
   importScreen: async (screenId, file) => {
+    return get().importScreens([{ screenId, file }]);
+  },
+
+  importScreens: async (entries) => {
+    if (!entries?.length) return;
     const sectionId = get().activeSectionId;
     set({ isCapturing: true });
     try {
-      await api.importScreen(screenId, file, sectionId);
+      for (const { screenId, file } of entries) {
+        await api.importScreen(screenId, file, sectionId);
+      }
       await get().fetchScreens();
+      get().bumpImageVersions(entries.map((e) => e.screenId));
     } catch (err) {
       console.error('Import failed:', err);
       throw err;
@@ -269,16 +297,67 @@ const useStore = create((set, get) => ({
   },
 
   updateScreenGraphPosition: async (screenId, graphX, graphY) => {
-    const rounded = { graphX: Math.round(graphX), graphY: Math.round(graphY) };
+    return get().updateScreenGraphPositions([{ screenId, graphX, graphY }]);
+  },
+
+  updateScreenGraphPositions: async (updates) => {
+    if (!updates?.length) return;
+    const rounded = updates.map(({ screenId, graphX, graphY }) => ({
+      screenId,
+      graphX: Math.round(graphX),
+      graphY: Math.round(graphY),
+    }));
+    const byId = new Map(rounded.map((u) => [u.screenId, u]));
     set({
-      screens: get().screens.map((s) =>
-        s.id === screenId ? { ...s, ...rounded } : s
-      ),
+      screens: get().screens.map((s) => {
+        const patch = byId.get(s.id);
+        return patch ? { ...s, graphX: patch.graphX, graphY: patch.graphY } : s;
+      }),
     });
     try {
-      await api.updateScreen(screenId, rounded);
+      await Promise.all(
+        rounded.map(({ screenId, graphX, graphY }) =>
+          api.updateScreen(screenId, { graphX, graphY })
+        )
+      );
     } catch (err) {
-      console.error('Update graph position failed:', err);
+      console.error('Update graph positions failed:', err);
+      await get().fetchScreens();
+      throw err;
+    }
+  },
+
+  /** Save screen coords and (in All screens) each section's canvas band position. */
+  persistGraphLayoutFromNodes: async (nodes) => {
+    if (!nodes?.length) return;
+
+    const screenUpdates = buildGraphPositionUpdates(nodes);
+    if (screenUpdates.length) {
+      await get().updateScreenGraphPositions(screenUpdates);
+    }
+
+    if (get().activeSectionId != null) return;
+
+    const bandUpdates = buildSectionBandUpdates(nodes);
+    if (!bandUpdates.length) return;
+
+    set({
+      sections: get().sections.map((sec) => {
+        const patch = bandUpdates.find((b) => b.sectionId === sec.id);
+        return patch
+          ? { ...sec, bandX: patch.bandX, bandY: patch.bandY }
+          : sec;
+      }),
+    });
+
+    try {
+      await Promise.all(
+        bandUpdates.map(({ sectionId, bandX, bandY }) =>
+          api.updateSection(sectionId, { bandX, bandY })
+        )
+      );
+    } catch (err) {
+      console.error('Update section band positions failed:', err);
       await get().fetchScreens();
       throw err;
     }
@@ -290,7 +369,12 @@ const useStore = create((set, get) => ({
       await get().fetchScreens();
       // Update selection if we renamed the selected screen
       if (get().selectedScreenId === oldId) {
-        set({ selectedScreenId: newId });
+        set({
+          selectedScreenId: newId,
+          selectedScreenIds: get().selectedScreenIds.map((id) =>
+            id === oldId ? newId : id
+          ),
+        });
       }
     } catch (err) {
       console.error('Rename screen failed:', err);
@@ -299,21 +383,76 @@ const useStore = create((set, get) => ({
   },
 
   deleteScreen: async (screenId) => {
+    return get().deleteScreens([screenId]);
+  },
+
+  deleteScreens: async (screenIds) => {
+    const ids = [...new Set(screenIds)].filter(Boolean);
+    if (!ids.length) return;
     try {
-      await api.deleteScreen(screenId);
-      if (get().selectedScreenId === screenId) {
-        set({ selectedScreenId: null });
+      for (const id of ids) {
+        await api.deleteScreen(id);
       }
+      const removed = new Set(ids);
+      const remaining = get().selectedScreenIds.filter((id) => !removed.has(id));
+      set({
+        selectedScreenIds: remaining,
+        selectedScreenId: remaining.length ? remaining[remaining.length - 1] : null,
+        selectedButtonId: remaining.length ? get().selectedButtonId : null,
+      });
       await get().fetchScreens();
     } catch (err) {
-      console.error('Delete screen failed:', err);
+      console.error('Delete screens failed:', err);
       throw err;
     }
   },
 
-  selectScreen: (screenId) => {
+  selectScreen: (screenId, options = {}) => {
+    const { additive = false } = options;
+    if (!screenId) {
+      set({
+        selectedScreenId: null,
+        selectedScreenIds: [],
+        selectedButtonId: null,
+        isAddingHotspot: false,
+        importCompareScreenId: null,
+        importSourceButtonIds: [],
+      });
+      return;
+    }
+
+    let selectedScreenIds;
+    if (additive) {
+      const current = get().selectedScreenIds;
+      selectedScreenIds = current.includes(screenId)
+        ? current.filter((id) => id !== screenId)
+        : [...current, screenId];
+    } else {
+      selectedScreenIds = [screenId];
+    }
+
     set({
       selectedScreenId: screenId,
+      selectedScreenIds,
+      selectedButtonId: null,
+      isAddingHotspot: false,
+      importCompareScreenId: null,
+      importSourceButtonIds: [],
+    });
+  },
+
+  setSelectedScreenIds: (screenIds) => {
+    const ids = Array.isArray(screenIds) ? screenIds.filter(Boolean) : [];
+    const prev = get().selectedScreenIds;
+    if (
+      prev.length === ids.length &&
+      prev.every((id, i) => id === ids[i])
+    ) {
+      return;
+    }
+    set({
+      selectedScreenIds: ids,
+      selectedScreenId: ids.length ? ids[ids.length - 1] : null,
       selectedButtonId: null,
       isAddingHotspot: false,
       importCompareScreenId: null,

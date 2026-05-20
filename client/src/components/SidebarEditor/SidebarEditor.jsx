@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import useStore from '../../store/useStore.js';
 import { normalizeButton } from '../../utils/buttonRect.js';
 import { getSectionGraphScreens } from '../../utils/sectionGraph.js';
+import { screenshotUrl } from '../../utils/screenshotUrl.js';
 import ImageConfigSection from '../ImageConfig/ImageConfigSection.jsx';
 import '../SectionBar/SectionBar.css';
 import './SidebarEditor.css';
@@ -12,12 +13,13 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const sections = useStore((s) => s.sections);
   const activeSectionId = useStore((s) => s.activeSectionId);
   const selectedScreenId = useStore((s) => s.selectedScreenId);
+  const selectedScreenIds = useStore((s) => s.selectedScreenIds);
   const selectScreen = useStore((s) => s.selectScreen);
   const assignScreenToSection = useStore((s) => s.assignScreenToSection);
   const serialStatus = useStore((s) => s.serialStatus);
   const connectSerial = useStore((s) => s.connectSerial);
   const disconnectSerial = useStore((s) => s.disconnectSerial);
-  const deleteScreen = useStore((s) => s.deleteScreen);
+  const deleteScreens = useStore((s) => s.deleteScreens);
   const deleteButton = useStore((s) => s.deleteButton);
   const updateButton = useStore((s) => s.updateButton);
   const addButton = useStore((s) => s.addButton);
@@ -34,6 +36,9 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const copyButtonRect = useStore((s) => s.copyButtonRect);
 
   const screen = screens.find((s) => s.id === selectedScreenId);
+  const imageVersion = useStore((s) =>
+    selectedScreenId ? (s.imageVersions[selectedScreenId] ?? 0) : 0
+  );
   const activeSection = sections.find((s) => s.id === activeSectionId);
 
   const { primary, external } = useMemo(
@@ -149,7 +154,6 @@ export default function SidebarEditor({ mode = 'viewer' }) {
     if (!screen) return;
     try {
       const newButtonData = {
-        label: `Button ${screen.buttons.length + 1}`,
         ...(buttonRectClipboard
           ? { ...buttonRectClipboard }
           : { left: 10, top: 10, width: 50, height: 50 }),
@@ -315,6 +319,40 @@ export default function SidebarEditor({ mode = 'viewer' }) {
 
       {mode === 'graph' && <ImageConfigSection />}
 
+      {mode === 'graph' && selectedScreenIds.length > 0 && (
+        <div className="sidebar__section">
+          <div className="sidebar__section-title">
+            {selectedScreenIds.length === 1 ? 'Screen' : `Screens (${selectedScreenIds.length})`}
+          </div>
+          {selectedScreenIds.length === 1 ? (
+            <p className="sidebar__flow-screen-id">{selectedScreenIds[0]}</p>
+          ) : (
+            <ul className="sidebar__flow-screen-list">
+              {selectedScreenIds.map((id) => (
+                <li key={id}>{id}</li>
+              ))}
+            </ul>
+          )}
+          <p className="sidebar__flow-select-hint">
+            Ctrl+click or drag a box to multi-select. Drag selected nodes together.
+          </p>
+          <button
+            type="button"
+            className="btn btn-danger btn-sm sidebar__delete-btn"
+            onClick={() => {
+              const count = selectedScreenIds.length;
+              const label =
+                count === 1
+                  ? `"${selectedScreenIds[0]}"`
+                  : `${count} screens (${selectedScreenIds.join(', ')})`;
+              if (confirm(`Delete ${label}?`)) deleteScreens(selectedScreenIds);
+            }}
+          >
+            {selectedScreenIds.length === 1 ? 'Delete Screen' : `Delete ${selectedScreenIds.length} Screens`}
+          </button>
+        </div>
+      )}
+
       {activeSectionId && (
         <div className="sidebar__section">
           <div className="sidebar__section-title">
@@ -330,7 +368,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                 <button
                   key={s.id}
                   type="button"
-                  className={`sidebar__section-screen ${s.id === selectedScreenId ? 'sidebar__section-screen--active' : ''} ${s.id === activeSection?.rootScreenId ? 'sidebar__section-screen--root' : ''}`}
+                  className={`sidebar__section-screen ${selectedScreenIds.includes(s.id) ? 'sidebar__section-screen--active' : ''} ${s.id === activeSection?.rootScreenId ? 'sidebar__section-screen--root' : ''}`}
                   onClick={() => selectScreen(s.id)}
                 >
                   {s.id}
@@ -340,7 +378,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                 <button
                   key={s.id}
                   type="button"
-                  className={`sidebar__section-screen sidebar__section-screen--external ${s.id === selectedScreenId ? 'sidebar__section-screen--active' : ''}`}
+                  className={`sidebar__section-screen sidebar__section-screen--external ${selectedScreenIds.includes(s.id) ? 'sidebar__section-screen--active' : ''}`}
                   onClick={() => selectScreen(s.id)}
                   title="Outside this section (linked)"
                 >
@@ -391,14 +429,12 @@ export default function SidebarEditor({ mode = 'viewer' }) {
             )}
 
             <div className="sidebar__screen-image">
-              <img src={`/screenshots/${screen.image}`} alt={screen.id} />
+              <img
+                key={`${screen.image}-${imageVersion}`}
+                src={screenshotUrl(screen.image, imageVersion)}
+                alt={screen.id}
+              />
             </div>
-
-            <button className="btn btn-danger btn-sm sidebar__delete-btn" onClick={() => {
-              if (confirm(`Delete screen "${screen.id}"?`)) deleteScreen(screen.id);
-            }}>
-              Delete Screen
-            </button>
           </div>
 
           {/* Buttons list */}
@@ -582,7 +618,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
             </div>
           )}
         </>
-      ) : !isEditMode ? (
+      ) : !isEditMode && selectedScreenIds.length === 0 ? (
         <div className="sidebar__section sidebar__section--grow">
           <div className="sidebar__empty">
             Select a screen from the graph to edit its details and buttons.

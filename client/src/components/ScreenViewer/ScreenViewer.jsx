@@ -12,6 +12,7 @@ import {
   loadGraphOpenPreference,
   saveGraphOpenPreference,
 } from '../MiniGraph/miniGraphPreference.js';
+import { screenshotUrl } from '../../utils/screenshotUrl.js';
 import './ScreenViewer.css';
 
 function PaneCloseButton({ onClick, label }) {
@@ -315,6 +316,9 @@ function ComparePane({
   showPickHint = false,
   onHeaderClose,
 }) {
+  const imageVersion = useStore((s) =>
+    screen?.id ? (s.imageVersions[screen.id] ?? 0) : 0
+  );
   const [sourceSize, setSourceSize] = useState({
     width: screen?.sourceWidth || imageConfig.intrinsicWidth,
     height: screen?.sourceHeight || imageConfig.intrinsicHeight,
@@ -464,7 +468,8 @@ function ComparePane({
           onPointerDown={pickable ? handlePickStagePointerDown : undefined}
         >
           <img
-            src={`/screenshots/${screen.image}`}
+            key={`${screen.image}-${imageVersion}`}
+            src={screenshotUrl(screen.image, imageVersion)}
             alt={screen.id}
             className="screen-viewer__image"
             onClick={editable ? (e) => onImageClick(e, screen, setSourceSize) : undefined}

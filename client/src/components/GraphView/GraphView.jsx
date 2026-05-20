@@ -13,78 +13,278 @@ import useStore from '../../store/useStore.js';
 import { rectCenteredAt } from '../../utils/buttonRect.js';
 import {
   getNextNumericScreenId,
-  suggestScreenId,
+  suggestScreenIdForSection,
+  resolveImportScreenId,
 } from '../../utils/sectionGraph.js';
-import { buildSectionGraphFlow } from '../../utils/graphFlow.js';
+import {
+  buildGraphPositionUpdates,
+  buildSectionGraphFlow,
+  filterSelectionToNodes,
+  nextNewNodePosition,
+  toStoredGraphPosition,
+} from '../../utils/graphFlow.js';
 import './GraphView.css';
 
 const nodeTypes = { screenNode: ScreenNode };
 
-export default function GraphView() {
+export default function GraphView({ isActive = true }) {
   const screens = useStore((s) => s.screens);
+  const sections = useStore((s) => s.sections);
   const activeSectionId = useStore((s) => s.activeSectionId);
-  const importScreen = useStore((s) => s.importScreen);
+  const selectedScreenIds = useStore((s) => s.selectedScreenIds);
+  const setSelectedScreenIds = useStore((s) => s.setSelectedScreenIds);
+  const deleteScreens = useStore((s) => s.deleteScreens);
+  const importScreens = useStore((s) => s.importScreens);
   const captureScreen = useStore((s) => s.captureScreen);
   const addButton = useStore((s) => s.addButton);
-  const updateScreenGraphPosition = useStore((s) => s.updateScreenGraphPosition);
+  const updateScreenGraphPositions = useStore((s) => s.updateScreenGraphPositions);
+  const persistGraphLayoutFromNodes = useStore((s) => s.persistGraphLayoutFromNodes);
   const serialStatus = useStore((s) => s.serialStatus);
   const isCapturing = useStore((s) => s.isCapturing);
-  const captureProgress = useStore((s) => s.captureProgress);
+  const capturingScreenId = useStore((s) => s.capturingScreenId);
 
   const [showImportModal, setShowImportModal] = useState(false);
   const [showCaptureModal, setShowCaptureModal] = useState(false);
   const [newScreenId, setNewScreenId] = useState('');
-  const [importFile, setImportFile] = useState(null);
+  const [importFiles, setImportFiles] = useState([]);
   const fileInputRef = useRef(null);
   const flowRef = useRef(null);
+  const prevSectionRef = useRef(activeSectionId);
+  const dragSessionRef = useRef(null);
+  const dragSaveTimerRef = useRef(null);
 
-  const { nodes: initialNodes, edges: initialEdges, visibleScreens } = useMemo(
-    () => buildSectionGraphFlow(screens, activeSectionId),
-    [screens, activeSectionId]
+  const { nodes: initialNodes, edges: initialEdges } = useMemo(
+    () => buildSectionGraphFlow(screens, activeSectionId, sections),
+    [screens, activeSectionId, sections]
   );
 
+  const nodesRef = useRef(initialNodes);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
+  nodesRef.current = nodes;
+
+  const flushDragPositions = useCallback(() => {
+    const ids = dragSessionRef.current;
+    if (!ids?.size) return;
+
+    const current = nodesRef.current;
+    if (activeSectionId == null) {
+      void persistGraphLayoutFromNodes(current);
+    } else {
+      const updates = buildGraphPositionUpdates(
+        current.filter((n) => ids.has(n.id))
+      );
+      if (updates.length) {
+        void updateScreenGraphPositions(updates);
+      }
+    }
+    dragSessionRef.current = null;
+  }, [
+    activeSectionId,
+    persistGraphLayoutFromNodes,
+    updateScreenGraphPositions,
+  ]);
+
+  const scheduleDragPositionSave = useCallback(() => {
+    if (dragSaveTimerRef.current) {
+      clearTimeout(dragSaveTimerRef.current);
+    }
+    dragSaveTimerRef.current = setTimeout(() => {
+      dragSaveTimerRef.current = null;
+      flushDragPositions();
+    }, 0);
+  }, [flushDragPositions]);
+
+  const handleNodesChange = useCallback(
+    (changes) => {
+      onNodesChange(changes);
+      const dragEnded = changes.some(
+        (c) => c.type === 'position' && c.dragging === false
+      );
+      if (dragEnded && dragSessionRef.current?.size) {
+        scheduleDragPositionSave();
+      }
+    },
+    [onNodesChange, scheduleDragPositionSave]
+  );
+
   // Sync data when screens change; keep dragged positions until server state catches up
   useEffect(() => {
-    setNodes((current) =>
-      initialNodes.map((node) => {
-        const prev = current.find((n) => n.id === node.id);
+    const prevSection = prevSectionRef.current;
+    const sectionChanged = prevSection !== activeSectionId;
+    prevSectionRef.current = activeSectionId;
+
+    const enteringAllScreens = sectionChanged && activeSectionId == null;
+    const enteringSection = sectionChanged && activeSectionId != null;
+
+    // Leaving All screens: persist coords + section band anchors
+    if (sectionChanged && prevSection === null && nodesRef.current.length > 0) {
+      void persistGraphLayoutFromNodes(nodesRef.current);
+    }
+
+    // Leaving a section: persist section-local node positions
+    if (enteringAllScreens && prevSection != null && nodesRef.current.length > 0) {
+      void updateScreenGraphPositions(
+        buildGraphPositionUpdates(nodesRef.current)
+      );
+    }
+
+    const validSelected = filterSelectionToNodes(initialNodes, selectedScreenIds);
+    if (validSelected.length !== selectedScreenIds.length) {
+      setSelectedScreenIds(validSelected);
+      return;
+    }
+
+    const selected = new Set(validSelected);
+
+    setNodes((current) => {
+      const next = initialNodes.map((node) => {
+        const live = current.find((n) => n.id === node.id);
+        let position;
+
+        if (enteringAllScreens) {
+          // Use freshly computed band layout (includes per-section viewOffset)
+          position = node.position;
+        } else if (enteringSection && live) {
+          position = toStoredGraphPosition(live);
+        } else {
+          position = live?.position ?? node.position;
+        }
+
         return {
           ...node,
-          position: prev?.position ?? node.position,
+          position,
+          selected: selected.has(node.id),
         };
-      })
-    );
+      });
+
+      if (capturingScreenId && !next.some((n) => n.id === capturingScreenId)) {
+        const prev = current.find((n) => n.id === capturingScreenId);
+        next.push({
+          id: capturingScreenId,
+          type: 'screenNode',
+          position: prev?.position ?? nextNewNodePosition(next),
+          selected: selected.has(capturingScreenId),
+          data: {
+            label: capturingScreenId,
+            image: null,
+            buttonCount: 0,
+            isExternal: false,
+          },
+        });
+      }
+
+      return next;
+    });
     setEdges(initialEdges);
-  }, [initialNodes, initialEdges, setNodes, setEdges]);
+  }, [
+    initialNodes,
+    initialEdges,
+    capturingScreenId,
+    activeSectionId,
+    selectedScreenIds,
+    setSelectedScreenIds,
+    setNodes,
+    setEdges,
+  ]);
+
+  // Refit when switching sections or returning to the Flow tab
+  useEffect(() => {
+    if (!isActive || !flowRef.current || nodes.length === 0) return;
+    const t = setTimeout(() => flowRef.current?.fitView({ padding: 0.25 }), 120);
+    return () => clearTimeout(t);
+  }, [activeSectionId, isActive, nodes.length]);
+
+  // Extra fit when entering All screens (bands can be far from prior viewport)
+  useEffect(() => {
+    if (!isActive || activeSectionId != null || !flowRef.current || nodes.length === 0) {
+      return;
+    }
+    const t = setTimeout(() => flowRef.current?.fitView({ padding: 0.25 }), 200);
+    return () => clearTimeout(t);
+  }, [activeSectionId, isActive, nodes.length]);
 
   useEffect(() => {
-    if (!flowRef.current) return;
-    const t = setTimeout(() => flowRef.current?.fitView({ padding: 0.25 }), 80);
-    return () => clearTimeout(t);
-  }, [activeSectionId, visibleScreens.length]);
+    setSelectedScreenIds([]);
+  }, [activeSectionId, setSelectedScreenIds]);
+
+  useEffect(
+    () => () => {
+      if (dragSaveTimerRef.current) clearTimeout(dragSaveTimerRef.current);
+    },
+    []
+  );
+
+  const activeSection = sections.find((s) => s.id === activeSectionId);
 
   const openCaptureModal = () => {
-    setNewScreenId(getNextNumericScreenId(screens));
+    setNewScreenId(
+      activeSectionId && activeSection
+        ? suggestScreenIdForSection(activeSection, screens)
+        : getNextNumericScreenId(screens)
+    );
     setShowCaptureModal(true);
   };
 
   const openImportModal = () => {
-    setNewScreenId(
-      activeSectionId ? suggestScreenId(activeSectionId, screens) : ''
-    );
-    setImportFile(null);
+    setImportFiles([]);
     setShowImportModal(true);
   };
 
-  const onNodeDragStop = useCallback(
+  const addImportFiles = (fileList) => {
+    const images = [...fileList].filter((f) => f.type.startsWith('image/'));
+    if (!images.length) return;
+    setImportFiles(images);
+  };
+
+  const onNodeDragStart = useCallback(
     (_, node) => {
-      updateScreenGraphPosition(node.id, node.position.x, node.position.y);
+      const ids = new Set(selectedScreenIds);
+      nodesRef.current.forEach((n) => {
+        if (n.selected) ids.add(n.id);
+      });
+      ids.add(node.id);
+      dragSessionRef.current = ids;
     },
-    [updateScreenGraphPosition]
+    [selectedScreenIds]
   );
+
+  const onNodeDragStop = useCallback(() => {
+    if (!dragSessionRef.current?.size) return;
+    scheduleDragPositionSave();
+  }, [scheduleDragPositionSave]);
+
+  const onSelectionChange = useCallback(
+    ({ nodes: selectedNodes }) => {
+      setSelectedScreenIds(selectedNodes.map((n) => n.id));
+    },
+    [setSelectedScreenIds]
+  );
+
+  const confirmDeleteSelection = useCallback(() => {
+    if (!selectedScreenIds.length) return;
+    const count = selectedScreenIds.length;
+    const label =
+      count === 1
+        ? `"${selectedScreenIds[0]}"`
+        : `${count} screens (${selectedScreenIds.join(', ')})`;
+    if (confirm(`Delete ${label}?`)) {
+      deleteScreens(selectedScreenIds);
+    }
+  }, [selectedScreenIds, deleteScreens]);
+
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (e.key !== 'Delete' && e.key !== 'Backspace') return;
+      if (e.target.closest('input, textarea, select, [contenteditable="true"]')) return;
+      if (!selectedScreenIds.length) return;
+      e.preventDefault();
+      confirmDeleteSelection();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [selectedScreenIds, confirmDeleteSelection]);
 
   const isValidConnection = useCallback(
     (connection) => connection.source !== connection.target,
@@ -96,10 +296,8 @@ export default function GraphView() {
       const { source, target } = connection;
       if (!source || !target) return;
 
-      const label = `→ ${target}`;
       try {
         await addButton(source, {
-          label,
           target,
           ...rectCenteredAt(960, 540),
         });
@@ -110,13 +308,25 @@ export default function GraphView() {
     [addButton]
   );
 
+  const buildImportEntries = () => {
+    if (!importFiles.length) return [];
+
+    const assigned = new Set();
+    return importFiles.map((file) => {
+      const screenId = resolveImportScreenId(file.name, screens, assigned);
+      assigned.add(screenId);
+      return { screenId, file };
+    });
+  };
+
   const handleImport = async () => {
-    if (!newScreenId.trim() || !importFile) return;
+    const entries = buildImportEntries();
+    if (!entries.length) return;
+
     try {
-      await importScreen(newScreenId.trim(), importFile);
+      await importScreens(entries);
       setShowImportModal(false);
-      setNewScreenId('');
-      setImportFile(null);
+      setImportFiles([]);
     } catch (err) {
       alert('Import failed: ' + err.message);
     }
@@ -124,17 +334,20 @@ export default function GraphView() {
 
   const handleCapture = async () => {
     if (!newScreenId.trim()) return;
+    const screenId = newScreenId.trim();
+    setShowCaptureModal(false);
+    setNewScreenId('');
     try {
-      await captureScreen(newScreenId.trim());
-      setShowCaptureModal(false);
-      setNewScreenId('');
+      await captureScreen(screenId);
     } catch (err) {
       alert('Capture failed: ' + err.message);
     }
   };
 
+  const flowKey = activeSectionId ?? 'all';
+
   return (
-    <div className="graph-view">
+    <div className={`graph-view ${isActive ? '' : 'graph-view--inactive'}`}>
       <SectionBar />
 
       <div className="graph-view__toolbar">
@@ -176,19 +389,24 @@ export default function GraphView() {
 
       {/* React Flow Canvas */}
       <ReactFlow
+        key={flowKey}
         nodes={nodes}
         edges={edges}
-        onNodesChange={onNodesChange}
+        onNodesChange={handleNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         isValidConnection={isValidConnection}
+        onNodeDragStart={onNodeDragStart}
         onNodeDragStop={onNodeDragStop}
+        onSelectionChange={onSelectionChange}
+        onPaneClick={() => setSelectedScreenIds([])}
         onInit={(instance) => { flowRef.current = instance; }}
         nodeTypes={nodeTypes}
-        elementsSelectable={false}
         nodesFocusable={false}
+        selectionOnDrag
+        panOnDrag={[1, 2]}
+        multiSelectionKeyCode={['Control', 'Meta']}
         defaultEdgeOptions={{ interactionWidth: 0 }}
-        selectNodesOnDrag={false}
         fitView
         fitViewOptions={{ padding: 0.2 }}
         className="graph-view__canvas"
@@ -202,57 +420,75 @@ export default function GraphView() {
       {showImportModal && (
         <div className="modal-overlay" onClick={() => setShowImportModal(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <h3 className="modal__title">Import Screenshot</h3>
+            <h3 className="modal__title">
+              {importFiles.length > 1 ? 'Import Screenshots' : 'Import Screenshot'}
+            </h3>
             {activeSectionId && (
-              <p className="graph-view__section-note">Adds to section: {activeSectionId}</p>
+              <p className="graph-view__section-note">
+                Adds to section: {activeSection?.name || activeSectionId}
+              </p>
             )}
 
-            <div className="modal__field">
-              <label className="label">Screen Name</label>
-              <input
-                className="input"
-                value={newScreenId}
-                onChange={(e) => setNewScreenId(e.target.value)}
-                placeholder="e.g. home, settings, apps"
-                autoFocus
-              />
-            </div>
+            <p className="graph-view__import-hint">
+              Screen names are taken from each filename.
+            </p>
 
             <div className="modal__field">
-              <label className="label">Screenshot File</label>
+              <label className="label">
+                {importFiles.length > 1 ? 'Screenshot Files' : 'Screenshot File'}
+              </label>
               <div
                 className="modal__dropzone"
                 onClick={() => fileInputRef.current?.click()}
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={(e) => {
                   e.preventDefault();
-                  const f = e.dataTransfer.files[0];
-                  if (f) setImportFile(f);
+                  addImportFiles(e.dataTransfer.files);
                 }}
               >
-                {importFile ? (
-                  <span className="modal__filename">{importFile.name}</span>
+                {importFiles.length === 0 ? (
+                  <span>Drop images here or click to browse</span>
+                ) : importFiles.length === 1 ? (
+                  <span className="modal__filename">{importFiles[0].name}</span>
                 ) : (
-                  <span>Drop image here or click to browse</span>
+                  <ul className="modal__file-list">
+                    {importFiles.map((f) => (
+                      <li key={`${f.name}-${f.size}-${f.lastModified}`}>{f.name}</li>
+                    ))}
+                  </ul>
                 )}
                 <input
                   ref={fileInputRef}
                   type="file"
                   accept="image/*"
+                  multiple
                   style={{ display: 'none' }}
-                  onChange={(e) => setImportFile(e.target.files[0] || null)}
+                  onChange={(e) => {
+                    addImportFiles(e.target.files);
+                    e.target.value = '';
+                  }}
                 />
               </div>
             </div>
 
             <div className="modal__actions">
-              <button className="btn" onClick={() => setShowImportModal(false)}>Cancel</button>
+              <button
+                className="btn"
+                onClick={() => setShowImportModal(false)}
+                disabled={isCapturing}
+              >
+                Cancel
+              </button>
               <button
                 className="btn btn-accent"
                 onClick={handleImport}
-                disabled={!newScreenId.trim() || !importFile}
+                disabled={isCapturing || importFiles.length === 0}
               >
-                Import
+                {isCapturing
+                  ? 'Importing…'
+                  : importFiles.length > 1
+                    ? `Import ${importFiles.length} screenshots`
+                    : 'Import'}
               </button>
             </div>
           </div>
@@ -270,7 +506,9 @@ export default function GraphView() {
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h3 className="modal__title">Capture from TV</h3>
             {activeSectionId && (
-              <p className="graph-view__section-note">Adds to section: {activeSectionId}</p>
+              <p className="graph-view__section-note">
+                Adds to section: {activeSection?.name || activeSectionId}
+              </p>
             )}
 
             <div className="modal__field">
@@ -279,33 +517,15 @@ export default function GraphView() {
                 className="input"
                 value={newScreenId}
                 onChange={(e) => setNewScreenId(e.target.value)}
-                placeholder="e.g. 1, 2, 3"
+                placeholder={
+                  activeSectionId
+                    ? 'e.g. SectionName_01, SectionName_02'
+                    : 'e.g. 1, 2, 3'
+                }
                 autoFocus
                 disabled={isCapturing}
               />
             </div>
-
-            {isCapturing && captureProgress && (
-              <div className="capture-progress" role="status" aria-live="polite">
-                <div className="capture-progress__header">
-                  <span className="capture-progress__label">{captureProgress.label}</span>
-                  <span className="capture-progress__percent">{captureProgress.percent}%</span>
-                </div>
-                <div
-                  className="capture-progress__track"
-                  role="progressbar"
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                  aria-valuenow={captureProgress.percent}
-                  aria-label={captureProgress.label}
-                >
-                  <div
-                    className="capture-progress__bar"
-                    style={{ width: `${captureProgress.percent}%` }}
-                  />
-                </div>
-              </div>
-            )}
 
             <div className="modal__actions">
               <button

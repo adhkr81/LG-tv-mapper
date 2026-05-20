@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { v4 as uuid } from 'uuid';
-import { getScreenshotsDir, createScreen, getScreen } from './screens.js';
+import { registerScreenshotImport } from './capture.js';
 import config from '../config.js';
 
 let watcher = null;
@@ -74,19 +73,8 @@ function importFromUSB(filePath, filename) {
     // Generate screen ID from filename (without extension)
     const screenId = path.parse(filename).name;
 
-    // Check if screen already exists
-    if (getScreen(screenId)) {
-      console.log(`[USBWatcher] Screen "${screenId}" already exists, skipping import`);
-      return;
-    }
-
-    // Copy to screenshots directory
-    const destPath = path.join(getScreenshotsDir(), filename);
-    fs.copyFileSync(filePath, destPath);
-
-    // Create screen record
-    createScreen({ id: screenId, image: filename });
-    console.log(`[USBWatcher] ✓ Auto-imported: ${screenId}`);
+    registerScreenshotImport(screenId, filePath);
+    console.log(`[USBWatcher] ✓ Imported screenshot for: ${screenId}`);
 
     // Optional: delete from watch folder
     try {

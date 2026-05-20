@@ -22,12 +22,13 @@ function scheduleFitView(instance) {
 
 export default function MiniGraph({ onClose }) {
   const screens = useStore((s) => s.screens);
+  const sections = useStore((s) => s.sections);
   const activeSectionId = useStore((s) => s.activeSectionId);
   const selectScreen = useStore((s) => s.selectScreen);
 
   const { nodes: initialNodes, edges: initialEdges } = useMemo(
-    () => buildSectionGraphFlow(screens, activeSectionId),
-    [screens, activeSectionId]
+    () => buildSectionGraphFlow(screens, activeSectionId, sections),
+    [screens, activeSectionId, sections]
   );
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);

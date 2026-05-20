@@ -54,4 +54,14 @@
   flex: 1;
   overflow: hidden;
   display: flex;
+  position: relative;
+}
+
+.app__panel-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+  background: var(--bg-primary);
 }

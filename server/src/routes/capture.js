@@ -2,8 +2,12 @@ import { Router } from 'express';
 import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { captureFromTV, captureFromTVStream, importScreenshot } from '../services/capture.js';
-import { createScreen, getScreenshotsDir } from '../services/screens.js';
+import {
+  captureFromTV,
+  captureFromTVStream,
+  registerScreenshotImport,
+} from '../services/capture.js';
+import { createScreen, getScreen, updateScreen } from '../services/screens.js';
 import { ensureConnected, getStatus } from '../services/serial.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -52,7 +56,10 @@ router.post('/', async (req, res) => {
       label: 'Registering screen…',
     });
 
-    const screen = createScreen({ id: screenId, image: filename, sectionId: sectionId || null });
+    const existing = getScreen(screenId);
+    const screen = existing
+      ? updateScreen(screenId, { image: filename })
+      : createScreen({ id: screenId, image: filename, sectionId: sectionId || null });
     const result = { ...screen, serialStatus: getStatus().status };
 
     if (streamProgress) {
@@ -81,8 +88,9 @@ router.post('/import', upload.single('file'), (req, res) => {
       return res.status(400).json({ error: 'screenId and file are required' });
     }
 
-    const filename = importScreenshot(screenId, req.file.path);
-    const screen = createScreen({ id: screenId, image: filename, sectionId: sectionId || null });
+    const screen = registerScreenshotImport(screenId, req.file.path, {
+      sectionId: sectionId || null,
+    });
     res.json(screen);
   } catch (err) {
     res.status(500).json({ error: err.message });

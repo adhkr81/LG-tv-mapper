@@ -36,7 +36,7 @@ export default function App() {
             <line x1="7.5" y1="7.5" x2="10.5" y2="16.5" />
             <line x1="16.5" y1="7.5" x2="13.5" y2="16.5" />
           </svg>
-          Graph
+          Flow
         </button>
         <button
           className={`app__tab ${activePanel === 'viewer' ? 'app__tab--active' : ''}`}
@@ -47,7 +47,7 @@ export default function App() {
             <circle cx="8.5" cy="8.5" r="1.5" />
             <path d="m21 15-5-5L5 21" />
           </svg>
-          Viewer
+          Screen
         </button>
         <button
           className={`app__tab ${activePanel === 'preview' ? 'app__tab--active' : ''}`}
@@ -64,9 +64,17 @@ export default function App() {
       {/* Main content area */}
       <div className="app__content">
         <div className="app__main">
-          {activePanel === 'graph' && <GraphView />}
-          {activePanel === 'preview' && <ScreenPreview />}
-          {activePanel === 'viewer' && <ScreenViewer />}
+          <GraphView isActive={activePanel === 'graph'} />
+          {activePanel === 'preview' && (
+            <div className="app__panel-overlay">
+              <ScreenPreview />
+            </div>
+          )}
+          {activePanel === 'viewer' && (
+            <div className="app__panel-overlay">
+              <ScreenViewer />
+            </div>
+          )}
         </div>
         <SidebarEditor mode={activePanel} />
       </div>
