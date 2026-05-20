@@ -5,7 +5,6 @@ import {
   Controls,
   useNodesState,
   useEdgesState,
-  MarkerType,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import ScreenNode from './ScreenNode.jsx';
@@ -13,24 +12,13 @@ import SectionBar from '../SectionBar/SectionBar.jsx';
 import useStore from '../../store/useStore.js';
 import { rectCenteredAt } from '../../utils/buttonRect.js';
 import {
-  getSectionGraphScreens,
   getNextNumericScreenId,
   suggestScreenId,
 } from '../../utils/sectionGraph.js';
+import { buildSectionGraphFlow } from '../../utils/graphFlow.js';
 import './GraphView.css';
 
 const nodeTypes = { screenNode: ScreenNode };
-
-function defaultNodePosition(index) {
-  return { x: (index % 4) * 220, y: Math.floor(index / 4) * 185 };
-}
-
-function getSavedPosition(screen, index) {
-  if (screen.graphX != null && screen.graphY != null) {
-    return { x: screen.graphX, y: screen.graphY };
-  }
-  return defaultNodePosition(index);
-}
 
 export default function GraphView() {
   const screens = useStore((s) => s.screens);
@@ -50,86 +38,10 @@ export default function GraphView() {
   const fileInputRef = useRef(null);
   const flowRef = useRef(null);
 
-  const { primary, external } = useMemo(
-    () => getSectionGraphScreens(screens, activeSectionId),
+  const { nodes: initialNodes, edges: initialEdges, visibleScreens } = useMemo(
+    () => buildSectionGraphFlow(screens, activeSectionId),
     [screens, activeSectionId]
   );
-
-  const visibleScreens = useMemo(
-    () => [...primary, ...external],
-    [primary, external]
-  );
-
-  const externalIds = useMemo(
-    () => new Set(external.map((s) => s.id)),
-    [external]
-  );
-
-  const maxPrimaryX = useMemo(() => {
-    if (primary.length === 0) return 0;
-    return Math.max(...primary.map((s, i) => getSavedPosition(s, i).x));
-  }, [primary]);
-
-  // Build React Flow nodes from visible screens
-  const initialNodes = useMemo(() => {
-    return visibleScreens.map((screen, i) => {
-      const isExternal = externalIds.has(screen.id);
-      let position = getSavedPosition(screen, i);
-      if (isExternal && activeSectionId) {
-        const extIndex = external.findIndex((s) => s.id === screen.id);
-        position = {
-          x: maxPrimaryX + 280,
-          y: extIndex * 185,
-        };
-      }
-      return {
-        id: screen.id,
-        type: 'screenNode',
-        position,
-        data: {
-          label: screen.id,
-          image: screen.image,
-          buttonCount: screen.buttons.length,
-          isExternal,
-        },
-      };
-    });
-  }, [visibleScreens, externalIds, activeSectionId, maxPrimaryX, external]);
-
-  // Build edges from button targets (within visible set)
-  const initialEdges = useMemo(() => {
-    const edges = [];
-    const screenIds = new Set(visibleScreens.map((s) => s.id));
-
-    visibleScreens.forEach((screen) => {
-      screen.buttons.forEach((btn) => {
-        if (btn.target && screenIds.has(btn.target)) {
-          const crossSection = externalIds.has(screen.id) || externalIds.has(btn.target);
-          edges.push({
-            id: `e-${btn.id}`,
-            source: screen.id,
-            target: btn.target,
-            label: btn.label,
-            animated: !crossSection,
-            style: {
-              stroke: crossSection ? '#ffab00' : '#00e5ff',
-              strokeWidth: 2,
-              strokeDasharray: crossSection ? '6 4' : undefined,
-            },
-            labelStyle: { fill: '#8a8a9e', fontSize: 11 },
-            markerEnd: {
-              type: MarkerType.ArrowClosed,
-              color: crossSection ? '#ffab00' : '#00e5ff',
-              width: 16,
-              height: 16,
-            },
-          });
-        }
-      });
-    });
-
-    return edges;
-  }, [visibleScreens, externalIds]);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);

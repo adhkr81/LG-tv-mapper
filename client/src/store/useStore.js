@@ -57,7 +57,7 @@ const useStore = create((set, get) => ({
   selectedScreenId: null,
   selectedButtonId: null,
   importCompareScreenId: null,
-  importSourceButtonId: null,
+  importSourceButtonIds: [],
   buttonRectClipboard: loadButtonRectClipboard(),
   isCapturing: false,
   captureProgress: null,
@@ -317,16 +317,40 @@ const useStore = create((set, get) => ({
       selectedButtonId: null,
       isAddingHotspot: false,
       importCompareScreenId: null,
-      importSourceButtonId: null,
+      importSourceButtonIds: [],
     });
   },
 
   setImportCompareScreenId: (screenId) => {
-    set({ importCompareScreenId: screenId || null, importSourceButtonId: null });
+    set({ importCompareScreenId: screenId || null, importSourceButtonIds: [] });
   },
 
-  setImportSourceButtonId: (buttonId) => {
-    set({ importSourceButtonId: buttonId || null });
+  setImportSourceButtonIds: (buttonIds) => {
+    set({
+      importSourceButtonIds: Array.isArray(buttonIds) ? buttonIds : [],
+    });
+  },
+
+  toggleImportSourceButtonId: (buttonId) => {
+    if (!buttonId) return;
+    const ids = get().importSourceButtonIds;
+    set({
+      importSourceButtonIds: ids.includes(buttonId)
+        ? ids.filter((id) => id !== buttonId)
+        : [...ids, buttonId],
+    });
+  },
+
+  selectImportSourceButton: (buttonId, { additive = false } = {}) => {
+    if (!buttonId) {
+      set({ importSourceButtonIds: [] });
+      return;
+    }
+    if (additive) {
+      get().toggleImportSourceButtonId(buttonId);
+      return;
+    }
+    set({ importSourceButtonIds: [buttonId] });
   },
 
   selectButton: (buttonId) => {

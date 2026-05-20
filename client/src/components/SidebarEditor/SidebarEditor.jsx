@@ -28,8 +28,8 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const selectButton = useStore((s) => s.selectButton);
   const importCompareScreenId = useStore((s) => s.importCompareScreenId);
   const setImportCompareScreenId = useStore((s) => s.setImportCompareScreenId);
-  const importSourceButtonId = useStore((s) => s.importSourceButtonId);
-  const setImportSourceButtonId = useStore((s) => s.setImportSourceButtonId);
+  const importSourceButtonIds = useStore((s) => s.importSourceButtonIds);
+  const setImportSourceButtonIds = useStore((s) => s.setImportSourceButtonIds);
   const buttonRectClipboard = useStore((s) => s.buttonRectClipboard);
   const copyButtonRect = useStore((s) => s.copyButtonRect);
 
@@ -89,8 +89,6 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const [popoverUIOpen, setPopoverUIOpen] = useState({});
   const [isImportingButtons, setIsImportingButtons] = useState(false);
   const [importIncludeTargets, setImportIncludeTargets] = useState(true);
-  const [importAllButtons, setImportAllButtons] = useState(true);
-
   useEffect(() => {
     if (screen) setNameValue(screen.id);
   }, [screen?.id]);
@@ -98,10 +96,6 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   useEffect(() => {
     setImportCompareScreenId(null);
   }, [screen?.id, setImportCompareScreenId]);
-
-  useEffect(() => {
-    if (importSourceButtonId) setImportAllButtons(false);
-  }, [importSourceButtonId]);
 
   const handleRename = async () => {
     if (!nameValue.trim() || nameValue === screen.id) {
@@ -171,24 +165,17 @@ export default function SidebarEditor({ mode = 'viewer' }) {
     const source = screens.find((s) => s.id === importCompareScreenId);
     if (!source?.buttons.length) return;
 
-    if (!importAllButtons && !importSourceButtonId) {
-      alert('Select a button on the import screen (right panel), or enable Import all.');
+    if (!importSourceButtonIds.length) {
+      alert('Select buttons on the import screen (right panel): drag an area or Ctrl+click.');
       return;
     }
 
-    const count = importAllButtons ? source.buttons.length : 1;
-    const selectedSourceBtn = importSourceButtonId
-      ? source.buttons.find((b) => b.id === importSourceButtonId)
-      : null;
-    const buttonLabel =
-      !importAllButtons && selectedSourceBtn
-        ? selectedSourceBtn.target || selectedSourceBtn.label || 'button'
-        : null;
+    const count = importSourceButtonIds.length;
 
     const message =
       screen.buttons.length > 0
-        ? `Import ${count} button${count === 1 ? '' : 's'}${buttonLabel ? ` (${buttonLabel})` : ''} from "${importCompareScreenId}"? They will be added to the ${screen.buttons.length} existing button${screen.buttons.length === 1 ? '' : 's'} on this screen.`
-        : `Import ${count} button${count === 1 ? '' : 's'}${buttonLabel ? ` (${buttonLabel})` : ''} from "${importCompareScreenId}"?`;
+        ? `Import ${count} button${count === 1 ? '' : 's'} from "${importCompareScreenId}"? They will be added to the ${screen.buttons.length} existing button${screen.buttons.length === 1 ? '' : 's'} on this screen.`
+        : `Import ${count} button${count === 1 ? '' : 's'} from "${importCompareScreenId}"?`;
 
     if (!confirm(message)) return;
 
@@ -196,12 +183,9 @@ export default function SidebarEditor({ mode = 'viewer' }) {
     try {
       await importButtonsFromScreen(screen.id, importCompareScreenId, {
         includeTargets: importIncludeTargets,
-        buttonIds: importAllButtons ? null : [importSourceButtonId],
+        buttonIds: importSourceButtonIds,
       });
-      if (importAllButtons) {
-        setImportCompareScreenId(null);
-      }
-      setImportSourceButtonId(null);
+      setImportSourceButtonIds([]);
     } catch (err) {
       alert('Import failed: ' + err.message);
     } finally {
@@ -212,7 +196,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const importDisabled =
     !importCompareScreenId ||
     isImportingButtons ||
-    (!importAllButtons && !importSourceButtonId);
+    importSourceButtonIds.length === 0;
 
   const handlePopoverToggle = async (buttonId, hasPopover) => {
     if (hasPopover) {
@@ -309,34 +293,20 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                 {isImportingButtons ? 'Importing…' : 'Import'}
               </button>
             </div>
-            <div className="sidebar__import-options">
-              <label className="sidebar__import-targets">
-                <input
-                  type="checkbox"
-                  checked={importAllButtons}
-                  onChange={(e) => {
-                    setImportAllButtons(e.target.checked);
-                    if (e.target.checked) setImportSourceButtonId(null);
-                  }}
-                  disabled={isImportingButtons}
-                />
-                <span>Import all</span>
-              </label>
-              <label className="sidebar__import-targets">
-                <input
-                  type="checkbox"
-                  checked={importIncludeTargets}
-                  onChange={(e) => setImportIncludeTargets(e.target.checked)}
-                  disabled={isImportingButtons}
-                />
-                <span>Import targets</span>
-              </label>
-            </div>
-            {importCompareScreenId && !importAllButtons && (
+            <label className="sidebar__import-targets">
+              <input
+                type="checkbox"
+                checked={importIncludeTargets}
+                onChange={(e) => setImportIncludeTargets(e.target.checked)}
+                disabled={isImportingButtons}
+              />
+              <span>Import targets</span>
+            </label>
+            {importCompareScreenId && (
               <p className="sidebar__import-pick-hint">
-                {importSourceButtonId
-                  ? '1 button selected in the right panel. Click Import to add it.'
-                  : 'Click a button on the right panel to import it.'}
+                {importSourceButtonIds.length > 0
+                  ? `${importSourceButtonIds.length} button${importSourceButtonIds.length === 1 ? '' : 's'} selected on the import screen.`
+                  : 'Drag on the import screen to select an area, or Ctrl+click buttons.'}
               </p>
             )}
           </div>

@@ -13,6 +13,7 @@ function ScreenNode({ id, data }) {
     (e) => {
       if (e.button !== 0) return;
       if (e.target.closest('.react-flow__handle')) return;
+      e.stopPropagation();
       selectScreen(id);
     },
     [id, selectScreen]
@@ -22,6 +23,7 @@ function ScreenNode({ id, data }) {
     <div
       className={`screen-node ${selected ? 'screen-node--selected' : ''} ${isExternal ? 'screen-node--external' : ''}`}
       onPointerDown={handleSelect}
+      onClick={handleSelect}
     >
       <Handle type="target" position={Position.Top} className="screen-node__handle" />
 

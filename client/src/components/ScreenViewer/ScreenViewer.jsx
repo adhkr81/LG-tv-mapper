@@ -7,7 +7,75 @@ import {
   toIntrinsicRect,
   toSourceRect,
 } from '../../utils/coords.js';
+import MiniGraph from '../MiniGraph/MiniGraph.jsx';
+import {
+  loadGraphOpenPreference,
+  saveGraphOpenPreference,
+} from '../MiniGraph/miniGraphPreference.js';
 import './ScreenViewer.css';
+
+function PaneCloseButton({ onClick, label }) {
+  return (
+    <button
+      type="button"
+      className="screen-viewer__pane-close"
+      onClick={onClick}
+      title={label}
+      aria-label={label}
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+  );
+}
+
+/** Sidebar map: panel + linked nodes (screen flow navigator). */
+function GraphNavIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="3" y="4" width="6" height="16" rx="1" />
+      <circle cx="17" cy="8" r="2" />
+      <circle cx="17" cy="16" r="2" />
+      <line x1="9" y1="12" x2="15" y2="8" />
+      <line x1="9" y1="12" x2="15" y2="16" />
+    </svg>
+  );
+}
+
+const MARQUEE_DRAG_THRESHOLD = 4;
+
+function rectsIntersect(a, b) {
+  return !(
+    a.left + a.width < b.left ||
+    b.left + b.width < a.left ||
+    a.top + a.height < b.top ||
+    b.top + b.height < a.top
+  );
+}
+
+function normalizeMarqueeRect(a, b) {
+  const left = Math.min(a.x, b.x);
+  const top = Math.min(a.y, b.y);
+  const right = Math.max(a.x, b.x);
+  const bottom = Math.max(a.y, b.y);
+  return {
+    left,
+    top,
+    width: right - left,
+    height: bottom - top,
+  };
+}
+
+function clientToSourcePoint(clientX, clientY, stage, imageSize) {
+  const stageRect = stage.getBoundingClientRect();
+  const { scaleX, scaleY } = getStageScale(stage, imageSize);
+  return {
+    x: (clientX - stageRect.left) * scaleX,
+    y: (clientY - stageRect.top) * scaleY,
+  };
+}
 
 const MIN_HOTSPOT_SIZE = 20;
 
@@ -16,6 +84,7 @@ export default function ScreenViewer() {
   const selectedScreenId = useStore((s) => s.selectedScreenId);
   const selectedButtonId = useStore((s) => s.selectedButtonId);
   const importCompareScreenId = useStore((s) => s.importCompareScreenId);
+  const setImportCompareScreenId = useStore((s) => s.setImportCompareScreenId);
   const selectButton = useStore((s) => s.selectButton);
   const isAddingHotspot = useStore((s) => s.isAddingHotspot);
   const setAddingHotspot = useStore((s) => s.setAddingHotspot);
@@ -24,8 +93,25 @@ export default function ScreenViewer() {
   const imageConfig = useStore((s) => s.imageConfig);
   const reportScreenSourceSize = useStore((s) => s.reportScreenSourceSize);
   const buttonRectClipboard = useStore((s) => s.buttonRectClipboard);
-  const importSourceButtonId = useStore((s) => s.importSourceButtonId);
-  const setImportSourceButtonId = useStore((s) => s.setImportSourceButtonId);
+  const importSourceButtonIds = useStore((s) => s.importSourceButtonIds);
+  const setImportSourceButtonIds = useStore((s) => s.setImportSourceButtonIds);
+  const toggleImportSourceButtonId = useStore((s) => s.toggleImportSourceButtonId);
+  const selectImportSourceButton = useStore((s) => s.selectImportSourceButton);
+
+  const [graphOpen, setGraphOpen] = useState(loadGraphOpenPreference);
+
+  const toggleGraph = useCallback(() => {
+    setGraphOpen((open) => {
+      const next = !open;
+      saveGraphOpenPreference(next);
+      return next;
+    });
+  }, []);
+
+  const closeGraph = useCallback(() => {
+    setGraphOpen(false);
+    saveGraphOpenPreference(false);
+  }, []);
 
   const screen = screens.find((s) => s.id === selectedScreenId);
   const compareScreen = importCompareScreenId
@@ -98,92 +184,113 @@ export default function ScreenViewer() {
     [isAddingHotspot, isCompareMode, addButton, setAddingHotspot, imageConfig, placementSize]
   );
 
-  if (!screen) {
-    return (
-      <div className="screen-viewer screen-viewer--empty">
-        <div className="screen-viewer__empty-state">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
-            <rect x="2" y="3" width="20" height="14" rx="2" />
-            <path d="M8 21h8M12 17v4" />
-          </svg>
-          <p>Select a screen node from the graph</p>
-          <p className="screen-viewer__empty-hint">or capture / import a new one</p>
-        </div>
-      </div>
-    );
-  }
+  const canvasContent = !screen ? (
+    <div className="screen-viewer__empty-state">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+        <rect x="2" y="3" width="20" height="14" rx="2" />
+        <path d="M8 21h8M12 17v4" />
+      </svg>
+      <p>Select a screen from the graph</p>
+      <p className="screen-viewer__empty-hint">or capture / import a new one in Graph mode</p>
+    </div>
+  ) : isCompareMode ? (
+    <div className="screen-viewer__compare">
+      <ComparePane
+        label={`Current — ${screen.id}`}
+        screen={screen}
+        imageConfig={imageConfig}
+        editable
+        selectedButtonId={selectedButtonId}
+        isAddingHotspot={false}
+        onSelectButton={() => selectButton(null)}
+        onSelectHotspot={selectButton}
+        onHotspotUpdate={handleHotspotUpdate}
+        onImageClick={handleImageClick}
+        reportSourceSize={reportScreenSourceSize}
+      />
+      <div className="screen-viewer__compare-divider" aria-hidden="true" />
+      <ComparePane
+        label={`Import from — ${compareScreen.id}`}
+        screen={compareScreen}
+        imageConfig={imageConfig}
+        editable={false}
+        pickable
+        selectedButtonIds={importSourceButtonIds}
+        isAddingHotspot={false}
+        onClearPick={() => setImportSourceButtonIds([])}
+        onPickButton={(buttonId, { additive }) =>
+          additive
+            ? toggleImportSourceButtonId(buttonId)
+            : selectImportSourceButton(buttonId)
+        }
+        onPickButtons={(buttonIds, { additive }) => {
+          if (additive) {
+            const merged = new Set([...importSourceButtonIds, ...buttonIds]);
+            setImportSourceButtonIds([...merged]);
+          } else {
+            setImportSourceButtonIds(buttonIds);
+          }
+        }}
+        onHotspotUpdate={() => {}}
+        onImageClick={() => {}}
+        reportSourceSize={null}
+        showPickHint
+        onHeaderClose={() => setImportCompareScreenId(null)}
+      />
+    </div>
+  ) : (
+    <ComparePane
+      label={null}
+      screen={screen}
+      imageConfig={imageConfig}
+      editable
+      selectedButtonId={selectedButtonId}
+      isAddingHotspot={isAddingHotspot}
+      onSelectButton={() => selectButton(null)}
+      onSelectHotspot={selectButton}
+      onHotspotUpdate={handleHotspotUpdate}
+      onImageClick={handleImageClick}
+      reportSourceSize={reportScreenSourceSize}
+    />
+  );
 
   return (
-    <div className={`screen-viewer ${isCompareMode ? 'screen-viewer--compare' : ''}`}>
+    <div className={`screen-viewer ${isCompareMode ? 'screen-viewer--compare' : ''} ${!screen ? 'screen-viewer--empty' : ''}`}>
       <div className="screen-viewer__header">
-        {isCompareMode ? (
-          <h3 className="screen-viewer__title">
-            Compare: <span className="screen-viewer__title-current">{screen.id}</span>
-            {' vs '}
-            <span className="screen-viewer__title-compare">{compareScreen.id}</span>
-          </h3>
-        ) : (
-          <h3 className="screen-viewer__title">{screen.id}</h3>
-        )}
-        {!isCompareMode && (
-          <button
-            className={`btn btn-sm ${isAddingHotspot ? 'btn-accent' : ''}`}
-            onClick={() => setAddingHotspot(!isAddingHotspot)}
-          >
-            {isAddingHotspot ? '✕ Cancel' : '+ Add Hotspot'}
-          </button>
-        )}
+        <div className="screen-viewer__nav">
+          {screen ? (
+            isCompareMode ? (
+              <h3 className="screen-viewer__title">
+                Compare: <span className="screen-viewer__title-current">{screen.id}</span>
+                {' vs '}
+                <span className="screen-viewer__title-compare">{compareScreen.id}</span>
+              </h3>
+            ) : (
+              <h3 className="screen-viewer__title">{screen.id}</h3>
+            )
+          ) : (
+            <h3 className="screen-viewer__title screen-viewer__title--muted">Screen viewer</h3>
+          )}
+        </div>
       </div>
 
-      {isCompareMode ? (
-        <div className="screen-viewer__compare">
-          <ComparePane
-            label={`Current — ${screen.id}`}
-            screen={screen}
-            imageConfig={imageConfig}
-            editable
-            selectedButtonId={selectedButtonId}
-            isAddingHotspot={false}
-            onSelectButton={() => selectButton(null)}
-            onSelectHotspot={selectButton}
-            onHotspotUpdate={handleHotspotUpdate}
-            onImageClick={handleImageClick}
-            reportSourceSize={reportScreenSourceSize}
-          />
-          <div className="screen-viewer__compare-divider" aria-hidden="true" />
-          <ComparePane
-            label={`Import from — ${compareScreen.id}`}
-            screen={compareScreen}
-            imageConfig={imageConfig}
-            editable={false}
-            pickable
-            selectedButtonId={importSourceButtonId}
-            isAddingHotspot={false}
-            onSelectButton={() => setImportSourceButtonId(null)}
-            onSelectHotspot={setImportSourceButtonId}
-            onHotspotUpdate={() => {}}
-            onImageClick={() => {}}
-            reportSourceSize={null}
-          />
+      <div className={`screen-viewer__body ${graphOpen ? 'screen-viewer__body--split' : ''}`}>
+        {graphOpen && <MiniGraph onClose={closeGraph} />}
+        <div className="screen-viewer__main">
+          {!graphOpen && (
+            <button
+              type="button"
+              className="btn btn-sm screen-viewer__graph-btn"
+              onClick={toggleGraph}
+              title="Show screen graph"
+              aria-label="Show screen graph"
+            >
+              <GraphNavIcon />
+            </button>
+          )}
+          {canvasContent}
         </div>
-      ) : (
-        <ComparePane
-          label={null}
-          screen={screen}
-          imageConfig={imageConfig}
-          editable
-          selectedButtonId={selectedButtonId}
-          isAddingHotspot={isAddingHotspot}
-          onSelectButton={() => selectButton(null)}
-          onSelectHotspot={selectButton}
-          onHotspotUpdate={handleHotspotUpdate}
-          onImageClick={handleImageClick}
-          reportSourceSize={reportScreenSourceSize}
-          showSizeHint
-          showAddHint={isAddingHotspot}
-          hotspotSize={placementSize}
-        />
-      )}
+      </div>
     </div>
   );
 }
@@ -195,15 +302,18 @@ function ComparePane({
   editable,
   pickable = false,
   selectedButtonId,
+  selectedButtonIds,
   isAddingHotspot,
   onSelectButton,
   onSelectHotspot,
+  onClearPick,
+  onPickButton,
+  onPickButtons,
   onHotspotUpdate,
   onImageClick,
   reportSourceSize,
-  showSizeHint = false,
-  showAddHint = false,
-  hotspotSize,
+  showPickHint = false,
+  onHeaderClose,
 }) {
   const [sourceSize, setSourceSize] = useState({
     width: screen?.sourceWidth || imageConfig.intrinsicWidth,
@@ -230,20 +340,129 @@ function ComparePane({
     }
   };
 
+  const stageRef = useRef(null);
+  const [marquee, setMarquee] = useState(null);
+  const marqueeRef = useRef(null);
+  const pickInteractionRef = useRef(null);
+
+  const screenForCoords = useMemo(
+    () => ({
+      ...screen,
+      sourceWidth: sourceSize.width,
+      sourceHeight: sourceSize.height,
+    }),
+    [screen, sourceSize.width, sourceSize.height]
+  );
+
+  const buttonSourceRects = useMemo(() => {
+    if (!pickable || !screen?.buttons?.length) return new Map();
+    return new Map(
+      screen.buttons.map((btn) => {
+        const intrinsic = normalizeButton(btn);
+        return [btn.id, toSourceRect(intrinsic, screenForCoords, imageConfig)];
+      })
+    );
+  }, [pickable, screen?.buttons, screenForCoords, imageConfig]);
+
+  const selectedPickSet = useMemo(
+    () => new Set(selectedButtonIds || []),
+    [selectedButtonIds]
+  );
+
+  const endPickInteraction = () => {
+    const interaction = pickInteractionRef.current;
+    if (!interaction) return;
+    window.removeEventListener('pointermove', interaction.onMove);
+    window.removeEventListener('pointerup', interaction.onUp);
+    pickInteractionRef.current = null;
+    setMarquee(null);
+    marqueeRef.current = null;
+  };
+
+  const handlePickStagePointerDown = (e) => {
+    if (!pickable || e.button !== 0 || e.target.closest('.hotspot-region')) return;
+
+    const stage = stageRef.current;
+    if (!stage) return;
+
+    e.preventDefault();
+    const additive = e.ctrlKey || e.metaKey;
+    const start = clientToSourcePoint(e.clientX, e.clientY, stage, sourceSize);
+    let didDrag = false;
+
+    const onMove = (ev) => {
+      const current = clientToSourcePoint(ev.clientX, ev.clientY, stage, sourceSize);
+      if (
+        !didDrag &&
+        (Math.abs(current.x - start.x) > MARQUEE_DRAG_THRESHOLD ||
+          Math.abs(current.y - start.y) > MARQUEE_DRAG_THRESHOLD)
+      ) {
+        didDrag = true;
+      }
+      if (didDrag) {
+        const next = normalizeMarqueeRect(start, current);
+        marqueeRef.current = next;
+        setMarquee(next);
+      }
+    };
+
+    const onUp = (ev) => {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      pickInteractionRef.current = null;
+
+      if (didDrag && marqueeRef.current) {
+        const box = marqueeRef.current;
+        const hits = screen.buttons
+          .filter((btn) => {
+            const rect = buttonSourceRects.get(btn.id);
+            return rect && rectsIntersect(box, rect);
+          })
+          .map((btn) => btn.id);
+        onPickButtons?.(hits, { additive });
+      } else if (!additive) {
+        onClearPick?.();
+      }
+
+      setMarquee(null);
+      marqueeRef.current = null;
+    };
+
+    pickInteractionRef.current = { onMove, onUp };
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+  };
+
+  useEffect(() => () => endPickInteraction(), []);
+
   const content = (
     <>
-      {label && <div className="screen-viewer__compare-label">{label}</div>}
-      {showSizeHint && (
-        <p className="screen-viewer__size-hint">
-          Screenshot {sourceSize.width}×{sourceSize.height} → product{' '}
-          {imageConfig.intrinsicWidth}×{imageConfig.intrinsicHeight} px
-        </p>
+      {label && (
+        <div
+          className={`screen-viewer__pane-header screen-viewer__compare-label ${showPickHint ? 'screen-viewer__compare-label--pick' : ''}`}
+        >
+          <div className="screen-viewer__compare-label-main">
+            <span className="screen-viewer__compare-label-title">{label}</span>
+            {showPickHint && (
+              <span className="screen-viewer__compare-label-hint">
+                Drag to select an area · Ctrl+click to add or remove buttons
+              </span>
+            )}
+          </div>
+          {onHeaderClose && (
+            <PaneCloseButton onClick={onHeaderClose} label="Close import" />
+          )}
+        </div>
       )}
       <div
-        className={`screen-viewer__image-container ${isAddingHotspot ? 'screen-viewer--crosshair' : ''} ${!editable ? 'screen-viewer__image-container--readonly' : ''}`}
+        className={`screen-viewer__image-container ${isAddingHotspot ? 'screen-viewer--crosshair' : ''} ${!editable ? 'screen-viewer__image-container--readonly' : ''} ${pickable ? 'screen-viewer__image-container--pickable' : ''}`}
         onClick={editable ? onSelectButton : undefined}
       >
-        <div className="screen-viewer__stage">
+        <div
+          ref={stageRef}
+          className="screen-viewer__stage"
+          onPointerDown={pickable ? handlePickStagePointerDown : undefined}
+        >
           <img
             src={`/screenshots/${screen.image}`}
             alt={screen.id}
@@ -259,28 +478,43 @@ function ComparePane({
               screen={screen}
               imageConfig={imageConfig}
               imageSize={sourceSize}
-              selected={btn.id === selectedButtonId && (editable || pickable)}
+              selected={
+                pickable
+                  ? selectedPickSet.has(btn.id)
+                  : btn.id === selectedButtonId && editable
+              }
               draggable={editable && !isAddingHotspot}
               readonly={!editable}
               pickable={pickable}
-              onSelect={() => onSelectHotspot(btn.id)}
+              onSelect={() =>
+                pickable
+                  ? onPickButton?.(btn.id, { additive: false })
+                  : onSelectHotspot(btn.id)
+              }
+              onToggleSelect={() => onPickButton?.(btn.id, { additive: true })}
               onUpdate={onHotspotUpdate}
             />
           ))}
+          {marquee && (
+            <div
+              className="screen-viewer__marquee"
+              style={{
+                left: `${(marquee.left / sourceSize.width) * 100}%`,
+                top: `${(marquee.top / sourceSize.height) * 100}%`,
+                width: `${(marquee.width / sourceSize.width) * 100}%`,
+                height: `${(marquee.height / sourceSize.height) * 100}%`,
+              }}
+            />
+          )}
         </div>
       </div>
-      {showAddHint && (
-        <div className="screen-viewer__hint">
-          Click on the image to place a hotspot ({hotspotSize.width}×{hotspotSize.height} product px)
-        </div>
-      )}
     </>
   );
 
   if (label) {
     return <div className="screen-viewer__compare-pane">{content}</div>;
   }
-  return content;
+  return <div className="screen-viewer__single-pane">{content}</div>;
 }
 
 function getStageScale(stage, imageSize) {
@@ -301,6 +535,7 @@ function HotspotRegion({
   readonly,
   pickable = false,
   onSelect,
+  onToggleSelect,
   onUpdate,
 }) {
   const screens = useStore((s) => s.screens);
@@ -463,7 +698,13 @@ function HotspotRegion({
       onClick={(e) => {
         if (readonly && !pickable) return;
         e.stopPropagation();
-        if (!didDragRef.current) onSelect();
+        if (!didDragRef.current) {
+          if (pickable && (e.ctrlKey || e.metaKey)) {
+            onToggleSelect?.();
+          } else {
+            onSelect();
+          }
+        }
       }}
     >
       {hasTarget ? (
