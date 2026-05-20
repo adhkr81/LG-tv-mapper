@@ -1,4 +1,4 @@
-/** LG simroom / emulator reference sizes (quick-settings-main.jpg). */
+/** LG simroom / emulator reference sizes (emulator.json coordinate space). */
 export const DEFAULT_IMAGE_CONFIG = {
   intrinsicWidth: 1031,
   intrinsicHeight: 580,
@@ -20,7 +20,6 @@ function positiveInt(value, fallback) {
   return Number.isFinite(n) && n > 0 ? n : fallback;
 }
 
-/** Coordinate space used in emulator.json button positions. */
 export function intrinsicSize(config) {
   return { width: config.intrinsicWidth, height: config.intrinsicHeight };
 }
@@ -86,17 +85,4 @@ export function defaultButtonSize(config) {
     width: Math.max(16, Math.round((120 * product.width) / 1031)),
     height: Math.max(12, Math.round((60 * product.height) / 580)),
   };
-}
-
-/**
- * Detect buttons stored in screenshot pixels instead of intrinsic product space.
- * @param {{ buttons: Array<{ left: number, top: number, width: number, height: number }>, sourceWidth?: number | null, sourceHeight?: number | null }} screen
- * @param {ReturnType<typeof normalizeImageConfig>} config
- */
-export function screenLikelySourceSpace(screen, config) {
-  if (!screen.buttons?.length || !sourceSize(screen)) return false;
-  const product = intrinsicSize(config);
-  const maxX = Math.max(...screen.buttons.map((b) => b.left + b.width));
-  const maxY = Math.max(...screen.buttons.map((b) => b.top + b.height));
-  return maxX > product.width * 1.05 || maxY > product.height * 1.05;
 }

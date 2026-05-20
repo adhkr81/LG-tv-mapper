@@ -16,6 +16,7 @@ function positiveInt(value, fallback) {
   return Number.isFinite(n) && n > 0 ? n : fallback;
 }
 
+/** LG emulator / emulator.json coordinate space (default 1031×580). */
 export function intrinsicSize(config) {
   return { width: config.intrinsicWidth, height: config.intrinsicHeight };
 }
@@ -38,6 +39,36 @@ export function scaleRect(rect, from, to) {
   };
 }
 
+/** Align emulator.json coords with full screenshots (LG screen-stack inset). */
+export const BUTTON_DISPLAY_OFFSET = { left: -92, top: -5 };
+
+function offsetRect(rect, delta) {
+  return {
+    ...rect,
+    left: rect.left + delta.left,
+    top: rect.top + delta.top,
+  };
+}
+
+/** Stored emulator coords → actual screenshot pixels for display. */
+export function toSourceRect(rect, screen, config) {
+  const src = sourceSize(screen);
+  const product = intrinsicSize(config);
+  if (!src) return rect;
+  if (src.width === product.width && src.height === product.height) return rect;
+  return scaleRect(rect, product, src);
+}
+
+/** Emulator storage → on-screen pixels (scale + display offset). */
+export function toDisplayRect(rect, screen, config) {
+  return toSourceRect(
+    offsetRect(rect, BUTTON_DISPLAY_OFFSET),
+    screen,
+    config
+  );
+}
+
+/** Screenshot pixels → emulator.json storage space. */
 export function toIntrinsicRect(rect, screen, config) {
   const src = sourceSize(screen);
   const product = intrinsicSize(config);
@@ -46,12 +77,12 @@ export function toIntrinsicRect(rect, screen, config) {
   return scaleRect(rect, src, product);
 }
 
-export function toSourceRect(rect, screen, config) {
-  const src = sourceSize(screen);
-  const product = intrinsicSize(config);
-  if (!src) return rect;
-  if (src.width === product.width && src.height === product.height) return rect;
-  return scaleRect(rect, product, src);
+/** On-screen pixels → emulator.json storage (inverse scale + offset). */
+export function fromDisplayRect(rect, screen, config) {
+  return offsetRect(toIntrinsicRect(rect, screen, config), {
+    left: -BUTTON_DISPLAY_OFFSET.left,
+    top: -BUTTON_DISPLAY_OFFSET.top,
+  });
 }
 
 export function defaultButtonSize(config) {
@@ -62,7 +93,7 @@ export function defaultButtonSize(config) {
   };
 }
 
-/** Place a hotspot from a click in screenshot pixel space; returns intrinsic (product) rect. */
+/** Click in screenshot pixels; returns rect in emulator storage space. */
 export function centerFromSourceClick(x, y, productSize, screen, config) {
   const src = sourceSize(screen) || intrinsicSize(config);
   const product = intrinsicSize(config);
@@ -76,5 +107,5 @@ export function centerFromSourceClick(x, y, productSize, screen, config) {
     width: sourceBtnSize.width,
     height: sourceBtnSize.height,
   };
-  return scaleRect(sourceRect, src, product);
+  return fromDisplayRect(sourceRect, screen, config);
 }

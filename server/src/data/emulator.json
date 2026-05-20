@@ -1,1 +1,123 @@
-{}
+{
+  "quick-settings-main": {
+    "img_filename": "quick-settings-main",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "133px",
+        "top": "22px",
+        "width": "25px",
+        "height": "26px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "185px",
+        "top": "22px",
+        "width": "25px",
+        "height": "25px"
+      },
+      {
+        "left": "194px",
+        "top": "168px",
+        "width": "86px",
+        "height": "49px"
+      },
+      {
+        "left": "101px",
+        "top": "110px",
+        "width": "86px",
+        "height": "49px"
+      },
+      {
+        "left": "101px",
+        "top": "167px",
+        "width": "86px",
+        "height": "49px"
+      },
+      {
+        "left": "101px",
+        "top": "222px",
+        "width": "86px",
+        "height": "49px"
+      },
+      {
+        "left": "101px",
+        "top": "333px",
+        "width": "86px",
+        "height": "49px"
+      },
+      {
+        "left": "193px",
+        "top": "333px",
+        "width": "86px",
+        "height": "49px"
+      },
+      {
+        "left": "194px",
+        "top": "222px",
+        "width": "86px",
+        "height": "49px"
+      },
+      {
+        "left": "194px",
+        "top": "277px",
+        "width": "86px",
+        "height": "49px"
+      },
+      {
+        "left": "159px",
+        "top": "22px",
+        "width": "25px",
+        "height": "25px"
+      },
+      {
+        "left": "244px",
+        "top": "22px",
+        "width": "25px",
+        "height": "25px"
+      }
+    ]
+  },
+  "settings-picture": {
+    "img_filename": "settings-picture",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "900px",
+        "top": "510px",
+        "width": "120px",
+        "height": "60px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "900px",
+        "top": "510px",
+        "width": "120px",
+        "height": "60px",
+        "target": "settings-general"
+      },
+      {
+        "left": "900px",
+        "top": "510px",
+        "width": "120px",
+        "height": "60px",
+        "target": "settings-support"
+      }
+    ]
+  },
+  "settings-sound": {
+    "img_filename": "settings-sound",
+    "preset": 0,
+    "buttons": []
+  },
+  "settings-general": {
+    "img_filename": "settings-general",
+    "preset": 0,
+    "buttons": []
+  },
+  "settings-support": {
+    "img_filename": "settings-support",
+    "preset": 0,
+    "buttons": []
+  }
+}

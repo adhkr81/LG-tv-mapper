@@ -11,12 +11,7 @@ import {
   screenToEmulator,
   stripImageExtension,
 } from './emulator-format.js';
-import {
-  DEFAULT_IMAGE_CONFIG,
-  normalizeImageConfig,
-  screenLikelySourceSpace,
-  toIntrinsicRect,
-} from './coords.js';
+import { DEFAULT_IMAGE_CONFIG, normalizeImageConfig } from './coords.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, '..', 'data');
@@ -52,10 +47,41 @@ const DEFAULT_BUTTON_SIZE = { width: 120, height: 60 };
  * @property {string | null} sectionId
  */
 
+function sleepMs(ms) {
+  const end = Date.now() + ms;
+  while (Date.now() < end) {
+    /* spin — rare retries when OneDrive locks the file */
+  }
+}
+
+function isRetriableFsError(err) {
+  return err && ['EPERM', 'EBUSY', 'EACCES'].includes(err.code);
+}
+
 function atomicWrite(filePath, data) {
-  const tmp = filePath + '.tmp';
-  fs.writeFileSync(tmp, JSON.stringify(data, null, 2), 'utf-8');
-  fs.renameSync(tmp, filePath);
+  const content = JSON.stringify(data, null, 2);
+  let lastErr;
+  for (let attempt = 0; attempt < 10; attempt++) {
+    const tmp = `${filePath}.${process.pid}.${attempt}.tmp`;
+    try {
+      fs.writeFileSync(tmp, content, 'utf-8');
+      fs.renameSync(tmp, filePath);
+      return;
+    } catch (err) {
+      lastErr = err;
+      try {
+        if (fs.existsSync(tmp)) fs.unlinkSync(tmp);
+      } catch {
+        /* ignore */
+      }
+      if (isRetriableFsError(err) && attempt < 9) {
+        sleepMs(40 * (attempt + 1));
+        continue;
+      }
+      throw err;
+    }
+  }
+  throw lastErr;
 }
 
 function ensureDataDir() {
@@ -166,15 +192,6 @@ function persist(screens, sections) {
   const metaFile = readMetaFile();
   const { emulatorMap, meta } = screensToEmulatorAndMeta(screens, sections, metaFile);
   writeEmulatorAndMeta(emulatorMap, meta);
-}
-
-function maybeConvertScreenButtonsToIntrinsic(screen, imageConfig) {
-  if (!screenLikelySourceSpace(screen, imageConfig)) return false;
-  screen.buttons = screen.buttons.map((btn) => {
-    const next = toIntrinsicRect(btn, screen, imageConfig);
-    return { ...btn, ...next };
-  });
-  return true;
 }
 
 function loadLegacy() {
@@ -427,20 +444,11 @@ export function updateScreen(id, updates) {
       stripImageExtension(updates.image) || screens[idx].id;
   }
 
-  const imageConfig = readMetaFile().config.imageSize;
-  let sourceChanged = false;
   if (updates.sourceWidth !== undefined) {
     screens[idx].sourceWidth = updates.sourceWidth || null;
-    sourceChanged = true;
   }
   if (updates.sourceHeight !== undefined) {
     screens[idx].sourceHeight = updates.sourceHeight || null;
-    sourceChanged = true;
-  }
-  if (sourceChanged && maybeConvertScreenButtonsToIntrinsic(screens[idx], imageConfig)) {
-    console.log(
-      `[DataStore] Converted hotspots on "${screens[idx].id}" to product size (${imageConfig.intrinsicWidth}×${imageConfig.intrinsicHeight})`
-    );
   }
 
   writeAll(screens, sections);

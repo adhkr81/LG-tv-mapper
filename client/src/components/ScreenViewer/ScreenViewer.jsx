@@ -4,8 +4,8 @@ import { normalizeButton } from '../../utils/buttonRect.js';
 import {
   centerFromSourceClick,
   defaultButtonSize,
-  toIntrinsicRect,
-  toSourceRect,
+  fromDisplayRect,
+  toDisplayRect,
 } from '../../utils/coords.js';
 import MiniGraph from '../MiniGraph/MiniGraph.jsx';
 import {
@@ -13,6 +13,13 @@ import {
   saveGraphOpenPreference,
 } from '../MiniGraph/miniGraphPreference.js';
 import { screenshotUrl } from '../../utils/screenshotUrl.js';
+import {
+  clientToImagePoint,
+  emulatorButtonStyle,
+  getFrameScale,
+  useImageFrameScale,
+} from '../../utils/imageFrameScale.js';
+import ScreenStack from './ScreenStack.jsx';
 import './ScreenViewer.css';
 
 function PaneCloseButton({ onClick, label }) {
@@ -66,15 +73,6 @@ function normalizeMarqueeRect(a, b) {
     top,
     width: right - left,
     height: bottom - top,
-  };
-}
-
-function clientToSourcePoint(clientX, clientY, stage, imageSize) {
-  const stageRect = stage.getBoundingClientRect();
-  const { scaleX, scaleY } = getStageScale(stage, imageSize);
-  return {
-    x: (clientX - stageRect.left) * scaleX,
-    y: (clientY - stageRect.top) * scaleY,
   };
 }
 
@@ -147,27 +145,27 @@ export default function ScreenViewer() {
     (e, targetScreen, setSourceSize) => {
       if (!isAddingHotspot || !targetScreen || isCompareMode) return;
 
-      const rect = e.currentTarget.getBoundingClientRect();
+      const imgRect = e.currentTarget.getBoundingClientRect();
       const img = e.currentTarget;
 
-      const scaleX = img.naturalWidth / rect.width;
-      const scaleY = img.naturalHeight / rect.height;
+      const scaleX = img.naturalWidth / imgRect.width;
+      const scaleY = img.naturalHeight / imgRect.height;
 
-      const x = Math.round((e.clientX - rect.left) * scaleX);
-      const y = Math.round((e.clientY - rect.top) * scaleY);
+      const x = Math.round((e.clientX - imgRect.left) * scaleX);
+      const y = Math.round((e.clientY - imgRect.top) * scaleY);
 
       const label = prompt('Button name:');
       if (!label) return;
 
       const target = prompt('Target screen name (leave empty if unknown):') || '';
 
+      setSourceSize({ width: img.naturalWidth, height: img.naturalHeight });
       const screenForCoords = {
         ...targetScreen,
         sourceWidth: img.naturalWidth,
         sourceHeight: img.naturalHeight,
       };
-      setSourceSize({ width: img.naturalWidth, height: img.naturalHeight });
-      const intrinsicRect = centerFromSourceClick(
+      const hotspotRect = centerFromSourceClick(
         x,
         y,
         placementSize,
@@ -178,11 +176,11 @@ export default function ScreenViewer() {
       addButton(targetScreen.id, {
         label,
         target,
-        ...intrinsicRect,
+        ...hotspotRect,
       });
       setAddingHotspot(false);
     },
-    [isAddingHotspot, isCompareMode, addButton, setAddingHotspot, imageConfig, placementSize]
+    [isAddingHotspot, isCompareMode, addButton, setAddingHotspot, placementSize, imageConfig]
   );
 
   const canvasContent = !screen ? (
@@ -344,7 +342,10 @@ function ComparePane({
     }
   };
 
+  const containerRef = useRef(null);
   const stageRef = useRef(null);
+  const imageFrameRef = useRef(null);
+  const frameScale = useImageFrameScale(containerRef, sourceSize);
   const [marquee, setMarquee] = useState(null);
   const marqueeRef = useRef(null);
   const pickInteractionRef = useRef(null);
@@ -361,10 +362,10 @@ function ComparePane({
   const buttonSourceRects = useMemo(() => {
     if (!pickable || !screen?.buttons?.length) return new Map();
     return new Map(
-      screen.buttons.map((btn) => {
-        const intrinsic = normalizeButton(btn);
-        return [btn.id, toSourceRect(intrinsic, screenForCoords, imageConfig)];
-      })
+      screen.buttons.map((btn) => [
+        btn.id,
+        toDisplayRect(normalizeButton(btn), screenForCoords, imageConfig),
+      ])
     );
   }, [pickable, screen?.buttons, screenForCoords, imageConfig]);
 
@@ -386,16 +387,16 @@ function ComparePane({
   const handlePickStagePointerDown = (e) => {
     if (!pickable || e.button !== 0 || e.target.closest('.hotspot-region')) return;
 
-    const stage = stageRef.current;
-    if (!stage) return;
+    const frame = imageFrameRef.current;
+    if (!frame) return;
 
     e.preventDefault();
     const additive = e.ctrlKey || e.metaKey;
-    const start = clientToSourcePoint(e.clientX, e.clientY, stage, sourceSize);
+    const start = clientToImagePoint(e.clientX, e.clientY, frame, sourceSize);
     let didDrag = false;
 
     const onMove = (ev) => {
-      const current = clientToSourcePoint(ev.clientX, ev.clientY, stage, sourceSize);
+      const current = clientToImagePoint(ev.clientX, ev.clientY, frame, sourceSize);
       if (
         !didDrag &&
         (Math.abs(current.x - start.x) > MARQUEE_DRAG_THRESHOLD ||
@@ -459,24 +460,17 @@ function ComparePane({
         </div>
       )}
       <div
+        ref={containerRef}
         className={`screen-viewer__image-container ${isAddingHotspot ? 'screen-viewer--crosshair' : ''} ${!editable ? 'screen-viewer__image-container--readonly' : ''} ${pickable ? 'screen-viewer__image-container--pickable' : ''}`}
         onClick={editable ? onSelectButton : undefined}
       >
-        <div
-          ref={stageRef}
-          className="screen-viewer__stage"
-          onPointerDown={pickable ? handlePickStagePointerDown : undefined}
-        >
-          <img
-            key={`${screen.image}-${imageVersion}`}
-            src={screenshotUrl(screen.image, imageVersion)}
-            alt={screen.id}
-            className="screen-viewer__image"
-            onClick={editable ? (e) => onImageClick(e, screen, setSourceSize) : undefined}
-            onLoad={handleLoad}
-            draggable={false}
-          />
-          {screen.buttons.map((btn) => (
+        <ScreenStack
+          sourceSize={sourceSize}
+          frameScale={frameScale}
+          stageRef={stageRef}
+          frameRef={imageFrameRef}
+          onFramePointerDown={pickable ? handlePickStagePointerDown : undefined}
+          buttons={screen.buttons.map((btn) => (
             <HotspotRegion
               key={btn.id}
               button={btn}
@@ -500,18 +494,23 @@ function ComparePane({
               onUpdate={onHotspotUpdate}
             />
           ))}
-          {marquee && (
-            <div
-              className="screen-viewer__marquee"
-              style={{
-                left: `${(marquee.left / sourceSize.width) * 100}%`,
-                top: `${(marquee.top / sourceSize.height) * 100}%`,
-                width: `${(marquee.width / sourceSize.width) * 100}%`,
-                height: `${(marquee.height / sourceSize.height) * 100}%`,
-              }}
+          image={
+            <img
+              key={`${screen.image}-${imageVersion}`}
+              src={screenshotUrl(screen.image, imageVersion)}
+              alt={screen.id}
+              className="screen-viewer__image"
+              onClick={editable ? (e) => onImageClick(e, screen, setSourceSize) : undefined}
+              onLoad={handleLoad}
+              draggable={false}
             />
-          )}
-        </div>
+          }
+          marquee={
+            marquee ? (
+              <div className="screen-viewer__marquee" style={emulatorButtonStyle(marquee)} />
+            ) : null
+          }
+        />
       </div>
     </>
   );
@@ -520,14 +519,6 @@ function ComparePane({
     return <div className="screen-viewer__compare-pane">{content}</div>;
   }
   return <div className="screen-viewer__single-pane">{content}</div>;
-}
-
-function getStageScale(stage, imageSize) {
-  const stageRect = stage.getBoundingClientRect();
-  return {
-    scaleX: imageSize.width / stageRect.width,
-    scaleY: imageSize.height / stageRect.height,
-  };
 }
 
 function HotspotRegion({
@@ -557,7 +548,7 @@ function HotspotRegion({
   );
 
   const saved = useMemo(
-    () => toSourceRect(savedIntrinsic, screenForCoords, imageConfig),
+    () => toDisplayRect(savedIntrinsic, screenForCoords, imageConfig),
     [
       savedIntrinsic.left,
       savedIntrinsic.top,
@@ -584,12 +575,7 @@ function HotspotRegion({
     setDraftRect(null);
   }, [button.id, saved.left, saved.top, saved.width, saved.height]);
 
-  const style = {
-    left: `${(rect.left / imageSize.width) * 100}%`,
-    top: `${(rect.top / imageSize.height) * 100}%`,
-    width: `${(rect.width / imageSize.width) * 100}%`,
-    height: `${(rect.height / imageSize.height) * 100}%`,
-  };
+  const style = emulatorButtonStyle(rect);
 
   const clampPosition = (left, top, width, height) => ({
     left: Math.round(Math.max(0, Math.min(imageSize.width - width, left))),
@@ -603,8 +589,7 @@ function HotspotRegion({
 
   const commitSourceRect = (partial) => {
     const fullSource = { ...savedRef.current, ...partial };
-    const intrinsic = toIntrinsicRect(fullSource, screenForCoords, imageConfig);
-    onUpdate(button.id, intrinsic);
+    onUpdate(button.id, fromDisplayRect(fullSource, screenForCoords, imageConfig));
   };
 
   const endInteraction = (commit, captureTarget, pointerId) => {
@@ -637,13 +622,13 @@ function HotspotRegion({
     const startTop = savedRef.current.top;
     const startWidth = savedRef.current.width;
     const startHeight = savedRef.current.height;
-    const stage = e.currentTarget.parentElement;
+    const frame = e.currentTarget.closest('.screen-viewer__image-frame');
     const captureTarget = e.currentTarget;
     const pointerId = e.pointerId;
     captureTarget.setPointerCapture(pointerId);
 
     const onMove = (ev) => {
-      const { scaleX, scaleY } = getStageScale(stage, imageSize);
+      const { scaleX, scaleY } = getFrameScale(frame, imageSize);
       const dx = (ev.clientX - startX) * scaleX;
       const dy = (ev.clientY - startY) * scaleY;
       if (Math.abs(dx) > 2 || Math.abs(dy) > 2) didDragRef.current = true;
@@ -672,13 +657,13 @@ function HotspotRegion({
     const startHeight = savedRef.current.height;
     const anchorLeft = savedRef.current.left;
     const anchorTop = savedRef.current.top;
-    const stage = e.currentTarget.closest('.screen-viewer__stage');
+    const frame = e.currentTarget.closest('.screen-viewer__image-frame');
     const captureTarget = e.currentTarget;
     const pointerId = e.pointerId;
     captureTarget.setPointerCapture(pointerId);
 
     const onMove = (ev) => {
-      const { scaleX, scaleY } = getStageScale(stage, imageSize);
+      const { scaleX, scaleY } = getFrameScale(frame, imageSize);
       const dx = (ev.clientX - startX) * scaleX;
       const dy = (ev.clientY - startY) * scaleY;
       if (Math.abs(dx) > 2 || Math.abs(dy) > 2) didDragRef.current = true;
@@ -696,7 +681,9 @@ function HotspotRegion({
 
   return (
     <div
-      className={`hotspot-region ${hasTarget ? 'hotspot-region--linked' : 'hotspot-region--unlinked'} ${selected ? 'hotspot-region--selected' : ''} ${draftRect ? 'hotspot-region--dragging' : ''} ${readonly ? 'hotspot-region--readonly' : ''} ${pickable ? 'hotspot-region--pickable' : ''}`}
+      role="button"
+      tabIndex={readonly && !pickable ? -1 : 0}
+      className={`emulator-button hotspot-region ${hasTarget ? 'hotspot-region--linked' : 'hotspot-region--unlinked'} ${selected ? 'hotspot-region--selected' : ''} ${draftRect ? 'hotspot-region--dragging' : ''} ${readonly ? 'hotspot-region--readonly' : ''} ${pickable ? 'hotspot-region--pickable' : ''}`}
       style={style}
       title={`${savedIntrinsic.label}${savedIntrinsic.target ? ` → ${savedIntrinsic.target}` : ''}`}
       onPointerDown={draggable ? handleMovePointerDown : undefined}

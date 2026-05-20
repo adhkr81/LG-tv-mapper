@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useStore from '../../store/useStore.js';
 import { normalizeButton } from '../../utils/buttonRect.js';
-import { toSourceRect } from '../../utils/coords.js';
 import { screenshotUrl } from '../../utils/screenshotUrl.js';
+import { toDisplayRect } from '../../utils/coords.js';
+import { emulatorButtonStyle, useImageFrameScale } from '../../utils/imageFrameScale.js';
+import ScreenStack from '../ScreenViewer/ScreenStack.jsx';
 import '../ScreenViewer/ScreenViewer.css';
 import './ScreenPreview.css';
 
@@ -20,6 +22,8 @@ export default function ScreenPreview() {
   });
   const [imageLoaded, setImageLoaded] = useState(false);
   const imgRef = useRef(null);
+  const containerRef = useRef(null);
+  const frameScale = useImageFrameScale(containerRef, sourceSize);
   const reportScreenSourceSize = useStore((s) => s.reportScreenSourceSize);
   const imageVersion = useStore((s) =>
     currentScreenId ? (s.imageVersions[currentScreenId] ?? 0) : 0
@@ -52,13 +56,6 @@ export default function ScreenPreview() {
     });
   }, [screen?.id, screen?.sourceWidth, screen?.sourceHeight, imageConfig.intrinsicWidth, imageConfig.intrinsicHeight]);
 
-  useEffect(() => {
-    const img = imgRef.current;
-    if (img?.complete && img.naturalWidth && img.naturalHeight) {
-      applyImageDimensions(img.naturalWidth, img.naturalHeight);
-    }
-  }, [screen?.id, screen?.image, applyImageDimensions]);
-
   const screenForCoords = useMemo(
     () => ({
       ...screen,
@@ -67,6 +64,13 @@ export default function ScreenPreview() {
     }),
     [screen, sourceSize.width, sourceSize.height]
   );
+
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img?.complete && img.naturalWidth && img.naturalHeight) {
+      applyImageDimensions(img.naturalWidth, img.naturalHeight);
+    }
+  }, [screen?.id, screen?.image, applyImageDimensions]);
 
   const navigateTo = useCallback(
     (targetId) => {
@@ -147,44 +151,50 @@ export default function ScreenPreview() {
         <span className="screen-preview__hint">Click hotspots to navigate</span>
       </div>
 
-      <div className="screen-viewer__image-container">
-        <div className="screen-viewer__stage">
-          <img
-            ref={imgRef}
-            key={`${screen.image}-${imageVersion}`}
-            src={screenshotUrl(screen.image, imageVersion)}
-            alt={screen.id}
-            className="screen-viewer__image"
-            draggable={false}
-            onLoad={(e) => {
-              const { naturalWidth, naturalHeight } = e.currentTarget;
-              applyImageDimensions(naturalWidth, naturalHeight);
-            }}
-          />
-
-          {imageLoaded && (screen.buttons || []).map((btn) => (
-            <PreviewHotspot
-              key={btn.id}
-              button={btn}
-              screenForCoords={screenForCoords}
-              imageConfig={imageConfig}
-              imageSize={sourceSize}
-              screens={screens}
-              onNavigate={navigateTo}
+      <div ref={containerRef} className="screen-viewer__image-container">
+        <ScreenStack
+          sourceSize={sourceSize}
+          frameScale={frameScale}
+          buttons={
+            imageLoaded
+              ? (screen.buttons || []).map((btn) => (
+                  <PreviewHotspot
+                    key={btn.id}
+                    button={btn}
+                    screenForCoords={screenForCoords}
+                    imageConfig={imageConfig}
+                    screens={screens}
+                    onNavigate={navigateTo}
+                  />
+                ))
+              : null
+          }
+          image={
+            <img
+              ref={imgRef}
+              key={`${screen.image}-${imageVersion}`}
+              src={screenshotUrl(screen.image, imageVersion)}
+              alt={screen.id}
+              className="screen-viewer__image"
+              draggable={false}
+              onLoad={(e) => {
+                const { naturalWidth, naturalHeight } = e.currentTarget;
+                applyImageDimensions(naturalWidth, naturalHeight);
+              }}
             />
-          ))}
-        </div>
+          }
+        />
       </div>
     </div>
   );
 }
 
-function PreviewHotspot({ button, screenForCoords, imageConfig, imageSize, screens, onNavigate }) {
+function PreviewHotspot({ button, screenForCoords, imageConfig, screens, onNavigate }) {
   const normalized = normalizeButton(button);
   const hasTarget = normalized.target && screens.some((s) => s.id === normalized.target);
 
   const rect = useMemo(
-    () => toSourceRect(normalized, screenForCoords, imageConfig),
+    () => toDisplayRect(normalized, screenForCoords, imageConfig),
     [
       normalized.left,
       normalized.top,
@@ -196,12 +206,7 @@ function PreviewHotspot({ button, screenForCoords, imageConfig, imageSize, scree
     ]
   );
 
-  const style = {
-    left: `${(rect.left / imageSize.width) * 100}%`,
-    top: `${(rect.top / imageSize.height) * 100}%`,
-    width: `${(rect.width / imageSize.width) * 100}%`,
-    height: `${(rect.height / imageSize.height) * 100}%`,
-  };
+  const style = emulatorButtonStyle(rect);
 
   const handleClick = (e) => {
     e.stopPropagation();
@@ -212,7 +217,7 @@ function PreviewHotspot({ button, screenForCoords, imageConfig, imageSize, scree
     <div
       role={hasTarget ? 'button' : undefined}
       tabIndex={hasTarget ? 0 : undefined}
-      className={`hotspot-region preview-hotspot ${hasTarget ? 'hotspot-region--linked' : 'hotspot-region--unlinked'}`}
+      className={`emulator-button hotspot-region preview-hotspot ${hasTarget ? 'hotspot-region--linked' : 'hotspot-region--unlinked'}`}
       style={style}
       title={
         hasTarget

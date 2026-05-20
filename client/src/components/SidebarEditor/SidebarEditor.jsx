@@ -664,7 +664,11 @@ function ButtonRectInputs({ button, onUpdate }) {
     }
     const min = key === 'width' || key === 'height' ? 1 : 0;
     const value = Math.max(min, parseInt(raw, 10) || 0);
-    setFields((prev) => ({ ...prev, [key]: value }));
+    setFields((prev) => {
+      const nextFields = { ...prev, [key]: value };
+      commit(normalizeFields(nextFields));
+      return nextFields;
+    });
   };
 
   const normalizeFields = (draft) => {

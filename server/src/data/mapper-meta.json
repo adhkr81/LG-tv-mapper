@@ -1,25 +1,60 @@
 {
-  "sections": [
-    {
-      "id": "Sound",
-      "name": "Sound Menu",
-      "rootScreenId": null,
-      "bandX": 518,
-      "bandY": 938
+  "sections": [],
+  "screens": {
+    "quick-settings-main": {
+      "graphX": 1707,
+      "graphY": 0,
+      "sectionId": null,
+      "buttonIds": [
+        "91718888-965f-4d30-bcea-3fe4d84a7750",
+        "88306f45-9a3b-4c6b-9a17-6226761d6fed",
+        "796de070-9334-407b-8b08-dbb3fc1652d9",
+        "121a0769-7ba6-4594-a26a-0be64c9f07b9",
+        "1bd647b2-bb67-4f6a-a641-1b3c6c231cb2",
+        "62627fd1-c770-4ac3-8989-6eb77fd8a746",
+        "72adab0f-5129-438d-9ac9-07bbf190c40b",
+        "1622328d-5a4e-497f-8a79-7f5194685da2",
+        "12a1d3f5-d296-4ba0-9e7c-1eb2c54ac0ac",
+        "c6a5a9ac-9232-4556-a3a3-4718f03abf2a",
+        "51e4d4f9-ecff-4567-92e5-705a87239e00",
+        "c7ab1352-3f82-4ba0-9dc1-7cf77962d5f7"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
-    {
-      "id": "Connections",
-      "name": "Connections",
-      "rootScreenId": null,
-      "bandX": -174,
-      "bandY": 788
+    "settings-picture": {
+      "graphX": 1704,
+      "graphY": 177,
+      "sectionId": null,
+      "buttonIds": [
+        "20cc8706-aa41-4133-b66d-5e5f08e5db5c",
+        "ee70df87-7d76-4bc9-8d28-d0ad8af08c94",
+        "cddaecfb-9148-4995-ac7b-b53802c97f30"
+      ]
+    },
+    "settings-sound": {
+      "graphX": 1494,
+      "graphY": 366,
+      "sectionId": null,
+      "buttonIds": []
+    },
+    "settings-general": {
+      "graphX": 1707,
+      "graphY": 368,
+      "sectionId": null,
+      "buttonIds": []
+    },
+    "settings-support": {
+      "graphX": 1920,
+      "graphY": 369,
+      "sectionId": null,
+      "buttonIds": []
     }
-  ],
-  "screens": {},
+  },
   "config": {
     "imageSize": {
-      "intrinsicWidth": 1031,
-      "intrinsicHeight": 580
+      "intrinsicWidth": 784,
+      "intrinsicHeight": 442
     }
   }
 }

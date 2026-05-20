@@ -43,6 +43,14 @@
   white-space: nowrap;
 }
 
+.screen-preview .screen-viewer__image-container {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Preview hotspots reuse .hotspot-region from ScreenViewer; override editor-only styles */
 .preview-hotspot {
   cursor: pointer;

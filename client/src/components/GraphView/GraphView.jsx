@@ -296,16 +296,20 @@ export default function GraphView({ isActive = true }) {
       const { source, target } = connection;
       if (!source || !target) return;
 
+      const sourceScreen = screens.find((s) => s.id === source);
+      const w = sourceScreen?.sourceWidth || 1031;
+      const h = sourceScreen?.sourceHeight || 580;
+
       try {
         await addButton(source, {
           target,
-          ...rectCenteredAt(960, 540),
+          ...rectCenteredAt(Math.round(w / 2), Math.round(h / 2)),
         });
       } catch (err) {
         alert('Failed to create link: ' + err.message);
       }
     },
-    [addButton]
+    [addButton, screens]
   );
 
   const buildImportEntries = () => {

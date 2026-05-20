@@ -41,8 +41,93 @@ function persistButtonRectClipboard(clip) {
   }
 }
 
-/** One in-flight save per button so rapid drags do not overlap PUTs. */
-const buttonUpdateChains = new Map();
+/** Debounced persistence per button — UI updates immediately, disk writes are batched. */
+const BUTTON_SAVE_DEBOUNCE_MS = 400;
+const buttonPendingPatches = new Map();
+const buttonSaveEntries = new Map();
+
+function applyButtonPatch(set, get, screenId, buttonId, updates) {
+  set({
+    screens: get().screens.map((s) =>
+      s.id !== screenId
+        ? s
+        : {
+            ...s,
+            buttons: s.buttons.map((b) =>
+              b.id === buttonId ? { ...b, ...updates } : b
+            ),
+          }
+    ),
+  });
+}
+
+async function flushButtonSave(get, set, screenId, buttonId, chainKey) {
+  const entry = buttonSaveEntries.get(chainKey);
+  if (!entry) return;
+
+  entry.timer = null;
+  const patch = buttonPendingPatches.get(chainKey);
+  buttonPendingPatches.delete(chainKey);
+  const { resolve, reject } = entry;
+  buttonSaveEntries.delete(chainKey);
+
+  if (!patch || Object.keys(patch).length === 0) {
+    resolve();
+    return;
+  }
+
+  try {
+    const updated = await api.updateButton(screenId, buttonId, patch);
+    set({
+      screens: get().screens.map((s) =>
+        s.id !== screenId
+          ? s
+          : {
+              ...s,
+              buttons: s.buttons.map((b) =>
+                b.id === buttonId ? { ...b, ...updated } : b
+              ),
+            }
+      ),
+    });
+    resolve();
+  } catch (err) {
+    console.error('Update button failed:', err);
+    try {
+      await get().fetchScreens();
+    } catch {
+      /* ignore */
+    }
+    reject(err);
+  }
+
+  if (buttonPendingPatches.has(chainKey)) {
+    scheduleButtonSave(get, set, screenId, buttonId);
+  }
+}
+
+function scheduleButtonSave(get, set, screenId, buttonId) {
+  const chainKey = `${screenId}:${buttonId}`;
+
+  let entry = buttonSaveEntries.get(chainKey);
+  if (!entry) {
+    let resolve;
+    let reject;
+    const promise = new Promise((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
+    entry = { promise, resolve, reject, timer: null };
+    buttonSaveEntries.set(chainKey, entry);
+  }
+
+  if (entry.timer) clearTimeout(entry.timer);
+  entry.timer = setTimeout(() => {
+    void flushButtonSave(get, set, screenId, buttonId, chainKey);
+  }, BUTTON_SAVE_DEBOUNCE_MS);
+
+  return entry.promise;
+}
 
 const useStore = create((set, get) => ({
   // Data
@@ -235,52 +320,15 @@ const useStore = create((set, get) => ({
 
   updateButton: async (screenId, buttonId, updates) => {
     const chainKey = `${screenId}:${buttonId}`;
-    const previous = buttonUpdateChains.get(chainKey) || Promise.resolve();
-    const task = previous
-      .catch(() => {})
-      .then(async () => {
-        const prevScreens = get().screens;
-        set({
-          screens: prevScreens.map((s) =>
-            s.id !== screenId
-              ? s
-              : {
-                  ...s,
-                  buttons: s.buttons.map((b) =>
-                    b.id === buttonId ? { ...b, ...updates } : b
-                  ),
-                }
-          ),
-        });
-        try {
-          const updated = await api.updateButton(screenId, buttonId, updates);
-          set({
-            screens: get().screens.map((s) =>
-              s.id !== screenId
-                ? s
-                : {
-                    ...s,
-                    buttons: s.buttons.map((b) =>
-                      b.id === buttonId ? { ...b, ...updated } : b
-                    ),
-                  }
-            ),
-          });
-        } catch (err) {
-          set({ screens: prevScreens });
-          console.error('Update button failed:', err);
-          throw err;
-        }
-      });
 
-    buttonUpdateChains.set(chainKey, task);
-    try {
-      await task;
-    } finally {
-      if (buttonUpdateChains.get(chainKey) === task) {
-        buttonUpdateChains.delete(chainKey);
-      }
+    applyButtonPatch(set, get, screenId, buttonId, updates);
+
+    if (updates && Object.keys(updates).length > 0) {
+      const prev = buttonPendingPatches.get(chainKey) || {};
+      buttonPendingPatches.set(chainKey, { ...prev, ...updates });
     }
+
+    return scheduleButtonSave(get, set, screenId, buttonId);
   },
 
   deleteButton: async (screenId, buttonId) => {
