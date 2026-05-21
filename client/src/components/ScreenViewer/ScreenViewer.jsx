@@ -77,6 +77,8 @@ function normalizeMarqueeRect(a, b) {
 }
 
 const MIN_HOTSPOT_SIZE = 20;
+/** Screen pixels the pointer must move before a move/resize drag starts (avoids jitter on click). */
+const DRAG_ACTIVATION_THRESHOLD = 8;
 
 export default function ScreenViewer() {
   const screens = useStore((s) => s.screens);
@@ -139,6 +141,28 @@ export default function ScreenViewer() {
       }
     },
     [screen, updateButton]
+  );
+
+  const handleHotspotDuplicate = useCallback(
+    async (sourceButton, { left, top, width, height }) => {
+      if (!screen) return;
+      const src = normalizeButton(sourceButton);
+      try {
+        const created = await addButton(screen.id, {
+          left,
+          top,
+          width,
+          height,
+          target: src.target || '',
+          label: src.label || '',
+          ...(src.type ? { type: src.type } : {}),
+        });
+        if (created?.id) selectButton(created.id);
+      } catch (err) {
+        alert('Duplicate button failed: ' + err.message);
+      }
+    },
+    [screen, addButton, selectButton]
   );
 
   const handleImageClick = useCallback(
@@ -204,6 +228,7 @@ export default function ScreenViewer() {
         onSelectButton={() => selectButton(null)}
         onSelectHotspot={selectButton}
         onHotspotUpdate={handleHotspotUpdate}
+        onHotspotDuplicate={handleHotspotDuplicate}
         onImageClick={handleImageClick}
         reportSourceSize={reportScreenSourceSize}
       />
@@ -248,6 +273,7 @@ export default function ScreenViewer() {
       onSelectButton={() => selectButton(null)}
       onSelectHotspot={selectButton}
       onHotspotUpdate={handleHotspotUpdate}
+      onHotspotDuplicate={handleHotspotDuplicate}
       onImageClick={handleImageClick}
       reportSourceSize={reportScreenSourceSize}
     />
@@ -309,6 +335,7 @@ function ComparePane({
   onPickButton,
   onPickButtons,
   onHotspotUpdate,
+  onHotspotDuplicate,
   onImageClick,
   reportSourceSize,
   showPickHint = false,
@@ -492,6 +519,7 @@ function ComparePane({
               }
               onToggleSelect={() => onPickButton?.(btn.id, { additive: true })}
               onUpdate={onHotspotUpdate}
+              onDuplicate={editable ? onHotspotDuplicate : undefined}
             />
           ))}
           image={
@@ -533,6 +561,7 @@ function HotspotRegion({
   onSelect,
   onToggleSelect,
   onUpdate,
+  onDuplicate,
 }) {
   const screens = useStore((s) => s.screens);
   const savedIntrinsic = normalizeButton(button);
@@ -561,18 +590,29 @@ function HotspotRegion({
   );
 
   const [draftRect, setDraftRect] = useState(null);
+  const [duplicateGhost, setDuplicateGhost] = useState(null);
   const draftRef = useRef(null);
+  const duplicateGhostRef = useRef(null);
+  const isDuplicateDragRef = useRef(false);
   const savedRef = useRef(saved);
   const didDragRef = useRef(false);
   const interactionRef = useRef(null);
 
   savedRef.current = saved;
 
-  const rect = draftRect ? { ...saved, ...draftRect } : saved;
+  const rect =
+    isDuplicateDragRef.current && duplicateGhost
+      ? saved
+      : draftRect
+        ? { ...saved, ...draftRect }
+        : saved;
 
   useEffect(() => {
     if (interactionRef.current) return;
     setDraftRect(null);
+    setDuplicateGhost(null);
+    duplicateGhostRef.current = null;
+    isDuplicateDragRef.current = false;
   }, [button.id, saved.left, saved.top, saved.width, saved.height]);
 
   const style = emulatorButtonStyle(rect);
@@ -587,12 +627,18 @@ function HotspotRegion({
     height: Math.round(Math.max(MIN_HOTSPOT_SIZE, Math.min(imageSize.height - top, height))),
   });
 
-  const commitSourceRect = (partial) => {
+  const interactionButtonIdRef = useRef(button.id);
+  interactionButtonIdRef.current = button.id;
+
+  const commitSourceRect = (partial, buttonId = interactionButtonIdRef.current) => {
     const fullSource = { ...savedRef.current, ...partial };
-    onUpdate(button.id, fromDisplayRect(fullSource, screenForCoords, imageConfig));
+    onUpdate(
+      buttonId,
+      fromDisplayRect(fullSource, screenForCoords, imageConfig)
+    );
   };
 
-  const endInteraction = (commit, captureTarget, pointerId) => {
+  const clearInteraction = (captureTarget, pointerId) => {
     window.removeEventListener('pointermove', interactionRef.current?.onMove);
     window.removeEventListener('pointerup', interactionRef.current?.onUp);
     if (captureTarget?.releasePointerCapture && pointerId != null) {
@@ -602,19 +648,48 @@ function HotspotRegion({
         /* already released */
       }
     }
+    setDraftRect(null);
+    draftRef.current = null;
+    setDuplicateGhost(null);
+    duplicateGhostRef.current = null;
+    isDuplicateDragRef.current = false;
+    interactionRef.current = null;
+  };
+
+  const endInteraction = (commit, captureTarget, pointerId) => {
     if (commit && draftRef.current) {
       commitSourceRect(draftRef.current);
     }
-    setDraftRect(null);
-    draftRef.current = null;
-    interactionRef.current = null;
+    clearInteraction(captureTarget, pointerId);
+  };
+
+  const endDuplicateInteraction = (commit, captureTarget, pointerId) => {
+    if (commit && duplicateGhostRef.current && onDuplicate) {
+      const ghost = duplicateGhostRef.current;
+      const sourceRect = fromDisplayRect(
+        {
+          left: ghost.left,
+          top: ghost.top,
+          width: ghost.width,
+          height: ghost.height,
+        },
+        screenForCoords,
+        imageConfig
+      );
+      onDuplicate(button, sourceRect);
+    }
+    clearInteraction(captureTarget, pointerId);
   };
 
   const handleMovePointerDown = (e) => {
     if (!draggable || e.button !== 0 || e.target.classList.contains('hotspot-region__resize-handle')) return;
     e.stopPropagation();
+    interactionButtonIdRef.current = button.id;
     onSelect();
     didDragRef.current = false;
+
+    const isAltDuplicate = e.altKey && !!onDuplicate;
+    isDuplicateDragRef.current = isAltDuplicate;
 
     const startX = e.clientX;
     const startY = e.clientY;
@@ -627,17 +702,44 @@ function HotspotRegion({
     const pointerId = e.pointerId;
     captureTarget.setPointerCapture(pointerId);
 
+    let dragStarted = false;
+
     const onMove = (ev) => {
+      const clientDx = ev.clientX - startX;
+      const clientDy = ev.clientY - startY;
+      if (!dragStarted) {
+        if (Math.hypot(clientDx, clientDy) < DRAG_ACTIVATION_THRESHOLD) return;
+        dragStarted = true;
+        didDragRef.current = true;
+      }
       const { scaleX, scaleY } = getFrameScale(frame, imageSize);
-      const dx = (ev.clientX - startX) * scaleX;
-      const dy = (ev.clientY - startY) * scaleY;
-      if (Math.abs(dx) > 2 || Math.abs(dy) > 2) didDragRef.current = true;
-      const next = clampPosition(startLeft + dx, startTop + dy, startWidth, startHeight);
-      draftRef.current = { left: next.left, top: next.top };
-      setDraftRect(draftRef.current);
+      const dx = clientDx * scaleX;
+      const dy = clientDy * scaleY;
+      const next = clampPosition(
+        startLeft + dx,
+        startTop + dy,
+        startWidth,
+        startHeight
+      );
+      if (isAltDuplicate) {
+        const ghost = {
+          left: next.left,
+          top: next.top,
+          width: startWidth,
+          height: startHeight,
+        };
+        duplicateGhostRef.current = ghost;
+        setDuplicateGhost(ghost);
+      } else {
+        draftRef.current = { left: next.left, top: next.top };
+        setDraftRect(draftRef.current);
+      }
     };
 
-    const onUp = () => endInteraction(true, captureTarget, pointerId);
+    const onUp = () =>
+      isAltDuplicate
+        ? endDuplicateInteraction(dragStarted, captureTarget, pointerId)
+        : endInteraction(dragStarted, captureTarget, pointerId);
 
     interactionRef.current = { onMove, onUp };
     window.addEventListener('pointermove', onMove);
@@ -648,6 +750,7 @@ function HotspotRegion({
     if (!draggable || e.button !== 0) return;
     e.stopPropagation();
     e.preventDefault();
+    interactionButtonIdRef.current = button.id;
     onSelect();
     didDragRef.current = false;
 
@@ -662,17 +765,25 @@ function HotspotRegion({
     const pointerId = e.pointerId;
     captureTarget.setPointerCapture(pointerId);
 
+    let dragStarted = false;
+
     const onMove = (ev) => {
+      const clientDx = ev.clientX - startX;
+      const clientDy = ev.clientY - startY;
+      if (!dragStarted) {
+        if (Math.hypot(clientDx, clientDy) < DRAG_ACTIVATION_THRESHOLD) return;
+        dragStarted = true;
+        didDragRef.current = true;
+      }
       const { scaleX, scaleY } = getFrameScale(frame, imageSize);
-      const dx = (ev.clientX - startX) * scaleX;
-      const dy = (ev.clientY - startY) * scaleY;
-      if (Math.abs(dx) > 2 || Math.abs(dy) > 2) didDragRef.current = true;
+      const dx = clientDx * scaleX;
+      const dy = clientDy * scaleY;
       const next = clampSize(startWidth + dx, startHeight + dy, anchorLeft, anchorTop);
       draftRef.current = { width: next.width, height: next.height };
       setDraftRect(draftRef.current);
     };
 
-    const onUp = () => endInteraction(true, captureTarget, pointerId);
+    const onUp = () => endInteraction(dragStarted, captureTarget, pointerId);
 
     interactionRef.current = { onMove, onUp };
     window.addEventListener('pointermove', onMove);
@@ -683,9 +794,9 @@ function HotspotRegion({
     <div
       role="button"
       tabIndex={readonly && !pickable ? -1 : 0}
-      className={`emulator-button hotspot-region ${hasTarget ? 'hotspot-region--linked' : 'hotspot-region--unlinked'} ${selected ? 'hotspot-region--selected' : ''} ${draftRect ? 'hotspot-region--dragging' : ''} ${readonly ? 'hotspot-region--readonly' : ''} ${pickable ? 'hotspot-region--pickable' : ''}`}
+      className={`emulator-button hotspot-region ${hasTarget ? 'hotspot-region--linked' : 'hotspot-region--unlinked'} ${selected ? 'hotspot-region--selected' : ''} ${draftRect ? 'hotspot-region--dragging' : ''} ${duplicateGhost ? 'hotspot-region--duplicating-source' : ''} ${readonly ? 'hotspot-region--readonly' : ''} ${pickable ? 'hotspot-region--pickable' : ''}`}
       style={style}
-      title={`${savedIntrinsic.label}${savedIntrinsic.target ? ` → ${savedIntrinsic.target}` : ''}`}
+      title={`${savedIntrinsic.label}${savedIntrinsic.target ? ` → ${savedIntrinsic.target}` : ''}${onDuplicate ? ' · Alt+drag to duplicate' : ''}`}
       onPointerDown={draggable ? handleMovePointerDown : undefined}
       onClick={(e) => {
         if (readonly && !pickable) return;
@@ -703,6 +814,18 @@ function HotspotRegion({
         <span className="hotspot-region__tag">→ {savedIntrinsic.target}</span>
       ) : (
         <span className="hotspot-region__tag">{savedIntrinsic.label}</span>
+      )}
+      {duplicateGhost && (
+        <div
+          className="hotspot-region__duplicate-ghost"
+          style={{
+            top: `${duplicateGhost.top - saved.top}px`,
+            left: `${duplicateGhost.left - saved.left}px`,
+            width: `${duplicateGhost.width}px`,
+            height: `${duplicateGhost.height}px`,
+          }}
+          aria-hidden="true"
+        />
       )}
       {draggable && (
         <span

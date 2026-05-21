@@ -1,3 +1,26 @@
+/** Legacy section selector value (migrated to per-section `collapsed`). */
+export const LEGACY_ALL_SCREENS_COLLAPSED_ID = '__all_collapsed__';
+
+export function isRealSectionView(activeSectionId) {
+  return activeSectionId != null;
+}
+
+/** Section ids collapsed on the All screens canvas. */
+export function getCollapsedSectionIds(sections) {
+  return new Set(
+    (sections || []).filter((s) => s.collapsed).map((s) => s.id)
+  );
+}
+
+/** Section id for capture/import, or null when not in a real section. */
+export function effectiveSectionId(activeSectionId) {
+  return isRealSectionView(activeSectionId) ? activeSectionId : null;
+}
+
+export function sectionNodeId(sectionId) {
+  return `section:${sectionId}`;
+}
+
 /**
  * Screens for section filtering.
  * `primary` — members of the active section.

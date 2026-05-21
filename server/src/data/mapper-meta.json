@@ -1,53 +1,348 @@
 {
-  "sections": [],
+  "sections": [
+    {
+      "id": "Settings",
+      "name": "Settings",
+      "rootScreenId": "quick-settings-main",
+      "bandX": -605,
+      "bandY": 0,
+      "collapsed": false
+    },
+    {
+      "id": "settings-picture",
+      "name": "settings-picture",
+      "rootScreenId": null,
+      "bandX": 385,
+      "bandY": 474,
+      "collapsed": false
+    },
+    {
+      "id": "picture-advanced",
+      "name": "picture-advanced",
+      "rootScreenId": null,
+      "bandX": -1089,
+      "bandY": 0,
+      "collapsed": false
+    }
+  ],
   "screens": {
     "quick-settings-main": {
-      "graphX": 1707,
-      "graphY": 0,
-      "sectionId": null,
+      "graphX": 628,
+      "graphY": -247,
+      "sectionId": "Settings",
       "buttonIds": [
-        "91718888-965f-4d30-bcea-3fe4d84a7750",
         "88306f45-9a3b-4c6b-9a17-6226761d6fed",
         "796de070-9334-407b-8b08-dbb3fc1652d9",
         "121a0769-7ba6-4594-a26a-0be64c9f07b9",
         "1bd647b2-bb67-4f6a-a641-1b3c6c231cb2",
         "62627fd1-c770-4ac3-8989-6eb77fd8a746",
         "72adab0f-5129-438d-9ac9-07bbf190c40b",
-        "1622328d-5a4e-497f-8a79-7f5194685da2",
         "12a1d3f5-d296-4ba0-9e7c-1eb2c54ac0ac",
         "c6a5a9ac-9232-4556-a3a3-4718f03abf2a",
         "51e4d4f9-ecff-4567-92e5-705a87239e00",
-        "c7ab1352-3f82-4ba0-9dc1-7cf77962d5f7"
+        "c7ab1352-3f82-4ba0-9dc1-7cf77962d5f7",
+        "a2cabced-5813-463d-93d0-b6b11324a8cf",
+        "f7094933-2352-4f96-9836-2816e427bf53"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general": {
+      "graphX": 68,
+      "graphY": 218,
+      "sectionId": "Settings",
+      "buttonIds": [
+        "ddf099db-8210-4872-b012-95230ed25dc0",
+        "6e919859-d63b-41cb-882d-ee613335b178",
+        "fd71d672-d281-4da2-9999-0291b26dabf7",
+        "5a8c0f7c-06c3-4149-904c-d7bc1842c7c9",
+        "b5c841c4-3cf0-40fa-a64e-229ecd153c60",
+        "fff6e5cb-88d0-42ef-aae4-617cd918089a",
+        "f7807dc9-15f7-4298-94fc-a828ce88fb71",
+        "75f8c68b-d592-4c06-8f7e-2d5fdfaf6b2c",
+        "b5d434a2-2bf9-4d21-97b2-28ee1c96e31c",
+        "ed3d0ba8-f4f7-43b9-ac75-68e4b7d2f717",
+        "31eff290-2f93-4781-9e0d-a1d33e9f9eaf"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
     "settings-picture": {
-      "graphX": 1704,
-      "graphY": 177,
-      "sectionId": null,
+      "graphX": 632,
+      "graphY": -57,
+      "sectionId": "Settings",
       "buttonIds": [
-        "20cc8706-aa41-4133-b66d-5e5f08e5db5c",
-        "ee70df87-7d76-4bc9-8d28-d0ad8af08c94",
-        "cddaecfb-9148-4995-ac7b-b53802c97f30"
-      ]
+        "931c1ab1-1aaa-4ff8-b55b-47860e0a039d",
+        "02d9bfca-d437-49e1-b46b-aa3f5d762c43",
+        "193ad2ba-9045-4b19-87ea-948213328cbe",
+        "72bb35f8-7aa3-425e-8b35-2f6ee5a1f699",
+        "797c5d19-3b94-4d45-9fb7-088a0049c15e",
+        "c99cf133-a3b5-4fb5-b79d-745731a65f62"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "settings-sound": {
-      "graphX": 1494,
-      "graphY": 366,
-      "sectionId": null,
-      "buttonIds": []
-    },
-    "settings-general": {
-      "graphX": 1707,
-      "graphY": 368,
-      "sectionId": null,
-      "buttonIds": []
+      "graphX": -195,
+      "graphY": 217,
+      "sectionId": "Settings",
+      "buttonIds": [
+        "93f99a79-bb5a-4443-b1ab-ab20d9a45956",
+        "bd3bd104-7f36-43de-a370-f571212dd453",
+        "2e4f336c-2e35-47ee-947b-5be4059aff03",
+        "35c9f8b3-e335-40b7-9ced-811a1cae13a4",
+        "694c9972-fd55-4001-8e19-3d4b9ad4ee63",
+        "0bd09c3d-9cce-4bcf-a5d7-0a6f6d7c6487"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "settings-support": {
-      "graphX": 1920,
-      "graphY": 369,
-      "sectionId": null,
+      "graphX": 373,
+      "graphY": 216,
+      "sectionId": "Settings",
+      "buttonIds": [
+        "bc172157-ee1d-40f9-b3a3-25d45a84c714",
+        "2af8ab18-a102-4d71-97dc-aeb524151a40",
+        "6c093dca-b6fc-44e7-87d6-1c61be1b322a",
+        "688dd54f-6284-4789-b5e9-79cc68bb5fe4",
+        "80c889d0-0da3-4620-be12-ef3bf7ae1473",
+        "792dae97-c169-4799-b208-24d5ba2e8b60",
+        "d4892bbd-9abd-4f98-a501-4ef167ddc7d3"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-picture_basic": {
+      "graphX": -441,
+      "graphY": 452,
+      "sectionId": "settings-picture",
+      "buttonIds": [
+        "61493787-17b7-429d-aba7-990af662707e",
+        "94999d7d-61f7-4241-8a73-ca349e7939ed",
+        "3e8aab13-cb96-4ac1-ae95-72b3f9238412",
+        "73161fe6-d97f-4e8b-9889-0cad79d07984",
+        "87a027fe-f032-4492-9c9a-0f3a43123ef8"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-picture_vivid": {
+      "graphX": -221,
+      "graphY": 452,
+      "sectionId": "settings-picture",
+      "buttonIds": [
+        "1fa3262d-2a58-4bb1-89fc-3eb35a5f64c7",
+        "e51819ff-28eb-4c73-b1d6-44069a1455b2",
+        "ab47b156-2a0f-4e6b-86af-917fdce47fc6",
+        "78db8cf4-d8ce-4d49-9519-7301f326fe5c",
+        "716d0295-6e12-4f4c-9a00-8faf528f5305"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-picture_standard": {
+      "graphX": -1,
+      "graphY": 452,
+      "sectionId": "settings-picture",
+      "buttonIds": [
+        "3c4ad797-93cc-4bb6-97c4-a5369b5ba37a",
+        "409802f5-b720-48df-b0de-d76549130dc6",
+        "66c382e9-f8eb-4d2c-b230-71fbcc7541f2",
+        "5e7422a6-a8fd-44f4-be2d-e48639952a12",
+        "0306bfbb-bb9c-4bbd-92ca-38bf612e401d"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-picture_cinema": {
+      "graphX": 219,
+      "graphY": 452,
+      "sectionId": "settings-picture",
+      "buttonIds": [
+        "84d62007-36fd-4822-b5fc-e4c6d9384308",
+        "1a9b5ed4-0dbc-4369-91c1-a399be769ec5",
+        "8ab521c2-ee70-4218-bdb4-f657c440545f",
+        "1a089a56-79e2-4213-8a9e-82fd93a14c72",
+        "7f7f8592-ca78-42ea-a6a8-2ba1e635f0a9"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-picture_sports": {
+      "graphX": 443,
+      "graphY": 455,
+      "sectionId": "settings-picture",
+      "buttonIds": [
+        "2c004ab8-d5bb-485c-9b08-54608d82c421",
+        "d74c6aaa-377b-49ef-8954-78f94abe3965",
+        "50779cb7-84f7-49d2-b3eb-64c33dfca9b7",
+        "cd5d9fd7-16eb-4cd1-97b4-72ac91785f03",
+        "47487357-9a80-4e5a-a75a-9efdb38ef806"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-picture_aspect-ratio": {
+      "graphX": -656,
+      "graphY": 457,
+      "sectionId": "settings-picture",
+      "buttonIds": [
+        "43d8a4dc-04ff-4d3a-9647-4a350b82e2fd",
+        "8d8430f5-30cc-4ea0-a16b-ddd1be913967",
+        "89c2f339-82c3-4dd2-8407-8a0fdd086dc7",
+        "a396e834-c698-460c-94ef-862985c09753",
+        "d3fe7cfa-76ee-4ffe-8adb-f60715bb798c"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-settings": {
+      "graphX": 1252,
+      "graphY": -110,
+      "sectionId": "picture-advanced",
+      "buttonIds": []
+    },
+    "picture-advanced_brightness": {
+      "graphX": 163,
+      "graphY": 520,
+      "sectionId": "picture-advanced",
+      "buttonIds": [
+        "6284ee3e-da5d-428c-99e3-87ba44b560f1",
+        "3e5b5048-06d7-457c-b1f1-2dc645668a36",
+        "a31156d2-b632-4359-9b61-911da7871516",
+        "6a853508-247f-405f-90e9-75899abd2cb3",
+        "0aa258c7-8edf-4107-8f6d-da1a4cd18c9c",
+        "f98a6dfa-3a40-49f9-b790-cc99acfa1949",
+        "3e56fde7-b0c5-4ace-87e1-6d41f38d498b",
+        "affe329c-14db-47be-8c24-34390322a692",
+        "051cd54b-c163-4e75-a2c4-3c3d2de1d44e"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced_adjust": {
+      "graphX": 832,
+      "graphY": 526,
+      "sectionId": "picture-advanced",
+      "buttonIds": [
+        "273ddda3-ca6a-4705-bef4-ebf08b4e2957"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced_panel": {
+      "graphX": 1064,
+      "graphY": 530,
+      "sectionId": "picture-advanced",
+      "buttonIds": [
+        "c293275b-0dd5-4fa6-9f36-14c6f495a225"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced_black": {
+      "graphX": 606,
+      "graphY": 529,
+      "sectionId": "picture-advanced",
+      "buttonIds": [
+        "c3b913f9-26db-4fe9-b76a-07d6bccd4284"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced_auto-dynamic-off": {
+      "graphX": 1180,
+      "graphY": 939,
+      "sectionId": "picture-advanced",
+      "buttonIds": [
+        "50d781f4-fa97-4ca5-b465-e915794d55fa",
+        "5b8a71d4-2ce8-434e-bb6c-4481400ebb03",
+        "63cccb46-100d-4030-8ccf-9697b8479cd2",
+        "09cba107-a56d-499f-8503-8c9b5e9c47ca",
+        "7a6c88c8-0ac5-4423-9745-5a0be3529c9e"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced_auto-dynamic-low": {
+      "graphX": 935,
+      "graphY": 938,
+      "sectionId": "picture-advanced",
+      "buttonIds": [
+        "041e6347-5d67-4a8b-b6dd-adc8c3190901",
+        "6429d1b0-6dd8-42a2-9e64-22c4125921e9",
+        "ed9ff204-d3d0-42f0-b7d0-795fd25a59e2",
+        "ecab9b91-7034-4d7e-a59e-5245619515af",
+        "f9b46f7f-3b2f-4c98-b7a7-235cec176541"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced_auto-dynamic-medium": {
+      "graphX": 1428,
+      "graphY": 936,
+      "sectionId": "picture-advanced",
+      "buttonIds": [
+        "bd6e7750-384c-49d6-bd6c-22108df85ebf",
+        "2f7ac821-f0de-4db6-a9ee-a1a337390e87",
+        "a645a1e5-66ce-4577-a67b-f85a84883a4d",
+        "70032a85-1c4e-449a-b842-e6abd7ba5300",
+        "f3ab7c55-9495-4339-9aa0-16960f88d63f"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced_auto-dynamic-high": {
+      "graphX": 1648,
+      "graphY": 936,
+      "sectionId": "picture-advanced",
+      "buttonIds": [
+        "dac57790-cdce-4e05-9f83-088a5baaf965",
+        "be5aef9d-7087-42a6-961a-c7258d5a7073",
+        "7d551c6a-764a-4441-b358-6a07aefdbe2b",
+        "63878be8-d970-4d36-9705-3e9e705662f6",
+        "ea4dec8c-108d-43c5-a7c5-483a9bd6f6df"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced_hgig": {
+      "graphX": 654,
+      "graphY": 1560,
+      "sectionId": "picture-advanced",
+      "buttonIds": []
+    },
+    "picture-advanced_gamma-bt": {
+      "graphX": 963,
+      "graphY": 1302,
+      "sectionId": "picture-advanced",
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced_gamma-22": {
+      "graphX": 1188,
+      "graphY": 1305,
+      "sectionId": "picture-advanced",
+      "buttonIds": []
+    },
+    "picture-advanced_down": {
+      "graphX": 419,
+      "graphY": 2109,
+      "sectionId": "picture-advanced",
+      "buttonIds": []
+    },
+    "picture-advanced_video-range-limited": {
+      "graphX": 904,
+      "graphY": 2282,
+      "sectionId": "picture-advanced",
+      "buttonIds": []
+    },
+    "picture-advanced_video-range-full": {
+      "graphX": 914,
+      "graphY": 2472,
+      "sectionId": "picture-advanced",
       "buttonIds": []
     }
   },

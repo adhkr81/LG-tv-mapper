@@ -8,11 +8,12 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import ScreenNode from './ScreenNode.jsx';
-import SectionBar from '../SectionBar/SectionBar.jsx';
+import SectionNode from './SectionNode.jsx';
 import useStore from '../../store/useStore.js';
 import { rectCenteredAt } from '../../utils/buttonRect.js';
 import {
   getNextNumericScreenId,
+  isRealSectionView,
   suggestScreenIdForSection,
   resolveImportScreenId,
 } from '../../utils/sectionGraph.js';
@@ -23,9 +24,10 @@ import {
   nextNewNodePosition,
   toStoredGraphPosition,
 } from '../../utils/graphFlow.js';
+import { promptDeleteScreens } from '../../utils/deleteScreenPrompt.js';
 import './GraphView.css';
 
-const nodeTypes = { screenNode: ScreenNode };
+const nodeTypes = { screenNode: ScreenNode, sectionNode: SectionNode };
 
 export default function GraphView({ isActive = true }) {
   const screens = useStore((s) => s.screens);
@@ -33,6 +35,8 @@ export default function GraphView({ isActive = true }) {
   const activeSectionId = useStore((s) => s.activeSectionId);
   const selectedScreenIds = useStore((s) => s.selectedScreenIds);
   const setSelectedScreenIds = useStore((s) => s.setSelectedScreenIds);
+  const setActiveSection = useStore((s) => s.setActiveSection);
+  const toggleSectionCollapsed = useStore((s) => s.toggleSectionCollapsed);
   const deleteScreens = useStore((s) => s.deleteScreens);
   const importScreens = useStore((s) => s.importScreens);
   const captureScreen = useStore((s) => s.captureScreen);
@@ -69,7 +73,7 @@ export default function GraphView({ isActive = true }) {
     if (!ids?.size) return;
 
     const current = nodesRef.current;
-    if (activeSectionId == null) {
+    if (!isRealSectionView(activeSectionId)) {
       void persistGraphLayoutFromNodes(current);
     } else {
       const updates = buildGraphPositionUpdates(
@@ -115,16 +119,18 @@ export default function GraphView({ isActive = true }) {
     const sectionChanged = prevSection !== activeSectionId;
     prevSectionRef.current = activeSectionId;
 
-    const enteringAllScreens = sectionChanged && activeSectionId == null;
-    const enteringSection = sectionChanged && activeSectionId != null;
+    const wasAllScreensLayout = !isRealSectionView(prevSection);
+    const isAllScreensLayout = !isRealSectionView(activeSectionId);
+    const enteringAllScreens = sectionChanged && isAllScreensLayout;
+    const enteringSection = sectionChanged && isRealSectionView(activeSectionId);
 
-    // Leaving All screens: persist coords + section band anchors
-    if (sectionChanged && prevSection === null && nodesRef.current.length > 0) {
+    // Leaving All screens (expanded or collapsed): persist coords + section bands
+    if (sectionChanged && wasAllScreensLayout && nodesRef.current.length > 0) {
       void persistGraphLayoutFromNodes(nodesRef.current);
     }
 
     // Leaving a section: persist section-local node positions
-    if (enteringAllScreens && prevSection != null && nodesRef.current.length > 0) {
+    if (enteringAllScreens && isRealSectionView(prevSection) && nodesRef.current.length > 0) {
       void updateScreenGraphPositions(
         buildGraphPositionUpdates(nodesRef.current)
       );
@@ -143,8 +149,7 @@ export default function GraphView({ isActive = true }) {
         const live = current.find((n) => n.id === node.id);
         let position;
 
-        if (enteringAllScreens) {
-          // Use freshly computed band layout (includes per-section viewOffset)
+        if (sectionChanged) {
           position = node.position;
         } else if (enteringSection && live) {
           position = toStoredGraphPosition(live);
@@ -198,7 +203,7 @@ export default function GraphView({ isActive = true }) {
 
   // Extra fit when entering All screens (bands can be far from prior viewport)
   useEffect(() => {
-    if (!isActive || activeSectionId != null || !flowRef.current || nodes.length === 0) {
+    if (!isActive || isRealSectionView(activeSectionId) || !flowRef.current || nodes.length === 0) {
       return;
     }
     const t = setTimeout(() => flowRef.current?.fitView({ padding: 0.25 }), 200);
@@ -216,11 +221,13 @@ export default function GraphView({ isActive = true }) {
     []
   );
 
-  const activeSection = sections.find((s) => s.id === activeSectionId);
+  const activeSection = isRealSectionView(activeSectionId)
+    ? sections.find((s) => s.id === activeSectionId)
+    : null;
 
   const openCaptureModal = () => {
     setNewScreenId(
-      activeSectionId && activeSection
+      isRealSectionView(activeSectionId) && activeSection
         ? suggestScreenIdForSection(activeSection, screens)
         : getNextNumericScreenId(screens)
     );
@@ -257,24 +264,44 @@ export default function GraphView({ isActive = true }) {
 
   const onSelectionChange = useCallback(
     ({ nodes: selectedNodes }) => {
-      setSelectedScreenIds(selectedNodes.map((n) => n.id));
+      setSelectedScreenIds(
+        selectedNodes.filter((n) => n.type === 'screenNode').map((n) => n.id)
+      );
     },
     [setSelectedScreenIds]
   );
 
+  const onNodeClick = useCallback(
+    (_, node) => {
+      if (
+        node.type === 'sectionNode' &&
+        node.data?.sectionId &&
+        activeSectionId == null
+      ) {
+        toggleSectionCollapsed(node.data.sectionId, false);
+      }
+    },
+    [activeSectionId, toggleSectionCollapsed]
+  );
+
+  const onNodeDoubleClick = useCallback(
+    (_, node) => {
+      if (node.type === 'sectionNode' && node.data?.sectionId) {
+        setActiveSection(node.data.sectionId);
+      }
+    },
+    [setActiveSection]
+  );
+
   const confirmDeleteSelection = useCallback(() => {
-    if (!selectedScreenIds.length) return;
-    const count = selectedScreenIds.length;
-    const label =
-      count === 1
-        ? `"${selectedScreenIds[0]}"`
-        : `${count} screens (${selectedScreenIds.join(', ')})`;
-    if (confirm(`Delete ${label}?`)) {
-      deleteScreens(selectedScreenIds);
+    const choice = promptDeleteScreens(screens, selectedScreenIds);
+    if (choice) {
+      deleteScreens(choice.ids, { removeParentButtons: choice.removeParentButtons });
     }
-  }, [selectedScreenIds, deleteScreens]);
+  }, [screens, selectedScreenIds, deleteScreens]);
 
   useEffect(() => {
+    if (!isActive) return undefined;
     const onKeyDown = (e) => {
       if (e.key !== 'Delete' && e.key !== 'Backspace') return;
       if (e.target.closest('input, textarea, select, [contenteditable="true"]')) return;
@@ -284,7 +311,7 @@ export default function GraphView({ isActive = true }) {
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [selectedScreenIds, confirmDeleteSelection]);
+  }, [isActive, selectedScreenIds, confirmDeleteSelection]);
 
   const isValidConnection = useCallback(
     (connection) => connection.source !== connection.target,
@@ -352,8 +379,6 @@ export default function GraphView({ isActive = true }) {
 
   return (
     <div className={`graph-view ${isActive ? '' : 'graph-view--inactive'}`}>
-      <SectionBar />
-
       <div className="graph-view__toolbar">
         <div className="graph-view__title">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -403,6 +428,8 @@ export default function GraphView({ isActive = true }) {
         onNodeDragStart={onNodeDragStart}
         onNodeDragStop={onNodeDragStop}
         onSelectionChange={onSelectionChange}
+        onNodeClick={onNodeClick}
+        onNodeDoubleClick={onNodeDoubleClick}
         onPaneClick={() => setSelectedScreenIds([])}
         onInit={(instance) => { flowRef.current = instance; }}
         nodeTypes={nodeTypes}
@@ -427,7 +454,7 @@ export default function GraphView({ isActive = true }) {
             <h3 className="modal__title">
               {importFiles.length > 1 ? 'Import Screenshots' : 'Import Screenshot'}
             </h3>
-            {activeSectionId && (
+            {isRealSectionView(activeSectionId) && (
               <p className="graph-view__section-note">
                 Adds to section: {activeSection?.name || activeSectionId}
               </p>
@@ -509,7 +536,7 @@ export default function GraphView({ isActive = true }) {
         >
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h3 className="modal__title">Capture from TV</h3>
-            {activeSectionId && (
+            {isRealSectionView(activeSectionId) && (
               <p className="graph-view__section-note">
                 Adds to section: {activeSection?.name || activeSectionId}
               </p>
@@ -522,7 +549,7 @@ export default function GraphView({ isActive = true }) {
                 value={newScreenId}
                 onChange={(e) => setNewScreenId(e.target.value)}
                 placeholder={
-                  activeSectionId
+                  isRealSectionView(activeSectionId)
                     ? 'e.g. SectionName_01, SectionName_02'
                     : 'e.g. 1, 2, 3'
                 }

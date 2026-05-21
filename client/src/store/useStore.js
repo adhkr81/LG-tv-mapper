@@ -5,9 +5,49 @@ import {
   buildGraphPositionUpdates,
   buildSectionBandUpdates,
 } from '../utils/graphFlow.js';
+import {
+  effectiveSectionId,
+  isRealSectionView,
+  LEGACY_ALL_SCREENS_COLLAPSED_ID,
+  sectionIdFromName,
+} from '../utils/sectionGraph.js';
+import {
+  canUndo as historyCanUndo,
+  clearUndoHistory,
+  cloneMapperState,
+  popUndoSnapshot,
+  recordUndo,
+} from '../utils/undoHistory.js';
 
 const SECTION_STORAGE_KEY = 'lg-mapper-active-section';
 const BUTTON_RECT_CLIPBOARD_KEY = 'lg-mapper-button-rect-clipboard';
+
+function loadActiveSectionId() {
+  try {
+    const stored = localStorage.getItem(SECTION_STORAGE_KEY);
+    if (!stored || stored === LEGACY_ALL_SCREENS_COLLAPSED_ID) return null;
+    return stored;
+  } catch {
+    return null;
+  }
+}
+
+async function migrateLegacyCollapsedView(sections) {
+  try {
+    if (localStorage.getItem(SECTION_STORAGE_KEY) !== LEGACY_ALL_SCREENS_COLLAPSED_ID) {
+      return sections;
+    }
+    localStorage.removeItem(SECTION_STORAGE_KEY);
+    if (!sections.length) return sections;
+    await Promise.all(
+      sections.map((s) => api.updateSection(s.id, { collapsed: true }))
+    );
+    return sections.map((s) => ({ ...s, collapsed: true }));
+  } catch (err) {
+    console.error('Legacy collapsed view migration failed:', err);
+    return sections;
+  }
+}
 
 function loadButtonRectClipboard() {
   try {
@@ -106,6 +146,47 @@ async function flushButtonSave(get, set, screenId, buttonId, chainKey) {
   }
 }
 
+function cancelButtonSave(screenId, buttonId) {
+  const chainKey = `${screenId}:${buttonId}`;
+  const entry = buttonSaveEntries.get(chainKey);
+  if (entry?.timer) clearTimeout(entry.timer);
+  buttonSaveEntries.delete(chainKey);
+  buttonPendingPatches.delete(chainKey);
+}
+
+function cancelAllButtonSaves() {
+  for (const chainKey of buttonSaveEntries.keys()) {
+    const entry = buttonSaveEntries.get(chainKey);
+    if (entry?.timer) clearTimeout(entry.timer);
+  }
+  buttonSaveEntries.clear();
+  buttonPendingPatches.clear();
+}
+
+function markUndoAvailable(set, get) {
+  const { screens, sections } = get();
+  recordUndo(screens, sections);
+  set({ canUndo: historyCanUndo() });
+}
+
+function markUndoAvailableKeyed(set, get, key) {
+  const { screens, sections } = get();
+  recordUndo(screens, sections, key);
+  set({ canUndo: historyCanUndo() });
+}
+
+/** Flush debounced edits immediately (e.g. before selecting another button). */
+function flushButtonSaveNow(get, set, screenId, buttonId) {
+  const chainKey = `${screenId}:${buttonId}`;
+  const entry = buttonSaveEntries.get(chainKey);
+  if (!entry) return Promise.resolve();
+  if (entry.timer) {
+    clearTimeout(entry.timer);
+    entry.timer = null;
+  }
+  return flushButtonSave(get, set, screenId, buttonId, chainKey);
+}
+
 function scheduleButtonSave(get, set, screenId, buttonId) {
   const chainKey = `${screenId}:${buttonId}`;
 
@@ -138,13 +219,7 @@ const useStore = create((set, get) => ({
   imageVersions: {},
 
   // UI state
-  activeSectionId: (() => {
-    try {
-      return localStorage.getItem(SECTION_STORAGE_KEY) || null;
-    } catch {
-      return null;
-    }
-  })(),
+  activeSectionId: loadActiveSectionId(),
   selectedScreenId: null,
   selectedScreenIds: [],
   selectedButtonId: null,
@@ -156,8 +231,51 @@ const useStore = create((set, get) => ({
   captureProgress: null,
   isAddingHotspot: false,
   serialStatus: 'disconnected',
+  canUndo: historyCanUndo(),
 
   // ---- Actions ----
+
+  undo: async () => {
+    const snapshot = popUndoSnapshot();
+    if (!snapshot) {
+      set({ canUndo: historyCanUndo() });
+      return false;
+    }
+
+    cancelAllButtonSaves();
+    const rollback = cloneMapperState(get().screens, get().sections);
+    set({
+      screens: snapshot.screens,
+      sections: snapshot.sections,
+      canUndo: historyCanUndo(),
+    });
+
+    try {
+      const restored = await api.restoreMapperState(
+        snapshot.screens,
+        snapshot.sections
+      );
+      set({
+        screens: restored.screens,
+        sections: restored.sections,
+        canUndo: historyCanUndo(),
+      });
+      return true;
+    } catch (err) {
+      console.error('Undo failed:', err);
+      set({
+        screens: rollback.screens,
+        sections: rollback.sections,
+        canUndo: historyCanUndo(),
+      });
+      try {
+        await get().fetchScreens({ clearUndo: true });
+      } catch {
+        /* ignore */
+      }
+      throw err;
+    }
+  },
 
   bumpImageVersions: (screenIds) => {
     const ids = (Array.isArray(screenIds) ? screenIds : [screenIds]).filter(Boolean);
@@ -169,13 +287,20 @@ const useStore = create((set, get) => ({
     set({ imageVersions });
   },
 
-  fetchScreens: async () => {
+  fetchScreens: async ({ clearUndo = false } = {}) => {
     try {
-      const [screens, sections] = await Promise.all([
+      const [screens, sectionsRaw] = await Promise.all([
         api.getScreens(),
         api.getSections(),
       ]);
-      set({ screens, sections });
+      const sections = await migrateLegacyCollapsedView(sectionsRaw);
+      if (clearUndo) clearUndoHistory();
+      set({
+        screens,
+        sections,
+        activeSectionId: loadActiveSectionId(),
+        canUndo: clearUndo ? false : historyCanUndo(),
+      });
     } catch (err) {
       console.error('Failed to fetch screens:', err);
     }
@@ -214,19 +339,80 @@ const useStore = create((set, get) => ({
   },
 
   setActiveSection: (sectionId) => {
+    const id =
+      sectionId && sectionId !== LEGACY_ALL_SCREENS_COLLAPSED_ID
+        ? sectionId
+        : null;
     try {
-      if (sectionId) localStorage.setItem(SECTION_STORAGE_KEY, sectionId);
+      if (id) localStorage.setItem(SECTION_STORAGE_KEY, id);
       else localStorage.removeItem(SECTION_STORAGE_KEY);
     } catch {
       // ignore
     }
-    set({ activeSectionId: sectionId });
+    set({ activeSectionId: id });
+  },
+
+  toggleSectionCollapsed: async (id, collapsed) => {
+    return get().updateSection(id, { collapsed });
+  },
+
+  collapseAllSections: async () => {
+    const { sections } = get();
+    const targets = sections.filter((s) => !s.collapsed);
+    if (!targets.length) return;
+    await Promise.all(
+      targets.map((s) => api.updateSection(s.id, { collapsed: true }))
+    );
+    set({
+      sections: get().sections.map((s) => ({ ...s, collapsed: true })),
+    });
+  },
+
+  expandAllSections: async () => {
+    const { sections } = get();
+    const targets = sections.filter((s) => s.collapsed);
+    if (!targets.length) return;
+    await Promise.all(
+      targets.map((s) => api.updateSection(s.id, { collapsed: false }))
+    );
+    set({
+      sections: get().sections.map((s) => ({ ...s, collapsed: false })),
+    });
   },
 
   createSection: async (data) => {
     const section = await api.createSection(data);
     set({ sections: [...get().sections, section] });
     return section;
+  },
+
+  createSectionFromScreens: async ({ name, screenIds, rootScreenId = null }) => {
+    const ids = [...new Set(screenIds)].filter(Boolean);
+    if (!ids.length) throw new Error('Select at least one screen on the graph');
+    const nameTrim = String(name || '').trim();
+    if (!nameTrim) throw new Error('Section name is required');
+
+    const id = sectionIdFromName(nameTrim, get().sections);
+    const section = await api.createSection({
+      id,
+      name: nameTrim,
+      rootScreenId: rootScreenId || null,
+    });
+    for (const screenId of ids) {
+      await api.updateScreen(screenId, { sectionId: id });
+    }
+    await get().fetchScreens();
+    get().setActiveSection(id);
+    return section;
+  },
+
+  deleteSection: async (id) => {
+    await api.deleteSection(id);
+    if (get().activeSectionId === id) {
+      get().setActiveSection(null);
+    }
+    set({ sections: get().sections.filter((s) => s.id !== id) });
+    await get().fetchScreens();
   },
 
   updateSection: async (id, updates) => {
@@ -246,7 +432,7 @@ const useStore = create((set, get) => ({
   },
 
   captureScreen: async (screenId) => {
-    const sectionId = get().activeSectionId;
+    const sectionId = effectiveSectionId(get().activeSectionId);
     set({
       isCapturing: true,
       capturingScreenId: screenId,
@@ -280,9 +466,38 @@ const useStore = create((set, get) => ({
     return get().importScreens([{ screenId, file }]);
   },
 
+  replaceScreenImage: async (screenId, file) => {
+    await get().importScreen(screenId, file);
+  },
+
+  clearScreenImage: async (screenId) => {
+    try {
+      await api.updateScreen(screenId, { image: null });
+      await get().fetchScreens();
+      get().bumpImageVersions(screenId);
+    } catch (err) {
+      console.error('Clear screen image failed:', err);
+      throw err;
+    }
+  },
+
+  createScreenNode: async ({ id, sectionId = null, graphX, graphY }) => {
+    markUndoAvailable(set, get);
+    const screen = await api.createScreen({
+      id,
+      image: '',
+      sectionId: sectionId ?? effectiveSectionId(get().activeSectionId) ?? null,
+      graphX,
+      graphY,
+    });
+    await get().fetchScreens();
+    get().selectScreen(id);
+    return screen;
+  },
+
   importScreens: async (entries) => {
     if (!entries?.length) return;
-    const sectionId = get().activeSectionId;
+    const sectionId = effectiveSectionId(get().activeSectionId);
     set({ isCapturing: true });
     try {
       for (const { screenId, file } of entries) {
@@ -299,9 +514,11 @@ const useStore = create((set, get) => ({
   },
 
   addButton: async (screenId, buttonData) => {
+    markUndoAvailable(set, get);
     try {
-      await api.addButton(screenId, buttonData);
+      const button = await api.addButton(screenId, buttonData);
       await get().fetchScreens();
+      return button;
     } catch (err) {
       console.error('Add button failed:', err);
       throw err;
@@ -309,6 +526,7 @@ const useStore = create((set, get) => ({
   },
 
   importButtonsFromScreen: async (targetScreenId, sourceScreenId, options = {}) => {
+    markUndoAvailable(set, get);
     try {
       await api.importButtons(targetScreenId, sourceScreenId, options);
       await get().fetchScreens();
@@ -320,6 +538,7 @@ const useStore = create((set, get) => ({
 
   updateButton: async (screenId, buttonId, updates) => {
     const chainKey = `${screenId}:${buttonId}`;
+    markUndoAvailableKeyed(set, get, `btn:${screenId}:${buttonId}`);
 
     applyButtonPatch(set, get, screenId, buttonId, updates);
 
@@ -332,14 +551,23 @@ const useStore = create((set, get) => ({
   },
 
   deleteButton: async (screenId, buttonId) => {
+    markUndoAvailable(set, get);
+    cancelButtonSave(screenId, buttonId);
+    set({
+      screens: get().screens.map((s) =>
+        s.id !== screenId
+          ? s
+          : { ...s, buttons: s.buttons.filter((b) => b.id !== buttonId) }
+      ),
+      selectedButtonId:
+        get().selectedButtonId === buttonId ? null : get().selectedButtonId,
+    });
     try {
       await api.deleteButtonApi(screenId, buttonId);
-      if (get().selectedButtonId === buttonId) {
-        set({ selectedButtonId: null });
-      }
       await get().fetchScreens();
     } catch (err) {
       console.error('Delete button failed:', err);
+      await get().fetchScreens();
       throw err;
     }
   },
@@ -350,6 +578,7 @@ const useStore = create((set, get) => ({
 
   updateScreenGraphPositions: async (updates) => {
     if (!updates?.length) return;
+    markUndoAvailableKeyed(set, get, 'graph:positions');
     const rounded = updates.map(({ screenId, graphX, graphY }) => ({
       screenId,
       graphX: Math.round(graphX),
@@ -379,15 +608,18 @@ const useStore = create((set, get) => ({
   persistGraphLayoutFromNodes: async (nodes) => {
     if (!nodes?.length) return;
 
-    const screenUpdates = buildGraphPositionUpdates(nodes);
+    const screenNodes = nodes.filter((n) => n.type === 'screenNode');
+    const screenUpdates = buildGraphPositionUpdates(screenNodes);
     if (screenUpdates.length) {
       await get().updateScreenGraphPositions(screenUpdates);
     }
 
-    if (get().activeSectionId != null) return;
+    if (isRealSectionView(get().activeSectionId)) return;
 
     const bandUpdates = buildSectionBandUpdates(nodes);
     if (!bandUpdates.length) return;
+
+    markUndoAvailableKeyed(set, get, 'graph:sections');
 
     set({
       sections: get().sections.map((sec) => {
@@ -412,6 +644,7 @@ const useStore = create((set, get) => ({
   },
 
   updateScreenName: async (oldId, newId) => {
+    markUndoAvailable(set, get);
     try {
       await api.updateScreen(oldId, { id: newId });
       await get().fetchScreens();
@@ -430,16 +663,17 @@ const useStore = create((set, get) => ({
     }
   },
 
-  deleteScreen: async (screenId) => {
-    return get().deleteScreens([screenId]);
+  deleteScreen: async (screenId, options) => {
+    return get().deleteScreens([screenId], options);
   },
 
-  deleteScreens: async (screenIds) => {
+  deleteScreens: async (screenIds, { removeParentButtons = false } = {}) => {
     const ids = [...new Set(screenIds)].filter(Boolean);
     if (!ids.length) return;
+    markUndoAvailable(set, get);
     try {
       for (const id of ids) {
-        await api.deleteScreen(id);
+        await api.deleteScreen(id, { removeParentButtons });
       }
       const removed = new Set(ids);
       const remaining = get().selectedScreenIds.filter((id) => !removed.has(id));
@@ -541,7 +775,13 @@ const useStore = create((set, get) => ({
   },
 
   selectButton: (buttonId) => {
-    set({ selectedButtonId: buttonId ?? null });
+    const prevId = get().selectedButtonId;
+    const nextId = buttonId ?? null;
+    const screenId = get().selectedScreenId;
+    if (prevId && prevId !== nextId && screenId) {
+      void flushButtonSaveNow(get, set, screenId, prevId);
+    }
+    set({ selectedButtonId: nextId });
   },
 
   setAddingHotspot: (val) => {

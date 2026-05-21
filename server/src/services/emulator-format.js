@@ -61,8 +61,9 @@ export function buttonFromEmulator(btn, { id, screenId }) {
  * @returns {Record<string, unknown>}
  */
 export function screenToEmulator(screen) {
-  const imgFilename =
-    screen.img_filename || stripImageExtension(screen.image) || screen.id;
+  const imgFilename = !screen.image?.trim()
+    ? ''
+    : screen.img_filename || stripImageExtension(screen.image) || screen.id;
   return {
     img_filename: imgFilename,
     preset: screen.preset ?? 0,

@@ -35,10 +35,13 @@ router.put('/:id', (req, res) => {
   }
 });
 
-// DELETE /api/screens/:id
+// DELETE /api/screens/:id?removeParentButtons=1
 router.delete('/:id', (req, res) => {
   try {
-    screenService.deleteScreen(req.params.id);
+    const removeParentButtons =
+      req.query.removeParentButtons === '1' ||
+      req.query.removeParentButtons === 'true';
+    screenService.deleteScreen(req.params.id, { removeParentButtons });
     res.json({ ok: true });
   } catch (err) {
     res.status(400).json({ error: err.message });

@@ -12,6 +12,7 @@ import buttonRoutes from './routes/buttons.js';
 import graphRoutes from './routes/graph.js';
 import sectionRoutes from './routes/sections.js';
 import configRoutes from './routes/config.js';
+import stateRoutes from './routes/state.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -32,6 +33,7 @@ app.use('/api/screens/:id/buttons', buttonRoutes);
 app.use('/api/graph', graphRoutes);
 app.use('/api/sections', sectionRoutes);
 app.use('/api/config', configRoutes);
+app.use('/api/state', stateRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

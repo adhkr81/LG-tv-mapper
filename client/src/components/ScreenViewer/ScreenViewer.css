@@ -372,6 +372,20 @@
   z-index: 12;
 }
 
+.hotspot-region--duplicating-source {
+  opacity: 0.55;
+}
+
+.hotspot-region__duplicate-ghost {
+  position: absolute;
+  box-sizing: border-box;
+  pointer-events: none;
+  z-index: 21;
+  border: 2px dashed var(--accent);
+  background: rgba(0, 229, 255, 0.12);
+  cursor: grabbing;
+}
+
 .hotspot-region:hover { z-index: 10; }
 
 .hotspot-region--linked {

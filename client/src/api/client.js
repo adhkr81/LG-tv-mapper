@@ -125,8 +125,10 @@ export const createScreen = (data) =>
   request('/api/screens', { method: 'POST', body: JSON.stringify(data) });
 export const updateScreen = (id, data) =>
   request(`/api/screens/${id}`, { method: 'PUT', body: JSON.stringify(data) });
-export const deleteScreen = (id) =>
-  request(`/api/screens/${id}`, { method: 'DELETE' });
+export const deleteScreen = (id, { removeParentButtons = false } = {}) => {
+  const q = removeParentButtons ? '?removeParentButtons=1' : '';
+  return request(`/api/screens/${id}${q}`, { method: 'DELETE' });
+};
 
 // Buttons
 export const getButtons = (screenId) =>
@@ -147,6 +149,13 @@ export const deleteButtonApi = (screenId, buttonId) =>
 
 // Graph
 export const getGraph = () => request('/api/graph');
+
+// Full mapper state (undo restore)
+export const restoreMapperState = (screens, sections) =>
+  request('/api/state', {
+    method: 'PUT',
+    body: JSON.stringify({ screens, sections }),
+  });
 
 // Config
 export const getConfig = () => request('/api/config');

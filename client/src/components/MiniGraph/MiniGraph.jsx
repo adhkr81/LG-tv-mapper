@@ -7,11 +7,12 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import ScreenNode from '../GraphView/ScreenNode.jsx';
+import SectionNode from '../GraphView/SectionNode.jsx';
 import useStore from '../../store/useStore.js';
 import { buildSectionGraphFlow } from '../../utils/graphFlow.js';
 import './MiniGraph.css';
 
-const nodeTypes = { screenNode: ScreenNode };
+const nodeTypes = { screenNode: ScreenNode, sectionNode: SectionNode };
 const FIT_VIEW_OPTIONS = { padding: 0.2 };
 
 function scheduleFitView(instance) {
@@ -67,7 +68,10 @@ export default function MiniGraph({ onClose }) {
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onInit={(instance) => scheduleFitView(instance)}
-          onNodeClick={(_, node) => selectScreen(node.id)}
+          onNodeClick={(_, node) => {
+            if (node.type === 'sectionNode') return;
+            selectScreen(node.id);
+          }}
           nodeTypes={nodeTypes}
           nodesDraggable={false}
           nodesConnectable={false}

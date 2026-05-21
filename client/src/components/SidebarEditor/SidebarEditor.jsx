@@ -1,9 +1,17 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import useStore from '../../store/useStore.js';
 import { normalizeButton } from '../../utils/buttonRect.js';
-import { getSectionGraphScreens } from '../../utils/sectionGraph.js';
-import { screenshotUrl } from '../../utils/screenshotUrl.js';
+import {
+  effectiveSectionId,
+  getSectionGraphScreens,
+  getNextNumericScreenId,
+  isRealSectionView,
+  suggestScreenIdForSection,
+} from '../../utils/sectionGraph.js';
+import { nextScreenGraphPosition } from '../../utils/graphFlow.js';
+import { countInboundButtons } from '../../utils/deleteScreenPrompt.js';
 import ImageConfigSection from '../ImageConfig/ImageConfigSection.jsx';
+import SectionBar from '../SectionBar/SectionBar.jsx';
 import '../SectionBar/SectionBar.css';
 import './SidebarEditor.css';
 
@@ -16,9 +24,6 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const selectedScreenIds = useStore((s) => s.selectedScreenIds);
   const selectScreen = useStore((s) => s.selectScreen);
   const assignScreenToSection = useStore((s) => s.assignScreenToSection);
-  const serialStatus = useStore((s) => s.serialStatus);
-  const connectSerial = useStore((s) => s.connectSerial);
-  const disconnectSerial = useStore((s) => s.disconnectSerial);
   const deleteScreens = useStore((s) => s.deleteScreens);
   const deleteButton = useStore((s) => s.deleteButton);
   const updateButton = useStore((s) => s.updateButton);
@@ -26,6 +31,10 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const importButtonsFromScreen = useStore((s) => s.importButtonsFromScreen);
   const imageConfig = useStore((s) => s.imageConfig);
   const updateScreenName = useStore((s) => s.updateScreenName);
+  const replaceScreenImage = useStore((s) => s.replaceScreenImage);
+  const clearScreenImage = useStore((s) => s.clearScreenImage);
+  const createScreenNode = useStore((s) => s.createScreenNode);
+  const isCapturing = useStore((s) => s.isCapturing);
   const selectedButtonId = useStore((s) => s.selectedButtonId);
   const selectButton = useStore((s) => s.selectButton);
   const importCompareScreenId = useStore((s) => s.importCompareScreenId);
@@ -36,10 +45,9 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const copyButtonRect = useStore((s) => s.copyButtonRect);
 
   const screen = screens.find((s) => s.id === selectedScreenId);
-  const imageVersion = useStore((s) =>
-    selectedScreenId ? (s.imageVersions[selectedScreenId] ?? 0) : 0
-  );
-  const activeSection = sections.find((s) => s.id === activeSectionId);
+  const activeSection = isRealSectionView(activeSectionId)
+    ? sections.find((s) => s.id === activeSectionId)
+    : null;
 
   const { primary, external } = useMemo(
     () => getSectionGraphScreens(screens, activeSectionId),
@@ -47,7 +55,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   );
 
   const sectionScreens = useMemo(() => {
-    if (!activeSectionId) return [];
+    if (!isRealSectionView(activeSectionId)) return [];
     const rootId = activeSection?.rootScreenId;
     const sorted = [...primary].sort((a, b) => {
       if (a.id === rootId) return -1;
@@ -58,7 +66,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   }, [primary, activeSectionId, activeSection?.rootScreenId]);
 
   const targetOptions = useMemo(() => {
-    if (!activeSectionId) {
+    if (!isRealSectionView(activeSectionId)) {
       return { inSection: [], other: screens.filter((s) => s.id !== screen?.id) };
     }
     const inSection = screens.filter(
@@ -94,6 +102,16 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const [popoverUIOpen, setPopoverUIOpen] = useState({});
   const [isImportingButtons, setIsImportingButtons] = useState(false);
   const [importIncludeTargets, setImportIncludeTargets] = useState(true);
+  const [isImageBusy, setIsImageBusy] = useState(false);
+  const [newNodeId, setNewNodeId] = useState('');
+  const [isCreatingNode, setIsCreatingNode] = useState(false);
+  const [removeParentButtons, setRemoveParentButtons] = useState(true);
+  const replaceImageInputRef = useRef(null);
+
+  const inboundToSelection = useMemo(
+    () => countInboundButtons(screens, selectedScreenIds),
+    [screens, selectedScreenIds]
+  );
   useEffect(() => {
     if (screen) setNameValue(screen.id);
   }, [screen?.id]);
@@ -101,6 +119,124 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   useEffect(() => {
     setImportCompareScreenId(null);
   }, [screen?.id, setImportCompareScreenId]);
+
+  useEffect(() => {
+    if (!isEditMode) return undefined;
+    const onKeyDown = (e) => {
+      const isDeleteKey =
+        e.key === 'Delete' || e.key === 'Backspace' || e.key === 'Enter';
+      if (!isDeleteKey) return;
+      if (e.target.closest('input, textarea, select, [contenteditable="true"]')) return;
+      const buttonId = selectedButtonId;
+      if (!buttonId || !screen?.buttons.some((b) => b.id === buttonId)) return;
+      e.preventDefault();
+      deleteButton(screen.id, buttonId);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isEditMode, selectedButtonId, screen?.id, screen?.buttons, deleteButton]);
+
+  useEffect(() => {
+    if (mode !== 'graph') return;
+    const section = isRealSectionView(activeSectionId)
+      ? sections.find((s) => s.id === activeSectionId)
+      : null;
+    const suggested =
+      section
+        ? suggestScreenIdForSection(section, screens)
+        : getNextNumericScreenId(screens);
+    setNewNodeId(suggested);
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- suggest id when Flow tab or section changes only
+  }, [mode, activeSectionId, sections]);
+
+  const hasScreenImage = Boolean(screen?.image?.trim());
+
+  const handleReplaceImage = async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file || !screen) return;
+    if (!file.type.startsWith('image/')) {
+      alert('Please choose an image file.');
+      return;
+    }
+    setIsImageBusy(true);
+    try {
+      await replaceScreenImage(screen.id, file);
+    } catch (err) {
+      alert('Replace image failed: ' + err.message);
+    } finally {
+      setIsImageBusy(false);
+    }
+  };
+
+  const confirmDeleteNodes = () => {
+    const count = selectedScreenIds.length;
+    const ids =
+      count === 1
+        ? `"${selectedScreenIds[0]}"`
+        : `${count} nodes (${selectedScreenIds.join(', ')})`;
+    return confirm(
+      `Permanently delete ${ids} from the graph?\n\n` +
+        'This removes each node entirely (image, buttons, and links on those nodes). ' +
+        'To keep the node and only remove its screenshot, use Remove image on the Screen tab.'
+    );
+  };
+
+  const handleDeleteNodes = () => {
+    if (!selectedScreenIds.length) return;
+    if (!confirmDeleteNodes()) return;
+    deleteScreens(selectedScreenIds, { removeParentButtons });
+  };
+
+  const handleCreateNode = async () => {
+    const id = newNodeId.trim();
+    if (!id) {
+      alert('Enter a screen id for the new node.');
+      return;
+    }
+    if (screens.some((s) => s.id === id)) {
+      alert(`Screen "${id}" already exists.`);
+      return;
+    }
+    const { x, y } = nextScreenGraphPosition(screens, activeSectionId);
+    setIsCreatingNode(true);
+    try {
+      const sectionId = effectiveSectionId(activeSectionId);
+      await createScreenNode({
+        id,
+        sectionId,
+        graphX: Math.round(x),
+        graphY: Math.round(y),
+      });
+      const section = sectionId
+        ? sections.find((s) => s.id === sectionId)
+        : null;
+      const nextId =
+        section
+          ? suggestScreenIdForSection(section, [...screens, { id, sectionId }])
+          : getNextNumericScreenId([...screens, { id }]);
+      setNewNodeId(nextId);
+    } catch (err) {
+      alert('Create node failed: ' + err.message);
+    } finally {
+      setIsCreatingNode(false);
+    }
+  };
+
+  const handleClearImage = async () => {
+    if (!screen || !hasScreenImage) return;
+    if (!confirm(`Remove the image from "${screen.id}"? The screen node and buttons will stay.`)) {
+      return;
+    }
+    setIsImageBusy(true);
+    try {
+      await clearScreenImage(screen.id);
+    } catch (err) {
+      alert('Remove image failed: ' + err.message);
+    } finally {
+      setIsImageBusy(false);
+    }
+  };
 
   const handleRename = async () => {
     if (!nameValue.trim() || nameValue === screen.id) {
@@ -156,7 +292,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
       const newButtonData = {
         ...(buttonRectClipboard
           ? { ...buttonRectClipboard }
-          : { left: 10, top: 10, width: 50, height: 50 }),
+          : { left: 500, top: 200, width: 50, height: 50 }),
       };
       await addButton(screen.id, newButtonData);
     } catch (err) {
@@ -248,26 +384,70 @@ export default function SidebarEditor({ mode = 'viewer' }) {
     }
   };
 
-  const statusLabel =
-    serialStatus === 'shell-ready' ? 'Shell Ready' :
-    serialStatus === 'connected' ? 'Connected' :
-    serialStatus === 'connecting' ? 'Connecting...' : 'Disconnected';
-
   return (
     <div className="sidebar">
-      {/* Serial connection section */}
-      <div className="sidebar__section">
-        <div className="sidebar__section-title">Serial Connection</div>
-        <div className="sidebar__serial-row">
-          <span className={`status-dot ${serialStatus === 'shell-ready' || serialStatus === 'connected' ? 'connected' : serialStatus === 'connecting' ? 'connecting' : ''}`} />
-          <span className="sidebar__serial-label">{statusLabel}</span>
-          {serialStatus === 'disconnected' ? (
-            <button className="btn btn-sm btn-accent" onClick={connectSerial}>Connect</button>
-          ) : serialStatus === 'connecting' ? null : (
-            <button className="btn btn-sm btn-danger" onClick={disconnectSerial}>Disconnect</button>
+      {screen && selectedScreenIds.length === 1 && isEditMode && (
+        <div className="sidebar__section">
+          <div className="sidebar__section-title">Image</div>
+          {editingName ? (
+            <div className="sidebar__rename">
+              <input
+                className="input"
+                value={nameValue}
+                onChange={(e) => setNameValue(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleRename()}
+                autoFocus
+              />
+              <button className="btn btn-sm btn-accent" onClick={handleRename}>Save</button>
+              <button className="btn btn-sm" onClick={() => setEditingName(false)}>✕</button>
+            </div>
+          ) : (
+            <div className="sidebar__screen-name" onClick={() => setEditingName(true)}>
+              <span>{screen.id}</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+              </svg>
+            </div>
           )}
+          {isRealSectionView(activeSectionId) && screen.sectionId !== activeSectionId && (
+            <button
+              type="button"
+              className="btn btn-sm btn-accent sidebar__assign-section"
+              onClick={() => assignScreenToSection(screen.id, activeSectionId)}
+            >
+              Add to section {activeSectionId}
+            </button>
+          )}
+          <div className="sidebar__image-actions">
+            <input
+              ref={replaceImageInputRef}
+              type="file"
+              accept="image/*"
+              className="sidebar__image-file-input"
+              onChange={handleReplaceImage}
+              disabled={isImageBusy || isCapturing}
+            />
+            <button
+              type="button"
+              className="btn btn-sm btn-accent"
+              onClick={() => replaceImageInputRef.current?.click()}
+              disabled={isImageBusy || isCapturing}
+            >
+              {isImageBusy ? 'Working…' : hasScreenImage ? 'Replace image' : 'Add image'}
+            </button>
+            <button
+              type="button"
+              className="btn btn-sm"
+              onClick={handleClearImage}
+              disabled={!hasScreenImage || isImageBusy || isCapturing}
+              title={hasScreenImage ? 'Delete screenshot file; keep this screen node' : 'No image on this screen'}
+            >
+              Remove image
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       {screen && isEditMode && importSourceOptions.length > 0 && (
         <div className="sidebar__section">
@@ -317,16 +497,49 @@ export default function SidebarEditor({ mode = 'viewer' }) {
         </div>
       )}
 
+      {mode === 'graph' && (
+        <div className="sidebar__section">
+          <SectionBar variant="sidebar" />
+        </div>
+      )}
+
       {mode === 'graph' && <ImageConfigSection />}
+
+      {mode === 'graph' && (
+        <div className="sidebar__section">
+          <div className="sidebar__section-title">Nodes</div>
+          <label className="label" htmlFor="sidebar-new-node-id">
+            Screen id
+          </label>
+          <input
+            id="sidebar-new-node-id"
+            className="input sidebar__new-node-input"
+            value={newNodeId}
+            onChange={(e) => setNewNodeId(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleCreateNode()}
+            disabled={isCreatingNode}
+            placeholder="e.g. settings_01"
+          />
+          <button
+            type="button"
+            className="btn btn-sm btn-accent sidebar__new-node-btn"
+            onClick={handleCreateNode}
+            disabled={isCreatingNode || !newNodeId.trim()}
+          >
+            {isCreatingNode ? 'Creating…' : 'New node'}
+          </button>
+          <p className="sidebar__flow-select-hint">
+            Creates an empty node on the graph. Open the Screen tab to add an image and buttons.
+          </p>
+        </div>
+      )}
 
       {mode === 'graph' && selectedScreenIds.length > 0 && (
         <div className="sidebar__section">
           <div className="sidebar__section-title">
-            {selectedScreenIds.length === 1 ? 'Screen' : `Screens (${selectedScreenIds.length})`}
+            {selectedScreenIds.length === 1 ? 'Selection' : `Screens (${selectedScreenIds.length})`}
           </div>
-          {selectedScreenIds.length === 1 ? (
-            <p className="sidebar__flow-screen-id">{selectedScreenIds[0]}</p>
-          ) : (
+          {selectedScreenIds.length > 1 && (
             <ul className="sidebar__flow-screen-list">
               {selectedScreenIds.map((id) => (
                 <li key={id}>{id}</li>
@@ -336,24 +549,33 @@ export default function SidebarEditor({ mode = 'viewer' }) {
           <p className="sidebar__flow-select-hint">
             Ctrl+click or drag a box to multi-select. Drag selected nodes together.
           </p>
+          {inboundToSelection.count > 0 && (
+            <label className="sidebar__delete-parent-option">
+              <input
+                type="checkbox"
+                checked={removeParentButtons}
+                onChange={(e) => setRemoveParentButtons(e.target.checked)}
+              />
+              <span>
+                Remove {inboundToSelection.count} navigation button
+                {inboundToSelection.count === 1 ? '' : 's'} on parent screen
+                {inboundToSelection.parentScreenCount === 1 ? '' : 's'}
+              </span>
+            </label>
+          )}
           <button
             type="button"
             className="btn btn-danger btn-sm sidebar__delete-btn"
-            onClick={() => {
-              const count = selectedScreenIds.length;
-              const label =
-                count === 1
-                  ? `"${selectedScreenIds[0]}"`
-                  : `${count} screens (${selectedScreenIds.join(', ')})`;
-              if (confirm(`Delete ${label}?`)) deleteScreens(selectedScreenIds);
-            }}
+            onClick={handleDeleteNodes}
           >
-            {selectedScreenIds.length === 1 ? 'Delete Screen' : `Delete ${selectedScreenIds.length} Screens`}
+            {selectedScreenIds.length === 1
+              ? 'Delete node'
+              : `Delete ${selectedScreenIds.length} nodes`}
           </button>
         </div>
       )}
 
-      {activeSectionId && (
+      {isRealSectionView(activeSectionId) && (
         <div className="sidebar__section">
           <div className="sidebar__section-title">
             Section: {activeSection?.name || activeSectionId}
@@ -393,92 +615,6 @@ export default function SidebarEditor({ mode = 'viewer' }) {
       {/* Screen / button editing — viewer only */}
       {screen && isEditMode ? (
         <>
-          <div className="sidebar__section">
-            <div className="sidebar__section-title">Screen</div>
-
-            {activeSectionId && screen.sectionId !== activeSectionId && (
-              <button
-                type="button"
-                className="btn btn-sm btn-accent sidebar__assign-section"
-                onClick={() => assignScreenToSection(screen.id, activeSectionId)}
-              >
-                Add to section {activeSectionId}
-              </button>
-            )}
-
-            {editingName ? (
-              <div className="sidebar__rename">
-                <input
-                  className="input"
-                  value={nameValue}
-                  onChange={(e) => setNameValue(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleRename()}
-                  autoFocus
-                />
-                <button className="btn btn-sm btn-accent" onClick={handleRename}>Save</button>
-                <button className="btn btn-sm" onClick={() => setEditingName(false)}>✕</button>
-              </div>
-            ) : (
-              <div className="sidebar__screen-name" onClick={() => setEditingName(true)}>
-                <span>{screen.id}</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                </svg>
-              </div>
-            )}
-
-            <div className="sidebar__screen-image">
-              <img
-                key={`${screen.image}-${imageVersion}`}
-                src={screenshotUrl(screen.image, imageVersion)}
-                alt={screen.id}
-              />
-            </div>
-          </div>
-
-          {/* Buttons list */}
-          <div className="sidebar__section">
-            <div className="sidebar__section-title">
-              <span>Buttons ({screen.buttons.length})</span>
-              <button
-                className="btn btn-sm btn-accent"
-                onClick={handleAddButton}
-                title="Add new button"
-                style={{ marginLeft: 'auto' }}
-              >
-                +
-              </button>
-            </div>
-
-            {screen.buttons.length === 0 ? (
-              <div className="sidebar__empty">No buttons yet. Click "Add Hotspot" in the viewer.</div>
-            ) : (
-              <div className="sidebar__button-list">
-                {screen.buttons.map((btn) => (
-                  <div
-                    key={btn.id}
-                    className={`sidebar__button-item ${btn.id === selectedButtonId ? 'sidebar__button-item--selected' : ''}`}
-                    onClick={() => selectButton(btn.id)}
-                  >
-                  <div className="sidebar__button-header">
-                      <span className={`sidebar__button-dot ${btn.target && screens.some(s => s.id === btn.target) ? 'linked' : 'unlinked'}`} />
-                      <span className="sidebar__button-name">{btn.target || '— none —'}</span>
-                      <button
-                        className="sidebar__button-delete"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          deleteButton(screen.id, btn.id);
-                        }}
-                        title="Delete button"
-                      >✕</button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
           {/* Selected button details */}
           {selectedButtonId && screen.buttons.find(b => b.id === selectedButtonId) && (
             <div className="sidebar__section sidebar__section--grow">
@@ -528,6 +664,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                       </select>
                     </div>
                     <ButtonRectInputs
+                      key={selectedBtn.id}
                       button={selectedBtn}
                       onUpdate={(updates) => handleRectChange(selectedBtn.id, updates)}
                     />
@@ -576,7 +713,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                             <input
                               className="input"
                               type="text"
-                              value={selectedBtn.popover.title || ''}
+                              value={selectedBtn.popover?.title || ''}
                               onChange={(e) => handlePopoverChange(selectedBtn.id, 'title', e.target.value)}
                             />
                           </label>
@@ -584,7 +721,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                             <span className="label">Text</span>
                             <textarea
                               className="input"
-                              value={selectedBtn.popover.text || ''}
+                              value={selectedBtn.popover?.text || ''}
                               onChange={(e) => handlePopoverChange(selectedBtn.id, 'text', e.target.value)}
                               style={{ minHeight: '60px', resize: 'vertical' }}
                             />
@@ -617,6 +754,48 @@ export default function SidebarEditor({ mode = 'viewer' }) {
               })()}
             </div>
           )}
+
+          {/* Buttons list */}
+          <div className="sidebar__section">
+            <div className="sidebar__section-title">
+              <span>Buttons ({screen.buttons.length})</span>
+              <button
+                className="btn btn-sm btn-accent"
+                onClick={handleAddButton}
+                title="Add new button"
+                style={{ marginLeft: 'auto' }}
+              >
+                +
+              </button>
+            </div>
+
+            {screen.buttons.length === 0 ? (
+              <div className="sidebar__empty">No buttons yet. Click "Add Hotspot" in the viewer.</div>
+            ) : (
+              <div className="sidebar__button-list">
+                {screen.buttons.map((btn) => (
+                  <div
+                    key={btn.id}
+                    className={`sidebar__button-item ${btn.id === selectedButtonId ? 'sidebar__button-item--selected' : ''}`}
+                    onClick={() => selectButton(btn.id)}
+                  >
+                  <div className="sidebar__button-header">
+                      <span className={`sidebar__button-dot ${btn.target && screens.some(s => s.id === btn.target) ? 'linked' : 'unlinked'}`} />
+                      <span className="sidebar__button-name">{btn.target || '— none —'}</span>
+                      <button
+                        className="sidebar__button-delete"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteButton(screen.id, btn.id);
+                        }}
+                        title="Delete button"
+                      >✕</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </>
       ) : !isEditMode && selectedScreenIds.length === 0 ? (
         <div className="sidebar__section sidebar__section--grow">
@@ -629,17 +808,26 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   );
 }
 
+const ARROW_KEYS = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']);
+
 function ButtonRectInputs({ button, onUpdate }) {
   const rect = normalizeButton(button);
+  const ownerIdRef = useRef(button.id);
+  ownerIdRef.current = button.id;
+  const rectRootRef = useRef(null);
+  const fieldsRef = useRef(null);
+
   const [fields, setFields] = useState({
     top: rect.top,
     left: rect.left,
     width: rect.width,
     height: rect.height,
   });
+  fieldsRef.current = fields;
 
   useEffect(() => {
     const next = normalizeButton(button);
+    ownerIdRef.current = button.id;
     setFields({
       top: next.top,
       left: next.left,
@@ -648,7 +836,8 @@ function ButtonRectInputs({ button, onUpdate }) {
     });
   }, [button.id, button.left, button.top, button.width, button.height, button.x, button.y]);
 
-  const commit = (next) => {
+  const commit = (next, ownerId = button.id) => {
+    if (ownerId !== ownerIdRef.current) return;
     onUpdate({
       left: next.left,
       top: next.top,
@@ -658,6 +847,7 @@ function ButtonRectInputs({ button, onUpdate }) {
   };
 
   const handleChange = (key, raw) => {
+    const ownerId = button.id;
     if (raw === '') {
       setFields((prev) => ({ ...prev, [key]: '' }));
       return;
@@ -666,7 +856,7 @@ function ButtonRectInputs({ button, onUpdate }) {
     const value = Math.max(min, parseInt(raw, 10) || 0);
     setFields((prev) => {
       const nextFields = { ...prev, [key]: value };
-      commit(normalizeFields(nextFields));
+      commit(normalizeFields(nextFields), ownerId);
       return nextFields;
     });
   };
@@ -681,24 +871,102 @@ function ButtonRectInputs({ button, onUpdate }) {
     };
   };
 
+  const nudgeFromArrow = (key, focusedField, step) => {
+    const f = fieldsRef.current;
+    const draft = { ...f };
+
+    if (focusedField === 'width') {
+      if (key === 'ArrowLeft') draft.width = Number(f.width) - step;
+      else if (key === 'ArrowRight') draft.width = Number(f.width) + step;
+      else return false;
+    } else if (focusedField === 'height') {
+      if (key === 'ArrowUp') draft.height = Number(f.height) - step;
+      else if (key === 'ArrowDown') draft.height = Number(f.height) + step;
+      else return false;
+    } else if (focusedField === 'left') {
+      if (key === 'ArrowLeft') draft.left = Number(f.left) - step;
+      else if (key === 'ArrowRight') draft.left = Number(f.left) + step;
+      else return false;
+    } else if (focusedField === 'top') {
+      if (key === 'ArrowUp') draft.top = Number(f.top) - step;
+      else if (key === 'ArrowDown') draft.top = Number(f.top) + step;
+      else return false;
+    } else {
+      if (key === 'ArrowLeft') draft.left = Number(f.left) - step;
+      else if (key === 'ArrowRight') draft.left = Number(f.left) + step;
+      else if (key === 'ArrowUp') draft.top = Number(f.top) - step;
+      else if (key === 'ArrowDown') draft.top = Number(f.top) + step;
+      else return false;
+    }
+
+    const next = normalizeFields(draft);
+    setFields(next);
+    commit(next, ownerIdRef.current);
+    return true;
+  };
+
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (!ARROW_KEYS.has(e.key)) return;
+
+      const active = document.activeElement;
+      const inRect = rectRootRef.current?.contains(active);
+      const focusedField = active?.dataset?.rectField;
+
+      if (active?.closest('input, textarea, select, [contenteditable="true"]') && !inRect) {
+        return;
+      }
+
+      const step = e.shiftKey ? 10 : 1;
+      if (!nudgeFromArrow(e.key, inRect ? focusedField : null, step)) return;
+
+      e.preventDefault();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  });
+
   const handleBlur = () => {
+    if (button.id !== ownerIdRef.current) {
+      const next = normalizeButton(button);
+      setFields({
+        top: next.top,
+        left: next.left,
+        width: next.width,
+        height: next.height,
+      });
+      return;
+    }
     const next = normalizeFields(fields);
     setFields(next);
-    commit(next);
+    commit(next, button.id);
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') e.currentTarget.blur();
+    if (e.key === 'Enter') {
+      e.currentTarget.blur();
+      return;
+    }
+    if (!ARROW_KEYS.has(e.key)) return;
+    const step = e.shiftKey ? 10 : 1;
+    if (nudgeFromArrow(e.key, e.currentTarget.dataset.rectField, step)) {
+      e.preventDefault();
+    }
   };
 
   return (
-    <div className="sidebar__button-rect" onClick={(e) => e.stopPropagation()}>
+    <div
+      ref={rectRootRef}
+      className="sidebar__button-rect"
+      onClick={(e) => e.stopPropagation()}
+    >
       <label className="sidebar__rect-field">
         <span className="label">Top</span>
         <input
           className="input"
           type="number"
           min="0"
+          data-rect-field="top"
           value={fields.top}
           onChange={(e) => handleChange('top', e.target.value)}
           onBlur={handleBlur}
@@ -711,6 +979,7 @@ function ButtonRectInputs({ button, onUpdate }) {
           className="input"
           type="number"
           min="0"
+          data-rect-field="left"
           value={fields.left}
           onChange={(e) => handleChange('left', e.target.value)}
           onBlur={handleBlur}
@@ -723,6 +992,7 @@ function ButtonRectInputs({ button, onUpdate }) {
           className="input"
           type="number"
           min="1"
+          data-rect-field="width"
           value={fields.width}
           onChange={(e) => handleChange('width', e.target.value)}
           onBlur={handleBlur}
@@ -735,6 +1005,7 @@ function ButtonRectInputs({ button, onUpdate }) {
           className="input"
           type="number"
           min="1"
+          data-rect-field="height"
           value={fields.height}
           onChange={(e) => handleChange('height', e.target.value)}
           onBlur={handleBlur}

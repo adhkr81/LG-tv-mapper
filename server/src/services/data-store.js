@@ -20,7 +20,7 @@ const SCREENSHOTS_DIR = path.join(DATA_DIR, 'screenshots');
 
 const DEFAULT_BUTTON_SIZE = { width: 120, height: 60 };
 
-/** @typedef {{ id: string, name: string, rootScreenId: string | null, bandX?: number | null, bandY?: number | null }} Section */
+/** @typedef {{ id: string, name: string, rootScreenId: string | null, bandX?: number | null, bandY?: number | null, collapsed?: boolean }} Section */
 /** @typedef {{ graphX?: number, graphY?: number, sectionId?: string | null, buttonIds?: string[] }} ScreenMeta */
 /**
  * @typedef {Object} MapperButton
@@ -134,7 +134,32 @@ function writeEmulatorAndMeta(emulatorMap, meta) {
   atomicWrite(config.mapperMetaPath, meta);
 }
 
+function unlinkScreenshotFile(filename) {
+  const name = String(filename || '').trim();
+  if (!name) return;
+  const filePath = getScreenshotPath(name);
+  if (!fs.existsSync(filePath)) return;
+  const stat = fs.statSync(filePath);
+  if (!stat.isFile()) return;
+  fs.unlinkSync(filePath);
+}
+
+function deleteScreenshotFiles(screen) {
+  const names = new Set();
+  if (screen.image?.trim()) names.add(screen.image.trim());
+  const base = screen.img_filename || screen.id;
+  if (base) {
+    for (const ext of ['.jpg', '.jpeg', '.png', '.webp']) {
+      names.add(base.includes('.') ? base : `${base}${ext}`);
+    }
+  }
+  for (const name of names) {
+    unlinkScreenshotFile(name);
+  }
+}
+
 function resolveImageFilename(screenId, imgFilename) {
+  if (imgFilename === '') return '';
   const base = imgFilename || screenId;
   for (const ext of ['.jpg', '.jpeg', '.png', '.webp']) {
     const name = base.includes('.') ? base : base + ext;
@@ -145,6 +170,20 @@ function resolveImageFilename(screenId, imgFilename) {
   return base.includes('.') ? base : `${base}.jpg`;
 }
 
+/** Keep mapper buttonIds aligned with emulator button count (stable across loads). */
+function alignScreenButtonIds(screen, screenMeta) {
+  const storedIds = screenMeta?.buttonIds || [];
+  let dirty = false;
+  const buttons = screen.buttons.map((btn, i) => {
+    const stableId = storedIds[i] || btn.id;
+    if (stableId && stableId === btn.id) return btn;
+    dirty = true;
+    return { ...btn, id: stableId || uuidv4() };
+  });
+  if (storedIds.length !== buttons.length) dirty = true;
+  return { screen: { ...screen, buttons }, dirty };
+}
+
 function emulatorAndMetaToScreens(emulatorMap, meta) {
   return Object.entries(emulatorMap).map(([screenId, entry]) => {
     const screenMeta = meta.screens[screenId];
@@ -152,14 +191,21 @@ function emulatorAndMetaToScreens(emulatorMap, meta) {
       typeof entry.img_filename === 'string' ? entry.img_filename : screenId;
     const image = resolveImageFilename(screenId, imgFilename);
     const screen = screenFromEmulator(screenId, entry, screenMeta, image);
-    screen.buttons = screen.buttons.map((b) => ({
-      ...b,
-      id: b.id || uuidv4(),
-    }));
-    screen.sourceWidth = screenMeta?.sourceWidth ?? null;
-    screen.sourceHeight = screenMeta?.sourceHeight ?? null;
-    return screen;
+    const { screen: aligned, dirty } = alignScreenButtonIds(screen, screenMeta);
+    aligned.sourceWidth = screenMeta?.sourceWidth ?? null;
+    aligned.sourceHeight = screenMeta?.sourceHeight ?? null;
+    aligned._buttonIdsDirty = dirty;
+    return aligned;
   });
+}
+
+function repairAndStripButtonIdFlags(screens, sections) {
+  const needsPersist = screens.some((s) => s._buttonIdsDirty);
+  const cleaned = screens.map(({ _buttonIdsDirty, ...screen }) => screen);
+  if (needsPersist) {
+    persist(cleaned, sections);
+  }
+  return cleaned;
 }
 
 function screensToEmulatorAndMeta(screens, sections, metaFile) {
@@ -240,7 +286,8 @@ function readAll() {
   }
 
   const meta = readMetaFile();
-  const screens = emulatorAndMetaToScreens(emulatorMap, meta);
+  const loaded = emulatorAndMetaToScreens(emulatorMap, meta);
+  const screens = repairAndStripButtonIdFlags(loaded, meta.sections);
   return { sections: meta.sections, screens, imageConfig: meta.config.imageSize };
 }
 
@@ -358,6 +405,24 @@ function renameScreenIdInTargets(screens, oldId, newId) {
   }
 }
 
+/** Remove parent hotspots that navigate to deleted screen(s). */
+function removeButtonsTargetingScreens(screens, targetIds) {
+  const idSet =
+    targetIds instanceof Set
+      ? targetIds
+      : Array.isArray(targetIds)
+        ? new Set(targetIds)
+        : new Set([targetIds]);
+  if (!idSet.size) return;
+
+  for (const screen of screens) {
+    if (idSet.has(screen.id)) continue;
+    screen.buttons = screen.buttons.filter(
+      (btn) => !btn.target || !idSet.has(btn.target)
+    );
+  }
+}
+
 // ---- Public API (used by screens, buttons, sections) ----
 
 export function getScreenshotsDir() {
@@ -369,6 +434,17 @@ export function getScreenshotPath(filename) {
   return path.join(getScreenshotsDir(), filename);
 }
 
+export function replaceMapperState(screens, sections) {
+  if (!Array.isArray(screens) || !Array.isArray(sections)) {
+    throw new Error('screens and sections must be arrays');
+  }
+  return runSerialized(() => {
+    writeAll(screens, sections);
+    const loaded = readAll();
+    return { screens: loaded.screens, sections: loaded.sections };
+  });
+}
+
 export function getAllScreens() {
   return readAll().screens;
 }
@@ -377,21 +453,34 @@ export function getScreen(id) {
   return readAll().screens.find((s) => s.id === id) || null;
 }
 
-export function createScreen({ id, image, sectionId = null }) {
+export function createScreen({
+  id,
+  image = '',
+  sectionId = null,
+  graphX,
+  graphY,
+}) {
   const { sections, screens } = readAll();
   if (screens.find((s) => s.id === id)) {
     throw new Error(`Screen "${id}" already exists`);
   }
 
   const i = screens.length;
-  const layout = sectionId
-    ? layoutForSection(screens, sectionId)
-    : { graphX: (i % 4) * 220, graphY: Math.floor(i / 4) * 185 };
+  let layout;
+  if (graphX !== undefined && graphY !== undefined) {
+    layout = { graphX, graphY };
+  } else if (sectionId) {
+    layout = layoutForSection(screens, sectionId);
+  } else {
+    layout = { graphX: (i % 4) * 220, graphY: Math.floor(i / 4) * 185 };
+  }
 
-  const img_filename = stripImageExtension(image) || id;
+  const img_filename = image?.trim()
+    ? stripImageExtension(image) || id
+    : '';
   const screen = {
     id,
-    image,
+    image: image || '',
     img_filename,
     preset: 0,
     buttons: [],
@@ -439,9 +528,15 @@ export function updateScreen(id, updates) {
   }
   if (updates.preset !== undefined) screens[idx].preset = updates.preset;
   if (updates.image !== undefined) {
-    screens[idx].image = updates.image;
-    screens[idx].img_filename =
-      stripImageExtension(updates.image) || screens[idx].id;
+    if (updates.image === null || updates.image === '') {
+      deleteScreenshotFiles(screens[idx]);
+      screens[idx].image = '';
+      screens[idx].img_filename = '';
+    } else {
+      screens[idx].image = updates.image;
+      screens[idx].img_filename =
+        stripImageExtension(updates.image) || screens[idx].id;
+    }
   }
 
   if (updates.sourceWidth !== undefined) {
@@ -455,21 +550,21 @@ export function updateScreen(id, updates) {
   return screens[idx];
 }
 
-export function deleteScreen(id) {
+export function deleteScreen(id, { removeParentButtons = false } = {}) {
   const { sections, screens } = readAll();
   const idx = screens.findIndex((s) => s.id === id);
   if (idx === -1) throw new Error(`Screen "${id}" not found`);
 
   const screen = screens[idx];
-  const imgPath = getScreenshotPath(screen.image);
-  if (fs.existsSync(imgPath)) {
-    fs.unlinkSync(imgPath);
-  }
+  deleteScreenshotFiles(screen);
 
   sections.forEach((sec) => {
     if (sec.rootScreenId === id) sec.rootScreenId = null;
   });
 
+  if (removeParentButtons) {
+    removeButtonsTargetingScreens(screens, id);
+  }
   screens.splice(idx, 1);
   writeAll(screens, sections);
 }
@@ -653,6 +748,9 @@ export function updateSection(id, updates) {
   if (updates.bandY !== undefined) {
     sections[idx].bandY =
       updates.bandY === null ? null : Math.round(Number(updates.bandY));
+  }
+  if (updates.collapsed !== undefined) {
+    sections[idx].collapsed = Boolean(updates.collapsed);
   }
 
   writeAll(screens, sections);
