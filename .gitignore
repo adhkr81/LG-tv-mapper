@@ -1,5 +1,5 @@
 node_modules/
 dist/
 .env
-server/src/data/screenshots/*
-!server/src/data/screenshots/.gitkeep
+# server/src/data/screenshots/*
+# !server/src/data/screenshots/.gitkeep
