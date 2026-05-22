@@ -54,6 +54,11 @@ export default function GraphView({ isActive = true }) {
   const fileInputRef = useRef(null);
   const flowRef = useRef(null);
   const prevSectionRef = useRef(activeSectionId);
+  const fitViewContextRef = useRef({
+    activeSectionId,
+    isActive,
+    nodesLength: 0,
+  });
   const dragSessionRef = useRef(null);
   const dragSaveTimerRef = useRef(null);
 
@@ -194,19 +199,31 @@ export default function GraphView({ isActive = true }) {
     setEdges,
   ]);
 
-  // Refit when switching sections or returning to the Flow tab
+  // Refit when switching sections or returning to the Flow tab — not on collapse/expand
+  // (those change nodes.length but should keep the current pan/zoom).
   useEffect(() => {
-    if (!isActive || !flowRef.current || nodes.length === 0) return;
-    const t = setTimeout(() => flowRef.current?.fitView({ padding: 0.25 }), 120);
-    return () => clearTimeout(t);
-  }, [activeSectionId, isActive, nodes.length]);
+    const prev = fitViewContextRef.current;
+    const sectionChanged = prev.activeSectionId !== activeSectionId;
+    const becameActive = !prev.isActive && isActive;
+    const initialLoad = prev.nodesLength === 0 && nodes.length > 0;
+    const enteringAllScreens =
+      sectionChanged &&
+      activeSectionId == null &&
+      prev.activeSectionId != null;
 
-  // Extra fit when entering All screens (bands can be far from prior viewport)
-  useEffect(() => {
-    if (!isActive || isRealSectionView(activeSectionId) || !flowRef.current || nodes.length === 0) {
-      return;
+    fitViewContextRef.current = {
+      activeSectionId,
+      isActive,
+      nodesLength: nodes.length,
+    };
+
+    if (!isActive || !flowRef.current || nodes.length === 0) return undefined;
+    if (!sectionChanged && !becameActive && !initialLoad && !enteringAllScreens) {
+      return undefined;
     }
-    const t = setTimeout(() => flowRef.current?.fitView({ padding: 0.25 }), 200);
+
+    const delay = enteringAllScreens ? 200 : 120;
+    const t = setTimeout(() => flowRef.current?.fitView({ padding: 0.25 }), delay);
     return () => clearTimeout(t);
   }, [activeSectionId, isActive, nodes.length]);
 

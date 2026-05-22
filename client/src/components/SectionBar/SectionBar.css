@@ -33,6 +33,28 @@
   width: 100%;
 }
 
+.section-bar__rename-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.section-bar--sidebar .section-bar__rename-row {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.section-bar__rename-row .section-bar__name-input {
+  flex: 1;
+  min-width: 120px;
+}
+
+.section-bar--sidebar .section-bar__rename-btn {
+  width: 100%;
+  justify-content: center;
+}
+
 .section-bar--sidebar .section-bar__actions {
   display: flex;
   gap: var(--space-sm);
