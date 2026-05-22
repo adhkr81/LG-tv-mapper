@@ -26,7 +26,7 @@ export default function SectionBar({ variant = 'toolbar' }) {
 
   const [sectionName, setSectionName] = useState('');
   const [renameName, setRenameName] = useState('');
-  const [sectionToRemove, setSectionToRemove] = useState('');
+  const [isEditingName, setIsEditingName] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
 
   const isAllScreens = !activeSectionId;
@@ -39,51 +39,42 @@ export default function SectionBar({ variant = 'toolbar' }) {
       : null;
 
   const collapsedCount = sections.filter((s) => s.collapsed).length;
-
-  useEffect(() => {
-    if (!isSidebar) return;
-    if (isRealSectionView(activeSectionId)) {
-      setSectionToRemove(activeSectionId);
-      return;
-    }
-    setSectionToRemove((prev) => {
-      if (sections.length === 0) return '';
-      if (sections.some((s) => s.id === prev)) return prev;
-      return sections[0].id;
-    });
-  }, [isSidebar, activeSectionId, sections]);
-
-  const renameTarget =
-    activeSection ||
-    (isSidebar && sectionToRemove
-      ? sections.find((s) => s.id === sectionToRemove)
-      : null);
   const renameDirty =
-    renameTarget &&
+    activeSection &&
     renameName.trim() &&
-    renameName.trim() !== renameTarget.name;
+    renameName.trim() !== activeSection.name;
 
   useEffect(() => {
-    setRenameName(renameTarget?.name ?? '');
-  }, [renameTarget?.id, renameTarget?.name]);
+    setRenameName(activeSection?.name ?? '');
+    setIsEditingName(false);
+  }, [activeSection?.id, activeSection?.name]);
 
   const handleRenameSection = async () => {
-    if (!renameTarget) return;
+    if (!activeSection) return;
     const name = renameName.trim();
     if (!name) {
       alert('Enter a section name.');
       return;
     }
-    if (name === renameTarget.name) return;
+    if (name === activeSection.name) {
+      setIsEditingName(false);
+      return;
+    }
 
     setIsBusy(true);
     try {
-      await updateSection(renameTarget.id, { name });
+      await updateSection(activeSection.id, { name });
+      setIsEditingName(false);
     } catch (err) {
       alert('Rename section failed: ' + err.message);
     } finally {
       setIsBusy(false);
     }
+  };
+
+  const cancelRename = () => {
+    setRenameName(activeSection?.name ?? '');
+    setIsEditingName(false);
   };
 
   const handleCreateEmpty = async () => {
@@ -134,19 +125,17 @@ export default function SectionBar({ variant = 'toolbar' }) {
   };
 
   const handleRemoveSection = async () => {
-    if (!sectionToRemove) return;
-    const sec = sections.find((s) => s.id === sectionToRemove);
-    if (!sec) return;
-    const taggedCount = screens.filter((s) => s.sectionId === sectionToRemove).length;
+    if (!activeSection) return;
+    const taggedCount = screens.filter((s) => s.sectionId === activeSection.id).length;
     const message =
-      `Remove section "${sec.name}"?\n\n` +
+      `Remove section "${activeSection.name}"?\n\n` +
       `The section will be deleted. ${taggedCount} screen${taggedCount === 1 ? '' : 's'} will ` +
       'stay on the graph; only their section tags will be cleared.';
     if (!confirm(message)) return;
 
     setIsBusy(true);
     try {
-      await deleteSection(sectionToRemove);
+      await deleteSection(activeSection.id);
     } catch (err) {
       alert('Remove section failed: ' + err.message);
     } finally {
@@ -202,6 +191,60 @@ export default function SectionBar({ variant = 'toolbar' }) {
     }
   };
 
+  const sidebarCreatePanel = (
+    <details className="section-bar__panel">
+      <summary className="section-bar__panel-summary">Add section</summary>
+      <div className="section-bar__panel-body">
+        <input
+          id="section-bar-name"
+          className="input"
+          value={sectionName}
+          onChange={(e) => setSectionName(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              if (selectedScreenIds.length > 0) handleMakeFromSelection();
+              else handleCreateEmpty();
+            }
+          }}
+          disabled={isBusy}
+          placeholder="Section name"
+          aria-label="New section name"
+        />
+        <div className="section-bar__actions">
+          <button
+            type="button"
+            className="btn btn-sm section-bar__action-btn"
+            onClick={handleCreateEmpty}
+            disabled={isBusy || !sectionName.trim()}
+            title="Create an empty section"
+          >
+            Empty
+          </button>
+          <button
+            type="button"
+            className="btn btn-sm btn-accent section-bar__action-btn"
+            onClick={handleMakeFromSelection}
+            disabled={
+              isBusy ||
+              !sectionName.trim() ||
+              selectedScreenIds.length === 0
+            }
+            title="Group selected nodes into a new section"
+          >
+            {isBusy
+              ? 'Working…'
+              : selectedScreenIds.length > 0
+                ? `From selection (${selectedScreenIds.length})`
+                : 'From selection'}
+          </button>
+        </div>
+        <p className="section-bar__hint section-bar__hint--inline">
+          Empty creates a group. From selection uses nodes selected on the graph.
+        </p>
+      </div>
+    </details>
+  );
+
   return (
     <div className={`section-bar ${isSidebar ? 'section-bar--sidebar' : ''}`}>
       <div className="section-bar__row">
@@ -212,6 +255,7 @@ export default function SectionBar({ variant = 'toolbar' }) {
           value={activeSectionId || ''}
           onChange={(e) => setActiveSection(e.target.value || null)}
           disabled={isBusy}
+          aria-label="Section view"
         >
           <option value="">All screens ({screens.length})</option>
           {sections.map((sec) => {
@@ -224,119 +268,7 @@ export default function SectionBar({ variant = 'toolbar' }) {
           })}
         </select>
 
-        {isSidebar && renameTarget && (
-          <>
-            <label className="label" htmlFor="section-bar-rename">
-              Rename section
-            </label>
-            <div className="section-bar__rename-row">
-              <input
-                id="section-bar-rename"
-                className="input section-bar__name-input"
-                value={renameName}
-                onChange={(e) => setRenameName(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') handleRenameSection();
-                }}
-                disabled={isBusy}
-                placeholder={renameTarget.name}
-              />
-              <button
-                type="button"
-                className="btn btn-sm section-bar__rename-btn"
-                onClick={handleRenameSection}
-                disabled={isBusy || !renameDirty}
-                title={`Rename "${renameTarget.name}"`}
-              >
-                Rename
-              </button>
-            </div>
-          </>
-        )}
-
-        {isSidebar ? (
-          <>
-            <label className="label" htmlFor="section-bar-name">
-              New section name
-            </label>
-            <input
-              id="section-bar-name"
-              className="input section-bar__name-input"
-              value={sectionName}
-              onChange={(e) => setSectionName(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  if (selectedScreenIds.length > 0) handleMakeFromSelection();
-                  else handleCreateEmpty();
-                }
-              }}
-              disabled={isBusy}
-              placeholder="e.g. Settings menu"
-            />
-            <p className="section-bar__hint section-bar__hint--inline">
-              + Section creates an empty group. From selection assigns selected graph nodes.
-            </p>
-            <div className="section-bar__actions">
-              <button
-                type="button"
-                className="btn btn-sm section-bar__action-btn"
-                onClick={handleCreateEmpty}
-                disabled={isBusy || !sectionName.trim()}
-                title="Create an empty section"
-              >
-                + Section
-              </button>
-              <button
-                type="button"
-                className="btn btn-sm btn-accent section-bar__action-btn"
-                onClick={handleMakeFromSelection}
-                disabled={
-                  isBusy ||
-                  !sectionName.trim() ||
-                  selectedScreenIds.length === 0
-                }
-                title="Group selected nodes into a new section"
-              >
-                {isBusy
-                  ? 'Working…'
-                  : selectedScreenIds.length > 0
-                    ? `From selection (${selectedScreenIds.length})`
-                    : 'From selection'}
-              </button>
-            </div>
-            {sections.length > 0 && (
-              <>
-                <label className="label" htmlFor="section-bar-remove">
-                  Remove section
-                </label>
-                <select
-                  id="section-bar-remove"
-                  className="input section-bar__select"
-                  value={sectionToRemove}
-                  onChange={(e) => setSectionToRemove(e.target.value)}
-                  disabled={isBusy}
-                >
-                  {sections.map((sec) => {
-                    const count = screens.filter((s) => s.sectionId === sec.id).length;
-                    return (
-                      <option key={sec.id} value={sec.id}>
-                        {sec.name} ({count})
-                      </option>
-                    );
-                  })}
-                </select>
-                <button
-                  type="button"
-                  className="btn btn-sm btn-danger section-bar__remove-btn"
-                  onClick={handleRemoveSection}
-                  disabled={isBusy || !sectionToRemove}
-                >
-                  Remove section
-                </button>
-              </>
-            )}
-          </>
-        ) : (
+        {!isSidebar && (
           <button
             type="button"
             className="btn btn-sm section-bar__add-btn"
@@ -348,79 +280,172 @@ export default function SectionBar({ variant = 'toolbar' }) {
         )}
       </div>
 
-      {isAllScreens && sections.length > 0 && (
-        <div className="section-bar__collapse-panel">
-          <div className="section-bar__collapse-header">
-            <span className="section-bar__collapse-title">Canvas groups</span>
-            {collapsedCount > 0 && (
-              <span className="section-bar__collapse-stat">
-                {collapsedCount} collapsed
-              </span>
+      {isSidebar && activeSection && progress && (
+        <div className="section-bar__card">
+          {isEditingName ? (
+            <div className="section-bar__edit-row">
+              <input
+                className="input"
+                value={renameName}
+                onChange={(e) => setRenameName(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleRenameSection();
+                  if (e.key === 'Escape') cancelRename();
+                }}
+                disabled={isBusy}
+                autoFocus
+                aria-label="Section name"
+              />
+              <div className="section-bar__edit-actions">
+                <button
+                  type="button"
+                  className="btn btn-sm btn-accent"
+                  onClick={handleRenameSection}
+                  disabled={isBusy || !renameDirty}
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-sm"
+                  onClick={cancelRename}
+                  disabled={isBusy}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="section-bar__current-row">
+              <div className="section-bar__current-info">
+                <span className="section-bar__current-name">{activeSection.name}</span>
+                <span className="section-bar__current-meta">
+                  {progress.screenCount} screen{progress.screenCount !== 1 ? 's' : ''}
+                  {progress.unlinkedButtons > 0 &&
+                    ` · ${progress.unlinkedButtons} unlinked`}
+                </span>
+              </div>
+              <div className="section-bar__current-actions">
+                <button
+                  type="button"
+                  className="btn btn-sm"
+                  onClick={() => setIsEditingName(true)}
+                  disabled={isBusy}
+                >
+                  Rename
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-sm btn-danger"
+                  onClick={handleRemoveSection}
+                  disabled={isBusy}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          )}
+
+          <div className="section-bar__card-footer">
+            {activeSection.rootScreenId ? (
+              <button type="button" className="btn btn-sm btn-accent" onClick={openRoot}>
+                Open menu: {activeSection.rootScreenId}
+              </button>
+            ) : (
+              <span className="section-bar__hint">Set a menu root from a selected screen</span>
+            )}
+            {selectedScreenId && (
+              <button type="button" className="btn btn-sm" onClick={setAsRoot}>
+                Set as menu root
+              </button>
             )}
           </div>
-          <div className="section-bar__collapse-actions">
-            <button
-              type="button"
-              className="btn btn-sm"
-              onClick={handleCollapseAll}
-              disabled={isBusy || collapsedCount === sections.length}
-              title="Collapse every section to a single node"
-            >
-              Collapse all
-            </button>
-            <button
-              type="button"
-              className="btn btn-sm"
-              onClick={handleExpandAll}
-              disabled={isBusy || collapsedCount === 0}
-              title="Show every section's screens on the graph"
-            >
-              Expand all
-            </button>
-          </div>
-          <ul className="section-bar__collapse-list">
-            {sections.map((sec) => {
-              const count = screens.filter((s) => s.sectionId === sec.id).length;
-              if (!count) return null;
-              return (
-                <li key={sec.id} className="section-bar__collapse-item">
-                  <span
-                    className="section-bar__collapse-dot"
-                    style={{
-                      background: sec.collapsed
-                        ? 'var(--accent)'
-                        : 'var(--text-muted)',
-                    }}
-                    aria-hidden
-                  />
-                  <span className="section-bar__collapse-name" title={sec.id}>
-                    {sec.name}
-                    <span className="section-bar__collapse-count">({count})</span>
-                  </span>
-                  <button
-                    type="button"
-                    className="btn btn-sm section-bar__collapse-toggle"
-                    onClick={() => handleToggleCollapsed(sec.id, !sec.collapsed)}
-                    disabled={isBusy}
-                    title={
-                      sec.collapsed
-                        ? 'Expand this section on the graph'
-                        : 'Collapse this section to one node'
-                    }
-                  >
-                    {sec.collapsed ? 'Expand' : 'Collapse'}
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-          <p className="section-bar__hint section-bar__hint--inline">
-            Click a collapsed node on the graph to expand. Double-click to open the section.
-          </p>
         </div>
       )}
 
-      {!isSidebar && renameTarget && (
+      {isSidebar && sidebarCreatePanel}
+
+      {isAllScreens && sections.length > 0 && (
+        <details className="section-bar__panel">
+          <summary className="section-bar__panel-summary">
+            Canvas groups
+            {collapsedCount > 0 && (
+              <span className="section-bar__panel-badge">{collapsedCount} collapsed</span>
+            )}
+          </summary>
+          <div className="section-bar__panel-body">
+            <div className="section-bar__collapse-actions">
+              <button
+                type="button"
+                className="btn btn-sm"
+                onClick={handleCollapseAll}
+                disabled={isBusy || collapsedCount === sections.length}
+                title="Collapse every section to a single node"
+              >
+                Collapse all
+              </button>
+              <button
+                type="button"
+                className="btn btn-sm"
+                onClick={handleExpandAll}
+                disabled={isBusy || collapsedCount === 0}
+                title="Show every section's screens on the graph"
+              >
+                Expand all
+              </button>
+            </div>
+            <ul className="section-bar__collapse-list">
+              {sections.map((sec) => {
+                const count = screens.filter((s) => s.sectionId === sec.id).length;
+                if (!count) return null;
+                return (
+                  <li key={sec.id} className="section-bar__collapse-item">
+                    <button
+                      type="button"
+                      className="section-bar__collapse-open"
+                      onClick={() => setActiveSection(sec.id)}
+                      disabled={isBusy}
+                      title="Open this section"
+                    >
+                      <span
+                        className="section-bar__collapse-dot"
+                        style={{
+                          background: sec.collapsed
+                            ? 'var(--accent)'
+                            : 'var(--text-muted)',
+                        }}
+                        aria-hidden
+                      />
+                      <span className="section-bar__collapse-name">
+                        {sec.name}
+                        <span className="section-bar__collapse-count">({count})</span>
+                      </span>
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-sm section-bar__collapse-toggle"
+                      onClick={() => handleToggleCollapsed(sec.id, !sec.collapsed)}
+                      disabled={isBusy}
+                      title={
+                        sec.collapsed
+                          ? 'Expand this section on the graph'
+                          : 'Collapse this section to one node'
+                      }
+                    >
+                      {sec.collapsed ? 'Expand' : 'Collapse'}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+            <p className="section-bar__hint section-bar__hint--inline">
+              Click a collapsed node on the graph to expand. Double-click to open the section.
+            </p>
+          </div>
+        </details>
+      )}
+
+      {!isSidebar && activeSection && (
         <div className="section-bar__rename-row">
           <input
             className="input section-bar__name-input"
@@ -443,7 +468,7 @@ export default function SectionBar({ variant = 'toolbar' }) {
         </div>
       )}
 
-      {activeSection && progress && (
+      {!isSidebar && activeSection && progress && (
         <div className="section-bar__meta">
           <span className="section-bar__stat">
             {progress.screenCount} screen{progress.screenCount !== 1 ? 's' : ''}
@@ -470,4 +495,3 @@ export default function SectionBar({ variant = 'toolbar' }) {
     </div>
   );
 }
-

@@ -18,11 +18,16 @@
     },
     {
       "id": "picture-advanced",
-      "name": "picture-advanced",
+      "name": "picture-advanced-brightness",
       "rootScreenId": null,
       "bandX": -502,
       "bandY": 839,
       "collapsed": false
+    },
+    {
+      "id": "picture-advanced-color",
+      "name": "picture-advanced-color",
+      "rootScreenId": null
     }
   ],
   "screens": {
@@ -390,6 +395,18 @@
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
+    },
+    "picture-advanced-color_menu": {
+      "graphX": 0,
+      "graphY": 0,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": []
+    },
+    "picture-advanced-color": {
+      "graphX": 220,
+      "graphY": 0,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": []
     }
   },
   "config": {

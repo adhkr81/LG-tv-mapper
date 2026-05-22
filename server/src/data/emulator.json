@@ -1062,5 +1062,15 @@
         "target": "picture-advanced_down"
       }
     ]
+  },
+  "picture-advanced-color_menu": {
+    "img_filename": "picture-advanced-color_menu",
+    "preset": 0,
+    "buttons": []
+  },
+  "picture-advanced-color": {
+    "img_filename": "picture-advanced-color",
+    "preset": 0,
+    "buttons": []
   }
 }
