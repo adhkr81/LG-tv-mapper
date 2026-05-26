@@ -2336,5 +2336,943 @@
         "target": "picture-advanced-brightness_reset-no"
       }
     ]
+  },
+  "settings-sound_menu": {
+    "img_filename": "settings-sound_menu",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "36px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "168px",
+        "top": "207px",
+        "width": "245px",
+        "height": "47px",
+        "target": "settings-sound_advanced-settings-menu"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-support"
+      },
+      {
+        "left": "168px",
+        "top": "92px",
+        "width": "245px",
+        "height": "53px",
+        "target": "settings-sound_select-mode"
+      },
+      {
+        "left": "168px",
+        "top": "149px",
+        "width": "245px",
+        "height": "53px",
+        "target": "settings-sound_sound-out"
+      }
+    ]
+  },
+  "settings-sound_select-mode": {
+    "img_filename": "settings-sound_select-mode",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "132px",
+        "top": "35px",
+        "width": "30px",
+        "height": "29px",
+        "target": "settings-sound_menu"
+      }
+    ]
+  },
+  "settings-sound_sound-out": {
+    "img_filename": "settings-sound_sound-out",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "36px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "164px",
+        "top": "306px",
+        "width": "245px",
+        "height": "35px",
+        "target": "settings-sound_sound-out-external"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-support"
+      },
+      {
+        "left": "164px",
+        "top": "267px",
+        "width": "245px",
+        "height": "35px",
+        "target": "settings-sound_sound-out-wireless"
+      },
+      {
+        "left": "164px",
+        "top": "228px",
+        "width": "245px",
+        "height": "35px",
+        "target": "settings-sound_sound-out-wired"
+      },
+      {
+        "left": "164px",
+        "top": "38px",
+        "width": "30px",
+        "height": "29px",
+        "target": "settings-sound_menu"
+      }
+    ]
+  },
+  "settings-sound_sound-out-wired": {
+    "img_filename": "settings-sound_sound-out-wired",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "36px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-support"
+      },
+      {
+        "left": "164px",
+        "top": "38px",
+        "width": "30px",
+        "height": "29px",
+        "target": "settings-sound_sound-out"
+      }
+    ]
+  },
+  "settings-sound_sound-out-wireless": {
+    "img_filename": "settings-sound_sound-out-wireless",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "36px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-support"
+      },
+      {
+        "left": "164px",
+        "top": "38px",
+        "width": "30px",
+        "height": "29px",
+        "target": "settings-sound_sound-out"
+      }
+    ]
+  },
+  "settings-sound_sound-out-external": {
+    "img_filename": "settings-sound_sound-out-external",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "36px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-support"
+      },
+      {
+        "left": "164px",
+        "top": "38px",
+        "width": "30px",
+        "height": "29px",
+        "target": "settings-sound_sound-out"
+      }
+    ]
+  },
+  "settings-sound_advanced-settings-menu": {
+    "img_filename": "settings-sound_advanced-settings-menu",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "36px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-support"
+      },
+      {
+        "left": "168px",
+        "top": "92px",
+        "width": "245px",
+        "height": "36px",
+        "target": "settings-sound_advanced-settings_dolby-off"
+      },
+      {
+        "left": "168px",
+        "top": "131px",
+        "width": "245px",
+        "height": "50px",
+        "target": "settings-sound_advanced-settings_balance"
+      },
+      {
+        "left": "168px",
+        "top": "184px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_equalizer"
+      },
+      {
+        "left": "168px",
+        "top": "224px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_apply"
+      },
+      {
+        "left": "168px",
+        "top": "263px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_reset"
+      },
+      {
+        "left": "167px",
+        "top": "321px",
+        "width": "245px",
+        "height": "50px",
+        "target": "settings-sound_advanced-settings_installation"
+      },
+      {
+        "left": "167px",
+        "top": "374px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_automatic"
+      },
+      {
+        "left": "250px",
+        "top": "391px",
+        "width": "56px",
+        "height": "56px",
+        "target": "settings-sound_advanced-settings-down",
+        "type": "arrow-down"
+      },
+      {
+        "left": "163px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-sound_menu"
+      }
+    ]
+  },
+  "settings-sound_advanced-settings_dolby-off": {
+    "img_filename": "settings-sound_advanced-settings_dolby-off",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "36px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-support"
+      },
+      {
+        "left": "168px",
+        "top": "92px",
+        "width": "245px",
+        "height": "36px",
+        "target": "settings-sound_advanced-settings-menu"
+      },
+      {
+        "left": "168px",
+        "top": "131px",
+        "width": "245px",
+        "height": "50px",
+        "target": "settings-sound_advanced-settings_balance"
+      },
+      {
+        "left": "168px",
+        "top": "184px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_equalizer"
+      },
+      {
+        "left": "168px",
+        "top": "224px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_apply"
+      },
+      {
+        "left": "168px",
+        "top": "263px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_reset"
+      },
+      {
+        "left": "167px",
+        "top": "321px",
+        "width": "245px",
+        "height": "50px",
+        "target": "settings-sound_advanced-settings_installation"
+      },
+      {
+        "left": "167px",
+        "top": "374px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_automatic"
+      },
+      {
+        "left": "250px",
+        "top": "391px",
+        "width": "56px",
+        "height": "56px",
+        "target": "settings-sound_advanced-settings-down",
+        "type": "arrow-down"
+      },
+      {
+        "left": "163px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-sound_menu"
+      }
+    ]
+  },
+  "settings-sound_advanced-settings_balance": {
+    "img_filename": "settings-sound_advanced-settings_balance",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "32px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-sound_advanced-settings-menu"
+      }
+    ]
+  },
+  "settings-sound_advanced-settings_equalizer": {
+    "img_filename": "settings-sound_advanced-settings_equalizer",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "32px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-sound_advanced-settings-menu"
+      }
+    ]
+  },
+  "settings-sound_advanced-settings_apply": {
+    "img_filename": "settings-sound_advanced-settings_apply",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "593px",
+        "top": "328px",
+        "width": "68px",
+        "height": "34px",
+        "target": "settings-sound_advanced-settings-menu"
+      }
+    ]
+  },
+  "settings-sound_advanced-settings_reset": {
+    "img_filename": "settings-sound_advanced-settings_reset",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "593px",
+        "top": "328px",
+        "width": "68px",
+        "height": "34px",
+        "target": "settings-sound_advanced-settings-menu"
+      }
+    ]
+  },
+  "settings-sound_advanced-settings_installation": {
+    "img_filename": "settings-sound_advanced-settings_installation",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "36px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-support"
+      },
+      {
+        "left": "164px",
+        "top": "38px",
+        "width": "30px",
+        "height": "29px",
+        "target": "settings-sound_advanced-settings-menu"
+      }
+    ]
+  },
+  "settings-sound_advanced-settings_automatic": {
+    "img_filename": "settings-sound_advanced-settings_automatic",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "36px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-support"
+      },
+      {
+        "left": "168px",
+        "top": "89px",
+        "width": "245px",
+        "height": "36px",
+        "target": "settings-sound_advanced-settings_dolby-off"
+      },
+      {
+        "left": "168px",
+        "top": "128px",
+        "width": "245px",
+        "height": "50px",
+        "target": "settings-sound_advanced-settings_balance"
+      },
+      {
+        "left": "168px",
+        "top": "181px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_equalizer"
+      },
+      {
+        "left": "168px",
+        "top": "221px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_apply"
+      },
+      {
+        "left": "168px",
+        "top": "261px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_reset"
+      },
+      {
+        "left": "167px",
+        "top": "316px",
+        "width": "245px",
+        "height": "50px",
+        "target": "settings-sound_advanced-settings_installation"
+      },
+      {
+        "left": "168px",
+        "top": "369px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings-menu"
+      },
+      {
+        "left": "250px",
+        "top": "391px",
+        "width": "56px",
+        "height": "56px",
+        "target": "settings-sound_advanced-settings-down",
+        "type": "arrow-down"
+      },
+      {
+        "left": "163px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-sound_menu"
+      }
+    ]
+  },
+  "settings-sound_advanced-settings-down": {
+    "img_filename": "settings-sound_advanced-settings-down",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "36px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-support"
+      },
+      {
+        "left": "163px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-sound_menu"
+      },
+      {
+        "left": "168px",
+        "top": "241px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_match"
+      },
+      {
+        "left": "168px",
+        "top": "281px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_select-hdmi"
+      },
+      {
+        "left": "168px",
+        "top": "322px",
+        "width": "245px",
+        "height": "50px",
+        "target": "settings-sound_advanced-settings_digital-sound"
+      },
+      {
+        "left": "168px",
+        "top": "375px",
+        "width": "245px",
+        "height": "35px",
+        "target": "settings-sound_advanced-settings-earc"
+      },
+      {
+        "left": "250px",
+        "top": "391px",
+        "width": "56px",
+        "height": "56px",
+        "target": "settings-sound_advanced-settings-menu",
+        "type": "arrow-up"
+      }
+    ]
+  },
+  "settings-sound_advanced-settings_select-hdmi": {
+    "img_filename": "settings-sound_advanced-settings_select-hdmi",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "36px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-support"
+      },
+      {
+        "left": "163px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-sound_menu"
+      },
+      {
+        "left": "168px",
+        "top": "241px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_match"
+      },
+      {
+        "left": "168px",
+        "top": "322px",
+        "width": "245px",
+        "height": "50px",
+        "target": "settings-sound_advanced-settings_digital-sound"
+      },
+      {
+        "left": "168px",
+        "top": "375px",
+        "width": "245px",
+        "height": "35px",
+        "target": "settings-sound_advanced-settings-earc"
+      },
+      {
+        "left": "250px",
+        "top": "391px",
+        "width": "56px",
+        "height": "56px",
+        "target": "settings-sound_advanced-settings-menu",
+        "type": "arrow-up"
+      }
+    ]
+  },
+  "settings-sound_advanced-settings_digital-sound": {
+    "img_filename": "settings-sound_advanced-settings_digital-sound",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "36px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-support"
+      },
+      {
+        "left": "163px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-sound_menu"
+      },
+      {
+        "left": "168px",
+        "top": "241px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_match"
+      },
+      {
+        "left": "168px",
+        "top": "281px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_select-hdmi"
+      },
+      {
+        "left": "168px",
+        "top": "375px",
+        "width": "245px",
+        "height": "35px",
+        "target": "settings-sound_advanced-settings-earc"
+      },
+      {
+        "left": "250px",
+        "top": "391px",
+        "width": "56px",
+        "height": "56px",
+        "target": "settings-sound_advanced-settings-menu",
+        "type": "arrow-up"
+      }
+    ]
+  },
+  "settings-sound_advanced-settings-earc": {
+    "img_filename": "settings-sound_advanced-settings-earc",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "36px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-support"
+      },
+      {
+        "left": "163px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-sound_menu"
+      },
+      {
+        "left": "168px",
+        "top": "241px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_match"
+      },
+      {
+        "left": "168px",
+        "top": "281px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_select-hdmi"
+      },
+      {
+        "left": "168px",
+        "top": "322px",
+        "width": "245px",
+        "height": "50px",
+        "target": "settings-sound_advanced-settings_digital-sound"
+      },
+      {
+        "left": "250px",
+        "top": "391px",
+        "width": "56px",
+        "height": "56px",
+        "target": "settings-sound_advanced-settings-menu",
+        "type": "arrow-up"
+      }
+    ]
+  },
+  "settings-sound_advanced-settings_match": {
+    "img_filename": "settings-sound_advanced-settings_match",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "36px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-support"
+      },
+      {
+        "left": "163px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-sound_advanced-settings-down"
+      },
+      {
+        "left": "168px",
+        "top": "94px",
+        "width": "245px",
+        "height": "49px",
+        "target": "settings-sound_advanced-settings_delay"
+      },
+      {
+        "left": "168px",
+        "top": "148px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_match-bypass"
+      }
+    ]
+  },
+  "settings-sound_advanced-settings_delay": {
+    "img_filename": "settings-sound_advanced-settings_delay",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "32px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-sound_advanced-settings_match"
+      }
+    ]
+  },
+  "settings-sound_advanced-settings_match-bypass": {
+    "img_filename": "settings-sound_advanced-settings_match-bypass",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "36px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-support"
+      },
+      {
+        "left": "163px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-sound_advanced-settings-down"
+      },
+      {
+        "left": "168px",
+        "top": "147px",
+        "width": "245px",
+        "height": "37px",
+        "target": "settings-sound_advanced-settings_match"
+      }
+    ]
   }
 }

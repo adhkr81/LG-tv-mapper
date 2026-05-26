@@ -39,6 +39,11 @@
       "collapsed": true,
       "bandX": -503,
       "bandY": 1329
+    },
+    {
+      "id": "settings-sound",
+      "name": "settings-sound",
+      "rootScreenId": null
     }
   ],
   "screens": {
@@ -869,6 +874,310 @@
         "9742252d-b66b-44c0-881e-48058040c7ac",
         "095cd49a-ec28-48f7-b977-f81a43f12cff",
         "2194a9be-1c33-490b-9050-815fece8b8fa"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_menu": {
+      "graphX": 280,
+      "graphY": 0,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "2b2696eb-2948-4ec4-b6b2-7d9c2b7441d7",
+        "ef83d7c0-be89-476b-86b0-6c4934091211",
+        "46a34254-a745-44ab-86c7-0adbed84cca5",
+        "2d3f99d0-388d-492b-9eea-615935a3446f",
+        "2cba619f-d994-4b5c-af94-59c451b005c9",
+        "96b47e56-d395-4ac9-a689-5668b7e542ad"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_select-mode": {
+      "graphX": 500,
+      "graphY": 0,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "81fc0260-02f4-4f08-89b0-fa38154e47b8"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_sound-out": {
+      "graphX": 720,
+      "graphY": 0,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "430496e1-4ada-4429-920e-cfeceb0f7ea0",
+        "c6d5c403-ff2c-4d92-b1c7-ad6b28eaf256",
+        "5e0311c1-258b-4fe3-9833-9adf1434da6f",
+        "e55ca354-997c-47ba-9591-b572bc2fbb98",
+        "38c5aa65-1ffe-4e96-af0b-cc702e70b681",
+        "74d5c36d-13d0-49ed-9298-b11077a14beb",
+        "cddc3849-7e05-4913-baab-f3a240fc05aa"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_sound-out-wired": {
+      "graphX": 940,
+      "graphY": 0,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "16088cf6-4d99-4891-8d52-06a90c52b387",
+        "9bdddbbd-f2bd-4191-b3ad-d7fca0b4478d",
+        "c6e899ae-6f28-4881-81df-be08dc7386c7",
+        "21e0a109-c1ce-4036-9993-6b9639419643"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_sound-out-wireless": {
+      "graphX": 280,
+      "graphY": 320,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "2e869466-9bc5-4e0c-8738-b9903ccafb5c",
+        "20086f90-dfea-4a55-8c52-90b22caef04d",
+        "b4e464a8-0802-422e-b83f-dfc9a8d95e85",
+        "28e06ea1-162c-4f87-bef2-ceed551306d2"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_sound-out-external": {
+      "graphX": 564,
+      "graphY": 306,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "c94ffb1a-943c-4cab-85bc-f1eec6e038e9",
+        "8d911ed7-55de-4149-8dd4-f1d6f56923d0",
+        "c70ce627-1bfb-4518-a455-ee12e7774a71",
+        "bf40973a-8c79-4f0a-914b-d9ab3f4205a6"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_advanced-settings-menu": {
+      "graphX": 844,
+      "graphY": 306,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "673a3abb-204f-4b3a-b49e-5f89511e1c8b",
+        "d068abcb-f84d-4717-a2d0-488337e5be59",
+        "974e718d-bf71-4f4c-aeaa-5da6297e4707",
+        "e97946a8-17d5-4793-ac16-b2c14bcdc4dd",
+        "dfaa5686-05ae-46ce-be7b-e18801fb970e",
+        "7374e10b-a987-4030-9d36-dc1e7072c38d",
+        "672c1b3d-a3b9-4ebf-afe4-46e0f47249bb",
+        "af99d227-cc03-4f9e-83e1-9166b446f0c1",
+        "d82a7235-57ee-4c57-b63f-e169587ccfa6",
+        "4ce3d148-129b-4650-8b83-db82c8f3a304",
+        "49f51224-2916-4724-96b1-349b3f250196",
+        "fa84be72-8aa5-412a-a662-6a519cba5605"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_advanced-settings_dolby-off": {
+      "graphX": 1122,
+      "graphY": 306,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "1075f749-121a-4bed-9dfd-0340fb3d896f",
+        "94766199-e51c-4809-ad1e-92cbc660153b",
+        "d9a6106d-c2b3-42c9-a7a5-41b108d643b3",
+        "d69a555d-28f6-45bb-970a-ea23ebf26008",
+        "c26e0586-5894-4614-a060-a3ae4c76a87a",
+        "89dcc235-6eb4-4c5c-9e7e-4cf80f2ed6ce",
+        "22f74b57-4096-4b3f-92eb-d81b6a7fbcfb",
+        "8b51cb36-d3ee-4d26-ae4c-b5117c9de439",
+        "ea1a737d-901b-4a32-b054-093c9c721faa",
+        "0fb6ba58-7b7f-4a93-a4f9-106542e2f5c3",
+        "0b30a744-1bed-4f64-a77f-66ad49aa44f7",
+        "55f6023c-d290-42c9-ab55-e48732ddd240"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_advanced-settings_balance": {
+      "graphX": 308,
+      "graphY": 628,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "3b0fbfdb-82ce-4951-a4e1-48a38f245d4a"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_advanced-settings_equalizer": {
+      "graphX": 588,
+      "graphY": 628,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "51a73d41-72db-484b-a14a-89a38862fe11"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_advanced-settings_apply": {
+      "graphX": 868,
+      "graphY": 628,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "0abd5c7e-1948-402f-b4c7-e01903221919"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_advanced-settings_reset": {
+      "graphX": 1144,
+      "graphY": 642,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "a5e7e51e-b61b-4d3e-9182-d5dcf62dd339"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_advanced-settings_installation": {
+      "graphX": 315,
+      "graphY": 969,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "6f1dda7f-88df-4c50-b098-bb12167cec9e",
+        "9357695a-ef7f-44df-abca-dd4cce451747",
+        "aa68006d-7048-4a26-90fd-3597e7dbfb49",
+        "f1c7b14f-0858-4559-b69f-a312203118ef"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_advanced-settings_automatic": {
+      "graphX": 595,
+      "graphY": 969,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "a2a08ece-f302-4e52-ac4d-298cf78b6081",
+        "d2c24237-298f-47c5-8b03-fc5b46c50ca7",
+        "716a9aff-6073-41bb-ae1c-e29410c1a551",
+        "669ab4c2-99de-40e1-8781-5490ef0b28b3",
+        "61810e59-ec11-45d6-a985-20e9bcc88440",
+        "83198b8f-68e3-429b-9ad2-9929e9f8d5ce",
+        "5fce9845-19e2-432f-af4c-b4d83182d13b",
+        "92939906-6092-46b0-982d-1543a21bf4df",
+        "f4dfc47f-8536-4d0f-a05b-ed24d47a6f70",
+        "2be96db3-bc5e-4821-8c81-9ff585a8f052",
+        "ec73a21c-c51a-4c0c-a33b-bfd8442f3d9e",
+        "e8e6950f-683f-4086-aed5-b8ad4c4b3a4e"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_advanced-settings-down": {
+      "graphX": 875,
+      "graphY": 969,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "496520c0-5e3c-4b45-9a01-a5d5dd2f89f9",
+        "88b1021a-0b78-4cd2-beb0-19d01efbe5bd",
+        "e77ea605-0226-49ad-b3c6-b55ecee26294",
+        "c1fb411f-3418-4a4e-8d46-0c4f33a74130",
+        "6b9df05a-a06b-4bf4-9c56-921a15a15d78",
+        "4d2959ad-8a1e-4c92-b6f3-0e216d9769b3",
+        "de12b9dd-6632-4d0a-8cb9-13eb2fba6c7e",
+        "0135bde4-6893-4c4f-9b17-f1f12312d320",
+        "583963a7-7c7c-48ff-8275-cf00725a7472"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_advanced-settings_select-hdmi": {
+      "graphX": 1155,
+      "graphY": 969,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "d25be3a3-7f16-4639-b3bb-f9ea750188bf",
+        "fb8cf087-8d69-49c3-a050-1ffd4baab7c8",
+        "564359a6-a9c7-4fe4-8857-68bf91c6a7bc",
+        "0e568aed-4a42-4d7f-b0f3-f994175dd840",
+        "9f7c8d4f-bfd0-4c46-8d82-a9694a4949f6",
+        "ea233041-5998-499e-8276-cb2208818e9a",
+        "7d1b335f-f018-4df9-ba48-11020bcf87ee",
+        "7884a0d4-5389-4c1e-b581-4cf0e8e793c0"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_advanced-settings_digital-sound": {
+      "graphX": 1435,
+      "graphY": 969,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "3e1b1bf0-ba13-45a0-b3d5-05f55b2861df",
+        "221883e4-2553-4947-b5f8-a48faedc8877",
+        "53092b9c-5c88-4db5-8905-dc8c54de503b",
+        "948eca95-b0cc-4fdc-a498-a2bccd302acb",
+        "30d12490-a684-49d0-b099-e23223fca430",
+        "964e24da-0e8d-4101-951d-c0408b778bd0",
+        "c1d72a45-5238-493c-bae7-48e1ff8ded38",
+        "9d344343-f61c-4940-bcf7-6537c2487230"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_advanced-settings-earc": {
+      "graphX": 1715,
+      "graphY": 969,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "5711b87b-89d2-49df-83cc-6f498696f054",
+        "4aae0225-28d9-4517-b3e2-839be50e46d3",
+        "c4c736d2-beee-4ec8-9ce6-88aa491dbe7f",
+        "c405be58-b0cc-4433-998c-d96669c06a2c",
+        "df714ce8-8d07-4ee9-94e2-56db7d6a091b",
+        "d00532ef-58a1-4fc7-bfe9-b20dda7284fe",
+        "2fd8880d-1890-45d3-8880-c8cbf8be9caf",
+        "0761304a-84b9-4ad5-beb6-c155fab95bd5"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_advanced-settings_match": {
+      "graphX": 327,
+      "graphY": 1317,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "f6344cbf-de67-4de4-83b3-277f31e1d665",
+        "9c4609e4-931d-47e3-8359-aab3fdd3f249",
+        "807eba25-ce5c-4c12-b080-28f6a4963091",
+        "23bbdde2-074c-4fe6-8047-faa9dbf8d02a",
+        "66872eb8-596c-4794-842c-f8749feee853",
+        "9221e71d-88a4-4d74-9bdb-971894b68f53"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_advanced-settings_delay": {
+      "graphX": 607,
+      "graphY": 1317,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "aaed299c-d8c2-4f2c-86e7-c48d35068759"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-sound_advanced-settings_match-bypass": {
+      "graphX": 887,
+      "graphY": 1317,
+      "sectionId": "settings-sound",
+      "buttonIds": [
+        "cf9bfbe0-3dd7-4e4c-9f21-8c2bb445ed0d",
+        "3274cfc2-9f87-447d-8e3a-2098c089f955",
+        "a87cd64c-2900-4532-8cd4-eb878c33d055",
+        "74a2c808-cd25-492b-8c9e-9fac6286b6d9",
+        "51b83cbf-4110-46d6-9d01-7601e53c62c6"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
