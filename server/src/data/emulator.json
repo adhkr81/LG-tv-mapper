@@ -610,6 +610,27 @@
         "width": "246px",
         "height": "36px",
         "target": "picture-advanced-clarity_menu"
+      },
+      {
+        "left": "168px",
+        "top": "210px",
+        "width": "246px",
+        "height": "36px",
+        "target": "picture-advanced-brightness_apply"
+      },
+      {
+        "left": "168px",
+        "top": "249px",
+        "width": "246px",
+        "height": "32px",
+        "target": "picture-advanced-brightness_reset-no"
+      },
+      {
+        "left": "168px",
+        "top": "295px",
+        "width": "246px",
+        "height": "36px",
+        "target": "picture-advanced-brightness_blue-light"
       }
     ]
   },
@@ -2218,6 +2239,101 @@
         "height": "56px",
         "target": "picture-advanced-clarity_menu",
         "type": "arrow-up"
+      }
+    ]
+  },
+  "picture-advanced-brightness_apply": {
+    "img_filename": "picture-advanced-brightness_apply",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "593px",
+        "top": "328px",
+        "width": "68px",
+        "height": "34px",
+        "target": "picture-advanced-settings"
+      }
+    ]
+  },
+  "picture-advanced-brightness_reset-no": {
+    "img_filename": "picture-advanced-brightness_reset-no",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "593px",
+        "top": "328px",
+        "width": "69px",
+        "height": "34px",
+        "target": "picture-advanced-settings"
+      }
+    ]
+  },
+  "picture-advanced-brightness_blue-light": {
+    "img_filename": "picture-advanced-brightness_blue-light",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "168px",
+        "top": "92px",
+        "width": "246px",
+        "height": "36px",
+        "target": "picture-advanced_brightness"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "168px",
+        "top": "131px",
+        "width": "246px",
+        "height": "36px",
+        "target": "picture-advanced-color_menu"
+      },
+      {
+        "left": "168px",
+        "top": "171px",
+        "width": "246px",
+        "height": "36px",
+        "target": "picture-advanced-clarity_menu"
+      },
+      {
+        "left": "168px",
+        "top": "210px",
+        "width": "246px",
+        "height": "36px",
+        "target": "picture-advanced-brightness_apply"
+      },
+      {
+        "left": "168px",
+        "top": "249px",
+        "width": "246px",
+        "height": "32px",
+        "target": "picture-advanced-brightness_reset-no"
       }
     ]
   }

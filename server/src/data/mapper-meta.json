@@ -14,7 +14,7 @@
       "rootScreenId": null,
       "bandX": -507,
       "bandY": 586,
-      "collapsed": false
+      "collapsed": true
     },
     {
       "id": "picture-advanced",
@@ -36,7 +36,9 @@
       "id": "picture-advanced-clarity",
       "name": "picture-advanced-clarity",
       "rootScreenId": null,
-      "collapsed": true
+      "collapsed": true,
+      "bandX": -503,
+      "bandY": 1329
     }
   ],
   "screens": {
@@ -128,8 +130,8 @@
       "sourceHeight": 2160
     },
     "settings-picture_basic": {
-      "graphX": -441,
-      "graphY": 452,
+      "graphX": -266,
+      "graphY": 586,
       "sectionId": "settings-picture",
       "buttonIds": [
         "61493787-17b7-429d-aba7-990af662707e",
@@ -142,8 +144,8 @@
       "sourceHeight": 2160
     },
     "settings-picture_vivid": {
-      "graphX": -221,
-      "graphY": 452,
+      "graphX": -46,
+      "graphY": 586,
       "sectionId": "settings-picture",
       "buttonIds": [
         "1fa3262d-2a58-4bb1-89fc-3eb35a5f64c7",
@@ -156,8 +158,8 @@
       "sourceHeight": 2160
     },
     "settings-picture_standard": {
-      "graphX": -1,
-      "graphY": 452,
+      "graphX": 174,
+      "graphY": 586,
       "sectionId": "settings-picture",
       "buttonIds": [
         "3c4ad797-93cc-4bb6-97c4-a5369b5ba37a",
@@ -170,8 +172,8 @@
       "sourceHeight": 2160
     },
     "settings-picture_cinema": {
-      "graphX": 219,
-      "graphY": 452,
+      "graphX": 394,
+      "graphY": 586,
       "sectionId": "settings-picture",
       "buttonIds": [
         "84d62007-36fd-4822-b5fc-e4c6d9384308",
@@ -184,8 +186,8 @@
       "sourceHeight": 2160
     },
     "settings-picture_sports": {
-      "graphX": 443,
-      "graphY": 455,
+      "graphX": 618,
+      "graphY": 589,
       "sectionId": "settings-picture",
       "buttonIds": [
         "2c004ab8-d5bb-485c-9b08-54608d82c421",
@@ -198,8 +200,8 @@
       "sourceHeight": 2160
     },
     "settings-picture_aspect-ratio": {
-      "graphX": -682,
-      "graphY": 453,
+      "graphX": -507,
+      "graphY": 587,
       "sectionId": "settings-picture",
       "buttonIds": [
         "43d8a4dc-04ff-4d3a-9647-4a350b82e2fd",
@@ -222,7 +224,10 @@
         "064b44c1-9ac4-414c-8581-82c2b893e097",
         "ae0c1d1b-4398-4ce4-9f9e-643edc548ba2",
         "a438a001-6a24-4198-90dc-50c1f3cc90d8",
-        "87680e28-d139-43da-92e4-d2f8d0af7250"
+        "87680e28-d139-43da-92e4-d2f8d0af7250",
+        "533168f1-e418-46b6-9942-12fe5805be2f",
+        "f9bc1bb6-673e-4c2c-aa91-96af1d8484d6",
+        "e545e665-5534-4cf1-94d2-247e65051df3"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
@@ -826,6 +831,44 @@
         "db2b9198-0ac9-4270-ae76-d67cdfd9ab87",
         "2a41ed09-cdbd-4416-918e-8b2610e7fccd",
         "1a6477f4-7ab6-4af8-9c37-35e42ea564fc"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-brightness_apply": {
+      "graphX": 1306,
+      "graphY": 1694,
+      "sectionId": "picture-advanced",
+      "buttonIds": [
+        "c70e0993-b69c-414e-9e7c-05f33b7c4572"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-brightness_reset-no": {
+      "graphX": 1572,
+      "graphY": 1689,
+      "sectionId": "picture-advanced",
+      "buttonIds": [
+        "c133a468-7b46-476f-8a15-f619663788cf"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-brightness_blue-light": {
+      "graphX": 1858,
+      "graphY": 1684,
+      "sectionId": "picture-advanced",
+      "buttonIds": [
+        "536694cd-46a0-4ba4-a65c-21e0c7c51607",
+        "70684c62-bb8e-4e6c-8fef-51d440a1fb6c",
+        "5b69059e-d503-4376-9707-383abdef4478",
+        "f3770cff-0a33-4e8e-903b-045c2d616211",
+        "c9deba97-a1cd-4c29-b503-485b18718bbf",
+        "6747a684-2d1f-4658-8ed5-0a93c37fd72f",
+        "9742252d-b66b-44c0-881e-48058040c7ac",
+        "095cd49a-ec28-48f7-b977-f81a43f12cff",
+        "2194a9be-1c33-490b-9050-815fece8b8fa"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
