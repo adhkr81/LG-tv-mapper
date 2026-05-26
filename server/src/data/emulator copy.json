@@ -596,6 +596,20 @@
         "width": "32px",
         "height": "32px",
         "target": "settings-picture"
+      },
+      {
+        "left": "168px",
+        "top": "131px",
+        "width": "246px",
+        "height": "36px",
+        "target": "picture-advanced-color_menu"
+      },
+      {
+        "left": "168px",
+        "top": "171px",
+        "width": "246px",
+        "height": "36px",
+        "target": "picture-advanced-clarity_menu"
       }
     ]
   },
@@ -1060,6 +1074,1150 @@
         "width": "30px",
         "height": "29px",
         "target": "picture-advanced_down"
+      }
+    ]
+  },
+  "picture-advanced-color_menu": {
+    "img_filename": "picture-advanced-color_menu",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "168px",
+        "top": "93px",
+        "width": "246px",
+        "height": "52px",
+        "target": "picture-advanced-color"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-settings"
+      },
+      {
+        "left": "168px",
+        "top": "147px",
+        "width": "246px",
+        "height": "52px",
+        "target": "picture-advanced-color_tint"
+      },
+      {
+        "left": "168px",
+        "top": "202px",
+        "width": "246px",
+        "height": "52px",
+        "target": "picture-advanced-color_gamut_auto"
+      },
+      {
+        "left": "168px",
+        "top": "256px",
+        "width": "246px",
+        "height": "40px",
+        "target": "picture-advanced-color_fine-tune_menu"
+      },
+      {
+        "left": "168px",
+        "top": "298px",
+        "width": "246px",
+        "height": "36px",
+        "target": "picture-advanced-color_white-balance-menu"
+      },
+      {
+        "left": "109px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      }
+    ]
+  },
+  "picture-advanced-color": {
+    "img_filename": "picture-advanced-color",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "33px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_menu"
+      },
+      {
+        "left": "92px",
+        "top": "229px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_tint"
+      },
+      {
+        "left": "246px",
+        "top": "229px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_tint"
+      }
+    ]
+  },
+  "picture-advanced-color_tint": {
+    "img_filename": "picture-advanced-color_tint",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "33px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_menu"
+      },
+      {
+        "left": "92px",
+        "top": "229px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color"
+      },
+      {
+        "left": "246px",
+        "top": "229px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color"
+      }
+    ]
+  },
+  "picture-advanced-color_gamut_auto": {
+    "img_filename": "picture-advanced-color_gamut_auto",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "134px",
+        "top": "125px",
+        "width": "250px",
+        "height": "35px",
+        "target": "picture-advanced-color_gamut_native"
+      },
+      {
+        "left": "132px",
+        "top": "35px",
+        "width": "30px",
+        "height": "29px",
+        "target": "picture-advanced-color_menu"
+      }
+    ]
+  },
+  "picture-advanced-color_gamut_native": {
+    "img_filename": "picture-advanced-color_gamut_native",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "134px",
+        "top": "86px",
+        "width": "250px",
+        "height": "35px",
+        "target": "picture-advanced-color_gamut_auto"
+      },
+      {
+        "left": "132px",
+        "top": "35px",
+        "width": "30px",
+        "height": "29px",
+        "target": "picture-advanced-color_menu"
+      }
+    ]
+  },
+  "picture-advanced-color_fine-tune_menu": {
+    "img_filename": "picture-advanced-color_fine-tune_menu",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "168px",
+        "top": "93px",
+        "width": "246px",
+        "height": "52px",
+        "target": "picture-advanced-color_fine-tune_user"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_menu"
+      },
+      {
+        "left": "168px",
+        "top": "147px",
+        "width": "246px",
+        "height": "52px",
+        "target": "picture-advanced-color_fine-tune_select-color"
+      },
+      {
+        "left": "168px",
+        "top": "202px",
+        "width": "246px",
+        "height": "52px",
+        "target": "picture-advanced-color_fine-tune_saturation"
+      },
+      {
+        "left": "168px",
+        "top": "256px",
+        "width": "246px",
+        "height": "52px",
+        "target": "picture-advanced-color_fine-tune_tint"
+      },
+      {
+        "left": "168px",
+        "top": "311px",
+        "width": "246px",
+        "height": "52px",
+        "target": "picture-advanced-color_fine-tune_luminance"
+      },
+      {
+        "left": "168px",
+        "top": "365px",
+        "width": "246px",
+        "height": "42px",
+        "target": "picture-advanced-color_reset"
+      }
+    ]
+  },
+  "picture-advanced-color_fine-tune_off": {
+    "img_filename": "picture-advanced-color_fine-tune_off",
+    "preset": 0,
+    "buttons": []
+  },
+  "picture-advanced-color_fine-tune_low": {
+    "img_filename": "picture-advanced-color_fine-tune_low",
+    "preset": 0,
+    "buttons": []
+  },
+  "picture-advanced-color_fine-tune_medium": {
+    "img_filename": "picture-advanced-color_fine-tune_medium",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "132px",
+        "top": "35px",
+        "width": "30px",
+        "height": "29px",
+        "target": "picture-advanced-color_fine-tune_menu"
+      }
+    ]
+  },
+  "picture-advanced-color_fine-tune_high": {
+    "img_filename": "picture-advanced-color_fine-tune_high",
+    "preset": 0,
+    "buttons": []
+  },
+  "picture-advanced-color_fine-tune_user": {
+    "img_filename": "picture-advanced-color_fine-tune_user",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "32px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_fine-tune_menu"
+      },
+      {
+        "left": "393px",
+        "top": "169px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_fine-tune_select-color"
+      },
+      {
+        "left": "92px",
+        "top": "169px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_fine-tune_luminance"
+      }
+    ]
+  },
+  "picture-advanced-color_fine-tune_select-color": {
+    "img_filename": "picture-advanced-color_fine-tune_select-color",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "32px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_fine-tune_menu"
+      },
+      {
+        "left": "393px",
+        "top": "189px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_fine-tune_saturation"
+      },
+      {
+        "left": "92px",
+        "top": "189px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_fine-tune_user"
+      }
+    ]
+  },
+  "picture-advanced-color_fine-tune_saturation": {
+    "img_filename": "picture-advanced-color_fine-tune_saturation",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "32px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_fine-tune_menu"
+      },
+      {
+        "left": "246px",
+        "top": "118px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_fine-tune_tint"
+      },
+      {
+        "left": "92px",
+        "top": "118px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_fine-tune_select-color"
+      }
+    ]
+  },
+  "picture-advanced-color_fine-tune_tint": {
+    "img_filename": "picture-advanced-color_fine-tune_tint",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "32px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_fine-tune_menu"
+      },
+      {
+        "left": "246px",
+        "top": "118px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_fine-tune_luminance"
+      },
+      {
+        "left": "92px",
+        "top": "118px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_fine-tune_saturation"
+      }
+    ]
+  },
+  "picture-advanced-color_fine-tune_luminance": {
+    "img_filename": "picture-advanced-color_fine-tune_luminance",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "32px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_fine-tune_menu"
+      },
+      {
+        "left": "246px",
+        "top": "118px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_fine-tune_user"
+      },
+      {
+        "left": "92px",
+        "top": "118px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_fine-tune_tint"
+      }
+    ]
+  },
+  "picture-advanced-color_reset": {
+    "img_filename": "picture-advanced-color_reset",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "593px",
+        "top": "329px",
+        "width": "68px",
+        "height": "33px",
+        "target": "picture-advanced-color_fine-tune_menu"
+      }
+    ]
+  },
+  "picture-advanced-color_white-balance-menu": {
+    "img_filename": "picture-advanced-color_white-balance-menu",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "168px",
+        "top": "93px",
+        "width": "246px",
+        "height": "52px",
+        "target": "picture-advanced-color_color-temperature"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_menu"
+      },
+      {
+        "left": "168px",
+        "top": "147px",
+        "width": "246px",
+        "height": "52px",
+        "target": "picture-advanced-color_method"
+      },
+      {
+        "left": "168px",
+        "top": "202px",
+        "width": "246px",
+        "height": "52px",
+        "target": "picture-advanced-color_point"
+      },
+      {
+        "left": "168px",
+        "top": "256px",
+        "width": "246px",
+        "height": "52px",
+        "target": "picture-advanced-color_red"
+      },
+      {
+        "left": "168px",
+        "top": "311px",
+        "width": "246px",
+        "height": "52px",
+        "target": "picture-advanced-color_green"
+      },
+      {
+        "left": "168px",
+        "top": "365px",
+        "width": "246px",
+        "height": "54px",
+        "target": "picture-advanced-color_blue"
+      },
+      {
+        "left": "255px",
+        "top": "391px",
+        "width": "56px",
+        "height": "56px",
+        "target": "picture-advanced-color_white-balance-down",
+        "type": "arrow-down"
+      }
+    ]
+  },
+  "picture-advanced-color_color-temperature": {
+    "img_filename": "picture-advanced-color_color-temperature",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "33px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_white-balance-menu"
+      },
+      {
+        "left": "92px",
+        "top": "229px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_blue"
+      },
+      {
+        "left": "246px",
+        "top": "229px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_method"
+      }
+    ]
+  },
+  "picture-advanced-color_method": {
+    "img_filename": "picture-advanced-color_method",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "32px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_white-balance-menu"
+      },
+      {
+        "left": "393px",
+        "top": "131px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_point"
+      },
+      {
+        "left": "92px",
+        "top": "131px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_color-temperature"
+      }
+    ]
+  },
+  "picture-advanced-color_point": {
+    "img_filename": "picture-advanced-color_point",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "32px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_white-balance-menu"
+      },
+      {
+        "left": "393px",
+        "top": "113px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_red"
+      },
+      {
+        "left": "92px",
+        "top": "113px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_method"
+      }
+    ]
+  },
+  "picture-advanced-color_red": {
+    "img_filename": "picture-advanced-color_red",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "32px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_white-balance-menu"
+      },
+      {
+        "left": "246px",
+        "top": "118px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_green"
+      },
+      {
+        "left": "92px",
+        "top": "118px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_point"
+      }
+    ]
+  },
+  "picture-advanced-color_green": {
+    "img_filename": "picture-advanced-color_green",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "32px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_white-balance-menu"
+      },
+      {
+        "left": "246px",
+        "top": "118px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_blue"
+      },
+      {
+        "left": "92px",
+        "top": "118px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_red"
+      }
+    ]
+  },
+  "picture-advanced-color_blue": {
+    "img_filename": "picture-advanced-color_blue",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "32px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_white-balance-menu"
+      },
+      {
+        "left": "246px",
+        "top": "118px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_color-temperature"
+      },
+      {
+        "left": "92px",
+        "top": "118px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_green"
+      }
+    ]
+  },
+  "picture-advanced-color_white-balance-reset": {
+    "img_filename": "picture-advanced-color_white-balance-reset",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "593px",
+        "top": "328px",
+        "width": "68px",
+        "height": "34px",
+        "target": "picture-advanced-color_white-balance-down"
+      }
+    ]
+  },
+  "picture-advanced-color_white-balance-down": {
+    "img_filename": "picture-advanced-color_white-balance-down",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "168px",
+        "top": "371px",
+        "width": "245px",
+        "height": "40px",
+        "target": "picture-advanced-color_white-balance-reset"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-color_menu"
+      },
+      {
+        "left": "255px",
+        "top": "391px",
+        "width": "56px",
+        "height": "56px",
+        "target": "picture-advanced-color_white-balance-menu",
+        "type": "arrow-down"
+      }
+    ]
+  },
+  "picture-advanced-clarity_menu": {
+    "img_filename": "picture-advanced-clarity_menu",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "168px",
+        "top": "207px",
+        "width": "245px",
+        "height": "47px",
+        "target": "picture-advanced-clarity_noise-reduction"
+      },
+      {
+        "left": "168px",
+        "top": "258px",
+        "width": "245px",
+        "height": "51px",
+        "target": "picture-advanced-clarity_mpeg"
+      },
+      {
+        "left": "168px",
+        "top": "369px",
+        "width": "245px",
+        "height": "51px",
+        "target": "picture-advanced-clarity_real-cinema"
+      },
+      {
+        "left": "168px",
+        "top": "313px",
+        "width": "245px",
+        "height": "52px",
+        "target": "picture-advanced-clarity_smooth-gradation"
+      },
+      {
+        "left": "168px",
+        "top": "92px",
+        "width": "245px",
+        "height": "53px",
+        "target": "picture-advanced-clarity_sharpness"
+      },
+      {
+        "left": "168px",
+        "top": "149px",
+        "width": "245px",
+        "height": "53px",
+        "target": "picture-advanced-clarity_super-resolution"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-settings"
+      },
+      {
+        "left": "253px",
+        "top": "391px",
+        "width": "56px",
+        "height": "56px",
+        "target": "picture-advanced-clarity_trumotion"
+      }
+    ]
+  },
+  "picture-advanced-clarity_sharpness": {
+    "img_filename": "picture-advanced-clarity_sharpness",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "33px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-clarity_menu"
+      },
+      {
+        "left": "92px",
+        "top": "229px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-clarity_smooth-gradation"
+      },
+      {
+        "left": "246px",
+        "top": "229px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-clarity_super-resolution"
+      }
+    ]
+  },
+  "picture-advanced-clarity_super-resolution": {
+    "img_filename": "picture-advanced-clarity_super-resolution",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "32px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-clarity_menu"
+      },
+      {
+        "left": "393px",
+        "top": "151px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-clarity_mpeg"
+      },
+      {
+        "left": "92px",
+        "top": "151px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-clarity_sharpness"
+      }
+    ]
+  },
+  "picture-advanced-clarity_noise-reduction": {
+    "img_filename": "picture-advanced-clarity_noise-reduction",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "168px",
+        "top": "258px",
+        "width": "245px",
+        "height": "51px",
+        "target": "picture-advanced-clarity_mpeg"
+      },
+      {
+        "left": "168px",
+        "top": "369px",
+        "width": "245px",
+        "height": "51px",
+        "target": "picture-advanced-clarity_real-cinema"
+      },
+      {
+        "left": "168px",
+        "top": "313px",
+        "width": "245px",
+        "height": "52px",
+        "target": "picture-advanced-clarity_smooth-gradation"
+      },
+      {
+        "left": "168px",
+        "top": "92px",
+        "width": "245px",
+        "height": "53px",
+        "target": "picture-advanced-clarity_sharpness"
+      },
+      {
+        "left": "168px",
+        "top": "149px",
+        "width": "245px",
+        "height": "53px",
+        "target": "picture-advanced-clarity_super-resolution"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-settings"
+      },
+      {
+        "left": "253px",
+        "top": "391px",
+        "width": "56px",
+        "height": "56px",
+        "target": "picture-advanced-clarity_trumotion"
+      }
+    ]
+  },
+  "picture-advanced-clarity_mpeg": {
+    "img_filename": "picture-advanced-clarity_mpeg",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "32px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-clarity_menu"
+      },
+      {
+        "left": "393px",
+        "top": "169px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-clarity_smooth-gradation"
+      },
+      {
+        "left": "92px",
+        "top": "169px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-clarity_super-resolution"
+      }
+    ]
+  },
+  "picture-advanced-clarity_smooth-gradation": {
+    "img_filename": "picture-advanced-clarity_smooth-gradation",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "32px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-clarity_menu"
+      },
+      {
+        "left": "393px",
+        "top": "151px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-clarity_sharpness"
+      },
+      {
+        "left": "92px",
+        "top": "151px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-clarity_mpeg"
+      }
+    ]
+  },
+  "picture-advanced-clarity_real-cinema": {
+    "img_filename": "picture-advanced-clarity_real-cinema",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "168px",
+        "top": "140px",
+        "width": "245px",
+        "height": "47px",
+        "target": "picture-advanced-clarity_noise-reduction"
+      },
+      {
+        "left": "168px",
+        "top": "192px",
+        "width": "245px",
+        "height": "51px",
+        "target": "picture-advanced-clarity_mpeg"
+      },
+      {
+        "left": "168px",
+        "top": "247px",
+        "width": "245px",
+        "height": "52px",
+        "target": "picture-advanced-clarity_smooth-gradation"
+      },
+      {
+        "left": "168px",
+        "top": "82px",
+        "width": "245px",
+        "height": "53px",
+        "target": "picture-advanced-clarity_super-resolution"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-settings"
+      },
+      {
+        "left": "167px",
+        "top": "356px",
+        "width": "245px",
+        "height": "52px",
+        "target": "picture-advanced-clarity_trumotion"
+      },
+      {
+        "left": "253px",
+        "top": "391px",
+        "width": "56px",
+        "height": "56px",
+        "target": "picture-advanced-clarity_menu",
+        "type": "arrow-up"
+      }
+    ]
+  },
+  "picture-advanced-clarity_trumotion": {
+    "img_filename": "picture-advanced-clarity_trumotion",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "109px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "109px",
+        "top": "146px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "168px",
+        "top": "140px",
+        "width": "245px",
+        "height": "47px",
+        "target": "picture-advanced-clarity_noise-reduction"
+      },
+      {
+        "left": "168px",
+        "top": "192px",
+        "width": "245px",
+        "height": "51px",
+        "target": "picture-advanced-clarity_mpeg"
+      },
+      {
+        "left": "168px",
+        "top": "247px",
+        "width": "245px",
+        "height": "52px",
+        "target": "picture-advanced-clarity_smooth-gradation"
+      },
+      {
+        "left": "168px",
+        "top": "82px",
+        "width": "245px",
+        "height": "53px",
+        "target": "picture-advanced-clarity_super-resolution"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "picture-advanced-settings"
+      },
+      {
+        "left": "168px",
+        "top": "303px",
+        "width": "245px",
+        "height": "52px",
+        "target": "picture-advanced-clarity_real-cinema"
+      },
+      {
+        "left": "253px",
+        "top": "391px",
+        "width": "56px",
+        "height": "56px",
+        "target": "picture-advanced-clarity_menu",
+        "type": "arrow-up"
       }
     ]
   }

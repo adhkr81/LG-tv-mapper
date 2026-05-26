@@ -22,12 +22,21 @@
       "rootScreenId": null,
       "bandX": -502,
       "bandY": 839,
-      "collapsed": false
+      "collapsed": true
     },
     {
       "id": "picture-advanced-color",
       "name": "picture-advanced-color",
-      "rootScreenId": null
+      "rootScreenId": null,
+      "collapsed": true,
+      "bandX": -500,
+      "bandY": 1086
+    },
+    {
+      "id": "picture-advanced-clarity",
+      "name": "picture-advanced-clarity",
+      "rootScreenId": null,
+      "collapsed": true
     }
   ],
   "screens": {
@@ -211,7 +220,9 @@
         "cc9c4b59-8a79-44d9-8dcb-d3131c6f061d",
         "6a0c919f-6926-4da8-b7cb-88d8a660226f",
         "064b44c1-9ac4-414c-8581-82c2b893e097",
-        "ae0c1d1b-4398-4ce4-9f9e-643edc548ba2"
+        "ae0c1d1b-4398-4ce4-9f9e-643edc548ba2",
+        "a438a001-6a24-4198-90dc-50c1f3cc90d8",
+        "87680e28-d139-43da-92e4-d2f8d0af7250"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
@@ -400,13 +411,424 @@
       "graphX": 0,
       "graphY": 0,
       "sectionId": "picture-advanced-color",
-      "buttonIds": []
+      "buttonIds": [
+        "3b608dbb-b8db-4cc3-a851-ce4520f3eacf",
+        "4980e1b8-179c-4221-a8cc-6ab80d108ad4",
+        "2d23aea2-a723-4402-8519-dbc80eaf9464",
+        "cf32543d-2463-45f2-bdd6-1594a73ef07e",
+        "faa1b425-624b-4218-9091-2b3b6619c89e",
+        "452a3b8a-c997-4699-a220-874b77498019",
+        "3166ef62-f65e-46ee-9bdc-0c3f06e8cff0",
+        "3fc963a9-807a-4ade-906f-9a567cdce3d1",
+        "46732b83-6f91-448a-93fb-16b0ca93a875"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "picture-advanced-color": {
       "graphX": 220,
       "graphY": 0,
       "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "5488162b-0047-48f6-9693-08552696a7ee",
+        "c46ff476-e168-4794-b866-7b73257a0fde",
+        "20156ab5-37ee-4955-aaca-5675742765ae"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_tint": {
+      "graphX": 440,
+      "graphY": 0,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "c9eac750-a966-4428-80f9-aa26d4b9e2a9",
+        "7154b08a-f311-4015-a26b-de3f02c27181",
+        "6e4ce614-ff42-4fa5-990a-f002e34900e7"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_gamut_auto": {
+      "graphX": 660,
+      "graphY": 0,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "34d78157-77f7-42c3-bcdb-5cf777eef19b",
+        "8f08c197-5d2c-4309-a6f3-1cfdf5b3d9a1"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_gamut_native": {
+      "graphX": 0,
+      "graphY": 185,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "c19d9734-0aba-45f1-8a15-a5c0332c423d",
+        "b35432bd-d825-4b44-b230-e15c4377e5e0"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_fine-tune_menu": {
+      "graphX": 220,
+      "graphY": 185,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "3d496ba9-fc93-47a9-bacf-f5f6da61fb31",
+        "59092b0e-a4ca-4422-b0b4-df109cdadcd5",
+        "eff63488-7e24-46aa-ae74-c703f9dcde02",
+        "1c2a8e4a-12ec-4e2c-a26a-b6598bd5b9c1",
+        "34f59848-9f62-41e2-8444-7f26c09d23e4",
+        "4ea7f41e-e5f2-4cf9-8d04-8090137c510a",
+        "085129ad-5493-4e8d-ad34-9220f32bd5ce",
+        "99d59b8f-ea3d-4715-903f-d8901c1a0d4b",
+        "37de94b3-fbb4-42af-a2b7-59c11e0362b8",
+        "c8d69f57-debb-4d8c-a005-41757c6e21e4"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_fine-tune_off": {
+      "graphX": 440,
+      "graphY": 185,
+      "sectionId": "picture-advanced-color",
       "buttonIds": []
+    },
+    "picture-advanced-color_fine-tune_low": {
+      "graphX": 660,
+      "graphY": 185,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": []
+    },
+    "picture-advanced-color_fine-tune_medium": {
+      "graphX": 0,
+      "graphY": 370,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "321c859a-dc4b-4087-8df2-ca15c6c20fbb"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_fine-tune_high": {
+      "graphX": 220,
+      "graphY": 370,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": []
+    },
+    "picture-advanced-color_fine-tune_user": {
+      "graphX": 440,
+      "graphY": 370,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "04471ae6-4ae6-4c6e-a28f-64d8df6b3de6",
+        "b3452947-2a96-44bc-8770-4f5e12789cee",
+        "25929041-1746-4890-9a10-59b1b19cb6d7"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_fine-tune_select-color": {
+      "graphX": 660,
+      "graphY": 370,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "9e32c45a-72f4-4300-a4df-d7563a812685",
+        "5e619ac6-552c-40ec-89d9-baf69cb8b51e",
+        "a25d6972-123b-4a7c-9cea-5d2940fcb290"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_fine-tune_saturation": {
+      "graphX": 0,
+      "graphY": 555,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "f87a6156-a9cb-48fd-acd3-049fef60d02e",
+        "6ef88366-1188-4ad7-8559-97b6128940fd",
+        "1c9866a9-4f88-4b7e-97e1-3e6eba91ab4c"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_fine-tune_tint": {
+      "graphX": 220,
+      "graphY": 555,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "d39afc8e-7e7e-440f-97c9-b8145f8007e7",
+        "09d7d81e-ba33-4b26-9f66-28aec57ea715",
+        "508eca53-4657-4af3-84d6-35f7c1185279"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_fine-tune_luminance": {
+      "graphX": 440,
+      "graphY": 555,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "f0c4acda-1598-4028-85ee-c54635af864b",
+        "297c4f81-18e2-4b47-8ad2-161967e0c564",
+        "a8574252-a778-4170-8acf-6b48100b93fe"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_reset": {
+      "graphX": 660,
+      "graphY": 555,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "b14b6fd0-d991-48f6-97e0-56951a56ab35"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_white-balance-menu": {
+      "graphX": 4,
+      "graphY": 776,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "57805190-2ebc-47c7-8dc8-bd32781600f8",
+        "bf9c52a7-5da7-465b-be05-b899a8b38807",
+        "e1272bc9-1a7d-4028-9680-5c73a40d7d30",
+        "60103c53-b736-4b6d-ab50-d49b972d33cd",
+        "e67475ae-37c1-4ec4-aaa7-0ea4a4af36ac",
+        "bbc00ff2-fdea-4a3b-a9eb-5374b734132e",
+        "45b73919-db31-461c-bd18-68fa2c40bfea",
+        "fce4596c-267a-48c8-a718-b66b70b747bd",
+        "662aca17-b5e0-4d69-a833-1fc89c3e92bc",
+        "8d4cc36f-366d-4f6e-b724-eac30e22c5a3",
+        "06e5d798-0eff-4d63-bf18-9db62ff67a89"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_color-temperature": {
+      "graphX": 284,
+      "graphY": 776,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "9cbe6158-7b36-486c-9446-27811ba2b813",
+        "97306b44-7dbc-4364-9fe4-af28e7851bd2",
+        "70ccfe2e-7654-459d-be9a-c0139dcdcfda"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_method": {
+      "graphX": 564,
+      "graphY": 776,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "54d843c5-e1a7-46d3-8b0c-964d37877d3d",
+        "d4ca1e23-4280-4a20-9c79-cca2f8dc8dac",
+        "0b4cf3ef-dcca-45b5-b479-16df4264c699"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_point": {
+      "graphX": 844,
+      "graphY": 776,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "4e8c4b7e-aee0-4d45-92e7-db5a3d704694",
+        "507a6e58-8c50-410c-8c7d-80a4231eb23c",
+        "86007f1f-f267-4901-a71d-b542b3942e29"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_red": {
+      "graphX": 1124,
+      "graphY": 776,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "c1c98456-f95a-4d84-bfca-384729f41810",
+        "c0190dc3-19ac-4ca4-9954-c1e0948e8e78",
+        "7cf5cb48-2d76-462c-a5a7-4bca78d49834"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_green": {
+      "graphX": 288,
+      "graphY": 976,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "d1bf0021-ea4a-4b1f-9cce-c7778746983c",
+        "00a94975-8867-40e6-b5ea-e53e2711c44d",
+        "2632ec81-745b-4fdb-9b5d-1d745c2cad56"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_blue": {
+      "graphX": 568,
+      "graphY": 976,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "67493263-24ee-4ede-a3e3-c338879c0520",
+        "83bcc49e-5f0e-45c7-9b38-0128f27869ce",
+        "d35641f2-b69e-43c2-a7fb-b2f71495f630"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_white-balance-reset": {
+      "graphX": 848,
+      "graphY": 976,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "4652b211-9269-4abc-bda9-cdd10278ebdd"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-color_white-balance-down": {
+      "graphX": 1132,
+      "graphY": 982,
+      "sectionId": "picture-advanced-color",
+      "buttonIds": [
+        "59a78dc2-2ca3-4a10-bfeb-b078d4471a79",
+        "359e5a1e-c30c-4f63-9542-4bdff1f82075",
+        "c3545f1d-a8c2-492b-9593-ec2507c05ae3",
+        "0fac6942-2982-40f2-9c42-1a4ee3afee68",
+        "feaf2b16-a244-4357-a48d-ae7d98e9df20",
+        "e5261108-1878-418a-ab30-9485177541a1"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-clarity_menu": {
+      "graphX": 280,
+      "graphY": 0,
+      "sectionId": "picture-advanced-clarity",
+      "buttonIds": [
+        "4985521d-8b04-4435-a5e2-642f1a2467c1",
+        "dcdb192f-ebdb-4e1e-bdcb-45c181cd4186",
+        "67c10bdb-f501-47aa-a18e-43e082aa6ff1",
+        "5e798488-010b-4c08-8f2f-ea3e6c7e35d3",
+        "8786ff30-f511-48ec-a0d8-96ce7dea614d",
+        "b7a30f98-842d-4815-a9d6-9e11cb5cb560",
+        "956c62ff-3bcb-4458-ba14-c3facd7bf2fe",
+        "782bd8e1-7fb6-4c9d-87d0-4d0676dd075d",
+        "dbce8104-69c6-4083-8010-c9950a46c11b",
+        "0a1beee7-2fef-4fd1-9772-94f7f55dbd10",
+        "2ed101f4-3069-4a7f-a5fe-cdb9452e7e36"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-clarity_sharpness": {
+      "graphX": 560,
+      "graphY": 0,
+      "sectionId": "picture-advanced-clarity",
+      "buttonIds": [
+        "43c064cf-2cfd-4a50-8c87-8ecfd77cd28a",
+        "361f21e9-73ae-4467-9ed5-9b210021cab5",
+        "0381dfe4-1a2b-4712-9c0b-9f99d82155b2"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-clarity_super-resolution": {
+      "graphX": 840,
+      "graphY": 0,
+      "sectionId": "picture-advanced-clarity",
+      "buttonIds": [
+        "2d8911c3-f10e-4fc7-bee8-9b00cd353f4d",
+        "185b889e-84a4-4ced-ae08-d54b44805045",
+        "a182c11a-8b6d-478f-b2b4-0aa10df26391"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-clarity_noise-reduction": {
+      "graphX": 1120,
+      "graphY": 0,
+      "sectionId": "picture-advanced-clarity",
+      "buttonIds": [
+        "5cab8a0f-9d49-4d22-b33b-837aa3d484b2",
+        "21f7b354-e8ef-4bdf-8bad-daca7ca7a811",
+        "eeb525c0-b783-42bd-a45d-16e6aef8b8ff",
+        "36fb0a07-5b9a-4cd2-8126-ddf51f6f92ba",
+        "e4705e30-f0a8-418d-ac32-a5360531a0bd",
+        "b6e0aa7c-43b8-4b91-8965-559bb540b8f7",
+        "70fb7c1c-3321-4568-9161-af889bc22bc2",
+        "51fd2bb5-5b4d-456b-b959-094a33755bda",
+        "d76d0198-82c1-4740-b9fb-95e7b05dd5d8",
+        "46eed9ce-a435-440a-9eb6-77d1a4303fc5"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-clarity_mpeg": {
+      "graphX": 282,
+      "graphY": 242,
+      "sectionId": "picture-advanced-clarity",
+      "buttonIds": [
+        "08081031-246c-4f68-a996-daf80b8ab01c",
+        "d2110851-e224-4b28-aba0-7ef432afa8f0",
+        "b6df5d27-c8b6-46f2-bca6-7c4b507ba755"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-clarity_smooth-gradation": {
+      "graphX": 562,
+      "graphY": 242,
+      "sectionId": "picture-advanced-clarity",
+      "buttonIds": [
+        "4540fd48-ad33-411f-b3f2-2d1d32a595a2",
+        "f666e7ff-b7bd-41de-bf43-4e6f38679fe2",
+        "c623d893-1aef-41a0-9355-6de720599872"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-clarity_real-cinema": {
+      "graphX": 842,
+      "graphY": 242,
+      "sectionId": "picture-advanced-clarity",
+      "buttonIds": [
+        "d05ad2a4-b276-4538-92a8-f3a3999853b5",
+        "1310538f-2b35-4479-8f8f-d66f99ce8dbf",
+        "41aa871b-ede7-46be-9e80-5e9828e4222a",
+        "a7b855a7-4c62-4a24-9137-d0564d2834c5",
+        "ce9b5384-36d9-4d58-9067-c1fee9768e80",
+        "30a20074-20a2-4079-977e-11c2f6087b3a",
+        "44fdcea8-94c2-43e5-96b6-5ec489b54c0c",
+        "cad9c283-08e7-418d-a8d0-69c286f31d08",
+        "8b11e737-1d0b-4853-8bbd-3e040ef2425c",
+        "3e4b0d20-c1d1-479a-853e-e9cb8c708ff4"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "picture-advanced-clarity_trumotion": {
+      "graphX": 1122,
+      "graphY": 242,
+      "sectionId": "picture-advanced-clarity",
+      "buttonIds": [
+        "e96979fb-9fee-4cc9-b3cb-9fe256146527",
+        "ec31e50d-45fa-4e46-bed7-1d19f2a41c03",
+        "c4b7e9c1-67a1-4d75-af89-1f8253d5e5be",
+        "480a1057-e108-4e4d-a45d-2e3343e4fceb",
+        "d7926e62-b1dd-4080-bb00-a2d2d02de90c",
+        "18d48c03-9813-4b6b-a2fd-5858212abd7d",
+        "d3339a26-e824-4a90-bcac-e0c6f14e3887",
+        "db2b9198-0ac9-4270-ae76-d67cdfd9ab87",
+        "2a41ed09-cdbd-4416-918e-8b2610e7fccd",
+        "1a6477f4-7ab6-4af8-9c37-35e42ea564fc"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     }
   },
   "config": {
