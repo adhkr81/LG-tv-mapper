@@ -97,6 +97,16 @@ export default function SidebarEditor({ mode = 'viewer' }) {
       .sort((a, b) => a.id.localeCompare(b.id));
   }, [screens, screen?.id]);
 
+  const importSourceGroups = useMemo(() => {
+    if (!isRealSectionView(activeSectionId)) {
+      return { inSection: [], other: importSourceOptions };
+    }
+    return {
+      inSection: importSourceOptions.filter((s) => s.sectionId === activeSectionId),
+      other: importSourceOptions.filter((s) => s.sectionId !== activeSectionId),
+    };
+  }, [importSourceOptions, activeSectionId]);
+
   const [editingName, setEditingName] = useState(false);
   const [nameValue, setNameValue] = useState('');
   const [popoverUIOpen, setPopoverUIOpen] = useState({});
@@ -462,11 +472,24 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                 disabled={isImportingButtons}
               >
                 <option value="">— select screen —</option>
-                {importSourceOptions.map((s) => (
-                  <option key={s.id} value={s.id}>
-                    {s.id} ({s.buttons.length})
-                  </option>
-                ))}
+                {importSourceGroups.inSection.length > 0 && (
+                  <optgroup label="This section">
+                    {importSourceGroups.inSection.map((s) => (
+                      <option key={s.id} value={s.id}>
+                        {s.id} ({s.buttons.length})
+                      </option>
+                    ))}
+                  </optgroup>
+                )}
+                {importSourceGroups.other.length > 0 && (
+                  <optgroup label="Other screens">
+                    {importSourceGroups.other.map((s) => (
+                      <option key={s.id} value={s.id}>
+                        {s.id} ({s.buttons.length})
+                      </option>
+                    ))}
+                  </optgroup>
+                )}
               </select>
               <button
                 type="button"

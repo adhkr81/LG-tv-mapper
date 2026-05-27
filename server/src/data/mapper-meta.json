@@ -5,7 +5,7 @@
       "name": "Settings",
       "rootScreenId": "quick-settings-main",
       "bandX": -507,
-      "bandY": 0,
+      "bandY": 8,
       "collapsed": false
     },
     {
@@ -43,13 +43,32 @@
     {
       "id": "settings-sound",
       "name": "settings-sound",
-      "rootScreenId": null
+      "rootScreenId": null,
+      "collapsed": true,
+      "bandX": 37,
+      "bandY": 562
+    },
+    {
+      "id": "settings-general",
+      "name": "settings-general",
+      "rootScreenId": "settings-general_down",
+      "bandX": 2729,
+      "bandY": 584,
+      "collapsed": false
+    },
+    {
+      "id": "general-ai-service",
+      "name": "general-ai-service",
+      "rootScreenId": "settings-general_ai-service-menu",
+      "bandX": 515,
+      "bandY": 846,
+      "collapsed": true
     }
   ],
   "screens": {
     "quick-settings-main": {
-      "graphX": 628,
-      "graphY": -247,
+      "graphX": 456,
+      "graphY": -195,
       "sectionId": "Settings",
       "buttonIds": [
         "88306f45-9a3b-4c6b-9a17-6226761d6fed",
@@ -70,7 +89,7 @@
     },
     "settings-general": {
       "graphX": 944,
-      "graphY": 47,
+      "graphY": 91,
       "sectionId": "Settings",
       "buttonIds": [
         "ddf099db-8210-4872-b012-95230ed25dc0",
@@ -83,14 +102,15 @@
         "75f8c68b-d592-4c06-8f7e-2d5fdfaf6b2c",
         "b5d434a2-2bf9-4d21-97b2-28ee1c96e31c",
         "ed3d0ba8-f4f7-43b9-ac75-68e4b7d2f717",
-        "31eff290-2f93-4781-9e0d-a1d33e9f9eaf"
+        "31eff290-2f93-4781-9e0d-a1d33e9f9eaf",
+        "2cfc096f-d49d-429c-ad61-fdd5af3c7f84"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
     "settings-picture": {
       "graphX": -97,
-      "graphY": 59,
+      "graphY": 103,
       "sectionId": "Settings",
       "buttonIds": [
         "931c1ab1-1aaa-4ff8-b55b-47860e0a039d",
@@ -105,7 +125,7 @@
     },
     "settings-sound": {
       "graphX": 457,
-      "graphY": 64,
+      "graphY": 108,
       "sectionId": "Settings",
       "buttonIds": [
         "93f99a79-bb5a-4443-b1ab-ab20d9a45956",
@@ -120,7 +140,7 @@
     },
     "settings-support": {
       "graphX": 1455,
-      "graphY": 53,
+      "graphY": 97,
       "sectionId": "Settings",
       "buttonIds": [
         "bc172157-ee1d-40f9-b3a3-25d45a84c714",
@@ -878,24 +898,9 @@
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
-    "settings-sound_menu": {
-      "graphX": 280,
-      "graphY": 0,
-      "sectionId": "settings-sound",
-      "buttonIds": [
-        "2b2696eb-2948-4ec4-b6b2-7d9c2b7441d7",
-        "ef83d7c0-be89-476b-86b0-6c4934091211",
-        "46a34254-a745-44ab-86c7-0adbed84cca5",
-        "2d3f99d0-388d-492b-9eea-615935a3446f",
-        "2cba619f-d994-4b5c-af94-59c451b005c9",
-        "96b47e56-d395-4ac9-a689-5668b7e542ad"
-      ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
-    },
     "settings-sound_select-mode": {
-      "graphX": 500,
-      "graphY": 0,
+      "graphX": 288,
+      "graphY": 52,
       "sectionId": "settings-sound",
       "buttonIds": [
         "81fc0260-02f4-4f08-89b0-fa38154e47b8"
@@ -904,8 +909,8 @@
       "sourceHeight": 2160
     },
     "settings-sound_sound-out": {
-      "graphX": 720,
-      "graphY": 0,
+      "graphX": 568,
+      "graphY": 52,
       "sectionId": "settings-sound",
       "buttonIds": [
         "430496e1-4ada-4429-920e-cfeceb0f7ea0",
@@ -920,8 +925,8 @@
       "sourceHeight": 2160
     },
     "settings-sound_sound-out-wired": {
-      "graphX": 940,
-      "graphY": 0,
+      "graphX": 864,
+      "graphY": 50,
       "sectionId": "settings-sound",
       "buttonIds": [
         "16088cf6-4d99-4891-8d52-06a90c52b387",
@@ -1181,6 +1186,546 @@
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
+    },
+    "settings-general_down": {
+      "graphX": 280,
+      "graphY": 0,
+      "sectionId": "settings-general",
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_always-ready": {
+      "graphX": 500,
+      "graphY": 0,
+      "sectionId": "settings-general",
+      "buttonIds": [
+        "7815f925-6519-4158-8d61-586f2925beb4",
+        "41b18316-c611-4b54-945d-0ba5a11c6ba8",
+        "1ff3f1bc-9425-4319-85eb-de31ea299c65",
+        "e5999cbf-47be-4395-82a0-647b329a3345",
+        "9f6e542a-73ae-44ed-95f2-a000da096034"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_always-ready-on": {
+      "graphX": 720,
+      "graphY": 0,
+      "sectionId": "settings-general",
+      "buttonIds": [
+        "ef41e428-2ced-4652-b85a-e7b8cdd339c6",
+        "749a53fe-128d-4fe4-8e18-bc11d1653aa2",
+        "61611531-de43-4182-80ca-e49f31e7a7f9",
+        "76fdce7a-f678-4724-a29b-148ff658accc",
+        "b124ffb9-6172-46a9-9ac7-357e1eaa8a7a",
+        "ac819d3c-eaba-47a2-81a3-ad90f5778a52"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_always-ready-on_use": {
+      "graphX": 940,
+      "graphY": 0,
+      "sectionId": "settings-general",
+      "buttonIds": [
+        "2ddd29c2-b86e-4aef-9382-97c6597aacc6",
+        "bb347435-7c9d-4943-80f2-778e708642a6",
+        "5debe53a-1d4d-4432-9e16-0ee772e2fa2a",
+        "bb4cf102-293d-4f45-8e98-e5811597ecf4",
+        "10be4757-b857-4a88-8634-1e244a3b0ce9",
+        "74647d4a-a35b-4c9c-a65d-a1132fb9d8e5"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_ai-service-menu": {
+      "graphX": 1,
+      "graphY": 0,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "2dd6ecc1-604e-429f-a99d-c172b8c9a818",
+        "fc09a7fe-f171-4415-b00a-3df1e2ecdb69",
+        "807807f3-ac83-49d1-98fa-1c924e48ce93",
+        "cdd162ab-ae80-45ec-95e7-49907136c219",
+        "e554e02d-66a1-4c07-9566-de2175c063c0",
+        "190675b1-fb4a-4ae1-979a-8d2e20b6d802",
+        "3f5812fd-90e3-4301-9074-fb4a942b67ea"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_ai-service_1": {
+      "graphX": 219,
+      "graphY": 0,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "d448a8e4-ae7d-42dd-baac-943323b0726a",
+        "56093eb2-5c2f-4fae-91ad-5e1d7d2d4af1",
+        "5df77f53-bfe3-4197-b86d-e51fdc26e768",
+        "a1606bf6-8a14-43e3-b5f5-bc6bc3164046",
+        "eb022615-ebba-4316-8c64-4a358b1bc5ef",
+        "87fbabfc-0f15-4809-b22a-308f6956b450",
+        "b175d386-9a30-417c-9ab5-de0302de247f",
+        "f241aff0-9aa2-4723-b900-c9ed748c4f63",
+        "0d474086-71e1-46ca-a9a6-9bb96a0dba1c",
+        "a58b6ea6-f82d-470a-8293-c249c8752ac0",
+        "98b2d985-dbc2-4c37-a210-1e9cee8615d1",
+        "0f28cf39-1d49-43fd-9f61-204aa6f7de25"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_ai-service_2": {
+      "graphX": 441,
+      "graphY": 0,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "9e8f5316-23b3-4cc8-9d64-77534b2a747d",
+        "68969906-0b8e-4a8a-b8ec-532be5761bc3",
+        "873e8ffc-b7e0-45f7-8736-9e4d4777e188",
+        "404e3d29-187f-4e81-b7df-2e28b14146e1",
+        "55655eeb-2f57-41a1-b5c9-bd8d63fd4038",
+        "396e4a70-b04a-41fb-99f8-1768c35b9686",
+        "3ef0060a-123d-4e8f-be86-777f5cb480cf",
+        "c8796af0-8dc7-41cf-8aaf-7671148cd3d3",
+        "4874aeb4-0e25-4bea-8346-656b943da55b",
+        "fd90079e-a70a-4d4b-971e-6e49da452591",
+        "23a48aab-8a06-435c-8398-666a8ce20cd3",
+        "9c96df01-70db-4c83-b607-1a12def32d42"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_ai-service_3": {
+      "graphX": 661,
+      "graphY": 0,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "f23d7cab-d8d4-4a12-a257-de621482a6aa",
+        "653f7cce-6e28-41de-8e5e-256d04b215e1",
+        "dc806cbd-a067-49aa-afa6-43be6876f9dc",
+        "1365d15f-a901-43ee-a5a2-ca1eace5e4d3",
+        "0798ea8e-3087-4ae0-83db-689747679f26",
+        "9ec0da24-b238-4e57-b1de-c628acc9fed1",
+        "309b30d4-8450-40db-9109-538976485f1c",
+        "8ceec162-3013-43b6-a67d-547c295fbb2b",
+        "c478aa8d-3dd6-48cc-a477-64d57f7e3cc7",
+        "c11d6d3c-3d2c-42e3-838a-fe9b5b40db12",
+        "7e010350-d0cc-4078-93a8-b717601f205b",
+        "1acd22b3-181f-4bd4-9815-460d1685bc88"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_ai-service_4": {
+      "graphX": 1,
+      "graphY": 185,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "a5db1f41-3c15-4342-a456-73ebb7bdaadb",
+        "13fea816-fcb0-487a-81a2-ae6002a4fcda",
+        "f885e2e7-629e-4f4e-8876-237f2489c38d",
+        "722725b5-0051-4664-81a1-e059dc1f9fc8",
+        "7ba9bf95-a46d-4679-863c-4c2fb9c70bd0",
+        "ccc08df3-a821-4e13-a085-278bea33bde1",
+        "4dce8ea6-8966-4cf9-9a2e-f5028bc70d38",
+        "5c5fdbe8-0aa2-427b-ab89-53da7855a6c2",
+        "e7cfe82f-308e-406b-80e5-47276d04b3af",
+        "36b892dd-1895-4d7b-93c9-76505a4d3381",
+        "ccf50f1c-f550-4dae-bb58-f6edfcbd63ec",
+        "7db2a9a7-d840-4ba2-a350-6989577c5797"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_ai-service_5": {
+      "graphX": 221,
+      "graphY": 185,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "48bac3c0-7b61-4a42-b485-fba997c69db9",
+        "78e367d1-15a8-409e-a058-5d0db5a20471",
+        "a9ef16f4-1c1e-4642-a083-501b65c29b05",
+        "7d5dc12a-a19b-4f3a-9cf8-b64590a14002",
+        "0b00ede1-ec90-4e1e-8aa4-32a7b62c7f63",
+        "76e483e0-c5b9-4503-82d7-506a4e06edfc",
+        "b1dc2231-d19e-4e22-8ed4-e45874687d95",
+        "1f4ef501-a40f-47f1-af1a-5bd92d88f237",
+        "b7f28e41-0a9a-480c-854f-8d1f09a24043",
+        "7a20f4b3-c20b-4e15-85b5-3824112bd7aa",
+        "984c2f2b-b1d1-408c-aa96-fe6019ce1cf2",
+        "1ed93209-861f-4635-904f-c0947f88cf2d"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_ai-service_6": {
+      "graphX": 441,
+      "graphY": 185,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "957c8153-0ed4-4bbf-9322-9b079464d747",
+        "88a1bd37-6f71-40e5-8202-3a6629ec8351",
+        "a338df3d-602e-42f0-949c-5cfabfd7d162",
+        "f73ac44b-f1db-4d56-8d86-f8d82e0244e9",
+        "ddf30818-0fcf-4f6e-96b4-be697e4a5adc",
+        "a31716b6-c27c-4682-86ea-5764b4396e4b",
+        "c29db5cf-96fb-45fe-8ab1-b98157fca83b",
+        "8343e32d-d95a-4842-8a29-9dbeff3348ba",
+        "24524a0a-a61e-4290-8173-c69206308e08",
+        "5aa5f5b3-0f75-4dec-8b4b-7de1c240a131",
+        "b4c9232c-3b85-4425-88f8-73871979dce2",
+        "ec15b5e2-9a38-47e3-8660-dd6ab59c82be"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_ai-service_7": {
+      "graphX": 661,
+      "graphY": 185,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "233eda18-5c09-45df-81ff-c8d6e5b00bee",
+        "437f09ba-fa89-4242-bf7f-8d537a058d88",
+        "4b53e2e3-7f57-43e9-8068-ac9cfa5f73bc",
+        "7d4840df-17c3-41a7-966a-005b2ab64b26",
+        "5ff1bedb-dc7b-4dd5-9da5-159ff6f90334",
+        "2f96a591-7e37-42cc-9c69-b2ef2ddf0825",
+        "912c2753-d1ad-48d5-bcf9-e31e2c6909d4",
+        "f57d9c81-1fed-4e65-9068-24b0107bd92a",
+        "bf2bf438-8906-4897-a467-a639d97bf866",
+        "97bdebd7-e0e4-439a-96d1-1adddf6a3039",
+        "fea6494e-d204-4566-bb97-ddafd2634314",
+        "fbb4ebeb-c61d-4235-b6f8-cba0f61dd2ff"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_ai-service_8": {
+      "graphX": 7,
+      "graphY": 378,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "6df63cb1-5e45-444c-8d75-f437d5ce09d8",
+        "2fbdf79b-0ff7-4385-a82a-c416e4ba082f",
+        "94b5f885-4211-408b-ac2b-0865c7b8a018",
+        "f6624fc0-7632-4527-88f9-e65ab37ccc1d",
+        "fea8a338-8dd6-4e79-b6ee-f845d84db46b",
+        "c1f84791-02bf-48b1-8dba-1657a331e35a",
+        "dfc7190f-012c-4575-a195-2a1f435faec7",
+        "c0560c30-c5fb-4188-a3e2-6c58966499d3",
+        "bbf09836-0e10-45ca-822d-d693a14cdf6b",
+        "0ce9b1c7-e6a3-4261-99f3-f2bcd50994be",
+        "92055550-2988-4854-aaca-19976b49487b",
+        "eeccf109-cd63-41a4-8959-6c6b167ed8bc"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_ai-service_9": {
+      "graphX": 221,
+      "graphY": 372,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "3308a3af-0ed7-42b0-924f-33c3d92d088f",
+        "6ea40dc7-f2ce-4a05-9024-a0fe717c41fa",
+        "53a24b4b-f9ac-4030-8275-0222c524c00c",
+        "f2cf7a5c-39dd-4574-a332-1c01c448f6e1",
+        "c38396da-9901-49c6-989a-3dace817171f",
+        "8062bee5-33f7-452a-9f72-abb13a2e42c7",
+        "a8949a95-1b08-409a-bde8-4a2785d02e0b",
+        "11f6ea8d-9155-4627-928c-9386b2049290",
+        "734ffeb9-5fb6-465a-b793-105b733a65dd",
+        "2065660b-a3a2-4eb7-9735-ada9ecb0724b",
+        "a490cd6a-5117-46f0-b485-c4004685b095",
+        "041d6d7b-e04e-4593-bf94-5f47c6aa5eec"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_ai-service_10": {
+      "graphX": 459,
+      "graphY": 370,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "2116032b-95aa-4f1b-99c0-3368c34985ed",
+        "722e02fd-2440-46ae-b379-42e0a54cef57",
+        "56c15381-b7f3-40b1-bef6-63f8abacd39f",
+        "f4ee2fb0-179f-4e8e-ba93-221b41af24f0",
+        "5eda15b0-cd5e-4689-afac-c85b9192141a",
+        "32b5ac62-3da6-4bf4-80b7-59a3c003e1b2",
+        "0c1a845a-a668-4c60-b402-d8eab63e82a9",
+        "ae0bc9ed-f116-45be-a99b-e51cd1c157ca",
+        "12f03619-4c7d-410a-9eba-c947e7e76564",
+        "cd9ef80a-e00b-4150-acd5-417e09177a87",
+        "ddc0c54a-9ebc-40a7-bd66-0b191f2dade2",
+        "d05c4f7a-d2bc-4594-9883-9c9576dc4855"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_ai-service_11": {
+      "graphX": 694,
+      "graphY": 375,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "45e50dbd-2964-4f92-9cad-11c6f7ddf9db",
+        "7c0f9f9f-def5-44a0-b1d8-be8c6c500f77",
+        "8528936c-350e-4a4d-829d-0115322f75fe",
+        "8e0f78dc-7b34-4bad-8abe-6dbade07e4c1",
+        "0b0e0455-eed0-4425-864b-1ed571fbc06a",
+        "b1b7d404-6258-45a5-9175-4071f8b0904e"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_ai-service_12": {
+      "graphX": 0,
+      "graphY": 562,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "81ece46c-e569-41f6-9221-b1eb265a1cb1",
+        "4e7e8963-41e9-4b5e-9917-2071eab25ddd",
+        "9830620e-54ff-43b9-8ce7-bcd7d145822f",
+        "4c456c8e-fda5-4a51-930d-8ce535d3c498",
+        "a9b59e37-442f-4f55-a523-34ddbe3a3212"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_ai-service_13": {
+      "graphX": 239,
+      "graphY": 561,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "e1825be0-8613-4aa9-889b-815103165a9f",
+        "7dcaf874-5403-4b1e-8a4b-6f537740716c",
+        "d3ec4b6b-ffcd-4d37-a5e6-a37a1740f5f4",
+        "6b4ac733-9e10-4a8b-a04e-7589b83032bc",
+        "2f9f0d1e-e6ec-44b8-9858-a3e4d099eaed"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-settings-ai-service_config_1": {
+      "graphX": -5,
+      "graphY": 893,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "39b97d04-c2db-42c1-8925-b01ff8b90f73",
+        "bb111e77-a88e-40a1-97ac-9c4daaa30605",
+        "15190972-b398-4b86-b77f-7947e4ab4d4d"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-settings-ai-service_config_1-off": {
+      "graphX": 235,
+      "graphY": 890,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "2fd63f29-d811-4d86-b096-ade38bf77bb4",
+        "fb71edd7-75f2-46f7-997b-900037d7955b"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-settings-ai-service_config_2": {
+      "graphX": 488,
+      "graphY": 891,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "8bedecb4-6097-4227-9a0f-f08ba6ea34a6",
+        "02fb4fd5-d406-44c6-a601-dafa01e1b20f",
+        "7f28d3bc-32a7-4619-bcd2-2bffaefc377b"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-settings-ai-service_config_2-off": {
+      "graphX": 733,
+      "graphY": 896,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "f597e381-4529-4165-8aeb-6d406bf97020",
+        "134a3f3a-f86e-40ec-8a17-a9128e6861cd",
+        "cc7c10e9-006d-4953-ba98-6f858734f879"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-ai-service_recommendation_1": {
+      "graphX": -2,
+      "graphY": 1156,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "b8f9f3d1-4cf7-4ca5-b2d5-2ee8c3720f82",
+        "8c53c890-5828-4fc0-8460-de0aee3713bf",
+        "a616792f-bb93-41b0-b46e-fcf725c74ac4",
+        "1e66f10f-8546-4fa7-bf83-dc62bddbbcc4",
+        "5d0b150a-cbd6-4e27-9890-8a4c23edde55",
+        "f481d970-82aa-450b-9124-c1d1c3d88881"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-ai-service_recommendation_1-off": {
+      "graphX": 279,
+      "graphY": 1162,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "b1405b74-75e9-4636-bc22-70f77cf11960",
+        "900aae15-dbf7-4425-a475-bd6688ca587a",
+        "f50bd8cf-5f68-44f0-8a11-a95ccbaebb81",
+        "8b4d8f55-d74d-419e-b335-3d5b7237fc44",
+        "c9265cbd-9a9c-4cff-9dc1-1519779e2bd0",
+        "52fd816d-c1b6-43f6-9810-086185e21f56"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-ai-service_recommendation_2": {
+      "graphX": 548,
+      "graphY": 1164,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "fd2b2752-0316-4684-a9cd-c7eda6849d93",
+        "ba59da4e-9b1a-4443-bdd5-58800b0a8f59",
+        "21098653-22c7-4eb5-b8a0-1aa1a1737a8f",
+        "c3904d69-f70e-4356-902f-5c405dbb7004",
+        "04657703-4d36-443d-9b08-742ffae2d765",
+        "459389cc-e905-4ba9-9b9c-cf51c2c411ce"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-ai-service_recommendation_2-on": {
+      "graphX": 829,
+      "graphY": 1158,
+      "sectionId": "general-ai-service",
+      "buttonIds": [
+        "c8a974d1-8134-4de0-9243-1dd503a0182a",
+        "3688b608-3259-41cc-bee3-9f67bbd2ed53",
+        "4c211070-64d5-4443-8006-0f1294e27734",
+        "ce8356a5-0583-4737-8644-32f54b90232d",
+        "72cb2bd3-0ea9-4d32-b69e-791f6cb5c44e",
+        "c2a70797-ee94-442d-b5f1-00355fe09ac6"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_usage-care": {
+      "graphX": 210,
+      "graphY": 237,
+      "sectionId": "settings-general",
+      "buttonIds": [
+        "0006746c-9268-4f31-8521-f67122fb9064"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-general_usage-care-down": {
+      "graphX": 490,
+      "graphY": 237,
+      "sectionId": "settings-general",
+      "buttonIds": []
+    },
+    "settings-general_family-care": {
+      "graphX": 770,
+      "graphY": 237,
+      "sectionId": "settings-general",
+      "buttonIds": []
+    },
+    "settings-general_family-care-down": {
+      "graphX": 1050,
+      "graphY": 237,
+      "sectionId": "settings-general",
+      "buttonIds": []
+    },
+    "settings-general_channels-menu": {
+      "graphX": 323,
+      "graphY": 468,
+      "sectionId": "settings-general",
+      "buttonIds": []
+    },
+    "settings-general_channels-tunning-1": {
+      "graphX": 603,
+      "graphY": 468,
+      "sectionId": "settings-general",
+      "buttonIds": []
+    },
+    "settings-general_channels-tunning-2": {
+      "graphX": 883,
+      "graphY": 468,
+      "sectionId": "settings-general",
+      "buttonIds": []
+    },
+    "settings-general_network-wired": {
+      "graphX": 460,
+      "graphY": 688,
+      "sectionId": "settings-general",
+      "buttonIds": []
+    },
+    "settings-general_network-wifi": {
+      "graphX": 740,
+      "graphY": 688,
+      "sectionId": "settings-general",
+      "buttonIds": []
+    },
+    "settings-general_external-devices-menu": {
+      "graphX": 30,
+      "graphY": 995,
+      "sectionId": "settings-general",
+      "buttonIds": []
+    },
+    "settings-general_external-devices_connect-controller": {
+      "graphX": 255,
+      "graphY": 995,
+      "sectionId": "settings-general",
+      "buttonIds": []
+    },
+    "settings-general_external-devices_hdmi": {
+      "graphX": 483,
+      "graphY": 995,
+      "sectionId": "settings-general",
+      "buttonIds": []
+    },
+    "settings-general_external-devices_universal": {
+      "graphX": 707,
+      "graphY": 998,
+      "sectionId": "settings-general",
+      "buttonIds": []
+    },
+    "settings-general_external-devices_tv": {
+      "graphX": 929,
+      "graphY": 998,
+      "sectionId": "settings-general",
+      "buttonIds": []
+    },
+    "settings-general_external-devices_delete": {
+      "graphX": 1162,
+      "graphY": 1004,
+      "sectionId": "settings-general",
+      "buttonIds": []
+    },
+    "settings-general_energy-saving-menu": {
+      "graphX": 352,
+      "graphY": 1260,
+      "sectionId": "settings-general",
+      "buttonIds": []
+    },
+    "settings-general_energy-saving_saving-step": {
+      "graphX": 632,
+      "graphY": 1260,
+      "sectionId": "settings-general",
+      "buttonIds": []
+    },
+    "settings-general_energy-saving_screen-off": {
+      "graphX": 912,
+      "graphY": 1260,
+      "sectionId": "settings-general",
+      "buttonIds": []
     }
   },
   "config": {
