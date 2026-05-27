@@ -1,3 +1,4 @@
+/* ── Toolbar variant ─────────────────────────── */
 .section-bar {
   display: flex;
   flex-direction: column;
@@ -7,6 +8,7 @@
   border-bottom: 1px solid var(--border);
 }
 
+/* ── Sidebar variant ─────────────────────────── */
 .section-bar--sidebar {
   padding: 0;
   background: none;
@@ -14,9 +16,7 @@
   gap: var(--space-sm);
 }
 
-.section-bar--sidebar .sidebar__section-title {
-  margin-bottom: 0;
-}
+.section-bar--sidebar .sidebar__section-title { margin-bottom: 0; }
 
 .section-bar--sidebar .section-bar__row {
   flex-direction: column;
@@ -30,6 +30,7 @@
   width: 100%;
 }
 
+/* ── Row ─────────────────────────────────────── */
 .section-bar__row {
   display: flex;
   align-items: center;
@@ -38,11 +39,11 @@
 }
 
 .section-bar__label {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   white-space: nowrap;
 }
 
@@ -52,11 +53,12 @@
   max-width: 280px;
 }
 
-/* Collapsible panels (Add section, Canvas groups) */
+/* ── Collapsible panels ──────────────────────── */
 .section-bar__panel {
   border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   background: var(--bg-elevated);
+  overflow: hidden;
 }
 
 .section-bar__panel-summary {
@@ -70,11 +72,11 @@
   cursor: pointer;
   list-style: none;
   user-select: none;
+  transition: color var(--duration) var(--ease),
+              background var(--duration) var(--ease);
 }
 
-.section-bar__panel-summary::-webkit-details-marker {
-  display: none;
-}
+.section-bar__panel-summary::-webkit-details-marker { display: none; }
 
 .section-bar__panel-summary::before {
   content: '';
@@ -83,7 +85,7 @@
   border-top: 4px solid transparent;
   border-bottom: 4px solid transparent;
   border-left: 5px solid var(--text-muted);
-  transition: transform 0.15s ease;
+  transition: transform 0.15s var(--ease);
   flex-shrink: 0;
 }
 
@@ -93,6 +95,7 @@
 
 .section-bar__panel-summary:hover {
   color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .section-bar__panel-badge {
@@ -110,9 +113,7 @@
   border-top: 1px solid var(--border);
 }
 
-.section-bar__panel-body > .input {
-  width: 100%;
-}
+.section-bar__panel-body > .input { width: 100%; }
 
 .section-bar__actions {
   display: flex;
@@ -129,14 +130,14 @@
   justify-content: center;
 }
 
-/* Active section card */
+/* ── Active section card ─────────────────────── */
 .section-bar__card {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
   padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
   background: var(--bg-elevated);
 }
 
@@ -155,7 +156,7 @@
 }
 
 .section-bar__current-name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-primary);
   overflow: hidden;
@@ -180,9 +181,7 @@
   gap: var(--space-sm);
 }
 
-.section-bar__edit-row .input {
-  width: 100%;
-}
+.section-bar__edit-row .input { width: 100%; }
 
 .section-bar__edit-actions {
   display: flex;
@@ -219,6 +218,7 @@
   min-width: 120px;
 }
 
+/* ── Meta + stats ────────────────────────────── */
 .section-bar__meta {
   display: flex;
   align-items: center;
@@ -227,13 +227,8 @@
   font-size: 12px;
 }
 
-.section-bar__stat {
-  color: var(--text-secondary);
-}
-
-.section-bar__warn {
-  color: var(--amber);
-}
+.section-bar__stat  { color: var(--text-secondary); }
+.section-bar__warn  { color: var(--amber); }
 
 .section-bar__hint {
   color: var(--text-muted);
@@ -245,6 +240,7 @@
   line-height: 1.4;
 }
 
+/* ── Collapse list ───────────────────────────── */
 .section-bar__collapse-actions {
   display: flex;
   gap: var(--space-sm);
@@ -282,20 +278,23 @@
   border: none;
   border-radius: var(--radius-sm);
   background: none;
-  color: var(--text-primary);
+  color: var(--text-secondary);
   font-family: var(--font);
   font-size: 12px;
   text-align: left;
   cursor: pointer;
+  transition: background var(--duration) var(--ease),
+              color var(--duration) var(--ease);
 }
 
 .section-bar__collapse-open:hover {
-  background: var(--bg-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
 }
 
 .section-bar__collapse-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -306,15 +305,10 @@
   white-space: nowrap;
 }
 
-.section-bar__collapse-count {
-  color: var(--text-muted);
-  font-weight: 400;
-}
+.section-bar__collapse-count { color: var(--text-muted); font-weight: 400; }
+.section-bar__collapse-toggle { flex-shrink: 0; }
 
-.section-bar__collapse-toggle {
-  flex-shrink: 0;
-}
-
+/* ── Section screen list (sidebar) ──────────── */
 .sidebar__section-screens {
   display: flex;
   flex-direction: column;
@@ -331,16 +325,18 @@
   border-radius: var(--radius-sm);
   background: none;
   border: none;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   font-family: var(--font);
   font-size: 12px;
   text-align: left;
   cursor: pointer;
   width: 100%;
+  transition: background var(--duration) var(--ease),
+              color var(--duration) var(--ease);
 }
 
 .sidebar__section-screen:hover {
-  background: var(--bg-elevated);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--text-primary);
 }
 
@@ -351,11 +347,11 @@
 
 .sidebar__section-screen--root::before {
   content: '★';
-  font-size: 10px;
+  font-size: 9px;
   color: var(--accent);
 }
 
 .sidebar__section-screen--external {
-  opacity: 0.7;
+  opacity: 0.65;
   font-style: italic;
 }

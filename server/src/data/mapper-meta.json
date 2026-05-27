@@ -2157,7 +2157,9 @@
       "graphX": 0,
       "graphY": 555,
       "sectionId": "general-system",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "general-system_safety_application-locks": {
       "graphX": 913,

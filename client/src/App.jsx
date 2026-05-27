@@ -46,8 +46,18 @@ export default function App() {
 
   return (
     <div className="app">
-      {/* Panel toggle tabs */}
+      {/* Top bar */}
       <div className="app__tabs">
+        {/* Brand */}
+        <div className="app__brand">
+          <div className="app__brand-icon">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <path d="M8 21h8M12 17v4"/>
+            </svg>
+          </div>
+          <span className="app__brand-name">UI Mapper</span>
+        </div>
         <div className="app__tabs-nav">
           <button
             className={`app__tab ${activePanel === 'graph' ? 'app__tab--active' : ''}`}

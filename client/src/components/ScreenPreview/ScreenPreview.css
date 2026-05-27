@@ -16,11 +16,14 @@
   display: flex;
   align-items: center;
   gap: var(--space-md);
-  padding: var(--space-md) var(--space-lg);
+  padding: 0 var(--space-lg);
+  height: 44px;
+  min-height: 44px;
   border-bottom: 1px solid var(--border);
   background: var(--bg-glass);
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
   flex-wrap: wrap;
+  flex-shrink: 0;
 }
 
 .screen-preview__nav {
@@ -30,11 +33,15 @@
 }
 
 .screen-preview__title {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   margin: 0;
   flex: 1;
   min-width: 0;
+  letter-spacing: -0.1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .screen-preview__hint {
@@ -51,13 +58,11 @@
   justify-content: center;
 }
 
-/* Preview hotspots reuse .hotspot-region from ScreenViewer; override editor-only styles */
-.preview-hotspot {
-  cursor: pointer;
-}
+/* Preview hotspots: reuse .hotspot-region; override editor-only styles */
+.preview-hotspot { cursor: pointer; }
 
 .preview-hotspot.hotspot-region--unlinked {
   cursor: not-allowed;
-  opacity: 0.55;
+  opacity: 0.45;
   pointer-events: none;
 }

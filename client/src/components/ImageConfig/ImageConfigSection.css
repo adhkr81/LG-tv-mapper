@@ -1,6 +1,6 @@
 .image-config__hint {
   font-size: 11px;
-  line-height: 1.45;
+  line-height: 1.5;
   color: var(--text-muted);
   margin: 0 0 var(--space-md);
 }
@@ -10,16 +10,14 @@
   font-weight: 600;
 }
 
-.image-config__group {
-  margin-bottom: var(--space-md);
-}
+.image-config__group { margin-bottom: var(--space-md); }
 
 .image-config__group-label {
   display: block;
   font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.55px;
   color: var(--text-muted);
   margin-bottom: var(--space-xs);
 }
@@ -41,6 +39,4 @@
   margin: 0 0 var(--space-sm);
 }
 
-.image-config__save {
-  width: 100%;
-}
+.image-config__save { width: 100%; justify-content: center; }

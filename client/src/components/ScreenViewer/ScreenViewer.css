@@ -1,3 +1,4 @@
+/* ── Shell ───────────────────────────────────── */
 .screen-viewer {
   flex: 1;
   width: 100%;
@@ -17,9 +18,7 @@
   overflow: hidden;
 }
 
-.screen-viewer__body--split {
-  flex-direction: row;
-}
+.screen-viewer__body--split { flex-direction: row; }
 
 .screen-viewer__body--split > .mini-graph {
   flex: 1;
@@ -27,11 +26,24 @@
   min-height: 0;
 }
 
-/* Graph ⅓ · canvas area ⅔ (single view, or two compare panes at ⅓ each) */
 .screen-viewer__body--split > .screen-viewer__main {
   flex: 2;
   min-width: 0;
   min-height: 0;
+}
+
+/* ── Header ──────────────────────────────────── */
+.screen-viewer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-lg);
+  height: 44px;
+  min-height: 44px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  flex-shrink: 0;
 }
 
 .screen-viewer__nav {
@@ -41,8 +53,12 @@
   min-width: 0;
 }
 
-.screen-viewer__nav .screen-viewer__title {
-  margin: 0;
+.screen-viewer__nav .screen-viewer__title { margin: 0; }
+
+.screen-viewer__title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.1px;
 }
 
 .screen-viewer__title--muted {
@@ -50,6 +66,10 @@
   font-weight: 600;
 }
 
+.screen-viewer__title-current { color: var(--accent); }
+.screen-viewer__title-compare { color: var(--amber); }
+
+/* ── Main canvas area ────────────────────────── */
 .screen-viewer__main {
   flex: 1;
   position: relative;
@@ -71,15 +91,15 @@
   padding-left: 8px;
   padding-right: 8px;
   background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-md);
 }
 
-/* Sit below pane headers (Current / Import from) in compare mode */
 .screen-viewer--compare .screen-viewer__graph-btn {
   top: calc(32px + var(--space-sm));
 }
 
+/* ── Empty state ─────────────────────────────── */
 .screen-viewer--empty .screen-viewer__main {
   align-items: center;
   justify-content: center;
@@ -94,27 +114,11 @@
   gap: var(--space-md);
 }
 
-.screen-viewer__empty-state p { font-size: 14px; }
-.screen-viewer__empty-hint { font-size: 12px !important; color: var(--text-muted); }
+.screen-viewer__empty-state p { font-size: 13px; }
+.screen-viewer__empty-hint    { font-size: 11px !important; color: var(--text-muted); }
 
-.screen-viewer__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-md) var(--space-lg);
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-glass);
-  backdrop-filter: blur(16px);
-}
-
-.screen-viewer__title { font-size: 14px; font-weight: 700; }
-
-.screen-viewer__title-current { color: var(--accent); }
-.screen-viewer__title-compare { color: var(--amber); }
-
-.screen-viewer--compare {
-  min-height: 0;
-}
+/* ── Compare mode ────────────────────────────── */
+.screen-viewer--compare { min-height: 0; }
 
 .screen-viewer__compare {
   flex: 1;
@@ -138,6 +142,7 @@
   background: var(--border);
 }
 
+/* ── Pane header ─────────────────────────────── */
 .screen-viewer__pane-header {
   flex-shrink: 0;
   box-sizing: border-box;
@@ -154,7 +159,7 @@
 
 .screen-viewer__pane-header .mini-graph__title,
 .screen-viewer__compare-label-title {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
   line-height: 1;
   color: var(--text-muted);
@@ -173,9 +178,7 @@
   min-width: 0;
 }
 
-.screen-viewer__compare-label-title {
-  flex-shrink: 0;
-}
+.screen-viewer__compare-label-title { flex-shrink: 0; }
 
 .screen-viewer__pane-close {
   display: flex;
@@ -188,17 +191,18 @@
   background: transparent;
   color: var(--text-muted);
   cursor: pointer;
-  transition: color var(--duration) var(--ease), background var(--duration) var(--ease);
+  transition: color var(--duration) var(--ease),
+              background var(--duration) var(--ease);
 }
 
 .screen-viewer__pane-close:hover {
   color: var(--text-primary);
-  background: var(--bg-elevated);
+  background: rgba(255, 255, 255, 0.07);
 }
 
 .screen-viewer__compare-label--pick {
-  background: rgba(255, 171, 0, 0.08);
-  border-bottom-color: rgba(255, 171, 0, 0.25);
+  background: rgba(245, 158, 11, 0.07);
+  border-bottom-color: rgba(245, 158, 11, 0.2);
 }
 
 .screen-viewer__compare-label-hint {
@@ -213,11 +217,7 @@
   text-overflow: ellipsis;
 }
 
-.screen-viewer__compare {
-  flex: 1;
-  min-height: 0;
-}
-
+/* ── Single pane ─────────────────────────────── */
 .screen-viewer__single-pane {
   flex: 1;
   display: flex;
@@ -249,42 +249,36 @@
   align-items: center;
 }
 
-.screen-viewer__image-container--readonly {
-  cursor: default;
-}
+.screen-viewer__image-container--readonly  { cursor: default; }
+.screen-viewer__image-container--pickable  { cursor: crosshair; }
 
-.screen-viewer__image-container--pickable {
-  cursor: crosshair;
-}
-
+/* ── Marquee ─────────────────────────────────── */
 .screen-viewer__marquee {
   position: absolute;
   box-sizing: border-box;
   border: 1px dashed var(--amber);
-  background: rgba(255, 171, 0, 0.15);
+  background: rgba(245, 158, 11, 0.12);
   pointer-events: none;
   z-index: 20;
 }
 
+/* ── Hotspot in readonly/pickable ────────────── */
 .hotspot-region--readonly {
   cursor: default;
   opacity: 0.92;
 }
 
-.hotspot-region--readonly:hover {
-  z-index: 5;
-}
+.hotspot-region--readonly:hover { z-index: 5; }
 
-.hotspot-region--pickable {
-  cursor: pointer;
-}
+.hotspot-region--pickable { cursor: pointer; }
 
 .hotspot-region--pickable.hotspot-region--selected {
   border-color: var(--amber);
-  box-shadow: 0 0 0 2px rgba(255, 171, 0, 0.25), 0 0 14px rgba(255, 171, 0, 0.35);
+  box-shadow: 0 0 0 2px rgba(245,158,11,.2), 0 0 14px rgba(245,158,11,.3);
   z-index: 11;
 }
 
+/* ── Size hint ───────────────────────────────── */
 .screen-viewer__size-hint {
   font-size: 11px;
   color: var(--text-muted);
@@ -292,6 +286,7 @@
   margin: 0;
 }
 
+/* ── Image container / stage ─────────────────── */
 .screen-viewer__image-container {
   flex: 1;
   position: relative;
@@ -320,7 +315,6 @@
   overflow: visible;
 }
 
-/* LG EmulatorV2_screen-stack-container — coordinate space for buttons + screenshot */
 .screen-viewer__screen-stack {
   position: relative;
   width: 100%;
@@ -335,35 +329,37 @@
   max-height: none;
   object-fit: fill;
   border-radius: var(--radius-sm);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.6);
   position: relative;
   z-index: 0;
 }
 
+/* ── Hint bar ────────────────────────────────── */
 .screen-viewer__hint {
   padding: var(--space-sm) var(--space-lg);
   background: var(--accent-dim);
   color: var(--accent);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   text-align: center;
   border-top: 1px solid var(--border-accent);
+  flex-shrink: 0;
 }
 
-/* LG EmulatorV2_button — absolute to screen-stack, top/left = 0,0 at image top-left */
+/* ── Hotspot regions ─────────────────────────── */
 .emulator-button,
 .hotspot-region {
   position: absolute;
   box-sizing: border-box;
-  z-index: 1;
-  border: 2px solid rgba(255, 255, 255, 0.35);
+  z-index: 5;
+  border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 4px;
   cursor: grab;
-  z-index: 5;
   touch-action: none;
   user-select: none;
   overflow: visible;
-  transition: box-shadow 0.15s var(--ease), border-color 0.15s var(--ease);
+  transition: box-shadow 0.12s var(--ease),
+              border-color 0.12s var(--ease);
 }
 
 .hotspot-region--dragging {
@@ -372,9 +368,7 @@
   z-index: 12;
 }
 
-.hotspot-region--duplicating-source {
-  opacity: 0.55;
-}
+.hotspot-region--duplicating-source { opacity: 0.5; }
 
 .hotspot-region__duplicate-ghost {
   position: absolute;
@@ -382,7 +376,7 @@
   pointer-events: none;
   z-index: 21;
   border: 2px dashed var(--accent);
-  background: rgba(0, 229, 255, 0.12);
+  background: rgba(0, 229, 255, 0.1);
   cursor: grabbing;
 }
 
@@ -390,21 +384,22 @@
 
 .hotspot-region--linked {
   border-color: var(--accent);
-  background: rgba(0, 229, 255, 0.12);
-  box-shadow: 0 0 12px var(--accent-glow);
+  background: rgba(0, 229, 255, 0.1);
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
 }
 
 .hotspot-region--unlinked {
   border-color: var(--amber);
-  background: rgba(255, 171, 0, 0.1);
+  background: rgba(245, 158, 11, 0.08);
 }
 
 .hotspot-region--selected {
   border-width: 3px;
-  box-shadow: 0 0 0 2px var(--accent-dim), 0 0 16px var(--accent-glow);
+  box-shadow: 0 0 0 2px var(--accent-dim), 0 0 14px var(--accent-glow);
   z-index: 11;
 }
 
+/* ── Hotspot label ───────────────────────────── */
 .hotspot-region__tag {
   position: absolute;
   left: -1px;
@@ -412,26 +407,28 @@
   width: max-content;
   max-width: 240px;
   background: var(--bg-elevated);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 4px;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
   white-space: nowrap;
-  line-height: 1.2;
+  line-height: 1.3;
   pointer-events: none;
   z-index: 3;
+  box-shadow: var(--shadow-sm);
 }
 
 .hotspot-region--linked .hotspot-region__tag {
   color: var(--accent);
-  border: 1px solid var(--accent);
+  border: 1px solid rgba(0, 229, 255, 0.3);
 }
 
 .hotspot-region--unlinked .hotspot-region__tag {
   color: var(--amber);
-  border: 1px solid var(--amber);
+  border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
+/* ── Resize handle ───────────────────────────── */
 .hotspot-region__resize-handle {
   position: absolute;
   right: -5px;
@@ -440,19 +437,15 @@
   height: 12px;
   background: var(--text-primary);
   border: 2px solid var(--accent);
-  border-radius: 2px;
+  border-radius: 3px;
   cursor: nwse-resize;
   opacity: 0;
-  transition: opacity 0.15s var(--ease);
+  transition: opacity 0.12s var(--ease);
   z-index: 2;
 }
 
 .hotspot-region:hover .hotspot-region__resize-handle,
-.hotspot-region--selected .hotspot-region__resize-handle {
-  opacity: 1;
-}
-
+.hotspot-region--selected .hotspot-region__resize-handle,
 .hotspot-region--dragging .hotspot-region__resize-handle {
   opacity: 1;
 }
-
