@@ -53,16 +53,23 @@
       "name": "settings-general",
       "rootScreenId": "settings-general_down",
       "bandX": 527,
-      "bandY": 566,
+      "bandY": 570,
       "collapsed": true
     },
     {
       "id": "general-ai-service",
       "name": "general-ai-service",
       "rootScreenId": "settings-general_ai-service-menu",
-      "bandX": 527,
+      "bandX": 539,
       "bandY": 846,
       "collapsed": true
+    },
+    {
+      "id": "general-system",
+      "name": "general-system",
+      "rootScreenId": null,
+      "bandX": 2173,
+      "bandY": 0
     }
   ],
   "screens": {
@@ -1854,6 +1861,369 @@
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
+    },
+    "general-system_menu": {
+      "graphX": 290,
+      "graphY": 0,
+      "sectionId": "general-system",
+      "buttonIds": [
+        "940d5821-1337-47ce-b53c-eff7063fb760",
+        "5f4490c1-5d84-46a8-baf6-c3b9b113b29f",
+        "c7125bbd-cc6d-48da-974e-75d5b5c547f8",
+        "58fdce8f-e669-410e-a3ed-f82b4058f238",
+        "86f4e73b-0010-4f1e-bbd0-4442fa5eb843",
+        "4b75e0cb-3f76-4ed0-96a2-d4081b6a1d66",
+        "8cdb9b92-5f47-4122-8830-e9ff16fa1c17",
+        "33b31ba7-2fd9-4e15-9ea3-d261eff30127",
+        "b658d7e0-e68a-4333-a67b-7eb5dca9d751",
+        "e3d297a4-ba65-41a3-87a5-e0f1a63b1fb8"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-system_language-menu": {
+      "graphX": 280,
+      "graphY": 185,
+      "sectionId": "general-system",
+      "buttonIds": [
+        "19789e09-aca4-47f5-a9e0-a8f48bb15640",
+        "3e580fc1-e428-4f69-bc6e-161199468883",
+        "35685339-0acd-4d02-9a72-4c843366b3a0",
+        "e56ff46d-472f-434e-a527-6b0d103e0368",
+        "e64f9b2f-e179-480f-9999-ad0c07c17308",
+        "46a9231d-aa9e-4b75-90f7-fbe66c78389a",
+        "05c15c4e-25e2-438e-9151-67da8df607a4"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-system_language-english": {
+      "graphX": 280,
+      "graphY": 370,
+      "sectionId": "general-system",
+      "buttonIds": [
+        "5969cf3b-354f-473b-a0a7-cc09e91a0431",
+        "53a6dba2-3836-446e-916a-0071f13cf73a",
+        "d40b79ff-a7a7-4925-bc75-8a48ca2f1f39",
+        "4debc79e-2779-4f7a-b8ae-dc006bb4668b"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-system_audio-english": {
+      "graphX": 660,
+      "graphY": 0,
+      "sectionId": "general-system",
+      "buttonIds": [
+        "594eef9b-b44f-4321-b056-3cdf8f39c94e",
+        "b74eac92-7b66-4794-b7bb-fc6fbb823463",
+        "4e77bf46-d29f-494d-94ae-3f540da4bc16",
+        "7d2d7170-67a3-4219-932f-fbefdc349955"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-system_keyboard-english": {
+      "graphX": 0,
+      "graphY": 185,
+      "sectionId": "general-system",
+      "buttonIds": [
+        "3d03b756-fb8b-4e6d-8e41-785d6581cc18",
+        "9f9bc3c8-a31f-4761-a038-422d0d401ff2",
+        "7239e626-aa2f-4979-9d66-801b9a65787a",
+        "5e647680-83f4-48c7-a61e-80cdd683dbd8"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-system_location-menu": {
+      "graphX": 280,
+      "graphY": 555,
+      "sectionId": "general-system",
+      "buttonIds": [
+        "01d31249-1497-4d12-99a9-6a7e4283fb2a",
+        "febe9acf-96b1-499f-bbb4-244767b553a6",
+        "0ec9b184-8ddf-4b47-be98-325bd5adc611",
+        "544b0dff-ac1f-4612-82ea-11db2c783286",
+        "09c56289-156e-41f9-aa50-3451d7808dfc",
+        "6374734e-5e04-42d7-850e-0a8790973dd9",
+        "e61e8bac-9353-462f-9c8e-ed7d2887dba3"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-system_location_zip-code": {
+      "graphX": 280,
+      "graphY": 740,
+      "sectionId": "general-system",
+      "buttonIds": [
+        "3e620c53-30ff-4817-a847-ddd0bf38474e"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-system_location_service-country": {
+      "graphX": 660,
+      "graphY": 185,
+      "sectionId": "general-system",
+      "buttonIds": [
+        "ae10b411-3d5a-4a67-9d8a-41285738e1b3",
+        "a69a63f5-22a1-4410-83bc-b5b78e8ebc61",
+        "f8d564eb-43fd-4022-b9a3-cf8f81485f28",
+        "463eeb62-6d31-43c5-b3dd-da01dac606c1"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-system_location_weather": {
+      "graphX": 0,
+      "graphY": 370,
+      "sectionId": "general-system",
+      "buttonIds": [
+        "47d1bd91-7d92-4635-9011-8e3db3d6f4b9"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-system_time-menu": {
+      "graphX": 576,
+      "graphY": 567,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_time-menu-off": {
+      "graphX": 860,
+      "graphY": 562,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_time-time": {
+      "graphX": 1130,
+      "graphY": 558,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_time-date": {
+      "graphX": 1400,
+      "graphY": 554,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_time_time-zone": {
+      "graphX": 1686,
+      "graphY": 546,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_timers-menu": {
+      "graphX": 578,
+      "graphY": 848,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_timers_sleep-timer": {
+      "graphX": 848,
+      "graphY": 842,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_power-on-timer-menu": {
+      "graphX": 586,
+      "graphY": 1142,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_power-on-timer-on": {
+      "graphX": 862,
+      "graphY": 1136,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_power-on-timer_time": {
+      "graphX": 1116,
+      "graphY": 1130,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_power-on-timer_timer-repeat": {
+      "graphX": 1384,
+      "graphY": 1122,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_power-on-timer_input": {
+      "graphX": 1668,
+      "graphY": 1118,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_power-on-timer_timer-channel": {
+      "graphX": 1942,
+      "graphY": 1106,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_power-on-timer_volume": {
+      "graphX": 2228,
+      "graphY": 1110,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_safety-menu": {
+      "graphX": 280,
+      "graphY": 925,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_safety-password-on": {
+      "graphX": 280,
+      "graphY": 1110,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_safety-menu-on": {
+      "graphX": 660,
+      "graphY": 370,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_safety_tv-program-locks-menu": {
+      "graphX": 1142,
+      "graphY": 1374,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_safety_tv-lock-menu": {
+      "graphX": 864,
+      "graphY": 1648,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_safety_tv-lock_children": {
+      "graphX": 1126,
+      "graphY": 1637,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_safety_tv-lock_fantasy": {
+      "graphX": 1396,
+      "graphY": 1644,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_safety_tv-lock_general": {
+      "graphX": 1680,
+      "graphY": 1640,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_safety_tv-lock_sexually": {
+      "graphX": 1972,
+      "graphY": 1638,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_safety_tv-lock_adult": {
+      "graphX": 2244,
+      "graphY": 1638,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_safety_tv-lock_sexual-situations": {
+      "graphX": 2546,
+      "graphY": 1637,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_safety_tv-lock_violence": {
+      "graphX": 2850,
+      "graphY": 1639,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_safety_tv-lock-menu-down": {
+      "graphX": 880,
+      "graphY": 1870,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_safety_movie-lock": {
+      "graphX": 876,
+      "graphY": 2085,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_safety_channel-lock": {
+      "graphX": 0,
+      "graphY": 555,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_safety_application-locks": {
+      "graphX": 913,
+      "graphY": 2301,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_safety_input-locks": {
+      "graphX": 1155,
+      "graphY": 2295,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_safety_reset-password": {
+      "graphX": 1435,
+      "graphY": 2287,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_additional-settings-menu": {
+      "graphX": 177,
+      "graphY": 2630,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_additional_home-settings-menu": {
+      "graphX": 562,
+      "graphY": 2603,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_additional_power-on-screen": {
+      "graphX": 182,
+      "graphY": 2889,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_additional_pointer-options-menu": {
+      "graphX": 462,
+      "graphY": 2889,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_additional_pointer-options_tracking": {
+      "graphX": 742,
+      "graphY": 2889,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_additional_pointer-options_pointer-size": {
+      "graphX": 1044,
+      "graphY": 2883,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_additional_set-id": {
+      "graphX": 172,
+      "graphY": 3154,
+      "sectionId": "general-system",
+      "buttonIds": []
+    },
+    "general-system_reset": {
+      "graphX": 452,
+      "graphY": 3154,
+      "sectionId": "general-system",
+      "buttonIds": []
     }
   },
   "config": {
