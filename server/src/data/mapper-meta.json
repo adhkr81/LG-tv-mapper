@@ -52,15 +52,15 @@
       "id": "settings-general",
       "name": "settings-general",
       "rootScreenId": "settings-general_down",
-      "bandX": 527,
-      "bandY": 576,
+      "bandX": 535,
+      "bandY": 572,
       "collapsed": true
     },
     {
       "id": "general-ai-service",
       "name": "general-ai-service",
       "rootScreenId": "settings-general_ai-service-menu",
-      "bandX": 545,
+      "bandX": 551,
       "bandY": 846,
       "collapsed": true
     },
@@ -68,8 +68,9 @@
       "id": "general-system",
       "name": "general-system",
       "rootScreenId": null,
-      "bandX": 2173,
-      "bandY": 0
+      "bandX": 555,
+      "bandY": 1104,
+      "collapsed": true
     },
     {
       "id": "Screenshots",
@@ -2618,8 +2619,8 @@
       "sourceHeight": 2160
     },
     "general-system_additional-settings-menu-off": {
-      "graphX": 3316,
-      "graphY": 806,
+      "graphX": 1345,
+      "graphY": 2635,
       "sectionId": "general-system",
       "buttonIds": [
         "c2461dd2-24dc-4d84-8ef2-1554c4a6b18f",
@@ -2638,8 +2639,8 @@
       "sourceHeight": 2160
     },
     "general-system_additional-settings_standby": {
-      "graphX": 3596,
-      "graphY": 806,
+      "graphX": 1625,
+      "graphY": 2635,
       "sectionId": "general-system",
       "buttonIds": [
         "6814e1f4-be99-4fb7-965b-1e9fe69b0534",
@@ -2658,8 +2659,8 @@
       "sourceHeight": 2160
     },
     "general-system_additional-settings_screensaver": {
-      "graphX": 3876,
-      "graphY": 806,
+      "graphX": 1905,
+      "graphY": 2635,
       "sectionId": "general-system",
       "buttonIds": [
         "33c1dd3a-ed49-405b-bb83-c17f9a292c31",
@@ -2678,8 +2679,8 @@
       "sourceHeight": 2160
     },
     "general-system_additional-settings_live-plus": {
-      "graphX": 4156,
-      "graphY": 806,
+      "graphX": 2185,
+      "graphY": 2635,
       "sectionId": "general-system",
       "buttonIds": [
         "8741fd11-ad18-413f-a20f-b0cfc87636fd",
@@ -2698,8 +2699,8 @@
       "sourceHeight": 2160
     },
     "general-system_additional-settings_settings-help": {
-      "graphX": 3322,
-      "graphY": 1030,
+      "graphX": 1351,
+      "graphY": 2859,
       "sectionId": "general-system",
       "buttonIds": [
         "0d166c11-0880-4aea-93a3-ed57ac98aea6",
@@ -2718,8 +2719,8 @@
       "sourceHeight": 2160
     },
     "general-system_additional_home-settings_promotiom": {
-      "graphX": 3602,
-      "graphY": 1030,
+      "graphX": 1631,
+      "graphY": 2859,
       "sectionId": "general-system",
       "buttonIds": [
         "cc124649-c24c-4633-9d03-d4ce2a1dcc95",
@@ -2733,8 +2734,8 @@
       "sourceHeight": 2160
     },
     "general-system_additional_home-settings_recommendation": {
-      "graphX": 3882,
-      "graphY": 1030,
+      "graphX": 1911,
+      "graphY": 2859,
       "sectionId": "general-system",
       "buttonIds": [
         "3bf5f599-89e3-4ea8-bda9-747888e3a3db",
