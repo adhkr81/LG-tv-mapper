@@ -81,6 +81,13 @@ function persistButtonRectClipboard(clip) {
   }
 }
 
+/** Build an O(1) lookup map for the current screens array. */
+function indexById(screens) {
+  const map = new Map();
+  for (const s of screens) map.set(s.id, s);
+  return map;
+}
+
 /** Debounced persistence per button — UI updates immediately, disk writes are batched. */
 const BUTTON_SAVE_DEBOUNCE_MS = 400;
 const buttonPendingPatches = new Map();
@@ -210,630 +217,782 @@ function scheduleButtonSave(get, set, screenId, buttonId) {
   return entry.promise;
 }
 
-const useStore = create((set, get) => ({
-  // Data
-  screens: [],
-  sections: [],
-  imageConfig: { ...DEFAULT_IMAGE_CONFIG },
-  /** Per-screen cache-bust counter when screenshot file is replaced (same filename). */
-  imageVersions: {},
-
-  // UI state
-  activeSectionId: loadActiveSectionId(),
-  selectedScreenId: null,
-  selectedScreenIds: [],
-  selectedButtonId: null,
-  importCompareScreenId: null,
-  importSourceButtonIds: [],
-  buttonRectClipboard: loadButtonRectClipboard(),
-  isCapturing: false,
-  capturingScreenId: null,
-  captureProgress: null,
-  isAddingHotspot: false,
-  serialStatus: 'disconnected',
-  canUndo: historyCanUndo(),
-
-  // ---- Actions ----
-
-  undo: async () => {
-    const snapshot = popUndoSnapshot();
-    if (!snapshot) {
-      set({ canUndo: historyCanUndo() });
-      return false;
-    }
-
-    cancelAllButtonSaves();
-    const rollback = cloneMapperState(get().screens, get().sections);
-    set({
-      screens: snapshot.screens,
-      sections: snapshot.sections,
-      canUndo: historyCanUndo(),
-    });
-
-    try {
-      const restored = await api.restoreMapperState(
-        snapshot.screens,
-        snapshot.sections
-      );
-      set({
-        screens: restored.screens,
-        sections: restored.sections,
-        canUndo: historyCanUndo(),
+const useStore = create((rawSet, get) => {
+  /**
+   * Wrap set() so any patch that touches `screens` also refreshes the
+   * `screensById` index. This lets callers keep using normal patches without
+   * worrying about the lookup map drifting out of sync.
+   */
+  const set = (patch) => {
+    if (typeof patch === 'function') {
+      rawSet((state) => {
+        const next = patch(state);
+        if (
+          next &&
+          typeof next === 'object' &&
+          Object.prototype.hasOwnProperty.call(next, 'screens')
+        ) {
+          return { ...next, screensById: indexById(next.screens) };
+        }
+        return next;
       });
-      return true;
-    } catch (err) {
-      console.error('Undo failed:', err);
-      set({
-        screens: rollback.screens,
-        sections: rollback.sections,
-        canUndo: historyCanUndo(),
-      });
-      try {
-        await get().fetchScreens({ clearUndo: true });
-      } catch {
-        /* ignore */
-      }
-      throw err;
-    }
-  },
-
-  bumpImageVersions: (screenIds) => {
-    const ids = (Array.isArray(screenIds) ? screenIds : [screenIds]).filter(Boolean);
-    if (!ids.length) return;
-    const imageVersions = { ...get().imageVersions };
-    for (const id of ids) {
-      imageVersions[id] = (imageVersions[id] ?? 0) + 1;
-    }
-    set({ imageVersions });
-  },
-
-  fetchScreens: async ({ clearUndo = false } = {}) => {
-    try {
-      const [screens, sectionsRaw] = await Promise.all([
-        api.getScreens(),
-        api.getSections(),
-      ]);
-      const sections = await migrateLegacyCollapsedView(sectionsRaw);
-      if (clearUndo) clearUndoHistory();
-      set({
-        screens,
-        sections,
-        activeSectionId: loadActiveSectionId(),
-        canUndo: clearUndo ? false : historyCanUndo(),
-      });
-    } catch (err) {
-      console.error('Failed to fetch screens:', err);
-    }
-  },
-
-  fetchConfig: async () => {
-    try {
-      const data = await api.getConfig();
-      set({ imageConfig: normalizeImageConfig(data.imageSize) });
-    } catch (err) {
-      console.error('Failed to fetch config:', err);
-    }
-  },
-
-  updateImageConfig: async (imageSize) => {
-    const data = await api.updateConfig(imageSize);
-    set({ imageConfig: normalizeImageConfig(data.imageSize) });
-    return data.imageSize;
-  },
-
-  reportScreenSourceSize: async (screenId, sourceWidth, sourceHeight) => {
-    const screen = get().screens.find((s) => s.id === screenId);
-    if (
-      screen?.sourceWidth === sourceWidth &&
-      screen?.sourceHeight === sourceHeight
-    ) {
       return;
     }
-    await api.updateScreen(screenId, { sourceWidth, sourceHeight });
-    set({
-      screens: get().screens.map((s) =>
-        s.id === screenId ? { ...s, sourceWidth, sourceHeight } : s
-      ),
-    });
-    await get().fetchScreens();
-  },
-
-  setActiveSection: (sectionId) => {
-    const id =
-      sectionId && sectionId !== LEGACY_ALL_SCREENS_COLLAPSED_ID
-        ? sectionId
-        : null;
-    try {
-      if (id) localStorage.setItem(SECTION_STORAGE_KEY, id);
-      else localStorage.removeItem(SECTION_STORAGE_KEY);
-    } catch {
-      // ignore
+    if (
+      patch &&
+      typeof patch === 'object' &&
+      Object.prototype.hasOwnProperty.call(patch, 'screens')
+    ) {
+      rawSet({ ...patch, screensById: indexById(patch.screens) });
+      return;
     }
-    set({ activeSectionId: id });
-  },
+    rawSet(patch);
+  };
 
-  toggleSectionCollapsed: async (id, collapsed) => {
-    return get().updateSection(id, { collapsed });
-  },
+  return {
+    // Data
+    screens: [],
+    /** O(1) screen lookup; kept in sync with `screens` by the set() wrapper. */
+    screensById: new Map(),
+    sections: [],
+    imageConfig: { ...DEFAULT_IMAGE_CONFIG },
+    /** Per-screen cache-bust counter when screenshot file is replaced (same filename). */
+    imageVersions: {},
 
-  collapseAllSections: async () => {
-    const { sections } = get();
-    const targets = sections.filter((s) => !s.collapsed);
-    if (!targets.length) return;
-    await Promise.all(
-      targets.map((s) => api.updateSection(s.id, { collapsed: true }))
-    );
-    set({
-      sections: get().sections.map((s) => ({ ...s, collapsed: true })),
-    });
-  },
+    // UI state
+    activeSectionId: loadActiveSectionId(),
+    selectedScreenId: null,
+    selectedScreenIds: [],
+    selectedButtonId: null,
+    importCompareScreenId: null,
+    importSourceButtonIds: [],
+    buttonRectClipboard: loadButtonRectClipboard(),
+    isCapturing: false,
+    capturingScreenId: null,
+    captureProgress: null,
+    isAddingHotspot: false,
+    serialStatus: 'disconnected',
+    canUndo: historyCanUndo(),
 
-  expandAllSections: async () => {
-    const { sections } = get();
-    const targets = sections.filter((s) => s.collapsed);
-    if (!targets.length) return;
-    await Promise.all(
-      targets.map((s) => api.updateSection(s.id, { collapsed: false }))
-    );
-    set({
-      sections: get().sections.map((s) => ({ ...s, collapsed: false })),
-    });
-  },
+    // ---- Actions ----
 
-  createSection: async (data) => {
-    const section = await api.createSection(data);
-    set({ sections: [...get().sections, section] });
-    return section;
-  },
+    undo: async () => {
+      const snapshot = popUndoSnapshot();
+      if (!snapshot) {
+        set({ canUndo: historyCanUndo() });
+        return false;
+      }
 
-  createSectionFromScreens: async ({ name, screenIds, rootScreenId = null }) => {
-    const ids = [...new Set(screenIds)].filter(Boolean);
-    if (!ids.length) throw new Error('Select at least one screen on the graph');
-    const nameTrim = String(name || '').trim();
-    if (!nameTrim) throw new Error('Section name is required');
+      cancelAllButtonSaves();
+      const rollback = cloneMapperState(get().screens, get().sections);
+      set({
+        screens: snapshot.screens,
+        sections: snapshot.sections,
+        canUndo: historyCanUndo(),
+      });
 
-    const id = sectionIdFromName(nameTrim, get().sections);
-    const section = await api.createSection({
-      id,
-      name: nameTrim,
-      rootScreenId: rootScreenId || null,
-    });
-    for (const screenId of ids) {
-      await api.updateScreen(screenId, { sectionId: id });
-    }
-    await get().fetchScreens();
-    get().setActiveSection(id);
-    return section;
-  },
+      try {
+        const restored = await api.restoreMapperState(
+          snapshot.screens,
+          snapshot.sections
+        );
+        set({
+          screens: restored.screens,
+          sections: restored.sections,
+          canUndo: historyCanUndo(),
+        });
+        return true;
+      } catch (err) {
+        console.error('Undo failed:', err);
+        set({
+          screens: rollback.screens,
+          sections: rollback.sections,
+          canUndo: historyCanUndo(),
+        });
+        try {
+          await get().fetchScreens({ clearUndo: true });
+        } catch {
+          /* ignore */
+        }
+        throw err;
+      }
+    },
 
-  deleteSection: async (id) => {
-    await api.deleteSection(id);
-    if (get().activeSectionId === id) {
-      get().setActiveSection(null);
-    }
-    set({ sections: get().sections.filter((s) => s.id !== id) });
-    await get().fetchScreens();
-  },
+    bumpImageVersions: (screenIds) => {
+      const ids = (Array.isArray(screenIds) ? screenIds : [screenIds]).filter(Boolean);
+      if (!ids.length) return;
+      const imageVersions = { ...get().imageVersions };
+      for (const id of ids) {
+        imageVersions[id] = (imageVersions[id] ?? 0) + 1;
+      }
+      set({ imageVersions });
+    },
 
-  updateSection: async (id, updates) => {
-    const section = await api.updateSection(id, updates);
-    set({
-      sections: get().sections.map((s) => (s.id === id ? section : s)),
-    });
-    if (updates.id && get().activeSectionId === id) {
-      get().setActiveSection(updates.id);
-    }
-    return section;
-  },
+    fetchScreens: async ({ clearUndo = false } = {}) => {
+      try {
+        const [screens, sectionsRaw] = await Promise.all([
+          api.getScreens(),
+          api.getSections(),
+        ]);
+        const sections = await migrateLegacyCollapsedView(sectionsRaw);
+        if (clearUndo) clearUndoHistory();
+        set({
+          screens,
+          sections,
+          activeSectionId: loadActiveSectionId(),
+          canUndo: clearUndo ? false : historyCanUndo(),
+        });
+      } catch (err) {
+        console.error('Failed to fetch screens:', err);
+      }
+    },
 
-  assignScreenToSection: async (screenId, sectionId) => {
-    await api.updateScreen(screenId, { sectionId: sectionId || null });
-    await get().fetchScreens();
-  },
+    fetchConfig: async () => {
+      try {
+        const data = await api.getConfig();
+        set({ imageConfig: normalizeImageConfig(data.imageSize) });
+      } catch (err) {
+        console.error('Failed to fetch config:', err);
+      }
+    },
 
-  captureScreen: async (screenId) => {
-    const sectionId = effectiveSectionId(get().activeSectionId);
-    set({
-      isCapturing: true,
-      capturingScreenId: screenId,
-      captureProgress: { phase: 'requesting', percent: 0, label: 'Starting capture…' },
-    });
-    try {
-      const result = await api.captureScreenWithProgress(
-        screenId,
-        false,
-        sectionId,
-        (progress) => set({ captureProgress: progress })
+    updateImageConfig: async (imageSize) => {
+      const data = await api.updateConfig(imageSize);
+      set({ imageConfig: normalizeImageConfig(data.imageSize) });
+      return data.imageSize;
+    },
+
+    reportScreenSourceSize: async (screenId, sourceWidth, sourceHeight) => {
+      const screen = get().screensById.get(screenId);
+      if (
+        screen?.sourceWidth === sourceWidth &&
+        screen?.sourceHeight === sourceHeight
+      ) {
+        return;
+      }
+      const updated = await api.updateScreen(screenId, {
+        sourceWidth,
+        sourceHeight,
+      });
+      set({
+        screens: get().screens.map((s) =>
+          s.id === screenId ? { ...s, ...updated } : s
+        ),
+      });
+    },
+
+    setActiveSection: (sectionId) => {
+      const id =
+        sectionId && sectionId !== LEGACY_ALL_SCREENS_COLLAPSED_ID
+          ? sectionId
+          : null;
+      try {
+        if (id) localStorage.setItem(SECTION_STORAGE_KEY, id);
+        else localStorage.removeItem(SECTION_STORAGE_KEY);
+      } catch {
+        // ignore
+      }
+      set({ activeSectionId: id });
+    },
+
+    toggleSectionCollapsed: async (id, collapsed) => {
+      return get().updateSection(id, { collapsed });
+    },
+
+    collapseAllSections: async () => {
+      const { sections } = get();
+      const targets = sections.filter((s) => !s.collapsed);
+      if (!targets.length) return;
+      await Promise.all(
+        targets.map((s) => api.updateSection(s.id, { collapsed: true }))
       );
-      if (result?.serialStatus) {
-        set({ serialStatus: result.serialStatus });
+      set({
+        sections: get().sections.map((s) => ({ ...s, collapsed: true })),
+      });
+    },
+
+    expandAllSections: async () => {
+      const { sections } = get();
+      const targets = sections.filter((s) => s.collapsed);
+      if (!targets.length) return;
+      await Promise.all(
+        targets.map((s) => api.updateSection(s.id, { collapsed: false }))
+      );
+      set({
+        sections: get().sections.map((s) => ({ ...s, collapsed: false })),
+      });
+    },
+
+    createSection: async (data) => {
+      const section = await api.createSection(data);
+      set({ sections: [...get().sections, section] });
+      return section;
+    },
+
+    createSectionFromScreens: async ({ name, screenIds, rootScreenId = null }) => {
+      const ids = [...new Set(screenIds)].filter(Boolean);
+      if (!ids.length) throw new Error('Select at least one screen on the graph');
+      const nameTrim = String(name || '').trim();
+      if (!nameTrim) throw new Error('Section name is required');
+
+      const id = sectionIdFromName(nameTrim, get().sections);
+      const section = await api.createSection({
+        id,
+        name: nameTrim,
+        rootScreenId: rootScreenId || null,
+      });
+
+      const updated = [];
+      for (const screenId of ids) {
+        updated.push(await api.updateScreen(screenId, { sectionId: id }));
+      }
+
+      const patchById = new Map(updated.map((s) => [s.id, s]));
+      set({
+        sections: [...get().sections, section],
+        screens: get().screens.map((s) =>
+          patchById.has(s.id) ? { ...s, ...patchById.get(s.id) } : s
+        ),
+      });
+      get().setActiveSection(id);
+      return section;
+    },
+
+    deleteSection: async (id) => {
+      await api.deleteSection(id);
+      if (get().activeSectionId === id) {
+        get().setActiveSection(null);
       }
       set({
-        captureProgress: { phase: 'complete', percent: 100, label: 'Done' },
+        sections: get().sections.filter((s) => s.id !== id),
+        screens: get().screens.map((s) =>
+          s.sectionId === id ? { ...s, sectionId: null } : s
+        ),
       });
-      await get().fetchScreens();
-      get().bumpImageVersions(screenId);
-    } catch (err) {
-      console.error('Capture failed:', err);
-      await get().fetchSerialStatus();
-      throw err;
-    } finally {
-      set({ isCapturing: false, capturingScreenId: null, captureProgress: null });
-    }
-  },
+    },
 
-  importScreen: async (screenId, file) => {
-    return get().importScreens([{ screenId, file }]);
-  },
+    updateSection: async (id, updates) => {
+      const section = await api.updateSection(id, updates);
+      const newId = section.id;
+      const idChanged = newId !== id;
 
-  replaceScreenImage: async (screenId, file) => {
-    await get().importScreen(screenId, file);
-  },
-
-  clearScreenImage: async (screenId) => {
-    try {
-      await api.updateScreen(screenId, { image: null });
-      await get().fetchScreens();
-      get().bumpImageVersions(screenId);
-    } catch (err) {
-      console.error('Clear screen image failed:', err);
-      throw err;
-    }
-  },
-
-  createScreenNode: async ({ id, sectionId = null, graphX, graphY }) => {
-    markUndoAvailable(set, get);
-    const screen = await api.createScreen({
-      id,
-      image: '',
-      sectionId: sectionId ?? effectiveSectionId(get().activeSectionId) ?? null,
-      graphX,
-      graphY,
-    });
-    await get().fetchScreens();
-    get().selectScreen(id);
-    return screen;
-  },
-
-  importScreens: async (entries) => {
-    if (!entries?.length) return;
-    const sectionId = effectiveSectionId(get().activeSectionId);
-    set({ isCapturing: true });
-    try {
-      for (const { screenId, file } of entries) {
-        await api.importScreen(screenId, file, sectionId);
+      const patch = {
+        sections: get().sections.map((s) => (s.id === id ? section : s)),
+      };
+      if (idChanged) {
+        patch.screens = get().screens.map((s) =>
+          s.sectionId === id ? { ...s, sectionId: newId } : s
+        );
       }
-      await get().fetchScreens();
-      get().bumpImageVersions(entries.map((e) => e.screenId));
-    } catch (err) {
-      console.error('Import failed:', err);
-      throw err;
-    } finally {
-      set({ isCapturing: false });
-    }
-  },
+      set(patch);
 
-  addButton: async (screenId, buttonData) => {
-    markUndoAvailable(set, get);
-    try {
-      const button = await api.addButton(screenId, buttonData);
-      await get().fetchScreens();
-      return button;
-    } catch (err) {
-      console.error('Add button failed:', err);
-      throw err;
-    }
-  },
+      if (updates.id && get().activeSectionId === id) {
+        get().setActiveSection(updates.id);
+      }
+      return section;
+    },
 
-  importButtonsFromScreen: async (targetScreenId, sourceScreenId, options = {}) => {
-    markUndoAvailable(set, get);
-    try {
-      await api.importButtons(targetScreenId, sourceScreenId, options);
-      await get().fetchScreens();
-    } catch (err) {
-      console.error('Import buttons failed:', err);
-      throw err;
-    }
-  },
+    assignScreenToSection: async (screenId, sectionId) => {
+      const updated = await api.updateScreen(screenId, {
+        sectionId: sectionId || null,
+      });
+      set({
+        screens: get().screens.map((s) =>
+          s.id === screenId ? { ...s, ...updated } : s
+        ),
+      });
+    },
 
-  updateButton: async (screenId, buttonId, updates) => {
-    const chainKey = `${screenId}:${buttonId}`;
-    markUndoAvailableKeyed(set, get, `btn:${screenId}:${buttonId}`);
-
-    applyButtonPatch(set, get, screenId, buttonId, updates);
-
-    if (updates && Object.keys(updates).length > 0) {
-      const prev = buttonPendingPatches.get(chainKey) || {};
-      buttonPendingPatches.set(chainKey, { ...prev, ...updates });
-    }
-
-    return scheduleButtonSave(get, set, screenId, buttonId);
-  },
-
-  deleteButton: async (screenId, buttonId) => {
-    markUndoAvailable(set, get);
-    cancelButtonSave(screenId, buttonId);
-    set({
-      screens: get().screens.map((s) =>
-        s.id !== screenId
-          ? s
-          : { ...s, buttons: s.buttons.filter((b) => b.id !== buttonId) }
-      ),
-      selectedButtonId:
-        get().selectedButtonId === buttonId ? null : get().selectedButtonId,
-    });
-    try {
-      await api.deleteButtonApi(screenId, buttonId);
-      await get().fetchScreens();
-    } catch (err) {
-      console.error('Delete button failed:', err);
-      await get().fetchScreens();
-      throw err;
-    }
-  },
-
-  updateScreenGraphPosition: async (screenId, graphX, graphY) => {
-    return get().updateScreenGraphPositions([{ screenId, graphX, graphY }]);
-  },
-
-  updateScreenGraphPositions: async (updates) => {
-    if (!updates?.length) return;
-    markUndoAvailableKeyed(set, get, 'graph:positions');
-    const rounded = updates.map(({ screenId, graphX, graphY }) => ({
-      screenId,
-      graphX: Math.round(graphX),
-      graphY: Math.round(graphY),
-    }));
-    const byId = new Map(rounded.map((u) => [u.screenId, u]));
-    set({
-      screens: get().screens.map((s) => {
-        const patch = byId.get(s.id);
-        return patch ? { ...s, graphX: patch.graphX, graphY: patch.graphY } : s;
-      }),
-    });
-    try {
-      await Promise.all(
-        rounded.map(({ screenId, graphX, graphY }) =>
-          api.updateScreen(screenId, { graphX, graphY })
-        )
-      );
-    } catch (err) {
-      console.error('Update graph positions failed:', err);
-      await get().fetchScreens();
-      throw err;
-    }
-  },
-
-  /** Save screen coords and (in All screens) each section's canvas band position. */
-  persistGraphLayoutFromNodes: async (nodes) => {
-    if (!nodes?.length) return;
-
-    const screenNodes = nodes.filter((n) => n.type === 'screenNode');
-    const screenUpdates = buildGraphPositionUpdates(screenNodes);
-    if (screenUpdates.length) {
-      await get().updateScreenGraphPositions(screenUpdates);
-    }
-
-    if (isRealSectionView(get().activeSectionId)) return;
-
-    const bandUpdates = buildSectionBandUpdates(nodes);
-    if (!bandUpdates.length) return;
-
-    markUndoAvailableKeyed(set, get, 'graph:sections');
-
-    set({
-      sections: get().sections.map((sec) => {
-        const patch = bandUpdates.find((b) => b.sectionId === sec.id);
-        return patch
-          ? { ...sec, bandX: patch.bandX, bandY: patch.bandY }
-          : sec;
-      }),
-    });
-
-    try {
-      await Promise.all(
-        bandUpdates.map(({ sectionId, bandX, bandY }) =>
-          api.updateSection(sectionId, { bandX, bandY })
-        )
-      );
-    } catch (err) {
-      console.error('Update section band positions failed:', err);
-      await get().fetchScreens();
-      throw err;
-    }
-  },
-
-  updateScreenName: async (oldId, newId) => {
-    markUndoAvailable(set, get);
-    try {
-      await api.updateScreen(oldId, { id: newId });
-      await get().fetchScreens();
-      // Update selection if we renamed the selected screen
-      if (get().selectedScreenId === oldId) {
+    captureScreen: async (screenId) => {
+      const sectionId = effectiveSectionId(get().activeSectionId);
+      set({
+        isCapturing: true,
+        capturingScreenId: screenId,
+        captureProgress: { phase: 'requesting', percent: 0, label: 'Starting capture…' },
+      });
+      try {
+        const result = await api.captureScreenWithProgress(
+          screenId,
+          false,
+          sectionId,
+          (progress) => set({ captureProgress: progress })
+        );
+        if (result?.serialStatus) {
+          set({ serialStatus: result.serialStatus });
+        }
         set({
-          selectedScreenId: newId,
-          selectedScreenIds: get().selectedScreenIds.map((id) =>
-            id === oldId ? newId : id
+          captureProgress: { phase: 'complete', percent: 100, label: 'Done' },
+        });
+
+        // result is `{ ...screen, serialStatus }` — merge it into local state.
+        // Strip out non-screen fields before patching.
+        const { serialStatus: _ignored, type: _t, ...screenFields } = result || {};
+        if (screenFields?.id) {
+          const screens = get().screens;
+          const exists = screens.some((s) => s.id === screenFields.id);
+          set({
+            screens: exists
+              ? screens.map((s) =>
+                  s.id === screenFields.id ? { ...s, ...screenFields } : s
+                )
+              : [...screens, screenFields],
+          });
+        } else {
+          // Fallback if the server response didn't include screen data.
+          await get().fetchScreens();
+        }
+        get().bumpImageVersions(screenId);
+      } catch (err) {
+        console.error('Capture failed:', err);
+        await get().fetchSerialStatus();
+        throw err;
+      } finally {
+        set({ isCapturing: false, capturingScreenId: null, captureProgress: null });
+      }
+    },
+
+    importScreen: async (screenId, file) => {
+      return get().importScreens([{ screenId, file }]);
+    },
+
+    replaceScreenImage: async (screenId, file) => {
+      await get().importScreen(screenId, file);
+    },
+
+    clearScreenImage: async (screenId) => {
+      try {
+        const updated = await api.updateScreen(screenId, { image: null });
+        set({
+          screens: get().screens.map((s) =>
+            s.id === screenId ? { ...s, ...updated } : s
           ),
         });
+        get().bumpImageVersions(screenId);
+      } catch (err) {
+        console.error('Clear screen image failed:', err);
+        throw err;
       }
-    } catch (err) {
-      console.error('Rename screen failed:', err);
-      throw err;
-    }
-  },
+    },
 
-  deleteScreen: async (screenId, options) => {
-    return get().deleteScreens([screenId], options);
-  },
-
-  deleteScreens: async (screenIds, { removeParentButtons = false } = {}) => {
-    const ids = [...new Set(screenIds)].filter(Boolean);
-    if (!ids.length) return;
-    markUndoAvailable(set, get);
-    try {
-      for (const id of ids) {
-        await api.deleteScreen(id, { removeParentButtons });
-      }
-      const removed = new Set(ids);
-      const remaining = get().selectedScreenIds.filter((id) => !removed.has(id));
-      set({
-        selectedScreenIds: remaining,
-        selectedScreenId: remaining.length ? remaining[remaining.length - 1] : null,
-        selectedButtonId: remaining.length ? get().selectedButtonId : null,
+    createScreenNode: async ({ id, sectionId = null, graphX, graphY }) => {
+      markUndoAvailable(set, get);
+      const screen = await api.createScreen({
+        id,
+        image: '',
+        sectionId: sectionId ?? effectiveSectionId(get().activeSectionId) ?? null,
+        graphX,
+        graphY,
       });
-      await get().fetchScreens();
-    } catch (err) {
-      console.error('Delete screens failed:', err);
-      throw err;
-    }
-  },
+      set({ screens: [...get().screens, screen] });
+      get().selectScreen(id);
+      return screen;
+    },
 
-  selectScreen: (screenId, options = {}) => {
-    const { additive = false } = options;
-    if (!screenId) {
+    importScreens: async (entries) => {
+      if (!entries?.length) return;
+      const sectionId = effectiveSectionId(get().activeSectionId);
+      set({ isCapturing: true });
+      try {
+        const results = [];
+        for (const { screenId, file } of entries) {
+          results.push(await api.importScreen(screenId, file, sectionId));
+        }
+        const patchById = new Map(results.map((s) => [s.id, s]));
+        const existingIds = new Set(get().screens.map((s) => s.id));
+        const merged = get().screens.map((s) =>
+          patchById.has(s.id) ? { ...s, ...patchById.get(s.id) } : s
+        );
+        const added = results.filter((s) => !existingIds.has(s.id));
+        set({ screens: [...merged, ...added] });
+        get().bumpImageVersions(entries.map((e) => e.screenId));
+      } catch (err) {
+        console.error('Import failed:', err);
+        throw err;
+      } finally {
+        set({ isCapturing: false });
+      }
+    },
+
+    addButton: async (screenId, buttonData) => {
+      markUndoAvailable(set, get);
+      try {
+        const button = await api.addButton(screenId, buttonData);
+        set({
+          screens: get().screens.map((s) =>
+            s.id !== screenId ? s : { ...s, buttons: [...s.buttons, button] }
+          ),
+        });
+        return button;
+      } catch (err) {
+        console.error('Add button failed:', err);
+        throw err;
+      }
+    },
+
+    importButtonsFromScreen: async (targetScreenId, sourceScreenId, options = {}) => {
+      markUndoAvailable(set, get);
+      try {
+        const buttons = await api.importButtons(
+          targetScreenId,
+          sourceScreenId,
+          options
+        );
+        set({
+          screens: get().screens.map((s) =>
+            s.id !== targetScreenId
+              ? s
+              : { ...s, buttons: [...s.buttons, ...buttons] }
+          ),
+        });
+      } catch (err) {
+        console.error('Import buttons failed:', err);
+        throw err;
+      }
+    },
+
+    updateButton: async (screenId, buttonId, updates) => {
+      const chainKey = `${screenId}:${buttonId}`;
+      markUndoAvailableKeyed(set, get, `btn:${screenId}:${buttonId}`);
+
+      applyButtonPatch(set, get, screenId, buttonId, updates);
+
+      if (updates && Object.keys(updates).length > 0) {
+        const prev = buttonPendingPatches.get(chainKey) || {};
+        buttonPendingPatches.set(chainKey, { ...prev, ...updates });
+      }
+
+      return scheduleButtonSave(get, set, screenId, buttonId);
+    },
+
+    deleteButton: async (screenId, buttonId) => {
+      markUndoAvailable(set, get);
+      cancelButtonSave(screenId, buttonId);
       set({
-        selectedScreenId: null,
-        selectedScreenIds: [],
+        screens: get().screens.map((s) =>
+          s.id !== screenId
+            ? s
+            : { ...s, buttons: s.buttons.filter((b) => b.id !== buttonId) }
+        ),
+        selectedButtonId:
+          get().selectedButtonId === buttonId ? null : get().selectedButtonId,
+      });
+      try {
+        await api.deleteButtonApi(screenId, buttonId);
+      } catch (err) {
+        console.error('Delete button failed:', err);
+        await get().fetchScreens();
+        throw err;
+      }
+    },
+
+    updateScreenGraphPosition: async (screenId, graphX, graphY) => {
+      return get().updateScreenGraphPositions([{ screenId, graphX, graphY }]);
+    },
+
+    updateScreenGraphPositions: async (updates) => {
+      if (!updates?.length) return;
+      markUndoAvailableKeyed(set, get, 'graph:positions');
+      const rounded = updates.map(({ screenId, graphX, graphY }) => ({
+        screenId,
+        graphX: Math.round(graphX),
+        graphY: Math.round(graphY),
+      }));
+      const byId = new Map(rounded.map((u) => [u.screenId, u]));
+      set({
+        screens: get().screens.map((s) => {
+          const patch = byId.get(s.id);
+          return patch ? { ...s, graphX: patch.graphX, graphY: patch.graphY } : s;
+        }),
+      });
+      try {
+        await Promise.all(
+          rounded.map(({ screenId, graphX, graphY }) =>
+            api.updateScreen(screenId, { graphX, graphY })
+          )
+        );
+      } catch (err) {
+        console.error('Update graph positions failed:', err);
+        await get().fetchScreens();
+        throw err;
+      }
+    },
+
+    /** Save screen coords and (in All screens) each section's canvas band position. */
+    persistGraphLayoutFromNodes: async (nodes) => {
+      if (!nodes?.length) return;
+
+      const screenNodes = nodes.filter((n) => n.type === 'screenNode');
+      const screenUpdates = buildGraphPositionUpdates(screenNodes);
+      if (screenUpdates.length) {
+        await get().updateScreenGraphPositions(screenUpdates);
+      }
+
+      if (isRealSectionView(get().activeSectionId)) return;
+
+      const bandUpdates = buildSectionBandUpdates(nodes);
+      if (!bandUpdates.length) return;
+
+      markUndoAvailableKeyed(set, get, 'graph:sections');
+
+      set({
+        sections: get().sections.map((sec) => {
+          const patch = bandUpdates.find((b) => b.sectionId === sec.id);
+          return patch
+            ? { ...sec, bandX: patch.bandX, bandY: patch.bandY }
+            : sec;
+        }),
+      });
+
+      try {
+        await Promise.all(
+          bandUpdates.map(({ sectionId, bandX, bandY }) =>
+            api.updateSection(sectionId, { bandX, bandY })
+          )
+        );
+      } catch (err) {
+        console.error('Update section band positions failed:', err);
+        await get().fetchScreens();
+        throw err;
+      }
+    },
+
+    updateScreenName: async (oldId, newId) => {
+      markUndoAvailable(set, get);
+      try {
+        const updated = await api.updateScreen(oldId, { id: newId });
+        // Server renamed the screen and rewrote all button.target references.
+        // Mirror that locally so we don't need to refetch.
+        set({
+          screens: get().screens.map((s) => {
+            let next = s;
+            if (s.id === oldId) {
+              next = { ...next, ...updated };
+            }
+            if (next.buttons.some((b) => b.target === oldId)) {
+              next = {
+                ...next,
+                buttons: next.buttons.map((b) =>
+                  b.target === oldId ? { ...b, target: newId } : b
+                ),
+              };
+            }
+            return next;
+          }),
+          sections: get().sections.map((sec) =>
+            sec.rootScreenId === oldId ? { ...sec, rootScreenId: newId } : sec
+          ),
+        });
+        if (get().selectedScreenId === oldId) {
+          set({
+            selectedScreenId: newId,
+            selectedScreenIds: get().selectedScreenIds.map((id) =>
+              id === oldId ? newId : id
+            ),
+          });
+        }
+      } catch (err) {
+        console.error('Rename screen failed:', err);
+        throw err;
+      }
+    },
+
+    deleteScreen: async (screenId, options) => {
+      return get().deleteScreens([screenId], options);
+    },
+
+    deleteScreens: async (screenIds, { removeParentButtons = false } = {}) => {
+      const ids = [...new Set(screenIds)].filter(Boolean);
+      if (!ids.length) return;
+      markUndoAvailable(set, get);
+      try {
+        for (const id of ids) {
+          await api.deleteScreen(id, { removeParentButtons });
+        }
+        const removed = new Set(ids);
+        // Mirror the server-side cascade: drop deleted screens, optionally
+        // strip parent buttons that pointed at them, and clear root refs.
+        set({
+          screens: get()
+            .screens.filter((s) => !removed.has(s.id))
+            .map((s) => {
+              if (!removeParentButtons) return s;
+              if (!s.buttons.some((b) => b.target && removed.has(b.target))) {
+                return s;
+              }
+              return {
+                ...s,
+                buttons: s.buttons.filter(
+                  (b) => !b.target || !removed.has(b.target)
+                ),
+              };
+            }),
+          sections: get().sections.map((sec) =>
+            sec.rootScreenId && removed.has(sec.rootScreenId)
+              ? { ...sec, rootScreenId: null }
+              : sec
+          ),
+        });
+        const remaining = get().selectedScreenIds.filter((id) => !removed.has(id));
+        set({
+          selectedScreenIds: remaining,
+          selectedScreenId: remaining.length
+            ? remaining[remaining.length - 1]
+            : null,
+          selectedButtonId: remaining.length ? get().selectedButtonId : null,
+        });
+      } catch (err) {
+        console.error('Delete screens failed:', err);
+        await get().fetchScreens();
+        throw err;
+      }
+    },
+
+    selectScreen: (screenId, options = {}) => {
+      const { additive = false } = options;
+      if (!screenId) {
+        set({
+          selectedScreenId: null,
+          selectedScreenIds: [],
+          selectedButtonId: null,
+          isAddingHotspot: false,
+          importCompareScreenId: null,
+          importSourceButtonIds: [],
+        });
+        return;
+      }
+
+      let selectedScreenIds;
+      if (additive) {
+        const current = get().selectedScreenIds;
+        selectedScreenIds = current.includes(screenId)
+          ? current.filter((id) => id !== screenId)
+          : [...current, screenId];
+      } else {
+        selectedScreenIds = [screenId];
+      }
+
+      set({
+        selectedScreenId: screenId,
+        selectedScreenIds,
         selectedButtonId: null,
         isAddingHotspot: false,
         importCompareScreenId: null,
         importSourceButtonIds: [],
       });
-      return;
-    }
+    },
 
-    let selectedScreenIds;
-    if (additive) {
-      const current = get().selectedScreenIds;
-      selectedScreenIds = current.includes(screenId)
-        ? current.filter((id) => id !== screenId)
-        : [...current, screenId];
-    } else {
-      selectedScreenIds = [screenId];
-    }
+    setSelectedScreenIds: (screenIds) => {
+      const ids = Array.isArray(screenIds) ? screenIds.filter(Boolean) : [];
+      const prev = get().selectedScreenIds;
+      if (
+        prev.length === ids.length &&
+        prev.every((id, i) => id === ids[i])
+      ) {
+        return;
+      }
+      set({
+        selectedScreenIds: ids,
+        selectedScreenId: ids.length ? ids[ids.length - 1] : null,
+        selectedButtonId: null,
+        isAddingHotspot: false,
+        importCompareScreenId: null,
+        importSourceButtonIds: [],
+      });
+    },
 
-    set({
-      selectedScreenId: screenId,
-      selectedScreenIds,
-      selectedButtonId: null,
-      isAddingHotspot: false,
-      importCompareScreenId: null,
-      importSourceButtonIds: [],
-    });
-  },
+    setImportCompareScreenId: (screenId) => {
+      set({ importCompareScreenId: screenId || null, importSourceButtonIds: [] });
+    },
 
-  setSelectedScreenIds: (screenIds) => {
-    const ids = Array.isArray(screenIds) ? screenIds.filter(Boolean) : [];
-    const prev = get().selectedScreenIds;
-    if (
-      prev.length === ids.length &&
-      prev.every((id, i) => id === ids[i])
-    ) {
-      return;
-    }
-    set({
-      selectedScreenIds: ids,
-      selectedScreenId: ids.length ? ids[ids.length - 1] : null,
-      selectedButtonId: null,
-      isAddingHotspot: false,
-      importCompareScreenId: null,
-      importSourceButtonIds: [],
-    });
-  },
+    setImportSourceButtonIds: (buttonIds) => {
+      set({
+        importSourceButtonIds: Array.isArray(buttonIds) ? buttonIds : [],
+      });
+    },
 
-  setImportCompareScreenId: (screenId) => {
-    set({ importCompareScreenId: screenId || null, importSourceButtonIds: [] });
-  },
+    toggleImportSourceButtonId: (buttonId) => {
+      if (!buttonId) return;
+      const ids = get().importSourceButtonIds;
+      set({
+        importSourceButtonIds: ids.includes(buttonId)
+          ? ids.filter((id) => id !== buttonId)
+          : [...ids, buttonId],
+      });
+    },
 
-  setImportSourceButtonIds: (buttonIds) => {
-    set({
-      importSourceButtonIds: Array.isArray(buttonIds) ? buttonIds : [],
-    });
-  },
+    selectImportSourceButton: (buttonId, { additive = false } = {}) => {
+      if (!buttonId) {
+        set({ importSourceButtonIds: [] });
+        return;
+      }
+      if (additive) {
+        get().toggleImportSourceButtonId(buttonId);
+        return;
+      }
+      set({ importSourceButtonIds: [buttonId] });
+    },
 
-  toggleImportSourceButtonId: (buttonId) => {
-    if (!buttonId) return;
-    const ids = get().importSourceButtonIds;
-    set({
-      importSourceButtonIds: ids.includes(buttonId)
-        ? ids.filter((id) => id !== buttonId)
-        : [...ids, buttonId],
-    });
-  },
+    selectButton: (buttonId) => {
+      const prevId = get().selectedButtonId;
+      const nextId = buttonId ?? null;
+      const screenId = get().selectedScreenId;
+      if (prevId && prevId !== nextId && screenId) {
+        void flushButtonSaveNow(get, set, screenId, prevId);
+      }
+      set({ selectedButtonId: nextId });
+    },
 
-  selectImportSourceButton: (buttonId, { additive = false } = {}) => {
-    if (!buttonId) {
-      set({ importSourceButtonIds: [] });
-      return;
-    }
-    if (additive) {
-      get().toggleImportSourceButtonId(buttonId);
-      return;
-    }
-    set({ importSourceButtonIds: [buttonId] });
-  },
+    setAddingHotspot: (val) => {
+      set({ isAddingHotspot: val });
+    },
 
-  selectButton: (buttonId) => {
-    const prevId = get().selectedButtonId;
-    const nextId = buttonId ?? null;
-    const screenId = get().selectedScreenId;
-    if (prevId && prevId !== nextId && screenId) {
-      void flushButtonSaveNow(get, set, screenId, prevId);
-    }
-    set({ selectedButtonId: nextId });
-  },
+    copyButtonRect: ({ top, left, width, height }) => {
+      const clip = {
+        top: Math.round(top),
+        left: Math.round(left),
+        width: Math.round(width),
+        height: Math.round(height),
+      };
+      persistButtonRectClipboard(clip);
+      set({ buttonRectClipboard: clip });
+    },
 
-  setAddingHotspot: (val) => {
-    set({ isAddingHotspot: val });
-  },
+    clearButtonRectClipboard: () => {
+      persistButtonRectClipboard(null);
+      set({ buttonRectClipboard: null });
+    },
 
-  copyButtonRect: ({ top, left, width, height }) => {
-    const clip = {
-      top: Math.round(top),
-      left: Math.round(left),
-      width: Math.round(width),
-      height: Math.round(height),
-    };
-    persistButtonRectClipboard(clip);
-    set({ buttonRectClipboard: clip });
-  },
+    // Serial
+    fetchSerialStatus: async () => {
+      try {
+        const data = await api.getSerialStatus();
+        set({ serialStatus: data.status });
+      } catch {
+        set({ serialStatus: 'disconnected' });
+      }
+    },
 
-  clearButtonRectClipboard: () => {
-    persistButtonRectClipboard(null);
-    set({ buttonRectClipboard: null });
-  },
+    connectSerial: async () => {
+      set({ serialStatus: 'connecting' });
+      try {
+        const data = await api.connectSerial();
+        set({ serialStatus: data.status });
+      } catch (err) {
+        set({ serialStatus: 'disconnected' });
+        console.error('Serial connect failed:', err);
+        throw err;
+      }
+    },
 
-  // Serial
-  fetchSerialStatus: async () => {
-    try {
-      const data = await api.getSerialStatus();
-      set({ serialStatus: data.status });
-    } catch {
-      set({ serialStatus: 'disconnected' });
-    }
-  },
-
-  connectSerial: async () => {
-    set({ serialStatus: 'connecting' });
-    try {
-      const data = await api.connectSerial();
-      set({ serialStatus: data.status });
-    } catch (err) {
-      set({ serialStatus: 'disconnected' });
-      console.error('Serial connect failed:', err);
-      throw err;
-    }
-  },
-
-  disconnectSerial: async () => {
-    try {
-      await api.disconnectSerial();
-      set({ serialStatus: 'disconnected' });
-    } catch (err) {
-      console.error('Serial disconnect failed:', err);
-    }
-  },
-}));
+    disconnectSerial: async () => {
+      try {
+        await api.disconnectSerial();
+        set({ serialStatus: 'disconnected' });
+      } catch (err) {
+        console.error('Serial disconnect failed:', err);
+      }
+    },
+  };
+});
 
 export default useStore;

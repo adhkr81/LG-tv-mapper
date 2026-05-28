@@ -4,7 +4,6 @@ import { fileURLToPath } from 'url';
 import { v4 as uuidv4 } from 'uuid';
 import config from '../config.js';
 import {
-  buttonFromEmulator,
   buttonToEmulator,
   parsePx,
   screenFromEmulator,
@@ -20,32 +19,35 @@ const SCREENSHOTS_DIR = path.join(DATA_DIR, 'screenshots');
 
 const DEFAULT_BUTTON_SIZE = { width: 120, height: 60 };
 
+/** Time (ms) the in-memory state stays "dirty" before we write it to disk. */
+const FLUSH_DEBOUNCE_MS = 250;
+/** Hard ceiling so a sustained drag still flushes occasionally. */
+const FLUSH_MAX_DELAY_MS = 2000;
+
 /** @typedef {{ id: string, name: string, rootScreenId: string | null, bandX?: number | null, bandY?: number | null, collapsed?: boolean }} Section */
-/** @typedef {{ graphX?: number, graphY?: number, sectionId?: string | null, buttonIds?: string[] }} ScreenMeta */
-/**
- * @typedef {Object} MapperButton
- * @property {string} id
- * @property {string} screenId
- * @property {string} label
- * @property {string} target
- * @property {number} left
- * @property {number} top
- * @property {number} width
- * @property {number} height
- * @property {Object} [popover]
- * @property {string} [type]
- */
-/**
- * @typedef {Object} MapperScreen
- * @property {string} id
- * @property {string} image
- * @property {string} img_filename
- * @property {number} preset
- * @property {MapperButton[]} buttons
- * @property {number} graphX
- * @property {number} graphY
- * @property {string | null} sectionId
- */
+
+/* -------------------------------------------------------------------------- */
+/* In-memory state                                                            */
+/* -------------------------------------------------------------------------- */
+
+const state = {
+  screens: /** @type {object[]} */ ([]),
+  sections: /** @type {Section[]} */ ([]),
+  imageConfig: { ...DEFAULT_IMAGE_CONFIG },
+  /** Monotonic counter, bumped on every mutation; powers ETag/304 responses. */
+  version: 0,
+  loaded: false,
+};
+
+/** True when state has unsaved mutations. */
+let dirty = false;
+let flushTimer = null;
+let flushDeadlineTimer = null;
+let shutdownRegistered = false;
+
+/* -------------------------------------------------------------------------- */
+/* Disk I/O helpers                                                           */
+/* -------------------------------------------------------------------------- */
 
 function sleepMs(ms) {
   const end = Date.now() + ms;
@@ -97,19 +99,15 @@ function readJson(filePath, fallback) {
   }
 }
 
-function readEmulatorMap() {
+function readEmulatorMapFromDisk() {
   ensureDataDir();
-  if (!fs.existsSync(config.emulatorDataPath)) {
-    return null;
-  }
+  if (!fs.existsSync(config.emulatorDataPath)) return null;
   const parsed = readJson(config.emulatorDataPath, null);
-  if (!parsed || Array.isArray(parsed) || typeof parsed !== 'object') {
-    return {};
-  }
+  if (!parsed || Array.isArray(parsed) || typeof parsed !== 'object') return {};
   return parsed;
 }
 
-function readMetaFile() {
+function readMetaFileFromDisk() {
   ensureDataDir();
   if (!fs.existsSync(config.mapperMetaPath)) {
     return {
@@ -128,37 +126,12 @@ function readMetaFile() {
   };
 }
 
-function writeEmulatorAndMeta(emulatorMap, meta) {
-  ensureDataDir();
-  atomicWrite(config.emulatorDataPath, emulatorMap);
-  atomicWrite(config.mapperMetaPath, meta);
-}
+/* -------------------------------------------------------------------------- */
+/* Image filename resolution (cached per screen)                              */
+/* -------------------------------------------------------------------------- */
 
-function unlinkScreenshotFile(filename) {
-  const name = String(filename || '').trim();
-  if (!name) return;
-  const filePath = getScreenshotPath(name);
-  if (!fs.existsSync(filePath)) return;
-  const stat = fs.statSync(filePath);
-  if (!stat.isFile()) return;
-  fs.unlinkSync(filePath);
-}
-
-function deleteScreenshotFiles(screen) {
-  const names = new Set();
-  if (screen.image?.trim()) names.add(screen.image.trim());
-  const base = screen.img_filename || screen.id;
-  if (base) {
-    for (const ext of ['.jpg', '.jpeg', '.png', '.webp']) {
-      names.add(base.includes('.') ? base : `${base}${ext}`);
-    }
-  }
-  for (const name of names) {
-    unlinkScreenshotFile(name);
-  }
-}
-
-function resolveImageFilename(screenId, imgFilename) {
+/** Resolve `img_filename` → an existing screenshot file (probe extensions). */
+function resolveImageFilenameOnDisk(screenId, imgFilename) {
   if (imgFilename === '') return '';
   const base = imgFilename || screenId;
   for (const ext of ['.jpg', '.jpeg', '.png', '.webp']) {
@@ -170,45 +143,49 @@ function resolveImageFilename(screenId, imgFilename) {
   return base.includes('.') ? base : `${base}.jpg`;
 }
 
-/** Keep mapper buttonIds aligned with emulator button count (stable across loads). */
+/** Set the resolved `image` filename on an in-memory screen. */
+function applyResolvedImage(screen) {
+  screen.image = resolveImageFilenameOnDisk(screen.id, screen.img_filename);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Conversion: emulator/meta JSON  <->  in-memory screen shape                */
+/* -------------------------------------------------------------------------- */
+
 function alignScreenButtonIds(screen, screenMeta) {
   const storedIds = screenMeta?.buttonIds || [];
-  let dirty = false;
+  let dirtyAlign = false;
   const buttons = screen.buttons.map((btn, i) => {
     const stableId = storedIds[i] || btn.id;
     if (stableId && stableId === btn.id) return btn;
-    dirty = true;
+    dirtyAlign = true;
     return { ...btn, id: stableId || uuidv4() };
   });
-  if (storedIds.length !== buttons.length) dirty = true;
-  return { screen: { ...screen, buttons }, dirty };
+  if (storedIds.length !== buttons.length) dirtyAlign = true;
+  return { screen: { ...screen, buttons }, dirty: dirtyAlign };
 }
 
 function emulatorAndMetaToScreens(emulatorMap, meta) {
-  return Object.entries(emulatorMap).map(([screenId, entry]) => {
+  let needsRepersist = false;
+  const screens = Object.entries(emulatorMap).map(([screenId, entry]) => {
     const screenMeta = meta.screens[screenId];
     const imgFilename =
       typeof entry.img_filename === 'string' ? entry.img_filename : screenId;
-    const image = resolveImageFilename(screenId, imgFilename);
+    const image = resolveImageFilenameOnDisk(screenId, imgFilename);
     const screen = screenFromEmulator(screenId, entry, screenMeta, image);
-    const { screen: aligned, dirty } = alignScreenButtonIds(screen, screenMeta);
+    const { screen: aligned, dirty: alignDirty } = alignScreenButtonIds(
+      screen,
+      screenMeta
+    );
     aligned.sourceWidth = screenMeta?.sourceWidth ?? null;
     aligned.sourceHeight = screenMeta?.sourceHeight ?? null;
-    aligned._buttonIdsDirty = dirty;
+    if (alignDirty) needsRepersist = true;
     return aligned;
   });
+  return { screens, needsRepersist };
 }
 
-function repairAndStripButtonIdFlags(screens, sections) {
-  const needsPersist = screens.some((s) => s._buttonIdsDirty);
-  const cleaned = screens.map(({ _buttonIdsDirty, ...screen }) => screen);
-  if (needsPersist) {
-    persist(cleaned, sections);
-  }
-  return cleaned;
-}
-
-function screensToEmulatorAndMeta(screens, sections, metaFile) {
+function screensToEmulatorAndMeta(screens, sections, imageConfig) {
   const emulatorMap = {};
   const metaScreens = {};
 
@@ -229,16 +206,14 @@ function screensToEmulatorAndMeta(screens, sections, metaFile) {
     meta: {
       sections,
       screens: metaScreens,
-      config: metaFile.config,
+      config: { imageSize: imageConfig },
     },
   };
 }
 
-function persist(screens, sections) {
-  const metaFile = readMetaFile();
-  const { emulatorMap, meta } = screensToEmulatorAndMeta(screens, sections, metaFile);
-  writeEmulatorAndMeta(emulatorMap, meta);
-}
+/* -------------------------------------------------------------------------- */
+/* Legacy migration                                                           */
+/* -------------------------------------------------------------------------- */
 
 function loadLegacy() {
   if (!fs.existsSync(LEGACY_FILE)) return null;
@@ -259,14 +234,17 @@ function loadLegacy() {
   return { sections, screens };
 }
 
-function migrateLegacyIfNeeded() {
-  const existing = readEmulatorMap();
-  if (existing !== null && Object.keys(existing).length > 0) return;
+function migrateLegacyIntoState() {
+  const existing = readEmulatorMapFromDisk();
+  if (existing !== null && Object.keys(existing).length > 0) return false;
 
   const legacy = loadLegacy();
-  if (!legacy || legacy.screens.length === 0) return;
+  if (!legacy || legacy.screens.length === 0) return false;
 
-  persist(legacy.screens, legacy.sections);
+  state.screens = legacy.screens;
+  state.sections = legacy.sections;
+  markDirty();
+  flushSync(); // write the migrated state now so the legacy file is safe to rename
   const backup = LEGACY_FILE + '.bak';
   if (!fs.existsSync(backup)) {
     fs.renameSync(LEGACY_FILE, backup);
@@ -274,38 +252,110 @@ function migrateLegacyIfNeeded() {
   console.log(
     `[DataStore] Migrated ${legacy.screens.length} screen(s) from screens.json → emulator.json`
   );
+  return true;
 }
 
-function readAll() {
-  migrateLegacyIfNeeded();
+/* -------------------------------------------------------------------------- */
+/* Load + flush                                                               */
+/* -------------------------------------------------------------------------- */
 
-  const emulatorMap = readEmulatorMap();
-  if (emulatorMap === null) {
-    const meta = readMetaFile();
-    return { sections: [], screens: [], imageConfig: meta.config.imageSize };
+function loadStateFromDisk() {
+  const migrated = migrateLegacyIntoState();
+  if (migrated) {
+    state.loaded = true;
+    return;
   }
 
-  const meta = readMetaFile();
-  const loaded = emulatorAndMetaToScreens(emulatorMap, meta);
-  const screens = repairAndStripButtonIdFlags(loaded, meta.sections);
-  return { sections: meta.sections, screens, imageConfig: meta.config.imageSize };
+  const emulatorMap = readEmulatorMapFromDisk();
+  const meta = readMetaFileFromDisk();
+
+  state.imageConfig = meta.config.imageSize;
+  state.sections = meta.sections;
+
+  if (emulatorMap === null) {
+    state.screens = [];
+  } else {
+    const { screens, needsRepersist } = emulatorAndMetaToScreens(emulatorMap, meta);
+    state.screens = screens;
+    if (needsRepersist) markDirty();
+  }
+
+  state.loaded = true;
 }
 
-function writeAll(screens, sections) {
-  persist(screens, sections);
+function ensureLoaded() {
+  if (!state.loaded) loadStateFromDisk();
+  if (!shutdownRegistered) registerShutdownHooks();
 }
 
-/** Serialize read–modify–write so rapid hotspot drags do not clobber each other. */
-let storeLock = Promise.resolve();
-
-function runSerialized(fn) {
-  const result = storeLock.then(() => fn());
-  storeLock = result.then(
-    () => undefined,
-    () => undefined
+function persistToDisk() {
+  ensureDataDir();
+  const { emulatorMap, meta } = screensToEmulatorAndMeta(
+    state.screens,
+    state.sections,
+    state.imageConfig
   );
-  return result;
+  atomicWrite(config.emulatorDataPath, emulatorMap);
+  atomicWrite(config.mapperMetaPath, meta);
 }
+
+/** Schedule a debounced flush. Coalesces bursts of mutations into one write. */
+function markDirty() {
+  state.version += 1;
+  dirty = true;
+  if (flushTimer) clearTimeout(flushTimer);
+  flushTimer = setTimeout(runFlush, FLUSH_DEBOUNCE_MS);
+  if (!flushDeadlineTimer) {
+    flushDeadlineTimer = setTimeout(runFlush, FLUSH_MAX_DELAY_MS);
+  }
+}
+
+function runFlush() {
+  if (flushTimer) {
+    clearTimeout(flushTimer);
+    flushTimer = null;
+  }
+  if (flushDeadlineTimer) {
+    clearTimeout(flushDeadlineTimer);
+    flushDeadlineTimer = null;
+  }
+  if (!dirty) return;
+  dirty = false;
+  try {
+    persistToDisk();
+  } catch (err) {
+    console.error('[DataStore] Flush failed; will retry on next mutation:', err);
+    dirty = true;
+  }
+}
+
+/** Synchronous flush — used on shutdown and the rare cross-cutting op (undo). */
+function flushSync() {
+  runFlush();
+}
+
+function registerShutdownHooks() {
+  shutdownRegistered = true;
+  const onExit = () => {
+    try {
+      flushSync();
+    } catch {
+      /* ignore */
+    }
+  };
+  process.on('beforeExit', onExit);
+  process.on('exit', onExit);
+  for (const sig of ['SIGINT', 'SIGTERM', 'SIGHUP']) {
+    process.on(sig, () => {
+      onExit();
+      process.exit(0);
+    });
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Internal mutation helpers                                                  */
+/* -------------------------------------------------------------------------- */
 
 function finitePx(value, fallback = 0) {
   const n = Math.round(Number(value));
@@ -380,17 +430,12 @@ function layoutForSection(screens, sectionId) {
     const row = Math.floor(n / 4);
     const candidate = { graphX: col * LAYOUT_COL_STEP, graphY: row * LAYOUT_ROW_STEP };
     const overlaps = occupied.some((p) =>
-      positionsOverlapLayout(
-        { x: candidate.graphX, y: candidate.graphY },
-        p
-      )
+      positionsOverlapLayout({ x: candidate.graphX, y: candidate.graphY }, p)
     );
     if (!overlaps) return candidate;
   }
 
-  const maxX = occupied.length
-    ? Math.max(...occupied.map((p) => p.x))
-    : 0;
+  const maxX = occupied.length ? Math.max(...occupied.map((p) => p.x)) : 0;
   return {
     graphX: maxX + 280,
     graphY: inSection.length * LAYOUT_ROW_STEP,
@@ -405,7 +450,6 @@ function renameScreenIdInTargets(screens, oldId, newId) {
   }
 }
 
-/** Remove parent hotspots that navigate to deleted screen(s). */
 function removeButtonsTargetingScreens(screens, targetIds) {
   const idSet =
     targetIds instanceof Set
@@ -423,7 +467,33 @@ function removeButtonsTargetingScreens(screens, targetIds) {
   }
 }
 
-// ---- Public API (used by screens, buttons, sections) ----
+function unlinkScreenshotFile(filename) {
+  const name = String(filename || '').trim();
+  if (!name) return;
+  const filePath = getScreenshotPath(name);
+  if (!fs.existsSync(filePath)) return;
+  const stat = fs.statSync(filePath);
+  if (!stat.isFile()) return;
+  fs.unlinkSync(filePath);
+}
+
+function deleteScreenshotFiles(screen) {
+  const names = new Set();
+  if (screen.image?.trim()) names.add(screen.image.trim());
+  const base = screen.img_filename || screen.id;
+  if (base) {
+    for (const ext of ['.jpg', '.jpeg', '.png', '.webp']) {
+      names.add(base.includes('.') ? base : `${base}${ext}`);
+    }
+  }
+  for (const name of names) {
+    unlinkScreenshotFile(name);
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Public API                                                                 */
+/* -------------------------------------------------------------------------- */
 
 export function getScreenshotsDir() {
   ensureDataDir();
@@ -434,23 +504,45 @@ export function getScreenshotPath(filename) {
   return path.join(getScreenshotsDir(), filename);
 }
 
+/** Version counter — used by routes for cheap ETag generation. */
+export function getStateVersion() {
+  ensureLoaded();
+  return state.version;
+}
+
+/** Force a synchronous flush. Used for cross-cutting ops (undo) and tests. */
+export function flushDataStore() {
+  ensureLoaded();
+  flushSync();
+}
+
 export function replaceMapperState(screens, sections) {
   if (!Array.isArray(screens) || !Array.isArray(sections)) {
     throw new Error('screens and sections must be arrays');
   }
-  return runSerialized(() => {
-    writeAll(screens, sections);
-    const loaded = readAll();
-    return { screens: loaded.screens, sections: loaded.sections };
-  });
+  ensureLoaded();
+  // Round-trip through emulator format to normalize the incoming shape.
+  const { emulatorMap, meta } = screensToEmulatorAndMeta(
+    screens,
+    sections,
+    state.imageConfig
+  );
+  const { screens: normalized } = emulatorAndMetaToScreens(emulatorMap, meta);
+  state.screens = normalized;
+  state.sections = sections;
+  markDirty();
+  flushSync();
+  return { screens: state.screens, sections: state.sections };
 }
 
 export function getAllScreens() {
-  return readAll().screens;
+  ensureLoaded();
+  return state.screens;
 }
 
 export function getScreen(id) {
-  return readAll().screens.find((s) => s.id === id) || null;
+  ensureLoaded();
+  return state.screens.find((s) => s.id === id) || null;
 }
 
 export function createScreen({
@@ -460,24 +552,22 @@ export function createScreen({
   graphX,
   graphY,
 }) {
-  const { sections, screens } = readAll();
-  if (screens.find((s) => s.id === id)) {
+  ensureLoaded();
+  if (state.screens.find((s) => s.id === id)) {
     throw new Error(`Screen "${id}" already exists`);
   }
 
-  const i = screens.length;
+  const i = state.screens.length;
   let layout;
   if (graphX !== undefined && graphY !== undefined) {
     layout = { graphX, graphY };
   } else if (sectionId) {
-    layout = layoutForSection(screens, sectionId);
+    layout = layoutForSection(state.screens, sectionId);
   } else {
     layout = { graphX: (i % 4) * 220, graphY: Math.floor(i / 4) * 185 };
   }
 
-  const img_filename = image?.trim()
-    ? stripImageExtension(image) || id
-    : '';
+  const img_filename = image?.trim() ? stripImageExtension(image) || id : '';
   const screen = {
     id,
     image: image || '',
@@ -490,166 +580,169 @@ export function createScreen({
     ...layout,
   };
 
-  screens.push(screen);
-  writeAll(screens, sections);
+  applyResolvedImage(screen);
+  state.screens.push(screen);
+  markDirty();
   return screen;
 }
 
 export function updateScreen(id, updates) {
-  const { sections, screens } = readAll();
-  const idx = screens.findIndex((s) => s.id === id);
+  ensureLoaded();
+  const idx = state.screens.findIndex((s) => s.id === id);
   if (idx === -1) throw new Error(`Screen "${id}" not found`);
+
+  const screen = state.screens[idx];
 
   if (updates.id && updates.id !== id) {
     const newId = updates.id;
-    if (screens.find((s) => s.id === newId)) {
+    if (state.screens.find((s) => s.id === newId)) {
       throw new Error(`Screen "${newId}" already exists`);
     }
 
-    renameScreenIdInTargets(screens, id, newId);
-    screens[idx].id = newId;
-    screens[idx].img_filename = newId;
-    screens[idx].buttons = screens[idx].buttons.map((b) => ({
-      ...b,
-      screenId: newId,
-    }));
+    renameScreenIdInTargets(state.screens, id, newId);
+    screen.id = newId;
+    screen.img_filename = newId;
+    screen.buttons = screen.buttons.map((b) => ({ ...b, screenId: newId }));
 
-    sections.forEach((sec) => {
+    state.sections.forEach((sec) => {
       if (sec.rootScreenId === id) sec.rootScreenId = newId;
     });
 
     id = newId;
+    applyResolvedImage(screen);
   }
 
-  if (updates.graphX !== undefined) screens[idx].graphX = updates.graphX;
-  if (updates.graphY !== undefined) screens[idx].graphY = updates.graphY;
+  if (updates.graphX !== undefined) screen.graphX = updates.graphX;
+  if (updates.graphY !== undefined) screen.graphY = updates.graphY;
   if (updates.sectionId !== undefined) {
-    screens[idx].sectionId = updates.sectionId || null;
+    screen.sectionId = updates.sectionId || null;
   }
-  if (updates.preset !== undefined) screens[idx].preset = updates.preset;
+  if (updates.preset !== undefined) screen.preset = updates.preset;
   if (updates.image !== undefined) {
     if (updates.image === null || updates.image === '') {
-      deleteScreenshotFiles(screens[idx]);
-      screens[idx].image = '';
-      screens[idx].img_filename = '';
+      deleteScreenshotFiles(screen);
+      screen.image = '';
+      screen.img_filename = '';
     } else {
-      screens[idx].image = updates.image;
-      screens[idx].img_filename =
-        stripImageExtension(updates.image) || screens[idx].id;
+      screen.image = updates.image;
+      screen.img_filename =
+        stripImageExtension(updates.image) || screen.id;
+      applyResolvedImage(screen);
     }
   }
-
   if (updates.sourceWidth !== undefined) {
-    screens[idx].sourceWidth = updates.sourceWidth || null;
+    screen.sourceWidth = updates.sourceWidth || null;
   }
   if (updates.sourceHeight !== undefined) {
-    screens[idx].sourceHeight = updates.sourceHeight || null;
+    screen.sourceHeight = updates.sourceHeight || null;
   }
 
-  writeAll(screens, sections);
-  return screens[idx];
+  markDirty();
+  return screen;
 }
 
 export function deleteScreen(id, { removeParentButtons = false } = {}) {
-  const { sections, screens } = readAll();
-  const idx = screens.findIndex((s) => s.id === id);
+  ensureLoaded();
+  const idx = state.screens.findIndex((s) => s.id === id);
   if (idx === -1) throw new Error(`Screen "${id}" not found`);
 
-  const screen = screens[idx];
+  const screen = state.screens[idx];
   deleteScreenshotFiles(screen);
 
-  sections.forEach((sec) => {
+  state.sections.forEach((sec) => {
     if (sec.rootScreenId === id) sec.rootScreenId = null;
   });
 
   if (removeParentButtons) {
-    removeButtonsTargetingScreens(screens, id);
+    removeButtonsTargetingScreens(state.screens, id);
   }
-  screens.splice(idx, 1);
-  writeAll(screens, sections);
+  state.screens.splice(idx, 1);
+  markDirty();
 }
 
 export function getButtons(screenId) {
-  const screen = getScreen(screenId);
+  ensureLoaded();
+  const screen = state.screens.find((s) => s.id === screenId);
   return screen ? screen.buttons : [];
 }
 
 export function addButton(screenId, data) {
-  return runSerialized(() => {
-    const { sections, screens } = readAll();
-    const screen = screens.find((s) => s.id === screenId);
-    if (!screen) throw new Error(`Screen "${screenId}" not found`);
+  ensureLoaded();
+  const screen = state.screens.find((s) => s.id === screenId);
+  if (!screen) throw new Error(`Screen "${screenId}" not found`);
 
-    const normalized = normalizeMapperButton(screenId, data);
-    const button = {
-      id: uuidv4(),
-      screenId,
-      label: normalized.label,
-      target: normalized.target,
-      left: normalized.left,
-      top: normalized.top,
-      width: normalized.width,
-      height: normalized.height,
-      ...(normalized.popover ? { popover: normalized.popover } : {}),
-      ...(normalized.type ? { type: normalized.type } : {}),
-    };
+  const normalized = normalizeMapperButton(screenId, data);
+  const button = {
+    id: uuidv4(),
+    screenId,
+    label: normalized.label,
+    target: normalized.target,
+    left: normalized.left,
+    top: normalized.top,
+    width: normalized.width,
+    height: normalized.height,
+    ...(normalized.popover ? { popover: normalized.popover } : {}),
+    ...(normalized.type ? { type: normalized.type } : {}),
+  };
 
-    screen.buttons.push(button);
-    writeAll(screens, sections);
-    return button;
-  });
+  screen.buttons.push(button);
+  markDirty();
+  return button;
 }
 
 export function updateButton(screenId, buttonId, updates) {
-  return runSerialized(() => {
-    const patch = sanitizeButtonUpdates(updates);
-    const { sections, screens } = readAll();
-    const screen = screens.find((s) => s.id === screenId);
-    if (!screen) throw new Error(`Screen "${screenId}" not found`);
+  ensureLoaded();
+  const patch = sanitizeButtonUpdates(updates);
+  const screen = state.screens.find((s) => s.id === screenId);
+  if (!screen) throw new Error(`Screen "${screenId}" not found`);
 
-    const btn = screen.buttons.find((b) => b.id === buttonId);
-    if (!btn) throw new Error(`Button "${buttonId}" not found`);
+  const btn = screen.buttons.find((b) => b.id === buttonId);
+  if (!btn) throw new Error(`Button "${buttonId}" not found`);
 
-    if (patch.label !== undefined) {
-      btn.label = patch.label;
+  if (patch.label !== undefined) btn.label = patch.label;
+  if (patch.target !== undefined) btn.target = patch.target;
+  if (patch.left !== undefined) btn.left = patch.left;
+  if (patch.top !== undefined) btn.top = patch.top;
+  if (patch.width !== undefined) btn.width = patch.width;
+  if (patch.height !== undefined) btn.height = patch.height;
+  if (patch.popover !== undefined) {
+    if (patch.popover === null) {
+      delete btn.popover;
+    } else {
+      btn.popover = patch.popover;
     }
-    if (patch.target !== undefined) btn.target = patch.target;
-    if (patch.left !== undefined) btn.left = patch.left;
-    if (patch.top !== undefined) btn.top = patch.top;
-    if (patch.width !== undefined) btn.width = patch.width;
-    if (patch.height !== undefined) btn.height = patch.height;
-    if (patch.popover !== undefined) btn.popover = patch.popover;
-    if (patch.type !== undefined) btn.type = patch.type || undefined;
+  }
+  if (patch.type !== undefined) {
+    if (patch.type) btn.type = patch.type;
+    else delete btn.type;
+  }
 
-    if (patch.x !== undefined || patch.y !== undefined) {
-      const merged = normalizeMapperButton(screenId, {
-        ...btn,
-        x: patch.x ?? btn.x,
-        y: patch.y ?? btn.y,
-      });
-      btn.left = merged.left;
-      btn.top = merged.top;
-      btn.width = merged.width;
-      btn.height = merged.height;
-    }
+  if (patch.x !== undefined || patch.y !== undefined) {
+    const merged = normalizeMapperButton(screenId, {
+      ...btn,
+      x: patch.x ?? btn.x,
+      y: patch.y ?? btn.y,
+    });
+    btn.left = merged.left;
+    btn.top = merged.top;
+    btn.width = merged.width;
+    btn.height = merged.height;
+  }
 
-    writeAll(screens, sections);
-    return normalizeMapperButton(screenId, btn);
-  });
+  markDirty();
+  return normalizeMapperButton(screenId, btn);
 }
 
 export function deleteButton(screenId, buttonId) {
-  return runSerialized(() => {
-    const { sections, screens } = readAll();
-    const screen = screens.find((s) => s.id === screenId);
-    if (!screen) throw new Error(`Screen "${screenId}" not found`);
+  ensureLoaded();
+  const screen = state.screens.find((s) => s.id === screenId);
+  if (!screen) throw new Error(`Screen "${screenId}" not found`);
 
-    const idx = screen.buttons.findIndex((b) => b.id === buttonId);
-    if (idx === -1) throw new Error(`Button "${buttonId}" not found`);
+  const idx = screen.buttons.findIndex((b) => b.id === buttonId);
+  if (idx === -1) throw new Error(`Button "${buttonId}" not found`);
 
-    screen.buttons.splice(idx, 1);
-    writeAll(screens, sections);
-  });
+  screen.buttons.splice(idx, 1);
+  markDirty();
 }
 
 export function importButtonsFromScreen(
@@ -657,135 +750,136 @@ export function importButtonsFromScreen(
   sourceScreenId,
   { includeTargets = true, buttonIds = null } = {}
 ) {
-  return runSerialized(() => {
-    if (targetScreenId === sourceScreenId) {
-      throw new Error('Cannot import buttons from the same screen');
-    }
-    const { sections, screens } = readAll();
-    const target = screens.find((s) => s.id === targetScreenId);
-    const source = screens.find((s) => s.id === sourceScreenId);
-    if (!target) throw new Error(`Screen "${targetScreenId}" not found`);
-    if (!source) throw new Error(`Screen "${sourceScreenId}" not found`);
-    if (source.buttons.length === 0) {
-      throw new Error(`Screen "${sourceScreenId}" has no buttons to import`);
-    }
+  ensureLoaded();
+  if (targetScreenId === sourceScreenId) {
+    throw new Error('Cannot import buttons from the same screen');
+  }
+  const target = state.screens.find((s) => s.id === targetScreenId);
+  const source = state.screens.find((s) => s.id === sourceScreenId);
+  if (!target) throw new Error(`Screen "${targetScreenId}" not found`);
+  if (!source) throw new Error(`Screen "${sourceScreenId}" not found`);
+  if (source.buttons.length === 0) {
+    throw new Error(`Screen "${sourceScreenId}" has no buttons to import`);
+  }
 
-    const idSet = buttonIds?.length ? new Set(buttonIds) : null;
-    const templates = idSet
-      ? source.buttons.filter((b) => idSet.has(b.id))
-      : source.buttons;
-    if (templates.length === 0) {
-      throw new Error('No matching buttons to import');
-    }
+  const idSet = buttonIds?.length ? new Set(buttonIds) : null;
+  const templates = idSet
+    ? source.buttons.filter((b) => idSet.has(b.id))
+    : source.buttons;
+  if (templates.length === 0) {
+    throw new Error('No matching buttons to import');
+  }
 
-    const imported = templates.map((template) => {
-      const normalized = normalizeMapperButton(targetScreenId, template);
-      const button = {
-        id: uuidv4(),
-        screenId: targetScreenId,
-        label: normalized.label,
-        target: includeTargets ? normalized.target : '',
-        left: normalized.left,
-        top: normalized.top,
-        width: normalized.width,
-        height: normalized.height,
-        ...(normalized.popover ? { popover: normalized.popover } : {}),
-        ...(normalized.type ? { type: normalized.type } : {}),
-      };
-      target.buttons.push(button);
-      return button;
-    });
-
-    writeAll(screens, sections);
-    return imported;
+  const imported = templates.map((template) => {
+    const normalized = normalizeMapperButton(targetScreenId, template);
+    const button = {
+      id: uuidv4(),
+      screenId: targetScreenId,
+      label: normalized.label,
+      target: includeTargets ? normalized.target : '',
+      left: normalized.left,
+      top: normalized.top,
+      width: normalized.width,
+      height: normalized.height,
+      ...(normalized.popover ? { popover: normalized.popover } : {}),
+      ...(normalized.type ? { type: normalized.type } : {}),
+    };
+    target.buttons.push(button);
+    return button;
   });
+
+  markDirty();
+  return imported;
 }
 
 export function getAllSections() {
-  return readAll().sections;
+  ensureLoaded();
+  return state.sections;
 }
 
 export function getSection(id) {
-  return readAll().sections.find((s) => s.id === id) || null;
+  ensureLoaded();
+  return state.sections.find((s) => s.id === id) || null;
 }
 
 export function createSection({ id, name, rootScreenId = null }) {
-  const { sections, screens } = readAll();
-  if (sections.find((s) => s.id === id)) {
+  ensureLoaded();
+  if (state.sections.find((s) => s.id === id)) {
     throw new Error(`Section "${id}" already exists`);
   }
   const section = { id, name: name || id, rootScreenId };
-  sections.push(section);
-  writeAll(screens, sections);
+  state.sections.push(section);
+  markDirty();
   return section;
 }
 
 export function updateSection(id, updates) {
-  const { sections, screens } = readAll();
-  const idx = sections.findIndex((s) => s.id === id);
+  ensureLoaded();
+  const idx = state.sections.findIndex((s) => s.id === id);
   if (idx === -1) throw new Error(`Section "${id}" not found`);
+
+  const section = state.sections[idx];
 
   if (updates.id && updates.id !== id) {
     const newId = updates.id;
-    if (sections.find((s) => s.id === newId)) {
+    if (state.sections.find((s) => s.id === newId)) {
       throw new Error(`Section "${newId}" already exists`);
     }
-    screens.forEach((screen) => {
+    state.screens.forEach((screen) => {
       if (screen.sectionId === id) screen.sectionId = newId;
     });
-    sections[idx].id = newId;
+    section.id = newId;
     id = newId;
   }
 
-  if (updates.name !== undefined) sections[idx].name = updates.name;
+  if (updates.name !== undefined) section.name = updates.name;
   if (updates.rootScreenId !== undefined) {
-    sections[idx].rootScreenId = updates.rootScreenId || null;
+    section.rootScreenId = updates.rootScreenId || null;
   }
   if (updates.bandX !== undefined) {
-    sections[idx].bandX =
+    section.bandX =
       updates.bandX === null ? null : Math.round(Number(updates.bandX));
   }
   if (updates.bandY !== undefined) {
-    sections[idx].bandY =
+    section.bandY =
       updates.bandY === null ? null : Math.round(Number(updates.bandY));
   }
   if (updates.collapsed !== undefined) {
-    sections[idx].collapsed = Boolean(updates.collapsed);
+    section.collapsed = Boolean(updates.collapsed);
   }
 
-  writeAll(screens, sections);
-  return sections[idx];
+  markDirty();
+  return section;
 }
 
 export function deleteSection(id) {
-  const { sections, screens } = readAll();
-  const idx = sections.findIndex((s) => s.id === id);
+  ensureLoaded();
+  const idx = state.sections.findIndex((s) => s.id === id);
   if (idx === -1) throw new Error(`Section "${id}" not found`);
 
-  sections.splice(idx, 1);
-  screens.forEach((screen) => {
+  state.sections.splice(idx, 1);
+  state.screens.forEach((screen) => {
     if (screen.sectionId === id) screen.sectionId = null;
   });
-
-  writeAll(screens, sections);
+  markDirty();
 }
 
 export function getScreensInSection(sectionId) {
-  return readAll().screens.filter((s) => s.sectionId === sectionId);
+  ensureLoaded();
+  return state.screens.filter((s) => s.sectionId === sectionId);
 }
 
 export function getImageConfig() {
-  return readMetaFile().config.imageSize;
+  ensureLoaded();
+  return state.imageConfig;
 }
 
 export function updateImageConfig(updates) {
-  const metaFile = readMetaFile();
-  metaFile.config.imageSize = normalizeImageConfig({
-    ...metaFile.config.imageSize,
+  ensureLoaded();
+  state.imageConfig = normalizeImageConfig({
+    ...state.imageConfig,
     ...updates,
   });
-  const { sections, screens } = readAll();
-  const { emulatorMap, meta } = screensToEmulatorAndMeta(screens, sections, metaFile);
-  writeEmulatorAndMeta(emulatorMap, meta);
-  return metaFile.config.imageSize;
+  markDirty();
+  return state.imageConfig;
 }

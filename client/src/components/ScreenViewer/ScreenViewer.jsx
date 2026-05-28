@@ -81,7 +81,7 @@ const MIN_HOTSPOT_SIZE = 20;
 const DRAG_ACTIVATION_THRESHOLD = 8;
 
 export default function ScreenViewer() {
-  const screens = useStore((s) => s.screens);
+  const screensById = useStore((s) => s.screensById);
   const selectedScreenId = useStore((s) => s.selectedScreenId);
   const selectedButtonId = useStore((s) => s.selectedButtonId);
   const importCompareScreenId = useStore((s) => s.importCompareScreenId);
@@ -114,9 +114,9 @@ export default function ScreenViewer() {
     saveGraphOpenPreference(false);
   }, []);
 
-  const screen = screens.find((s) => s.id === selectedScreenId);
+  const screen = selectedScreenId ? screensById.get(selectedScreenId) : undefined;
   const compareScreen = importCompareScreenId
-    ? screens.find((s) => s.id === importCompareScreenId)
+    ? screensById.get(importCompareScreenId)
     : null;
   const isCompareMode = !!compareScreen;
   const hotspotSize = useMemo(() => defaultButtonSize(imageConfig), [imageConfig]);
@@ -563,9 +563,12 @@ function HotspotRegion({
   onUpdate,
   onDuplicate,
 }) {
-  const screens = useStore((s) => s.screens);
   const savedIntrinsic = normalizeButton(button);
-  const hasTarget = savedIntrinsic.target && screens.some((s) => s.id === savedIntrinsic.target);
+  // Subscribe to a boolean instead of the full `screens` array so this
+  // component doesn't re-render on every unrelated screen mutation.
+  const hasTarget = useStore((s) =>
+    Boolean(savedIntrinsic.target && s.screensById.has(savedIntrinsic.target))
+  );
 
   const screenForCoords = useMemo(
     () => ({

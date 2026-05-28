@@ -1,9 +1,19 @@
 import { Router } from 'express';
-import { getImageConfig, updateImageConfig } from '../services/data-store.js';
+import {
+  getImageConfig,
+  getStateVersion,
+  updateImageConfig,
+} from '../services/data-store.js';
 
 const router = Router();
 
 router.get('/', (req, res) => {
+  const etag = `W/"v${getStateVersion()}"`;
+  res.set('ETag', etag);
+  res.set('Cache-Control', 'no-cache');
+  if (req.headers['if-none-match'] === etag) {
+    return res.status(304).end();
+  }
   res.json({ imageSize: getImageConfig() });
 });
 

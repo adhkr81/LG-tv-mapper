@@ -21,6 +21,7 @@ import {
   buildGraphPositionUpdates,
   buildSectionGraphFlow,
   filterSelectionToNodes,
+  graphLayoutSignature,
   nextNewNodePosition,
   toStoredGraphPosition,
 } from '../../utils/graphFlow.js';
@@ -62,9 +63,14 @@ export default function GraphView({ isActive = true }) {
   const dragSessionRef = useRef(null);
   const dragSaveTimerRef = useRef(null);
 
+  // Memoize the React Flow layout by structural signature, not by `screens`
+  // reference — button rect edits change `screens` ref every keystroke, but
+  // they don't affect node/edge layout, so we skip the relayout in that case.
+  const layoutSignature = graphLayoutSignature(screens, activeSectionId, sections);
   const { nodes: initialNodes, edges: initialEdges } = useMemo(
     () => buildSectionGraphFlow(screens, activeSectionId, sections),
-    [screens, activeSectionId, sections]
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- structural signature subsumes screens/sections/activeSectionId
+    [layoutSignature]
   );
 
   const nodesRef = useRef(initialNodes);

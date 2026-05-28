@@ -52,8 +52,8 @@
       "id": "settings-general",
       "name": "settings-general",
       "rootScreenId": "settings-general_down",
-      "bandX": 535,
-      "bandY": 572,
+      "bandX": 537,
+      "bandY": 574,
       "collapsed": true
     },
     {
@@ -76,6 +76,14 @@
       "id": "Screenshots",
       "name": "Screenshots",
       "rootScreenId": null
+    },
+    {
+      "id": "general-accessibility",
+      "name": "general-accessibility",
+      "rootScreenId": null,
+      "collapsed": true,
+      "bandX": 554,
+      "bandY": 1328
     }
   ],
   "screens": {
@@ -2744,6 +2752,459 @@
         "94fab0e9-c0cc-47dd-89ba-2e71c054c922",
         "207fa316-07fb-4500-9212-f0e62f016d86",
         "8162334b-25df-40e0-97c0-9da3384cdf3d"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_menu": {
+      "graphX": 280,
+      "graphY": 0,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "dc1021ec-78d7-4af7-9ec9-8c16db84b862",
+        "ed62ae93-1e44-479f-bbb5-1aaaedc1017d",
+        "65207987-5ea0-4999-b7f8-ad652b6b2c2a",
+        "a46a78bb-4d53-42ae-8b49-98c9665383ee",
+        "64eaf988-1900-4cbf-9982-0820df3e4ea7",
+        "caf4f02e-db7d-4af8-a882-f5b91c135902",
+        "fda4ff96-9381-4ab8-9bd3-b1fc83132a92",
+        "9889e0e2-4423-46e5-9039-093bf795722e",
+        "2d6b0925-b8ef-4a62-b422-3c0ebc546747",
+        "cf15421c-766b-45d6-9ee2-d5d4cdd73df9",
+        "c740c79a-4a67-48da-9a41-4a65372f2cfa",
+        "60624a2d-2b53-425b-b602-0ff863c98995"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_menu-down": {
+      "graphX": 560,
+      "graphY": 0,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "2e9fe124-2ae0-49fc-aff1-8664bd542a39",
+        "7ee3a5d6-72f2-4950-b6fc-5a34ad637a0f",
+        "188e2d0c-9e89-4c11-93bf-7469ba1d517d",
+        "f915aa8c-fecb-44c7-ae0a-81acddb838db",
+        "40b6557a-3fbf-46db-9802-c692c822f1e0",
+        "2351d50b-770c-4bae-a033-d4be15fca95c",
+        "1965dfcf-b68b-4f80-9d39-93b7cd9d8325",
+        "3c5a742a-ebf9-43d4-a164-8007ede448a1",
+        "1c97d503-24a3-4a7d-a462-9a26f294d67a",
+        "6b0a5df2-e2ef-4dfa-bf4c-6c21ae24603c"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_audio-guidance-menu": {
+      "graphX": 840,
+      "graphY": 0,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "a841e8a8-7d6c-48a3-b5df-f72ac0c233ac",
+        "34304145-d2af-4f4f-8de8-442c59a56502",
+        "6f2775ea-01d2-4346-9999-c5e93ffc163f",
+        "e33ea123-9c14-40ee-b2ef-5fa5a473f7a2",
+        "a0e1b74f-9f0d-4ef6-92c9-29083ff63e2c"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_audio-guidance-menu-on": {
+      "graphX": 1120,
+      "graphY": 0,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "0068cb3c-5ad1-40ad-a3e9-bcb5e822990b",
+        "e5d7a344-d52c-49e7-8251-4130bab36460",
+        "257b56fb-93ad-4d66-b7cc-79b34aac7216",
+        "6191553f-2e87-4cc5-acd6-efaf4028194f",
+        "96417bc3-21d2-4e6c-8ec0-bc159f68c47e",
+        "16611547-ff71-429f-b48a-2b392a7ede3f",
+        "f6e55f01-2538-4b01-a410-079771f3d969",
+        "a211febe-acba-47f8-9693-b63b9dd456e0",
+        "6b3c707c-aa00-4419-9515-ee060ac8a205"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_audio-guidance_speed": {
+      "graphX": 1400,
+      "graphY": 0,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "0ab0e756-6eea-440c-86c5-74c6fde65fbf",
+        "cfa7dd10-d953-4451-9dc8-0e5f41a6d7f8",
+        "781620a6-6828-415b-bd0c-49fca47b5804",
+        "79609350-080f-4736-aa77-02e82e725fe2"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_audio-guidance_volume": {
+      "graphX": 1680,
+      "graphY": 0,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "55bd754a-4761-42b0-904f-189f8a16276a",
+        "95b1349b-1050-4858-be45-7c460c65dfd4",
+        "36263b02-42db-42bc-a50b-e700e82d3d5d",
+        "8715feff-3dfe-41c8-b11d-84d690ef2c84"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_audio-guidance_pitch": {
+      "graphX": 1960,
+      "graphY": 0,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "5dc4b6b8-4ec5-4a73-a22d-99729f7ee564",
+        "969a28d0-d7a3-40db-8645-0c67e99dbe51",
+        "374d0635-eb9e-4ac5-95ac-1fe244bf7919",
+        "acea731c-dce0-486b-9d44-80f5440c6d72"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_audio-guidance_high-quality": {
+      "graphX": 2240,
+      "graphY": 0,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "975aaa35-0c9d-42c8-9a80-30d07b39a3fa",
+        "20592704-ac2e-44d2-9ba8-b0fb5b3829ee",
+        "44e145fa-cae2-4bd7-8ba4-24ea0134944c",
+        "a139988f-a3a9-4659-8b82-e611a5a889f2"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_learn-remote-control": {
+      "graphX": 308,
+      "graphY": 244,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "ee7c69f8-d068-4f3e-a8b7-06be88ac0c35"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_audio-guidance_extended-menu": {
+      "graphX": 588,
+      "graphY": 244,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "e52d4dc4-82bf-4736-8b7a-be3a470bdae7",
+        "d5d38392-4186-4e91-9e41-1fb7b025a23d",
+        "145720e0-ee3b-4fa1-a127-5a0e29e47540",
+        "c37efd3d-6265-4f07-9df5-0a5f4c6bbe01",
+        "5d22aae3-3330-4312-aa77-ecf99cdfb904"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_audio-guidance_extended-menu-on": {
+      "graphX": 540,
+      "graphY": 502,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "3abcd05d-8ade-45d3-ba9c-bb7032c58260",
+        "73c2697c-6421-467a-9532-98a072f65f0d",
+        "020b1bb8-bbc3-451c-b453-e34affae7ab8",
+        "a00d0480-3829-4ab4-9de4-2f024661309d",
+        "27872512-e94f-4410-9cfe-54173c7f70ca",
+        "8ce3d288-442d-4af7-ae71-18ad2891cf23",
+        "08ff5e6d-b970-4dd7-8ee0-c72b1623f38c"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_audio-guidance_extended_activate-time": {
+      "graphX": 820,
+      "graphY": 502,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "84318596-3864-4a8c-8da1-ea231964bffb",
+        "9ab8fa3a-5e30-4123-9aa3-bf485923158d",
+        "bb90ab98-0b3a-4430-8b0f-657734f4c60a",
+        "daf15542-9fb7-4ac7-bc57-83fccad60f5f"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_audio-guidance_interval-time": {
+      "graphX": 1100,
+      "graphY": 502,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "850c11a8-cf75-479c-b692-317b5f0e8b47",
+        "946b733c-0d3a-4f16-8d3f-bdbcbd603c5a",
+        "74559471-9515-4242-82c5-9e82d690b4db",
+        "759e7bc7-4de4-42a3-9547-335422c4cbec"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_device-power-sound": {
+      "graphX": 1380,
+      "graphY": 502,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "d1b7b907-e9b4-4bc5-b3c2-5e91a633c907",
+        "1d017c31-1a3c-4467-8a8f-24ed138e1d9a",
+        "40dca52a-587b-4118-8c63-b39bcdb36684",
+        "7e7de367-82b5-4555-8fa1-9b7418ed8b8c",
+        "a553529f-d1cb-431a-a5df-30e4414f4c94",
+        "c7d32bd4-ef2f-4b8c-8bb0-3b998a26ad54",
+        "bce0634f-b9b5-487b-b3a5-231a9cb7a397",
+        "c6d60264-6641-4409-83e5-6a04e73ba5a0",
+        "e57723af-2cc0-4766-b64b-8b8c70b3108d",
+        "8e0e8efe-b580-49f3-8451-d0635f4c5f4a",
+        "6546e940-6c0b-4a26-bcd2-47a95f6e37ab"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_screen-zoom": {
+      "graphX": 558,
+      "graphY": 726,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "999aebc3-e995-4e12-8ced-1bb23d251320"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_listen-simultaneously": {
+      "graphX": 838,
+      "graphY": 726,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "dd4c5e18-3e62-4a71-ae9b-98bff4fea0fc",
+        "29bc697e-7266-49d8-802a-e294f42acd92",
+        "5b8a090c-d844-40b9-be55-04ebab354deb",
+        "e1ec8670-9c4a-4737-a93a-0694a492d4df"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_sign-language-menu": {
+      "graphX": 1118,
+      "graphY": 726,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "6f4ad583-7b3c-4de1-8ebb-ad72d2dd1690",
+        "b9704950-f29c-4ba5-9a99-a769cc239040",
+        "0a353a6d-854d-49a1-802b-fa189ff3c240",
+        "ddc5424c-d43e-4a6e-9f31-1b3737c76bef",
+        "999332a8-e47d-4ada-a301-085421038b5a"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_sign-language_manual-zoom": {
+      "graphX": 1398,
+      "graphY": 726,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "53d80a06-f707-4f14-a188-b7677c8d5278",
+        "10f8ac48-e843-406e-90bc-51c727783bf8",
+        "cee3be07-4cb8-48b7-8c2c-236244d42a86",
+        "bac8ad18-6280-46f1-86e4-aa6789cdf93b",
+        "51ff6abb-8737-4372-ae5c-91a7ace2292c"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_closed-caption-menu": {
+      "graphX": 240,
+      "graphY": 954,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "9a3e3f7c-68c1-470d-8708-119ba96e59a0",
+        "d98f06f0-9f16-4bbc-808c-d84ca933acc9",
+        "83d1b58f-1c81-44a1-ab59-d7521eb3e40e",
+        "0052b6e5-6907-45b3-9cd4-67a20ee6db7c",
+        "c55f5eb3-fc4c-42e0-a9cf-0aede6d16b2a",
+        "28f66e99-98c4-4600-8d9f-444d0eae4c4d",
+        "ef9383b5-bdb9-4ec1-a673-1e5a7c900d29",
+        "4528f1ed-d914-41e9-946d-1b4656a444f5"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_closed-caption-menu-on": {
+      "graphX": 520,
+      "graphY": 954,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "23e4c006-8789-4d81-a73c-ede3be80a4d6",
+        "70c2b8c7-4bbe-4e96-bd41-795b72b746de",
+        "31e1d321-37b5-4547-96f1-065c65d9cda2",
+        "00b56327-c588-4f03-b53a-d699ef561ca4",
+        "7daf2e62-6543-4491-aaca-8fa5144c051c",
+        "7f4c6b78-4272-4b3e-a7b6-ec64322d592e",
+        "b119ab25-3dee-49ea-b384-ea818efbee6b",
+        "a7455189-fa49-4947-af98-451667049e7a"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_closed-caption_analog-mode": {
+      "graphX": 800,
+      "graphY": 954,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "a317fc1f-fafc-43bd-bafb-b93bec2917af",
+        "ac84532a-cd15-461f-946d-684a50b960d4",
+        "16c900df-7e77-4f6e-90b3-b2be266b08c7",
+        "1cc24f72-6a88-4d3c-a9d4-fa551064fda0"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_closed-caption_digital-mode-menu": {
+      "graphX": 242,
+      "graphY": 1170,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "69682949-7b24-4a42-b07e-e7b48a2acaea",
+        "92e5260c-5860-4122-869f-b697a63860cc",
+        "089b5579-3a62-49ee-8836-cf58d07436a9",
+        "5622be82-e528-42ed-97c7-cc8293fe900e",
+        "b88d3c45-26c7-43a9-96c8-f9bcc4da5033",
+        "11c5ea36-6307-4c24-b7a5-e2cb60f37c45"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_closed-caption_digital-mode_hd-mode": {
+      "graphX": 522,
+      "graphY": 1170,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "1e36fbb1-9bd2-4661-ab14-da94b2f32363",
+        "82baa8d5-b144-4fe8-bbc0-19b0ba1512da",
+        "a93c18cc-c37d-45cd-bed5-b70cadf99c43",
+        "d7ff7556-e4b7-4404-b5c8-8214566e7169"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_closed-caption_digital-mode_hd-mode-option-menu": {
+      "graphX": 802,
+      "graphY": 1170,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "871d62cc-05d0-4adf-91bd-5047c841779a",
+        "403845e0-99de-4786-a5e6-4eb859a02807",
+        "1175756a-34b8-4a1e-99f1-126fc1cd4c0f",
+        "fb72ccdc-5a2d-43ac-a1a6-79c99ead727f",
+        "62aa2795-9ece-4fc8-b60c-77158857f8e8"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_closed-caption_digital-mode_hd-mode-optiom_style": {
+      "graphX": 1082,
+      "graphY": 1170,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "bf9d6531-6e8e-4726-ac82-ceaa2357a844",
+        "7fbc9357-38e9-401a-836c-378799613bba",
+        "495ed2c1-60fc-40b8-9fa2-2feef514c0d2",
+        "a904b2c6-62c5-4305-a277-692ca511e661"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_text-with-high-contrast": {
+      "graphX": 256,
+      "graphY": 1390,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "dca4082c-d186-44a5-91e2-8bccbace3386",
+        "06ec312f-ef3d-4415-8b8c-3afc1534df3d",
+        "9c683e6a-66fc-4a4e-8689-a018e2b79499",
+        "d2deae65-6acc-4c24-81e0-19cca5ef784b",
+        "bfa9c150-59c3-44cd-9334-ac5c470db93c",
+        "1e5d2ed5-7608-4f70-9a7a-aa7bd510e83c",
+        "fb454e69-82f9-4aa6-9960-4ec7f6e096e4",
+        "3d21d585-2a73-419b-b07f-2b19d1ccd08e",
+        "d942c7ce-d6a3-46cb-aa5c-f6666e5bb681",
+        "d4ba1aff-23c9-4aaf-88d8-d5bc81a8bbc5"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_focus-with-high-contrast": {
+      "graphX": 536,
+      "graphY": 1390,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "3d1aeeb7-3636-4fc1-897f-de3df1e6f3f1",
+        "886a200a-db38-42ee-891a-521a42721fe0",
+        "ac47121c-3b82-4e78-9839-74a1f88a7143",
+        "8446d500-a427-4d03-9a9f-36a9785cb429",
+        "d9087ab4-97b4-40dd-aded-eb2a610df255",
+        "7cbb9dcc-1e4a-4fba-aea7-24ab5f313f7e",
+        "2b3313c2-93a4-434b-b059-51948cea1ea0",
+        "516b13ad-4109-4c63-8bee-8587d615a05d",
+        "11502b56-f7d9-44c4-96d1-75d19543a2f2"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_grayscale": {
+      "graphX": 816,
+      "graphY": 1390,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "c73d206c-510d-4bca-8fe6-1e050724e5a6",
+        "68541da1-2ac1-4328-96dc-e5843cad1f96",
+        "a4068425-06dc-4250-acfe-0f2afd80f6b0",
+        "c5d63c2c-f15e-4178-a61a-16544b7962ad",
+        "4c95fec8-c4b0-4194-a4f0-612eb1f8e99d",
+        "57a099db-94a1-4b08-80be-96e1d12257c7",
+        "6f01c80a-c19c-43f3-ad92-76ac598ae167",
+        "383f478e-bc48-4894-82a3-2c6dbedbf791",
+        "6d468a34-bede-48b2-ae52-2f6dd719f652"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_invert-colors": {
+      "graphX": 1096,
+      "graphY": 1390,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "2746a6f7-deee-4ca7-8372-7a7a3eb90b24",
+        "8f7fc701-1df6-4c67-bf19-357baf6eb01c",
+        "75b2f655-ad10-4000-8119-c4314b39b33c",
+        "63ef1015-6231-4fa0-9f5f-8585c1762930",
+        "7c4191fe-80a2-466b-93a6-c627f11078f4",
+        "a6227d77-e040-49bc-9c1c-7dc3a2af0af5",
+        "f2b3db23-d165-4def-89b6-7a1406353509",
+        "dc7faff5-3f7e-45ae-ba44-c25507e5987b",
+        "435380e0-77a9-4c47-8cdd-ecb75704a9b7",
+        "6e2e808e-ba40-4ff9-b552-6f38b06b86e6"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "general-accessibility_closed-caption_position-settings": {
+      "graphX": 1086,
+      "graphY": 954,
+      "sectionId": "general-accessibility",
+      "buttonIds": [
+        "bc9a0ad8-4523-412e-bfd9-0d32e643cac7",
+        "d69f0098-4828-4b0b-945c-e0121940fabd",
+        "bbed962d-f2da-453a-aadf-62f6db2cfa78",
+        "8bd62b3e-991b-43b5-ba81-23fb985fcab9",
+        "85f18550-2c87-4f74-b7e1-3324b7a2561c",
+        "d8d7fbd4-402b-4ce6-815c-7dfdc2182494",
+        "d2f5bd22-e9d1-462b-bfcf-51a538d5ca50"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160

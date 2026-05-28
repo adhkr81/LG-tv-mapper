@@ -9,7 +9,7 @@ import '../ScreenViewer/ScreenViewer.css';
 import './ScreenPreview.css';
 
 export default function ScreenPreview() {
-  const screens = useStore((s) => s.screens);
+  const screensById = useStore((s) => s.screensById);
   const selectedScreenId = useStore((s) => s.selectedScreenId);
   const selectScreen = useStore((s) => s.selectScreen);
   const imageConfig = useStore((s) => s.imageConfig);
@@ -36,7 +36,7 @@ export default function ScreenPreview() {
     }
   }, [selectedScreenId]);
 
-  const screen = screens.find((s) => s.id === currentScreenId);
+  const screen = currentScreenId ? screensById.get(currentScreenId) : undefined;
 
   const applyImageDimensions = useCallback(
     (naturalWidth, naturalHeight) => {
@@ -75,13 +75,12 @@ export default function ScreenPreview() {
   const navigateTo = useCallback(
     (targetId) => {
       if (!targetId || targetId === currentScreenId) return;
-      const exists = screens.some((s) => s.id === targetId);
-      if (!exists) return;
+      if (!screensById.has(targetId)) return;
       setHistory((prev) => [...prev, currentScreenId]);
       setCurrentScreenId(targetId);
       selectScreen(targetId);
     },
-    [currentScreenId, screens, selectScreen]
+    [currentScreenId, screensById, selectScreen]
   );
 
   const goBack = useCallback(() => {
@@ -163,7 +162,6 @@ export default function ScreenPreview() {
                     button={btn}
                     screenForCoords={screenForCoords}
                     imageConfig={imageConfig}
-                    screens={screens}
                     onNavigate={navigateTo}
                   />
                 ))
@@ -189,9 +187,11 @@ export default function ScreenPreview() {
   );
 }
 
-function PreviewHotspot({ button, screenForCoords, imageConfig, screens, onNavigate }) {
+function PreviewHotspot({ button, screenForCoords, imageConfig, onNavigate }) {
   const normalized = normalizeButton(button);
-  const hasTarget = normalized.target && screens.some((s) => s.id === normalized.target);
+  const hasTarget = useStore((s) =>
+    Boolean(normalized.target && s.screensById.has(normalized.target))
+  );
 
   const rect = useMemo(
     () => toDisplayRect(normalized, screenForCoords, imageConfig),

@@ -56,6 +56,44 @@ export function ensureFinitePosition(position) {
   };
 }
 
+/**
+ * Compact structural signature for the React Flow layout inputs.
+ *
+ * Mirrors only the fields `buildSectionGraphFlow` actually reads: positions,
+ * section membership, target ids, image presence, collapsed state, band
+ * offsets. Crucially, button rect/label/popover fields are excluded — that's
+ * what lets us memoize the graph and skip relayout on every hotspot drag.
+ */
+export function graphLayoutSignature(screens, activeSectionId, sections) {
+  const parts = [activeSectionId ?? ''];
+  for (const sec of sections) {
+    parts.push(
+      's',
+      sec.id,
+      sec.name || '',
+      sec.rootScreenId ?? '',
+      sec.collapsed ? '1' : '0',
+      sec.bandX ?? '',
+      sec.bandY ?? ''
+    );
+  }
+  for (const screen of screens) {
+    parts.push(
+      'p',
+      screen.id,
+      screen.sectionId ?? '',
+      screen.graphX ?? '',
+      screen.graphY ?? '',
+      screen.image ? '1' : '0',
+      String(screen.buttons.length)
+    );
+    for (const btn of screen.buttons) {
+      parts.push('b', btn.id, btn.target || '');
+    }
+  }
+  return parts.join('|');
+}
+
 /** Drop edges whose endpoints are missing in the current node list. */
 export function filterEdgesToNodes(nodes, edges) {
   const ids = new Set(nodes.map((n) => n.id));

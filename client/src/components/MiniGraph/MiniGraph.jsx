@@ -9,7 +9,10 @@ import '@xyflow/react/dist/style.css';
 import ScreenNode from '../GraphView/ScreenNode.jsx';
 import SectionNode from '../GraphView/SectionNode.jsx';
 import useStore from '../../store/useStore.js';
-import { buildSectionGraphFlow } from '../../utils/graphFlow.js';
+import {
+  buildSectionGraphFlow,
+  graphLayoutSignature,
+} from '../../utils/graphFlow.js';
 import './MiniGraph.css';
 
 const nodeTypes = { screenNode: ScreenNode, sectionNode: SectionNode };
@@ -27,9 +30,11 @@ export default function MiniGraph({ onClose }) {
   const activeSectionId = useStore((s) => s.activeSectionId);
   const selectScreen = useStore((s) => s.selectScreen);
 
+  const layoutSignature = graphLayoutSignature(screens, activeSectionId, sections);
   const { nodes: initialNodes, edges: initialEdges } = useMemo(
     () => buildSectionGraphFlow(screens, activeSectionId, sections),
-    [screens, activeSectionId, sections]
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- structural signature subsumes screens/sections/activeSectionId
+    [layoutSignature]
   );
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);

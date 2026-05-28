@@ -1,10 +1,21 @@
 import { Router } from 'express';
 import * as screenService from '../services/screens.js';
+import { getStateVersion } from '../services/data-store.js';
 
 const router = Router();
 
+function stateEtag() {
+  return `W/"v${getStateVersion()}"`;
+}
+
 // GET /api/screens
 router.get('/', (req, res) => {
+  const etag = stateEtag();
+  res.set('ETag', etag);
+  res.set('Cache-Control', 'no-cache');
+  if (req.headers['if-none-match'] === etag) {
+    return res.status(304).end();
+  }
   res.json(screenService.getAllScreens());
 });
 

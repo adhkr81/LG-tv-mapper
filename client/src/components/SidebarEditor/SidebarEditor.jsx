@@ -20,6 +20,7 @@ import './SidebarEditor.css';
 export default function SidebarEditor({ mode = 'viewer' }) {
   const isEditMode = mode === 'viewer';
   const screens = useStore((s) => s.screens);
+  const screensById = useStore((s) => s.screensById);
   const sections = useStore((s) => s.sections);
   const activeSectionId = useStore((s) => s.activeSectionId);
   const selectedScreenId = useStore((s) => s.selectedScreenId);
@@ -46,7 +47,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const buttonRectClipboard = useStore((s) => s.buttonRectClipboard);
   const copyButtonRect = useStore((s) => s.copyButtonRect);
 
-  const screen = screens.find((s) => s.id === selectedScreenId);
+  const screen = selectedScreenId ? screensById.get(selectedScreenId) : undefined;
   const activeSection = isRealSectionView(activeSectionId)
     ? sections.find((s) => s.id === activeSectionId)
     : null;
@@ -809,7 +810,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                     onClick={() => selectButton(btn.id)}
                   >
                   <div className="sidebar__button-header">
-                      <span className={`sidebar__button-dot ${btn.target && screens.some(s => s.id === btn.target) ? 'linked' : 'unlinked'}`} />
+                      <span className={`sidebar__button-dot ${btn.target && screensById.has(btn.target) ? 'linked' : 'unlinked'}`} />
                       <span className="sidebar__button-name">{btn.target || '— none —'}</span>
                       <button
                         className="sidebar__button-delete"
