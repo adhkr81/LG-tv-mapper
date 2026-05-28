@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import useStore from '../../store/useStore.js';
 import { normalizeButton } from '../../utils/buttonRect.js';
+import { screenshotUrl } from '../../utils/screenshotUrl.js';
 import {
   effectiveSectionId,
   getSectionGraphScreens,
@@ -87,8 +89,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
     return ids;
   }, [screens, screen?.id]);
 
-  const formatTargetLabel = (screenId) =>
-    parentScreenIds.has(screenId) ? `${screenId} (parent)` : screenId;
+  const isParentScreen = (screenId) => parentScreenIds.has(screenId);
 
   const importSourceOptions = useMemo(() => {
     if (!screen?.id) return [];
@@ -465,32 +466,35 @@ export default function SidebarEditor({ mode = 'viewer' }) {
           <div className="sidebar__button-import">
             <label className="label">From screen</label>
             <div className="sidebar__button-import-row">
-              <select
-                className="input"
+              <ScreenPickerSelect
                 value={importCompareScreenId || ''}
-                onChange={(e) => setImportCompareScreenId(e.target.value || null)}
+                onChange={(screenId) => setImportCompareScreenId(screenId || null)}
+                placeholder="— select screen —"
                 disabled={isImportingButtons}
-              >
-                <option value="">— select screen —</option>
-                {importSourceGroups.inSection.length > 0 && (
-                  <optgroup label="This section">
-                    {importSourceGroups.inSection.map((s) => (
-                      <option key={s.id} value={s.id}>
-                        {s.id} ({s.buttons.length})
-                      </option>
-                    ))}
-                  </optgroup>
-                )}
-                {importSourceGroups.other.length > 0 && (
-                  <optgroup label="Other screens">
-                    {importSourceGroups.other.map((s) => (
-                      <option key={s.id} value={s.id}>
-                        {s.id} ({s.buttons.length})
-                      </option>
-                    ))}
-                  </optgroup>
-                )}
-              </select>
+                isParent={isParentScreen}
+                showPreviewOnHover
+                screens={screens}
+                groups={[
+                  ...(importSourceGroups.inSection.length > 0
+                    ? [{
+                        label: 'This section',
+                        options: importSourceGroups.inSection.map((s) => ({
+                          id: s.id,
+                          suffix: s.buttons.length,
+                        })),
+                      }]
+                    : []),
+                  ...(importSourceGroups.other.length > 0
+                    ? [{
+                        label: 'Other screens',
+                        options: importSourceGroups.other.map((s) => ({
+                          id: s.id,
+                          suffix: s.buttons.length,
+                        })),
+                      }]
+                    : []),
+                ]}
+              />
               <button
                 type="button"
                 className="btn btn-sm btn-accent"
@@ -648,27 +652,29 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                   <>
                     <div className="sidebar__button-target">
                       <label className="label">Target</label>
-                      <select
-                        className="input"
+                      <ScreenPickerSelect
                         value={selectedBtn.target || ''}
-                        onChange={(e) => handleTargetChange(selectedBtn.id, e.target.value)}
-                      >
-                        <option value="">— none —</option>
-                        {targetOptions.inSection.length > 0 && (
-                          <optgroup label="This section">
-                            {targetOptions.inSection.map((s) => (
-                              <option key={s.id} value={s.id}>{formatTargetLabel(s.id)}</option>
-                            ))}
-                          </optgroup>
-                        )}
-                        {targetOptions.other.length > 0 && (
-                          <optgroup label="Other screens">
-                            {targetOptions.other.map((s) => (
-                              <option key={s.id} value={s.id}>{formatTargetLabel(s.id)}</option>
-                            ))}
-                          </optgroup>
-                        )}
-                      </select>
+                        onChange={(targetId) => handleTargetChange(selectedBtn.id, targetId || '')}
+                        allowEmpty
+                        emptyLabel="— none —"
+                        isParent={isParentScreen}
+                        showPreviewOnHover
+                        screens={screens}
+                        groups={[
+                          ...(targetOptions.inSection.length > 0
+                            ? [{
+                                label: 'This section',
+                                options: targetOptions.inSection.map((s) => ({ id: s.id })),
+                              }]
+                            : []),
+                          ...(targetOptions.other.length > 0
+                            ? [{
+                                label: 'Other screens',
+                                options: targetOptions.other.map((s) => ({ id: s.id })),
+                              }]
+                            : []),
+                        ]}
+                      />
                     </div>
                     <div className="sidebar__button-target">
                       <label className="label">Type</label>
@@ -827,6 +833,218 @@ export default function SidebarEditor({ mode = 'viewer' }) {
           </div>
         </div>
       ) : null}
+    </div>
+  );
+}
+
+function ScreenPickerLabel({ screenId, isParent, suffix }) {
+  return (
+    <>
+      {screenId}
+      {isParent && (
+        <>
+          {' '}
+          <strong className="sidebar-screen-picker__parent">(parent)</strong>
+        </>
+      )}
+      {suffix != null && suffix !== '' && <> ({suffix})</>}
+    </>
+  );
+}
+
+function ScreenPickerSelect({
+  value,
+  onChange,
+  placeholder = '— select —',
+  disabled = false,
+  allowEmpty = false,
+  emptyLabel = '— none —',
+  groups = [],
+  isParent = () => false,
+  showPreviewOnHover = false,
+  screens = [],
+  className = '',
+}) {
+  const [open, setOpen] = useState(false);
+  const [hoveredId, setHoveredId] = useState(null);
+  const [previewPos, setPreviewPos] = useState(null);
+  const [previewImageFailed, setPreviewImageFailed] = useState(false);
+  const rootRef = useRef(null);
+  const menuRef = useRef(null);
+  const imageVersions = useStore((s) => s.imageVersions);
+
+  const flatOptions = useMemo(() => {
+    const opts = [];
+    if (allowEmpty) opts.push({ id: '', suffix: null });
+    groups.forEach((group) => {
+      group.options.forEach((option) => opts.push(option));
+    });
+    return opts;
+  }, [groups, allowEmpty]);
+
+  const selected = flatOptions.find((option) => option.id === (value || ''));
+  const hoveredScreen = hoveredId
+    ? screens.find((screen) => screen.id === hoveredId)
+    : null;
+  const hoveredImageVersion = hoveredId ? (imageVersions[hoveredId] ?? 0) : 0;
+
+  useEffect(() => {
+    if (!open) {
+      setHoveredId(null);
+      setPreviewPos(null);
+    }
+  }, [open]);
+
+  useEffect(() => {
+    setPreviewImageFailed(false);
+  }, [hoveredId, hoveredScreen?.image, hoveredImageVersion]);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const onDocMouseDown = (e) => {
+      if (!rootRef.current?.contains(e.target)) setOpen(false);
+    };
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('mousedown', onDocMouseDown);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', onDocMouseDown);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [open]);
+
+  const pick = (id) => {
+    onChange(id);
+    setOpen(false);
+  };
+
+  const handleOptionHover = (optionId, e) => {
+    if (!showPreviewOnHover || !optionId) {
+      setHoveredId(null);
+      setPreviewPos(null);
+      return;
+    }
+
+    setHoveredId(optionId);
+    const optionRect = e.currentTarget.getBoundingClientRect();
+    const menuRect = menuRef.current?.getBoundingClientRect();
+    const width = 630;
+    const gap = 12;
+    const anchorLeft = menuRect?.left ?? optionRect.left;
+    let left = anchorLeft - width - gap;
+    let top = optionRect.top;
+    const maxHeight = 441;
+
+    if (top + maxHeight > window.innerHeight - 8) {
+      top = Math.max(8, window.innerHeight - maxHeight - 8);
+    }
+    if (left < 8) left = 8;
+
+    setPreviewPos({ top, left, width });
+  };
+
+  const previewImage = hoveredScreen?.image?.trim();
+  const showPreview = open && showPreviewOnHover && hoveredId && previewPos;
+
+  return (
+    <div
+      ref={rootRef}
+      className={`sidebar-screen-picker ${open ? 'sidebar-screen-picker--open' : ''} ${className}`.trim()}
+    >
+      <button
+        type="button"
+        className="input sidebar-screen-picker__trigger"
+        disabled={disabled}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        onClick={() => !disabled && setOpen((wasOpen) => !wasOpen)}
+      >
+        <span className="sidebar-screen-picker__trigger-text">
+          {value ? (
+            <ScreenPickerLabel
+              screenId={value}
+              isParent={isParent(value)}
+              suffix={selected?.suffix}
+            />
+          ) : (
+            placeholder
+          )}
+        </span>
+        <span className="sidebar-screen-picker__chevron" aria-hidden>▾</span>
+      </button>
+      {open && (
+        <div
+          ref={menuRef}
+          className="sidebar-screen-picker__menu"
+          role="listbox"
+          onMouseLeave={() => {
+            setHoveredId(null);
+            setPreviewPos(null);
+          }}
+        >
+          {allowEmpty && (
+            <button
+              type="button"
+              role="option"
+              aria-selected={!value}
+              className={`sidebar-screen-picker__option ${!value ? 'sidebar-screen-picker__option--selected' : ''}`}
+              onClick={() => pick('')}
+            >
+              {emptyLabel}
+            </button>
+          )}
+          {groups.map((group) => (
+            <div key={group.label} className="sidebar-screen-picker__group">
+              <div className="sidebar-screen-picker__group-label">{group.label}</div>
+              {group.options.map((option) => (
+                <button
+                  key={option.id}
+                  type="button"
+                  role="option"
+                  aria-selected={value === option.id}
+                  className={`sidebar-screen-picker__option ${value === option.id ? 'sidebar-screen-picker__option--selected' : ''}`}
+                  onClick={() => pick(option.id)}
+                  onMouseEnter={(e) => handleOptionHover(option.id, e)}
+                >
+                  <ScreenPickerLabel
+                    screenId={option.id}
+                    isParent={isParent(option.id)}
+                    suffix={option.suffix}
+                  />
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+      {showPreview && createPortal(
+        <div
+          className="sidebar-screen-picker__preview"
+          style={{
+            top: previewPos.top,
+            left: previewPos.left,
+            width: previewPos.width,
+          }}
+        >
+          <div className="sidebar-screen-picker__preview-thumb">
+            {previewImage && !previewImageFailed ? (
+              <img
+                key={`${previewImage}-${hoveredImageVersion}`}
+                src={screenshotUrl(previewImage, hoveredImageVersion)}
+                alt=""
+                draggable={false}
+                onError={() => setPreviewImageFailed(true)}
+              />
+            ) : (
+              <div className="sidebar-screen-picker__preview-empty">no image</div>
+            )}
+          </div>
+          <div className="sidebar-screen-picker__preview-label">{hoveredId}</div>
+        </div>,
+        document.body
+      )}
     </div>
   );
 }

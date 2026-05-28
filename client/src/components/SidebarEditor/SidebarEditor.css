@@ -262,11 +262,9 @@
   gap: var(--space-xs);
 }
 
-.sidebar__button-import-row select {
+.sidebar__button-import-row .sidebar-screen-picker {
   flex: 1;
   min-width: 0;
-  font-size: 12px;
-  padding: 5px var(--space-sm);
 }
 
 .sidebar__import-options {
@@ -300,9 +298,133 @@
   margin-bottom: var(--space-xs);
 }
 
-.sidebar__button-target select {
+.sidebar-screen-picker {
+  position: relative;
+  width: 100%;
+}
+
+.sidebar-screen-picker__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
   font-size: 12px;
   padding: 5px var(--space-sm);
+}
+
+.sidebar-screen-picker__trigger:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.sidebar-screen-picker__trigger-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-screen-picker__chevron {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  font-size: 10px;
+  line-height: 1;
+}
+
+.sidebar-screen-picker__menu {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 240px;
+  overflow-y: auto;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.sidebar-screen-picker__group-label {
+  padding: var(--space-xs) var(--space-sm);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-screen-picker__option {
+  display: block;
+  width: 100%;
+  padding: 6px var(--space-sm);
+  border: none;
+  background: none;
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sidebar-screen-picker__option:hover,
+.sidebar-screen-picker__option--selected {
+  background: color-mix(in srgb, var(--accent) 12%, var(--bg-primary));
+}
+
+.sidebar-screen-picker__parent {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.sidebar-screen-picker__preview {
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+.sidebar-screen-picker__preview-thumb {
+  aspect-ratio: 16 / 9;
+  background: var(--bg-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-screen-picker__preview-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.sidebar-screen-picker__preview-empty {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.sidebar-screen-picker__preview-label {
+  padding: 6px var(--space-sm);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-top: 1px solid var(--border);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ── Button rect fields ──────────────────────── */
