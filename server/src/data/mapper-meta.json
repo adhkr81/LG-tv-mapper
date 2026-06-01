@@ -97,15 +97,15 @@
       "id": "support-privacy",
       "name": "support-privacy",
       "rootScreenId": null,
-      "bandX": 1050,
-      "bandY": 843,
+      "bandX": 1077,
+      "bandY": 848,
       "collapsed": true
     }
   ],
   "screens": {
     "quick-settings-main": {
-      "graphX": 456,
-      "graphY": -195,
+      "graphX": -95,
+      "graphY": -188,
       "sectionId": "Settings",
       "buttonIds": [
         "88306f45-9a3b-4c6b-9a17-6226761d6fed",
@@ -3326,8 +3326,8 @@
       "sourceHeight": 2160
     },
     "support-privacy_menu": {
-      "graphX": -2861,
-      "graphY": 873,
+      "graphX": -2834,
+      "graphY": 878,
       "sectionId": "support-privacy",
       "buttonIds": [
         "ebfe0934-26bc-4f7e-b6ac-483864bb1ee6",
@@ -3346,8 +3346,8 @@
       "sourceHeight": 2160
     },
     "support-privacy_user-agreements": {
-      "graphX": -2301,
-      "graphY": 873,
+      "graphX": -2274,
+      "graphY": 878,
       "sectionId": "support-privacy",
       "buttonIds": [
         "e27aab06-e5fa-434d-9091-ee84654c2b42"
@@ -3356,8 +3356,8 @@
       "sourceHeight": 2160
     },
     "support-privacy_legal-notice": {
-      "graphX": -2578,
-      "graphY": 878,
+      "graphX": -2551,
+      "graphY": 883,
       "sectionId": "support-privacy",
       "buttonIds": [
         "12c0758c-bbbb-49cc-a3e5-c59f8711078c",
@@ -3369,8 +3369,8 @@
       "sourceHeight": 2160
     },
     "support-privacy_open-source": {
-      "graphX": -2861,
-      "graphY": 1058,
+      "graphX": -2834,
+      "graphY": 1063,
       "sectionId": "support-privacy",
       "buttonIds": [
         "64039e72-9c5c-4dac-a398-d802d88905f5",
@@ -3382,8 +3382,8 @@
       "sourceHeight": 2160
     },
     "support-privacy_do-not-sell": {
-      "graphX": -2641,
-      "graphY": 1058,
+      "graphX": -2614,
+      "graphY": 1063,
       "sectionId": "support-privacy",
       "buttonIds": [
         "0592b1b7-62e5-4b2a-b5f0-7d5adfc56af7",
@@ -3401,8 +3401,8 @@
       "sourceHeight": 2160
     },
     "support-privacy_advertisement": {
-      "graphX": -2421,
-      "graphY": 1058,
+      "graphX": -2394,
+      "graphY": 1063,
       "sectionId": "support-privacy",
       "buttonIds": [
         "e679f6fb-f360-4d4d-8a2c-6d47d7f53cdc",
@@ -3414,8 +3414,8 @@
       "sourceHeight": 2160
     },
     "support-privacy_app-permissions-menu": {
-      "graphX": -2201,
-      "graphY": 1058,
+      "graphX": -2174,
+      "graphY": 1063,
       "sectionId": "support-privacy",
       "buttonIds": [
         "e2b5b76b-ba68-4a3f-af1b-ecdf37128fc9",
@@ -3430,8 +3430,8 @@
       "sourceHeight": 2160
     },
     "support-privacy_app-permissions_camera": {
-      "graphX": -2861,
-      "graphY": 1243,
+      "graphX": -2834,
+      "graphY": 1248,
       "sectionId": "support-privacy",
       "buttonIds": [
         "7f3bdcef-fabb-4931-94fc-2657b13684bf",
@@ -3443,8 +3443,8 @@
       "sourceHeight": 2160
     },
     "support-privacy_app-permissions_microphone": {
-      "graphX": -2641,
-      "graphY": 1243,
+      "graphX": -2614,
+      "graphY": 1248,
       "sectionId": "support-privacy",
       "buttonIds": [
         "69835cb3-7fe4-49c2-abca-6db35e0873f6",
@@ -3456,8 +3456,8 @@
       "sourceHeight": 2160
     },
     "support-privacy_app-permissions_nearby-devices": {
-      "graphX": -2421,
-      "graphY": 1243,
+      "graphX": -2394,
+      "graphY": 1248,
       "sectionId": "support-privacy",
       "buttonIds": [
         "7810982a-87a5-40aa-a108-55dcfec9698e",
@@ -3469,8 +3469,8 @@
       "sourceHeight": 2160
     },
     "support-privacy_app-permissions_delete-personal-menu": {
-      "graphX": -2201,
-      "graphY": 1243,
+      "graphX": -2174,
+      "graphY": 1248,
       "sectionId": "support-privacy",
       "buttonIds": [
         "0c4803d5-d999-4849-a2fe-ccc5f4946c72",
@@ -3484,8 +3484,8 @@
       "sourceHeight": 2160
     },
     "support-privacy_app-permissions_delete-viewing": {
-      "graphX": -2861,
-      "graphY": 1428,
+      "graphX": -2834,
+      "graphY": 1433,
       "sectionId": "support-privacy",
       "buttonIds": [
         "05567624-0a90-49d5-b5cc-1c78bb29f0b0",
@@ -3497,8 +3497,8 @@
       "sourceHeight": 2160
     },
     "support-privacy_app-permissions_delete-voice": {
-      "graphX": -2641,
-      "graphY": 1428,
+      "graphX": -2614,
+      "graphY": 1433,
       "sectionId": "support-privacy",
       "buttonIds": [
         "beeb233d-5a79-44c3-abb7-dd1c577b6aef",
@@ -3510,22 +3510,44 @@
       "sourceHeight": 2160
     },
     "homescreen": {
-      "graphX": 174,
-      "graphY": 8873,
+      "graphX": -5610,
+      "graphY": 4992,
       "sectionId": null,
-      "buttonIds": []
+      "buttonIds": [
+        "0d9db044-f12c-4bfb-bd81-eec88dce2df4",
+        "ef9132ca-0f23-41b6-994a-18783c69e1b6",
+        "07e47702-80c2-4897-bb93-521427beee76",
+        "6cd75582-ad32-4b47-8913-9818f3302e5a",
+        "85aee43a-4b80-41a7-a383-9fb53005a148",
+        "26b1c022-516d-4344-84e4-15dcf2585152",
+        "992b34b6-2daa-4c24-bfa7-0056bafd4a23",
+        "88232ab9-d360-4a9d-b260-85bc0f33d634",
+        "ce0f65af-8c59-433d-a490-f9c0835fe5e8",
+        "d4bd2a97-ef96-4023-affb-25ba3b829bdf",
+        "5a26601a-0038-4f73-9dcf-ea0488a124ad"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "homescreen-left": {
-      "graphX": 476,
-      "graphY": 8871,
+      "graphX": -5324,
+      "graphY": 4989,
       "sectionId": null,
-      "buttonIds": []
+      "buttonIds": [
+        "a5c32139-2f21-4fea-b1d9-83cbb2698021"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "homescreen-down": {
-      "graphX": 170,
-      "graphY": 9159,
+      "graphX": -5329,
+      "graphY": 5206,
       "sectionId": null,
-      "buttonIds": []
+      "buttonIds": [
+        "e69a3ffb-faae-4bbc-837b-1dcf777783a5"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     }
   },
   "config": {

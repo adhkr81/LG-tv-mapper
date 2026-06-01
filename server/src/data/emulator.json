@@ -10356,16 +10356,154 @@
   "homescreen": {
     "img_filename": "homescreen",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "104px",
+        "top": "26px",
+        "width": "31px",
+        "height": "31px",
+        "popover": {
+          "title": "Profile",
+          "text": "Enjoy recommended content and services by logging into your LG account.",
+          "style": {
+            "top": "2%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "104px",
+        "top": "157px",
+        "width": "31px",
+        "height": "31px",
+        "popover": {
+          "title": "Notification",
+          "text": "View your current notifications.",
+          "style": {
+            "top": "10%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "104px",
+        "top": "396px",
+        "width": "31px",
+        "height": "31px",
+        "target": "quick-settings-main",
+        "popover": {
+          "title": "Settings",
+          "text": "Adjust your preferences by accessing the quick settings panel.",
+          "style": {
+            "top": "18%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "885px",
+        "top": "223px",
+        "width": "35px",
+        "height": "19px",
+        "target": "homescreen-left",
+        "type": "arrow-right"
+      },
+      {
+        "left": "210px",
+        "top": "342px",
+        "width": "591px",
+        "height": "54px",
+        "popover": {
+          "title": "Content Providers",
+          "text": "View content from all your favorite providers and the webOS TV LG Channels service.",
+          "style": {
+            "top": "72%",
+            "left": "8%"
+          }
+        }
+      },
+      {
+        "left": "104px",
+        "top": "360px",
+        "width": "31px",
+        "height": "31px",
+        "popover": {
+          "title": "Search",
+          "text": "Search for movie titles, actors, and genre.",
+          "style": {
+            "top": "26%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "803px",
+        "top": "342px",
+        "width": "52px",
+        "height": "54px",
+        "popover": {
+          "title": "Sports",
+          "text": "Use the Sports Alerts feature to view live scores and upcoming games.",
+          "style": {
+            "bottom": "54%",
+            "left": "62.5%"
+          }
+        }
+      },
+      {
+        "left": "156px",
+        "top": "342px",
+        "width": "52px",
+        "height": "54px"
+      },
+      {
+        "left": "104px",
+        "top": "193px",
+        "width": "31px",
+        "height": "31px"
+      },
+      {
+        "left": "104px",
+        "top": "229px",
+        "width": "31px",
+        "height": "31px"
+      },
+      {
+        "left": "478px",
+        "top": "391px",
+        "width": "56px",
+        "height": "56px",
+        "target": "homescreen-down",
+        "type": "arrow-down"
+      }
+    ]
   },
   "homescreen-left": {
     "img_filename": "homescreen-left",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "885px",
+        "top": "223px",
+        "width": "35px",
+        "height": "19px",
+        "target": "homescreen",
+        "type": "arrow-left"
+      }
+    ]
   },
   "homescreen-down": {
     "img_filename": "homescreen-down",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "478px",
+        "top": "391px",
+        "width": "56px",
+        "height": "56px",
+        "target": "homescreen",
+        "type": "arrow-up"
+      }
+    ]
   }
 }
