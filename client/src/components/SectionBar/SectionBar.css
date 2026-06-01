@@ -308,6 +308,35 @@
 .section-bar__collapse-count { color: var(--text-muted); font-weight: 400; }
 .section-bar__collapse-toggle { flex-shrink: 0; }
 
+.section-bar__collapse-locate {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--duration) var(--ease),
+              background var(--duration) var(--ease),
+              border-color var(--duration) var(--ease);
+}
+
+.section-bar__collapse-locate:hover:not(:disabled) {
+  color: var(--accent);
+  border-color: var(--border-accent);
+  background: var(--accent-dim);
+}
+
+.section-bar__collapse-locate:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* ── Section screen list (sidebar) ──────────── */
 .sidebar__section-screens {
   display: flex;

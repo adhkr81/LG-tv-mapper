@@ -23,6 +23,7 @@ export default function SectionBar({ variant = 'toolbar' }) {
   const toggleSectionCollapsed = useStore((s) => s.toggleSectionCollapsed);
   const collapseAllSections = useStore((s) => s.collapseAllSections);
   const expandAllSections = useStore((s) => s.expandAllSections);
+  const locateSection = useStore((s) => s.locateSection);
 
   const [sectionName, setSectionName] = useState('');
   const [renameName, setRenameName] = useState('');
@@ -420,6 +421,29 @@ export default function SectionBar({ variant = 'toolbar' }) {
                         {sec.name}
                         <span className="section-bar__collapse-count">({count})</span>
                       </span>
+                    </button>
+                    <button
+                      type="button"
+                      className="section-bar__collapse-locate"
+                      onClick={() => locateSection(sec.id)}
+                      disabled={isBusy}
+                      title="Find this section on the graph"
+                      aria-label={`Locate ${sec.name} on the graph`}
+                    >
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden
+                      >
+                        <circle cx="12" cy="12" r="3" />
+                        <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+                      </svg>
                     </button>
                     <button
                       type="button"

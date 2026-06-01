@@ -14,6 +14,7 @@ import { rectCenteredAt } from '../../utils/buttonRect.js';
 import {
   getNextNumericScreenId,
   isRealSectionView,
+  sectionNodeId,
   suggestScreenIdForSection,
   resolveImportScreenId,
 } from '../../utils/sectionGraph.js';
@@ -47,6 +48,8 @@ export default function GraphView({ isActive = true }) {
   const serialStatus = useStore((s) => s.serialStatus);
   const isCapturing = useStore((s) => s.isCapturing);
   const capturingScreenId = useStore((s) => s.capturingScreenId);
+  const locateSectionRequest = useStore((s) => s.locateSectionRequest);
+  const clearLocateSectionRequest = useStore((s) => s.clearLocateSectionRequest);
 
   const [showImportModal, setShowImportModal] = useState(false);
   const [showCaptureModal, setShowCaptureModal] = useState(false);
@@ -236,6 +239,63 @@ export default function GraphView({ isActive = true }) {
   useEffect(() => {
     setSelectedScreenIds([]);
   }, [activeSectionId, setSelectedScreenIds]);
+
+  // Pan/zoom to a section when the sidebar's "Locate" button is clicked, and
+  // briefly pulse its nodes so the user can spot it.
+  useEffect(() => {
+    if (!locateSectionRequest || !isActive || !flowRef.current) return undefined;
+
+    const { sectionId } = locateSectionRequest;
+    const summaryId = sectionNodeId(sectionId);
+    const targets = nodesRef.current.filter(
+      (n) => n.id === summaryId || n.data?.sectionId === sectionId
+    );
+
+    if (!targets.length) {
+      clearLocateSectionRequest();
+      return undefined;
+    }
+
+    // Pull the camera back instead of cropping in — easier to see how the
+    // located section sits relative to the rest of the canvas.
+    flowRef.current.fitView({
+      nodes: targets.map((n) => ({ id: n.id })),
+      padding: 1.2,
+      duration: 600,
+      minZoom: 0.15,
+      maxZoom: 0.45,
+    });
+
+    const PULSE_CLASS = 'graph-view__node--locate-pulse';
+    const targetIds = new Set(targets.map((n) => n.id));
+    const addPulse = (cls) => {
+      const parts = (cls || '').split(/\s+/).filter(Boolean);
+      if (!parts.includes(PULSE_CLASS)) parts.push(PULSE_CLASS);
+      return parts.join(' ');
+    };
+    const removePulse = (cls) => {
+      const parts = (cls || '').split(/\s+/).filter(Boolean);
+      const next = parts.filter((p) => p !== PULSE_CLASS).join(' ');
+      return next || undefined;
+    };
+
+    setNodes((current) =>
+      current.map((n) =>
+        targetIds.has(n.id) ? { ...n, className: addPulse(n.className) } : n
+      )
+    );
+
+    const pulseTimer = setTimeout(() => {
+      setNodes((current) =>
+        current.map((n) =>
+          targetIds.has(n.id) ? { ...n, className: removePulse(n.className) } : n
+        )
+      );
+    }, 1500);
+
+    clearLocateSectionRequest();
+    return () => clearTimeout(pulseTimer);
+  }, [locateSectionRequest, isActive, setNodes, clearLocateSectionRequest]);
 
   useEffect(
     () => () => {

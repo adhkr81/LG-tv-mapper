@@ -52,15 +52,15 @@
       "id": "settings-general",
       "name": "settings-general",
       "rootScreenId": "settings-general_down",
-      "bandX": 537,
-      "bandY": 574,
+      "bandX": 539,
+      "bandY": 576,
       "collapsed": true
     },
     {
       "id": "general-ai-service",
       "name": "general-ai-service",
       "rootScreenId": "settings-general_ai-service-menu",
-      "bandX": 551,
+      "bandX": 569,
       "bandY": 846,
       "collapsed": true
     },
@@ -84,6 +84,13 @@
       "collapsed": true,
       "bandX": 554,
       "bandY": 1328
+    },
+    {
+      "id": "settings-support",
+      "name": "settings-support",
+      "rootScreenId": null,
+      "bandX": 4205,
+      "bandY": 0
     }
   ],
   "screens": {
@@ -3208,6 +3215,66 @@
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
+    },
+    "settings-software-update-menu": {
+      "graphX": 280,
+      "graphY": 0,
+      "sectionId": "settings-support",
+      "buttonIds": []
+    },
+    "settings-software-update_on": {
+      "graphX": 500,
+      "graphY": 0,
+      "sectionId": "settings-support",
+      "buttonIds": []
+    },
+    "settings-software-update_check": {
+      "graphX": 720,
+      "graphY": 0,
+      "sectionId": "settings-support",
+      "buttonIds": []
+    },
+    "settings-user-guide": {
+      "graphX": 940,
+      "graphY": 0,
+      "sectionId": "settings-support",
+      "buttonIds": []
+    },
+    "settings-support_memory-optimizer": {
+      "graphX": 280,
+      "graphY": 185,
+      "sectionId": "settings-support",
+      "buttonIds": []
+    },
+    "settings-software-update_home-store": {
+      "graphX": 500,
+      "graphY": 185,
+      "sectionId": "settings-support",
+      "buttonIds": []
+    },
+    "settings-support_ip-control-settings": {
+      "graphX": 720,
+      "graphY": 185,
+      "sectionId": "settings-support",
+      "buttonIds": []
+    },
+    "settings-support_tv-information": {
+      "graphX": 940,
+      "graphY": 185,
+      "sectionId": "settings-support",
+      "buttonIds": []
+    },
+    "home-1": {
+      "graphX": 280,
+      "graphY": 370,
+      "sectionId": "settings-support",
+      "buttonIds": []
+    },
+    "home-2": {
+      "graphX": 500,
+      "graphY": 370,
+      "sectionId": "settings-support",
+      "buttonIds": []
     }
   },
   "config": {

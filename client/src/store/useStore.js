@@ -273,6 +273,12 @@ const useStore = create((rawSet, get) => {
     isAddingHotspot: false,
     serialStatus: 'disconnected',
     canUndo: historyCanUndo(),
+    /**
+     * Bumped each time the user asks the graph to focus on a section.
+     * `{ sectionId, token }`; the token forces a fresh effect even when the
+     * same section is requested twice in a row.
+     */
+    locateSectionRequest: null,
 
     // ---- Actions ----
 
@@ -379,6 +385,28 @@ const useStore = create((rawSet, get) => {
           s.id === screenId ? { ...s, ...updated } : s
         ),
       });
+    },
+
+    locateSection: (sectionId) => {
+      if (!sectionId) return;
+      // Locating only makes sense from the All screens canvas. If the user is
+      // currently viewing a single section, switch back so they can actually
+      // see the section's band on the graph.
+      if (isRealSectionView(get().activeSectionId)) {
+        get().setActiveSection(null);
+      }
+      set({
+        locateSectionRequest: {
+          sectionId,
+          token: (get().locateSectionRequest?.token ?? 0) + 1,
+        },
+      });
+    },
+
+    clearLocateSectionRequest: () => {
+      if (get().locateSectionRequest) {
+        set({ locateSectionRequest: null });
+      }
     },
 
     setActiveSection: (sectionId) => {
