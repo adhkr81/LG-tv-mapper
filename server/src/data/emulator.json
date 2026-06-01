@@ -337,7 +337,7 @@
         "top": "337px",
         "width": "245px",
         "height": "36px",
-        "target": "picture-aspectratio"
+        "target": "support-privacy_menu"
       }
     ]
   },
@@ -9809,66 +9809,548 @@
   "support-privacy_menu": {
     "img_filename": "support-privacy_menu",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "35px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "108px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "108px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-support"
+      },
+      {
+        "left": "167px",
+        "top": "321px",
+        "width": "247px",
+        "height": "34px",
+        "target": "support-privacy_app-permissions_delete-personal-menu"
+      },
+      {
+        "left": "166px",
+        "top": "283px",
+        "width": "247px",
+        "height": "34px",
+        "target": "support-privacy_app-permissions-menu"
+      },
+      {
+        "left": "166px",
+        "top": "245px",
+        "width": "247px",
+        "height": "34px",
+        "target": "support-privacy_advertisement"
+      },
+      {
+        "left": "166px",
+        "top": "207px",
+        "width": "247px",
+        "height": "34px",
+        "target": "support-privacy_do-not-sell"
+      },
+      {
+        "left": "166px",
+        "top": "170px",
+        "width": "247px",
+        "height": "34px",
+        "target": "support-privacy_open-source"
+      },
+      {
+        "left": "166px",
+        "top": "132px",
+        "width": "247px",
+        "height": "34px",
+        "target": "support-privacy_legal-notice"
+      },
+      {
+        "left": "167px",
+        "top": "93px",
+        "width": "247px",
+        "height": "34px",
+        "target": "support-privacy_user-agreements"
+      }
+    ]
   },
   "support-privacy_user-agreements": {
     "img_filename": "support-privacy_user-agreements",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "363px",
+        "top": "399px",
+        "width": "117px",
+        "height": "31px",
+        "target": "support-privacy_menu"
+      }
+    ]
   },
   "support-privacy_legal-notice": {
     "img_filename": "support-privacy_legal-notice",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "35px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "108px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "108px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "support-privacy_menu"
+      }
+    ]
   },
   "support-privacy_open-source": {
     "img_filename": "support-privacy_open-source",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "35px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "108px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "108px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "support-privacy_menu"
+      }
+    ]
   },
   "support-privacy_do-not-sell": {
     "img_filename": "support-privacy_do-not-sell",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "35px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "108px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "108px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-support"
+      },
+      {
+        "left": "167px",
+        "top": "321px",
+        "width": "247px",
+        "height": "34px",
+        "target": "support-privacy_app-permissions_delete-personal-menu"
+      },
+      {
+        "left": "166px",
+        "top": "283px",
+        "width": "247px",
+        "height": "34px",
+        "target": "support-privacy_app-permissions-menu"
+      },
+      {
+        "left": "166px",
+        "top": "245px",
+        "width": "247px",
+        "height": "34px",
+        "target": "support-privacy_advertisement"
+      },
+      {
+        "left": "166px",
+        "top": "170px",
+        "width": "247px",
+        "height": "34px",
+        "target": "support-privacy_open-source"
+      },
+      {
+        "left": "166px",
+        "top": "132px",
+        "width": "247px",
+        "height": "34px",
+        "target": "support-privacy_legal-notice"
+      },
+      {
+        "left": "167px",
+        "top": "93px",
+        "width": "247px",
+        "height": "34px",
+        "target": "support-privacy_user-agreements"
+      }
+    ]
   },
   "support-privacy_advertisement": {
     "img_filename": "support-privacy_advertisement",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "35px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "108px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "108px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "support-privacy_menu"
+      }
+    ]
   },
   "support-privacy_app-permissions-menu": {
     "img_filename": "support-privacy_app-permissions-menu",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "35px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "108px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "108px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "support-privacy_menu"
+      },
+      {
+        "left": "166px",
+        "top": "170px",
+        "width": "247px",
+        "height": "34px",
+        "target": "support-privacy_app-permissions_nearby-devices"
+      },
+      {
+        "left": "166px",
+        "top": "132px",
+        "width": "247px",
+        "height": "34px",
+        "target": "support-privacy_app-permissions_microphone"
+      },
+      {
+        "left": "167px",
+        "top": "93px",
+        "width": "247px",
+        "height": "34px",
+        "target": "support-privacy_app-permissions_camera"
+      }
+    ]
   },
   "support-privacy_app-permissions_camera": {
     "img_filename": "support-privacy_app-permissions_camera",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "35px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "108px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "108px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "support-privacy_app-permissions-menu"
+      }
+    ]
   },
   "support-privacy_app-permissions_microphone": {
     "img_filename": "support-privacy_app-permissions_microphone",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "35px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "108px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "108px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "support-privacy_app-permissions-menu"
+      }
+    ]
   },
   "support-privacy_app-permissions_nearby-devices": {
     "img_filename": "support-privacy_app-permissions_nearby-devices",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "35px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "108px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "108px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "support-privacy_app-permissions-menu"
+      }
+    ]
   },
   "support-privacy_app-permissions_delete-personal-menu": {
     "img_filename": "support-privacy_app-permissions_delete-personal-menu",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "35px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "108px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "108px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "support-privacy_menu"
+      },
+      {
+        "left": "166px",
+        "top": "132px",
+        "width": "247px",
+        "height": "34px",
+        "target": "support-privacy_app-permissions_delete-voice"
+      },
+      {
+        "left": "167px",
+        "top": "93px",
+        "width": "247px",
+        "height": "34px",
+        "target": "support-privacy_app-permissions_delete-viewing"
+      }
+    ]
   },
   "support-privacy_app-permissions_delete-viewing": {
     "img_filename": "support-privacy_app-permissions_delete-viewing",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "35px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "108px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "108px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "support-privacy_app-permissions_delete-personal-menu"
+      }
+    ]
   },
   "support-privacy_app-permissions_delete-voice": {
     "img_filename": "support-privacy_app-permissions_delete-voice",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "35px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "108px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "108px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "support-privacy_app-permissions_delete-personal-menu"
+      }
+    ]
   }
 }
