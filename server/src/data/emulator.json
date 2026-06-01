@@ -292,30 +292,51 @@
       },
       {
         "left": "258px",
-        "top": "85px",
+        "top": "86px",
         "width": "245px",
-        "height": "47px",
-        "target": "picture-selectmode-standard"
+        "height": "43px",
+        "target": "settings-software-update-menu"
       },
       {
         "left": "258px",
-        "top": "134px",
+        "top": "133px",
         "width": "245px",
         "height": "35px",
-        "target": "picture-selectmode-personalizedpicture-1"
+        "target": "settings-user-guide"
       },
       {
         "left": "258px",
-        "top": "206px",
+        "top": "207px",
         "width": "245px",
-        "height": "57px",
-        "target": "advancedsettings-brightness"
+        "height": "55px",
+        "target": "settings-software-update_home-store"
       },
       {
         "left": "258px",
         "top": "172px",
         "width": "245px",
         "height": "32px",
+        "target": "settings-support_memory-optimizer"
+      },
+      {
+        "left": "258px",
+        "top": "265px",
+        "width": "245px",
+        "height": "32px",
+        "target": "settings-support_ip-control-settings"
+      },
+      {
+        "left": "258px",
+        "top": "301px",
+        "width": "245px",
+        "height": "32px",
+        "target": "settings-support_tv-information"
+      },
+      {
+        "left": "258px",
+        "top": "337px",
+        "width": "245px",
+        "height": "36px",
         "target": "picture-aspectratio"
       }
     ]
@@ -589,7 +610,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "168px",
@@ -693,7 +714,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "168px",
@@ -952,7 +973,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "168px",
@@ -1047,7 +1068,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -1171,7 +1192,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       }
     ]
   },
@@ -1292,7 +1313,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "168px",
@@ -1544,7 +1565,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "168px",
@@ -1803,7 +1824,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "168px",
@@ -1852,7 +1873,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "168px",
@@ -1989,7 +2010,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "168px",
@@ -2119,7 +2140,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "168px",
@@ -2196,7 +2217,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "168px",
@@ -2299,7 +2320,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "168px",
@@ -3307,7 +3328,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -3348,7 +3369,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -3396,7 +3417,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -3444,7 +3465,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -4642,7 +4663,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -4690,7 +4711,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -4738,7 +4759,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -4786,7 +4807,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -4946,7 +4967,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -5074,7 +5095,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -5143,7 +5164,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -5177,7 +5198,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -5224,7 +5245,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "163px",
@@ -5271,7 +5292,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -5312,7 +5333,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -5386,7 +5407,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -5462,7 +5483,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -5517,7 +5538,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -5551,7 +5572,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -5585,7 +5606,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -5619,7 +5640,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -5687,7 +5708,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -5734,7 +5755,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -5789,7 +5810,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -5858,7 +5879,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -5892,7 +5913,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -5926,7 +5947,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -5960,7 +5981,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6022,7 +6043,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6056,7 +6077,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6145,7 +6166,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6179,7 +6200,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6213,7 +6234,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6247,7 +6268,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6329,7 +6350,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6377,7 +6398,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6453,7 +6474,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6508,7 +6529,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6585,7 +6606,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6619,7 +6640,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6653,7 +6674,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6687,7 +6708,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6721,7 +6742,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6760,7 +6781,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6809,7 +6830,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6843,7 +6864,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6890,7 +6911,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6924,7 +6945,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -6971,7 +6992,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -7061,7 +7082,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -7116,7 +7137,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -7150,7 +7171,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -7198,7 +7219,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -7232,7 +7253,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -7266,7 +7287,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "166px",
@@ -7313,7 +7334,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -7354,7 +7375,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -7409,7 +7430,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -7443,7 +7464,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -7477,7 +7498,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -7532,7 +7553,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -7580,7 +7601,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -7663,7 +7684,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -7746,7 +7767,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -7829,7 +7850,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -7912,7 +7933,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -7995,7 +8016,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8043,7 +8064,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8091,7 +8112,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8182,7 +8203,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8259,7 +8280,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8300,7 +8321,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8369,7 +8390,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8403,7 +8424,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8437,7 +8458,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8471,7 +8492,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8518,7 +8539,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8559,7 +8580,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8614,7 +8635,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8648,7 +8669,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8682,7 +8703,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8779,7 +8800,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8813,7 +8834,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8854,7 +8875,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8895,7 +8916,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -8957,7 +8978,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -9019,7 +9040,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -9053,7 +9074,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -9101,7 +9122,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -9135,7 +9156,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -9176,7 +9197,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -9210,7 +9231,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -9287,7 +9308,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -9357,7 +9378,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -9427,7 +9448,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -9504,7 +9525,7 @@
         "top": "146px",
         "width": "35px",
         "height": "35px",
-        "target": "settings-general"
+        "target": "settings-support"
       },
       {
         "left": "162px",
@@ -9539,17 +9560,139 @@
   "settings-software-update-menu": {
     "img_filename": "settings-software-update-menu",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "35px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "108px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "108px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-support"
+      },
+      {
+        "left": "167px",
+        "top": "149px",
+        "width": "247px",
+        "height": "32px",
+        "target": "settings-software-update_on"
+      },
+      {
+        "left": "220px",
+        "top": "200px",
+        "width": "141px",
+        "height": "30px",
+        "target": "settings-software-update_check"
+      }
+    ]
   },
   "settings-software-update_on": {
     "img_filename": "settings-software-update_on",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "35px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "108px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "108px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-support"
+      },
+      {
+        "left": "167px",
+        "top": "149px",
+        "width": "247px",
+        "height": "32px",
+        "target": "settings-software-update-menu"
+      },
+      {
+        "left": "220px",
+        "top": "200px",
+        "width": "141px",
+        "height": "30px",
+        "target": "settings-software-update_check"
+      }
+    ]
   },
   "settings-software-update_check": {
     "img_filename": "settings-software-update_check",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "35px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "108px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "108px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-support"
+      },
+      {
+        "left": "167px",
+        "top": "149px",
+        "width": "247px",
+        "height": "32px",
+        "target": "settings-software-update_on"
+      }
+    ]
   },
   "settings-user-guide": {
     "img_filename": "settings-user-guide",
@@ -9559,12 +9702,70 @@
   "settings-support_memory-optimizer": {
     "img_filename": "settings-support_memory-optimizer",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "35px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "108px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "108px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-support"
+      }
+    ]
   },
   "settings-software-update_home-store": {
     "img_filename": "settings-software-update_home-store",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "35px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "108px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "108px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-support"
+      }
+    ]
   },
   "settings-support_ip-control-settings": {
     "img_filename": "settings-support_ip-control-settings",
@@ -9574,15 +9775,99 @@
   "settings-support_tv-information": {
     "img_filename": "settings-support_tv-information",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "35px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-picture"
+      },
+      {
+        "left": "108px",
+        "top": "72px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-sound"
+      },
+      {
+        "left": "108px",
+        "top": "109px",
+        "width": "35px",
+        "height": "35px",
+        "target": "settings-general"
+      },
+      {
+        "left": "162px",
+        "top": "37px",
+        "width": "32px",
+        "height": "32px",
+        "target": "settings-support"
+      }
+    ]
   },
-  "home-1": {
-    "img_filename": "home-1",
+  "support-privacy_menu": {
+    "img_filename": "support-privacy_menu",
     "preset": 0,
     "buttons": []
   },
-  "home-2": {
-    "img_filename": "home-2",
+  "support-privacy_user-agreements": {
+    "img_filename": "support-privacy_user-agreements",
+    "preset": 0,
+    "buttons": []
+  },
+  "support-privacy_legal-notice": {
+    "img_filename": "support-privacy_legal-notice",
+    "preset": 0,
+    "buttons": []
+  },
+  "support-privacy_open-source": {
+    "img_filename": "support-privacy_open-source",
+    "preset": 0,
+    "buttons": []
+  },
+  "support-privacy_do-not-sell": {
+    "img_filename": "support-privacy_do-not-sell",
+    "preset": 0,
+    "buttons": []
+  },
+  "support-privacy_advertisement": {
+    "img_filename": "support-privacy_advertisement",
+    "preset": 0,
+    "buttons": []
+  },
+  "support-privacy_app-permissions-menu": {
+    "img_filename": "support-privacy_app-permissions-menu",
+    "preset": 0,
+    "buttons": []
+  },
+  "support-privacy_app-permissions_camera": {
+    "img_filename": "support-privacy_app-permissions_camera",
+    "preset": 0,
+    "buttons": []
+  },
+  "support-privacy_app-permissions_microphone": {
+    "img_filename": "support-privacy_app-permissions_microphone",
+    "preset": 0,
+    "buttons": []
+  },
+  "support-privacy_app-permissions_nearby-devices": {
+    "img_filename": "support-privacy_app-permissions_nearby-devices",
+    "preset": 0,
+    "buttons": []
+  },
+  "support-privacy_app-permissions_delete-personal-menu": {
+    "img_filename": "support-privacy_app-permissions_delete-personal-menu",
+    "preset": 0,
+    "buttons": []
+  },
+  "support-privacy_app-permissions_delete-viewing": {
+    "img_filename": "support-privacy_app-permissions_delete-viewing",
+    "preset": 0,
+    "buttons": []
+  },
+  "support-privacy_app-permissions_delete-voice": {
+    "img_filename": "support-privacy_app-permissions_delete-voice",
     "preset": 0,
     "buttons": []
   }

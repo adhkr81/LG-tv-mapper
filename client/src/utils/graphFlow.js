@@ -174,10 +174,14 @@ export function buildSectionBandUpdates(nodes) {
     if (node.type === 'sectionNode' && node.data?.sectionId) {
       const sectionId = node.data.sectionId;
       fromSectionNode.add(sectionId);
+      // The collapsed summary may be rendered offset from the band's top-left
+      // so it sits where the root screen would be when expanded. Subtract that
+      // offset so the persisted band matches what gets rendered back next time.
+      const offset = node.data.bandAnchorOffset ?? { x: 0, y: 0 };
       updates.push({
         sectionId,
-        bandX: Math.round(node.position.x),
-        bandY: Math.round(node.position.y),
+        bandX: Math.round(node.position.x - offset.x),
+        bandY: Math.round(node.position.y - offset.y),
       });
     }
   }
@@ -410,20 +414,31 @@ function computeSectionBandLayout(primary, sectionMeta, autoOffsetX, sectionId) 
   };
 }
 
-/** Where a collapsed summary node should sit (root screen, else band top-left). */
+/**
+ * Where a collapsed summary node should sit (root screen, else band top-left).
+ * Also reports the offset from the band's top-left to the summary node, so the
+ * persist step can reverse it when the user drags the summary.
+ */
 function collapsedSectionNodePosition(layout, sectionMeta) {
   const { groupNodes, bandX, bandY, viewOffset } = layout;
 
   const rootId = sectionMeta?.rootScreenId;
   const rootNode = rootId ? groupNodes.find((n) => n.id === rootId) : null;
   if (rootNode) {
-    return ensureFinitePosition({
+    const position = ensureFinitePosition({
       x: rootNode.position.x + viewOffset.x,
       y: rootNode.position.y + viewOffset.y,
     });
+    return {
+      position,
+      anchorOffset: { x: position.x - bandX, y: position.y - bandY },
+    };
   }
 
-  return ensureFinitePosition({ x: bandX, y: bandY });
+  return {
+    position: ensureFinitePosition({ x: bandX, y: bandY }),
+    anchorOffset: { x: 0, y: 0 },
+  };
 }
 
 function buildSectionSummaryNode({
@@ -431,6 +446,7 @@ function buildSectionSummaryNode({
   primary,
   meta,
   position,
+  anchorOffset,
   colorIndex,
 }) {
   const linkCount = primary.reduce((n, s) => n + s.buttons.length, 0);
@@ -446,6 +462,7 @@ function buildSectionSummaryNode({
       sectionId,
       color: sectionAccentColor(colorIndex),
       collapsed: true,
+      bandAnchorOffset: anchorOffset ?? { x: 0, y: 0 },
     },
   };
 }
@@ -476,7 +493,10 @@ function buildAllScreensGraphFlow(
         sectionId
       );
       const { groupWidth, hasSavedBand } = layout;
-      const position = collapsedSectionNodePosition(layout, sectionMeta);
+      const { position, anchorOffset } = collapsedSectionNodePosition(
+        layout,
+        sectionMeta
+      );
 
       allNodes.push(
         buildSectionSummaryNode({
@@ -484,6 +504,7 @@ function buildAllScreensGraphFlow(
           primary,
           meta: sectionMeta,
           position,
+          anchorOffset,
           colorIndex: sectionIndexById.get(sectionId) ?? 0,
         })
       );

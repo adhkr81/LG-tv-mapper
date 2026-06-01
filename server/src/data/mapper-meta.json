@@ -52,16 +52,16 @@
       "id": "settings-general",
       "name": "settings-general",
       "rootScreenId": "settings-general_down",
-      "bandX": 539,
-      "bandY": 576,
+      "bandX": 290,
+      "bandY": 580,
       "collapsed": true
     },
     {
       "id": "general-ai-service",
       "name": "general-ai-service",
       "rootScreenId": "settings-general_ai-service-menu",
-      "bandX": 569,
-      "bandY": 846,
+      "bandX": 539,
+      "bandY": 848,
       "collapsed": true
     },
     {
@@ -89,8 +89,16 @@
       "id": "settings-support",
       "name": "settings-support",
       "rootScreenId": null,
-      "bandX": 4205,
-      "bandY": 0
+      "bandX": 1030,
+      "bandY": 592,
+      "collapsed": false
+    },
+    {
+      "id": "support-privacy",
+      "name": "support-privacy",
+      "rootScreenId": null,
+      "bandX": 1378,
+      "bandY": 1531
     }
   ],
   "screens": {
@@ -167,8 +175,8 @@
       "sourceHeight": 2160
     },
     "settings-support": {
-      "graphX": 1455,
-      "graphY": 97,
+      "graphX": 1457,
+      "graphY": 99,
       "sectionId": "Settings",
       "buttonIds": [
         "bc172157-ee1d-40f9-b3a3-25d45a84c714",
@@ -177,7 +185,10 @@
         "688dd54f-6284-4789-b5e9-79cc68bb5fe4",
         "80c889d0-0da3-4620-be12-ef3bf7ae1473",
         "792dae97-c169-4799-b208-24d5ba2e8b60",
-        "d4892bbd-9abd-4f98-a501-4ef167ddc7d3"
+        "d4892bbd-9abd-4f98-a501-4ef167ddc7d3",
+        "f73385e2-ab7c-46b5-b76b-4b0e4d779550",
+        "e8f54764-e565-4318-b132-9ff0893557cf",
+        "cc4a6077-e23d-48a6-a266-c8793b7a1514"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
@@ -3217,63 +3228,178 @@
       "sourceHeight": 2160
     },
     "settings-software-update-menu": {
-      "graphX": 280,
-      "graphY": 0,
+      "graphX": -2865,
+      "graphY": 568,
       "sectionId": "settings-support",
-      "buttonIds": []
+      "buttonIds": [
+        "edfa2e13-c8e2-46ef-95ce-3d92073bccf0",
+        "051f82d8-74f4-4ec7-a470-891be0910dd3",
+        "a6655f84-67b5-415f-80ab-c6b3cb77cb55",
+        "d29c03f3-551d-409d-a06c-2ff8fa931ba0",
+        "2411b4bc-1a74-4897-815c-12c566011328",
+        "901e2d42-852a-48f6-aff2-a74471108966"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "settings-software-update_on": {
-      "graphX": 500,
-      "graphY": 0,
+      "graphX": -2645,
+      "graphY": 568,
       "sectionId": "settings-support",
-      "buttonIds": []
+      "buttonIds": [
+        "6d9f2eb9-a0a2-47ae-b803-51a26c9bd33a",
+        "fcde6971-3d3b-45c7-b780-81f215d26ea9",
+        "44174456-9a22-4ca9-a5e9-264c9fea1e9b",
+        "a905f932-6978-4b2b-a79a-17d919e7772e",
+        "a11ce748-9803-4dac-92dc-1a7f045f1e68",
+        "537a736f-0006-4981-ba14-d4d36a54e09d"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "settings-software-update_check": {
-      "graphX": 720,
-      "graphY": 0,
+      "graphX": -2425,
+      "graphY": 568,
       "sectionId": "settings-support",
-      "buttonIds": []
+      "buttonIds": [
+        "e61177a1-c961-4ec1-a5fa-ab12f8748670",
+        "37fe0e9e-205d-4113-b04d-f2dceabbad87",
+        "b3d1bf71-bcef-4cd8-a8e9-f2d8b20147ae",
+        "798b8018-889e-4e2f-937f-ef7d545e05fb",
+        "ee88e971-f078-4f59-b0c0-0239f1fb8f73"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "settings-user-guide": {
-      "graphX": 940,
-      "graphY": 0,
+      "graphX": -2205,
+      "graphY": 568,
       "sectionId": "settings-support",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "settings-support_memory-optimizer": {
-      "graphX": 280,
-      "graphY": 185,
+      "graphX": -2880,
+      "graphY": 759,
       "sectionId": "settings-support",
-      "buttonIds": []
+      "buttonIds": [
+        "e76f4118-7f9a-4af3-ac26-fd3a58ee1806",
+        "441ceba4-ba9e-434f-8f3f-1c2e094f6a72",
+        "84995fc8-7b24-4c01-8d10-097aed5194cb",
+        "ab2ee313-ef44-4a68-bc97-a62475572b85"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "settings-software-update_home-store": {
-      "graphX": 500,
-      "graphY": 185,
+      "graphX": -2645,
+      "graphY": 753,
       "sectionId": "settings-support",
-      "buttonIds": []
+      "buttonIds": [
+        "a8bde13d-8902-4ef4-9067-391441b30f5e",
+        "0541c658-bb12-4765-9eac-83a506e0259f",
+        "70a6e961-cc36-4d9a-b101-92a173da12aa",
+        "1c8dc9ec-615a-4446-bfff-1991c5212c21"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "settings-support_ip-control-settings": {
-      "graphX": 720,
-      "graphY": 185,
+      "graphX": -2425,
+      "graphY": 753,
       "sectionId": "settings-support",
       "buttonIds": []
     },
     "settings-support_tv-information": {
-      "graphX": 940,
-      "graphY": 185,
+      "graphX": -2205,
+      "graphY": 753,
       "sectionId": "settings-support",
+      "buttonIds": [
+        "8b656657-b0df-492a-bc8d-b47ee1ee93b7",
+        "b3f1d68d-4b1d-461d-a25c-c8796e9787e4",
+        "34ba41e0-7529-4e74-b07e-689cd0ce4467",
+        "3a662582-d722-4b9f-9de5-42c9acb8f362"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "support-privacy_menu": {
+      "graphX": -2547,
+      "graphY": 1531,
+      "sectionId": "support-privacy",
       "buttonIds": []
     },
-    "home-1": {
-      "graphX": 280,
-      "graphY": 370,
-      "sectionId": "settings-support",
+    "support-privacy_user-agreements": {
+      "graphX": -1987,
+      "graphY": 1531,
+      "sectionId": "support-privacy",
       "buttonIds": []
     },
-    "home-2": {
-      "graphX": 500,
-      "graphY": 370,
-      "sectionId": "settings-support",
+    "support-privacy_legal-notice": {
+      "graphX": -2327,
+      "graphY": 1531,
+      "sectionId": "support-privacy",
+      "buttonIds": []
+    },
+    "support-privacy_open-source": {
+      "graphX": -2547,
+      "graphY": 1716,
+      "sectionId": "support-privacy",
+      "buttonIds": []
+    },
+    "support-privacy_do-not-sell": {
+      "graphX": -2327,
+      "graphY": 1716,
+      "sectionId": "support-privacy",
+      "buttonIds": []
+    },
+    "support-privacy_advertisement": {
+      "graphX": -2107,
+      "graphY": 1716,
+      "sectionId": "support-privacy",
+      "buttonIds": []
+    },
+    "support-privacy_app-permissions-menu": {
+      "graphX": -1887,
+      "graphY": 1716,
+      "sectionId": "support-privacy",
+      "buttonIds": []
+    },
+    "support-privacy_app-permissions_camera": {
+      "graphX": -2547,
+      "graphY": 1901,
+      "sectionId": "support-privacy",
+      "buttonIds": []
+    },
+    "support-privacy_app-permissions_microphone": {
+      "graphX": -2327,
+      "graphY": 1901,
+      "sectionId": "support-privacy",
+      "buttonIds": []
+    },
+    "support-privacy_app-permissions_nearby-devices": {
+      "graphX": -2107,
+      "graphY": 1901,
+      "sectionId": "support-privacy",
+      "buttonIds": []
+    },
+    "support-privacy_app-permissions_delete-personal-menu": {
+      "graphX": -1887,
+      "graphY": 1901,
+      "sectionId": "support-privacy",
+      "buttonIds": []
+    },
+    "support-privacy_app-permissions_delete-viewing": {
+      "graphX": -2547,
+      "graphY": 2086,
+      "sectionId": "support-privacy",
+      "buttonIds": []
+    },
+    "support-privacy_app-permissions_delete-voice": {
+      "graphX": -2327,
+      "graphY": 2086,
+      "sectionId": "support-privacy",
       "buttonIds": []
     }
   },
