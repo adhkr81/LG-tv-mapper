@@ -10362,6 +10362,7 @@
         "top": "26px",
         "width": "31px",
         "height": "31px",
+        "target": "sidebar_profile-menu",
         "popover": {
           "title": "Profile",
           "text": "Enjoy recommended content and services by logging into your LG account.",
@@ -10376,6 +10377,7 @@
         "top": "157px",
         "width": "31px",
         "height": "31px",
+        "target": "sidebar_profile_search",
         "popover": {
           "title": "Notification",
           "text": "View your current notifications.",
@@ -10427,6 +10429,7 @@
         "top": "360px",
         "width": "31px",
         "height": "31px",
+        "target": "sidebar_notifications",
         "popover": {
           "title": "Search",
           "text": "Search for movie titles, actors, and genre.",
@@ -10460,13 +10463,15 @@
         "left": "104px",
         "top": "193px",
         "width": "31px",
-        "height": "31px"
+        "height": "31px",
+        "target": "sidebar_apps_menu"
       },
       {
         "left": "104px",
         "top": "229px",
         "width": "31px",
-        "height": "31px"
+        "height": "31px",
+        "target": "sidebar_gaming-portal-menu"
       },
       {
         "left": "478px",
@@ -10475,6 +10480,12 @@
         "height": "56px",
         "target": "homescreen-down",
         "type": "arrow-down"
+      },
+      {
+        "left": "856px",
+        "top": "342px",
+        "width": "20px",
+        "height": "54px"
       }
     ]
   },
@@ -10489,6 +10500,158 @@
         "height": "19px",
         "target": "homescreen",
         "type": "arrow-left"
+      },
+      {
+        "left": "104px",
+        "top": "26px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_profile-menu",
+        "popover": {
+          "title": "Profile",
+          "text": "Enjoy recommended content and services by logging into your LG account.",
+          "style": {
+            "top": "2%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "104px",
+        "top": "157px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_profile_search",
+        "popover": {
+          "title": "Notification",
+          "text": "View your current notifications.",
+          "style": {
+            "top": "10%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "104px",
+        "top": "396px",
+        "width": "31px",
+        "height": "31px",
+        "target": "quick-settings-main",
+        "popover": {
+          "title": "Settings",
+          "text": "Adjust your preferences by accessing the quick settings panel.",
+          "style": {
+            "top": "18%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "104px",
+        "top": "360px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_notifications",
+        "popover": {
+          "title": "Search",
+          "text": "Search for movie titles, actors, and genre.",
+          "style": {
+            "top": "26%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "104px",
+        "top": "193px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_apps_menu"
+      },
+      {
+        "left": "104px",
+        "top": "229px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal-menu"
+      },
+      {
+        "left": "169px",
+        "top": "342px",
+        "width": "52px",
+        "height": "54px"
+      },
+      {
+        "left": "223px",
+        "top": "342px",
+        "width": "52px",
+        "height": "54px"
+      },
+      {
+        "left": "277px",
+        "top": "342px",
+        "width": "52px",
+        "height": "54px"
+      },
+      {
+        "left": "331px",
+        "top": "342px",
+        "width": "52px",
+        "height": "54px"
+      },
+      {
+        "left": "385px",
+        "top": "342px",
+        "width": "52px",
+        "height": "54px"
+      },
+      {
+        "left": "438px",
+        "top": "342px",
+        "width": "52px",
+        "height": "54px"
+      },
+      {
+        "left": "493px",
+        "top": "342px",
+        "width": "52px",
+        "height": "54px"
+      },
+      {
+        "left": "547px",
+        "top": "342px",
+        "width": "52px",
+        "height": "54px"
+      },
+      {
+        "left": "600px",
+        "top": "342px",
+        "width": "52px",
+        "height": "54px"
+      },
+      {
+        "left": "654px",
+        "top": "342px",
+        "width": "52px",
+        "height": "54px"
+      },
+      {
+        "left": "709px",
+        "top": "342px",
+        "width": "52px",
+        "height": "54px"
+      },
+      {
+        "left": "762px",
+        "top": "342px",
+        "width": "52px",
+        "height": "54px"
+      },
+      {
+        "left": "816px",
+        "top": "342px",
+        "width": "52px",
+        "height": "54px"
       }
     ]
   },
@@ -10503,7 +10666,281 @@
         "height": "56px",
         "target": "homescreen",
         "type": "arrow-up"
+      },
+      {
+        "left": "104px",
+        "top": "26px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_profile-menu",
+        "popover": {
+          "title": "Profile",
+          "text": "Enjoy recommended content and services by logging into your LG account.",
+          "style": {
+            "top": "2%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "104px",
+        "top": "157px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_profile_search",
+        "popover": {
+          "title": "Notification",
+          "text": "View your current notifications.",
+          "style": {
+            "top": "10%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "104px",
+        "top": "396px",
+        "width": "31px",
+        "height": "31px",
+        "target": "quick-settings-main",
+        "popover": {
+          "title": "Settings",
+          "text": "Adjust your preferences by accessing the quick settings panel.",
+          "style": {
+            "top": "18%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "104px",
+        "top": "360px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_notifications",
+        "popover": {
+          "title": "Search",
+          "text": "Search for movie titles, actors, and genre.",
+          "style": {
+            "top": "26%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "104px",
+        "top": "193px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_apps_menu"
+      },
+      {
+        "left": "104px",
+        "top": "229px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal-menu"
       }
     ]
+  },
+  "sidebar_notifications": {
+    "img_filename": "sidebar_notifications",
+    "preset": 0,
+    "buttons": []
+  },
+  "sidebar_profile-menu": {
+    "img_filename": "sidebar_profile-menu",
+    "preset": 0,
+    "buttons": []
+  },
+  "sidebar_profile_lg-thinq": {
+    "img_filename": "sidebar_profile_lg-thinq",
+    "preset": 0,
+    "buttons": []
+  },
+  "sidebar_profile_mobile": {
+    "img_filename": "sidebar_profile_mobile",
+    "preset": 0,
+    "buttons": []
+  },
+  "sidebar_profile_device": {
+    "img_filename": "sidebar_profile_device",
+    "preset": 0,
+    "buttons": []
+  },
+  "sidebar_profile_search": {
+    "img_filename": "sidebar_profile_search",
+    "preset": 0,
+    "buttons": []
+  },
+  "sidebar_search_options": {
+    "img_filename": "sidebar_search_options",
+    "preset": 0,
+    "buttons": []
+  },
+  "sidebar_apps_menu": {
+    "img_filename": "sidebar_apps_menu",
+    "preset": 0,
+    "buttons": []
+  },
+  "sidebar_apps_entertainment": {
+    "img_filename": "sidebar_apps_entertainment",
+    "preset": 0,
+    "buttons": []
+  },
+  "sidebar_apps_game": {
+    "img_filename": "sidebar_apps_game",
+    "preset": 0,
+    "buttons": []
+  },
+  "sidebar_apps_news-info": {
+    "img_filename": "sidebar_apps_news-info",
+    "preset": 0,
+    "buttons": []
+  },
+  "sidebar_apps_life": {
+    "img_filename": "sidebar_apps_life",
+    "preset": 0,
+    "buttons": []
+  },
+  "sidebar_apps_education": {
+    "img_filename": "sidebar_apps_education",
+    "preset": 0,
+    "buttons": []
+  },
+  "sidebar_apps_options": {
+    "img_filename": "sidebar_apps_options",
+    "preset": 0,
+    "buttons": []
+  },
+  "sidebar_gaming-portal-menu": {
+    "img_filename": "sidebar_gaming-portal-menu",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "99px",
+        "top": "116px",
+        "width": "31px",
+        "height": "31px",
+        "popover": {
+          "title": "Profile",
+          "text": "Enjoy recommended content and services by logging into your LG account.",
+          "style": {
+            "top": "2%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "99px",
+        "top": "153px",
+        "width": "31px",
+        "height": "31px",
+        "popover": {
+          "title": "Notification",
+          "text": "View your current notifications.",
+          "style": {
+            "top": "10%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "98px",
+        "top": "391px",
+        "width": "31px",
+        "height": "31px",
+        "target": "homescreen",
+        "popover": {
+          "title": "Settings",
+          "text": "Adjust your preferences by accessing the quick settings panel.",
+          "style": {
+            "top": "18%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "99px",
+        "top": "79px",
+        "width": "31px",
+        "height": "31px",
+        "popover": {
+          "title": "Search",
+          "text": "Search for movie titles, actors, and genre.",
+          "style": {
+            "top": "26%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "99px",
+        "top": "189px",
+        "width": "31px",
+        "height": "31px"
+      },
+      {
+        "left": "99px",
+        "top": "226px",
+        "width": "31px",
+        "height": "31px"
+      }
+    ]
+  },
+  "sidebar_gaming-portal_search": {
+    "img_filename": "sidebar_gaming-portal_search",
+    "preset": 0,
+    "buttons": []
+  },
+  "sidebar_gaming-portal_profile": {
+    "img_filename": "sidebar_gaming-portal_profile",
+    "preset": 0,
+    "buttons": []
+  },
+  "sidebar_gaming-portal_remote": {
+    "img_filename": "sidebar_gaming-portal_remote",
+    "preset": 0,
+    "buttons": []
+  },
+  "sidebar_gaming-portal_gamepad": {
+    "img_filename": "sidebar_gaming-portal_gamepad",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_accessibility-shortcuts": {
+    "img_filename": "quick-settings_accessibility-shortcuts",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_internet-connection": {
+    "img_filename": "quick-settings_internet-connection",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_picture-mode-1": {
+    "img_filename": "quick-settings_picture-mode-1",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_picture-mode-2": {
+    "img_filename": "quick-settings_picture-mode-2",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_picture-mode-3": {
+    "img_filename": "quick-settings_picture-mode-3",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_picture-mode-4": {
+    "img_filename": "quick-settings_picture-mode-4",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_picture-mode-5": {
+    "img_filename": "quick-settings_picture-mode-5",
+    "preset": 0,
+    "buttons": []
   }
 }

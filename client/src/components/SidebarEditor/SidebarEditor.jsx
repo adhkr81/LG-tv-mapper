@@ -867,11 +867,14 @@ function ScreenPickerSelect({
   className = '',
 }) {
   const [open, setOpen] = useState(false);
+  const [filterText, setFilterText] = useState('');
+  const [isFiltering, setIsFiltering] = useState(false);
   const [hoveredId, setHoveredId] = useState(null);
   const [previewPos, setPreviewPos] = useState(null);
   const [previewImageFailed, setPreviewImageFailed] = useState(false);
   const rootRef = useRef(null);
   const menuRef = useRef(null);
+  const inputRef = useRef(null);
   const imageVersions = useStore((s) => s.imageVersions);
 
   const flatOptions = useMemo(() => {
@@ -884,6 +887,41 @@ function ScreenPickerSelect({
   }, [groups, allowEmpty]);
 
   const selected = flatOptions.find((option) => option.id === (value || ''));
+
+  // When closed (or value changes externally), sync the input text to the value
+  useEffect(() => {
+    if (!open) {
+      setFilterText(value || '');
+      setIsFiltering(false);
+    }
+  }, [value, open]);
+
+  const normalizedFilter = isFiltering ? filterText.trim().toLowerCase() : '';
+
+  const filteredGroups = useMemo(() => {
+    if (!normalizedFilter) return groups;
+    return groups
+      .map((group) => ({
+        ...group,
+        options: group.options.filter((opt) =>
+          opt.id.toLowerCase().includes(normalizedFilter)
+        ),
+      }))
+      .filter((group) => group.options.length > 0);
+  }, [groups, normalizedFilter]);
+
+  const firstMatch = useMemo(() => {
+    for (const group of filteredGroups) {
+      if (group.options.length) return group.options[0];
+    }
+    return null;
+  }, [filteredGroups]);
+
+  const totalMatches = filteredGroups.reduce(
+    (sum, g) => sum + g.options.length,
+    0
+  );
+
   const hoveredScreen = hoveredId
     ? screens.find((screen) => screen.id === hoveredId)
     : null;
@@ -919,6 +957,49 @@ function ScreenPickerSelect({
   const pick = (id) => {
     onChange(id);
     setOpen(false);
+    setFilterText(id || '');
+    setIsFiltering(false);
+  };
+
+  const handleInputFocus = (e) => {
+    if (disabled) return;
+    setOpen(true);
+    const input = e.target;
+    // Defer select so click-cursor placement doesn't override it
+    setTimeout(() => {
+      if (document.activeElement === input) input.select();
+    }, 0);
+  };
+
+  const handleInputChange = (e) => {
+    if (!open) setOpen(true);
+    setFilterText(e.target.value);
+    setIsFiltering(true);
+  };
+
+  const handleInputKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      if (isFiltering && firstMatch) {
+        e.preventDefault();
+        pick(firstMatch.id);
+      } else if (isFiltering && allowEmpty && !filterText.trim()) {
+        e.preventDefault();
+        pick('');
+      }
+    } else if (e.key === 'ArrowDown' && !open) {
+      setOpen(true);
+    }
+  };
+
+  const toggleOpen = () => {
+    if (disabled) return;
+    if (open) {
+      setOpen(false);
+      inputRef.current?.blur();
+    } else {
+      setOpen(true);
+      inputRef.current?.focus();
+    }
   };
 
   const handleOptionHover = (optionId, e) => {
@@ -949,32 +1030,50 @@ function ScreenPickerSelect({
   const previewImage = hoveredScreen?.image?.trim();
   const showPreview = open && showPreviewOnHover && hoveredId && previewPos;
 
+  const showEmptyOption =
+    allowEmpty && (!normalizedFilter || emptyLabel.toLowerCase().includes(normalizedFilter));
+
   return (
     <div
       ref={rootRef}
       className={`sidebar-screen-picker ${open ? 'sidebar-screen-picker--open' : ''} ${className}`.trim()}
     >
-      <button
-        type="button"
-        className="input sidebar-screen-picker__trigger"
-        disabled={disabled}
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        onClick={() => !disabled && setOpen((wasOpen) => !wasOpen)}
+      <div
+        className={`input sidebar-screen-picker__trigger ${disabled ? 'sidebar-screen-picker__trigger--disabled' : ''}`}
       >
-        <span className="sidebar-screen-picker__trigger-text">
-          {value ? (
-            <ScreenPickerLabel
-              screenId={value}
-              isParent={isParent(value)}
-              suffix={selected?.suffix}
-            />
-          ) : (
-            placeholder
-          )}
-        </span>
-        <span className="sidebar-screen-picker__chevron" aria-hidden>▾</span>
-      </button>
+        <input
+          ref={inputRef}
+          type="text"
+          role="combobox"
+          aria-haspopup="listbox"
+          aria-expanded={open}
+          aria-autocomplete="list"
+          className="sidebar-screen-picker__input"
+          value={filterText}
+          placeholder={open ? 'Type to filter…' : placeholder}
+          disabled={disabled}
+          spellCheck={false}
+          autoComplete="off"
+          onFocus={handleInputFocus}
+          onChange={handleInputChange}
+          onKeyDown={handleInputKeyDown}
+        />
+        {!open && value && selected?.suffix != null && selected.suffix !== '' && (
+          <span className="sidebar-screen-picker__trigger-suffix">({selected.suffix})</span>
+        )}
+        {!open && value && selected && isParent(value) && (
+          <span className="sidebar-screen-picker__trigger-badge">parent</span>
+        )}
+        <button
+          type="button"
+          tabIndex={-1}
+          className="sidebar-screen-picker__chevron"
+          aria-label={open ? 'Close options' : 'Open options'}
+          disabled={disabled}
+          onMouseDown={(e) => e.preventDefault()}
+          onClick={toggleOpen}
+        >▾</button>
+      </div>
       {open && (
         <div
           ref={menuRef}
@@ -985,7 +1084,7 @@ function ScreenPickerSelect({
             setPreviewPos(null);
           }}
         >
-          {allowEmpty && (
+          {showEmptyOption && (
             <button
               type="button"
               role="option"
@@ -996,7 +1095,7 @@ function ScreenPickerSelect({
               {emptyLabel}
             </button>
           )}
-          {groups.map((group) => (
+          {filteredGroups.map((group) => (
             <div key={group.label} className="sidebar-screen-picker__group">
               <div className="sidebar-screen-picker__group-label">{group.label}</div>
               {group.options.map((option) => (
@@ -1018,6 +1117,11 @@ function ScreenPickerSelect({
               ))}
             </div>
           ))}
+          {totalMatches === 0 && !showEmptyOption && (
+            <div className="sidebar-screen-picker__no-results">
+              No matches for "{filterText}"
+            </div>
+          )}
         </div>
       )}
       {showPreview && createPortal(

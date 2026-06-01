@@ -30,11 +30,11 @@ export default function ScreenPreview() {
   );
 
   useEffect(() => {
-    if (selectedScreenId) {
+    if (selectedScreenId && selectedScreenId !== currentScreenId) {
       setCurrentScreenId(selectedScreenId);
       setHistory([]);
     }
-  }, [selectedScreenId]);
+  }, [selectedScreenId, currentScreenId]);
 
   const screen = currentScreenId ? screensById.get(currentScreenId) : undefined;
 

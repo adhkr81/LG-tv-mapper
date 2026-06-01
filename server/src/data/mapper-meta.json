@@ -52,8 +52,8 @@
       "id": "settings-general",
       "name": "settings-general",
       "rootScreenId": "settings-general_down",
-      "bandX": 290,
-      "bandY": 580,
+      "bandX": 270,
+      "bandY": 578,
       "collapsed": true
     },
     {
@@ -97,9 +97,22 @@
       "id": "support-privacy",
       "name": "support-privacy",
       "rootScreenId": null,
-      "bandX": 1077,
-      "bandY": 848,
+      "bandX": 1057,
+      "bandY": 843,
       "collapsed": true
+    },
+    {
+      "id": "sidebar",
+      "name": "sidebar",
+      "rootScreenId": null,
+      "bandX": 245,
+      "bandY": -61,
+      "collapsed": true
+    },
+    {
+      "id": "quick-settings",
+      "name": "quick-settings",
+      "rootScreenId": null
     }
   ],
   "screens": {
@@ -3510,8 +3523,8 @@
       "sourceHeight": 2160
     },
     "homescreen": {
-      "graphX": -5610,
-      "graphY": 4992,
+      "graphX": -7690,
+      "graphY": -983,
       "sectionId": null,
       "buttonIds": [
         "0d9db044-f12c-4bfb-bd81-eec88dce2df4",
@@ -3524,30 +3537,229 @@
         "88232ab9-d360-4a9d-b260-85bc0f33d634",
         "ce0f65af-8c59-433d-a490-f9c0835fe5e8",
         "d4bd2a97-ef96-4023-affb-25ba3b829bdf",
-        "5a26601a-0038-4f73-9dcf-ea0488a124ad"
+        "5a26601a-0038-4f73-9dcf-ea0488a124ad",
+        "49b2e2b4-3c6b-4767-a9a4-831527ae7ab6"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
     "homescreen-left": {
-      "graphX": -5324,
-      "graphY": 4989,
+      "graphX": -7398,
+      "graphY": -979,
       "sectionId": null,
       "buttonIds": [
-        "a5c32139-2f21-4fea-b1d9-83cbb2698021"
+        "a5c32139-2f21-4fea-b1d9-83cbb2698021",
+        "ede078aa-253a-422c-8563-44ed7bc12c95",
+        "680f44ac-c027-4bca-889f-10242c318cbd",
+        "6ccb0534-8004-40ba-91a9-7f8ac70115bb",
+        "aec482f8-b1f1-4530-b9ec-d5686594cc98",
+        "923ff6dd-e02b-4311-9342-f0f5e8bf232f",
+        "73683935-78dc-4f15-98cc-8b1b15863521",
+        "bb93ae92-24cc-4e46-b416-8bedc29865e5",
+        "c9891116-380f-4f87-b1fc-de8d82672276",
+        "feb35480-9067-428d-8ee9-9db9e0b2d90b",
+        "f72f0071-d653-4e6e-a3ce-99c2372c4b54",
+        "db7060a8-0c15-4679-a813-e3d58935b3af",
+        "bedeb4e6-96ce-4575-a1c6-dbd7acab688e",
+        "e5569d9c-6666-4ed7-8f2c-3dd4ac7a16c7",
+        "17b25049-97a2-4b8b-9016-26fb9bfcced6",
+        "e3bc9f62-8ae4-4dbf-8038-393c05b0ba99",
+        "c854ac03-083b-41a0-aaf2-5eb82a0ba663",
+        "84934f48-186a-41ff-8e7b-d0fd1b5356e3",
+        "a6a47f04-86b5-43e0-9b3f-a518d746be83",
+        "dce69e3d-206f-4c34-8878-067767bd022e"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
     "homescreen-down": {
-      "graphX": -5329,
-      "graphY": 5206,
+      "graphX": -7692,
+      "graphY": -749,
       "sectionId": null,
       "buttonIds": [
-        "e69a3ffb-faae-4bbc-837b-1dcf777783a5"
+        "e69a3ffb-faae-4bbc-837b-1dcf777783a5",
+        "d0b69581-149c-4cbd-8db0-834e5cdaf7d9",
+        "24f633ad-21ab-485c-af98-b4891c4c2947",
+        "aa4b2104-c019-4790-bf55-a184063a47b4",
+        "cf66439f-6d8b-41ac-a748-e2c8e4938176",
+        "e5d13a04-6ed1-4114-b866-3debffa98afd",
+        "723c79b1-c1b6-4c26-b81c-80b3e416b7b8"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
+    },
+    "sidebar_notifications": {
+      "graphX": -2235,
+      "graphY": -323,
+      "sectionId": "sidebar",
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "sidebar_profile-menu": {
+      "graphX": -2221,
+      "graphY": -124,
+      "sectionId": "sidebar",
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "sidebar_profile_lg-thinq": {
+      "graphX": -1941,
+      "graphY": -124,
+      "sectionId": "sidebar",
+      "buttonIds": []
+    },
+    "sidebar_profile_mobile": {
+      "graphX": -1661,
+      "graphY": -124,
+      "sectionId": "sidebar",
+      "buttonIds": []
+    },
+    "sidebar_profile_device": {
+      "graphX": -1381,
+      "graphY": -124,
+      "sectionId": "sidebar",
+      "buttonIds": []
+    },
+    "sidebar_profile_search": {
+      "graphX": -2235,
+      "graphY": -527,
+      "sectionId": "sidebar",
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "sidebar_search_options": {
+      "graphX": -1968,
+      "graphY": -523,
+      "sectionId": "sidebar",
+      "buttonIds": []
+    },
+    "sidebar_apps_menu": {
+      "graphX": -2225,
+      "graphY": 84,
+      "sectionId": "sidebar",
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "sidebar_apps_entertainment": {
+      "graphX": -1945,
+      "graphY": 84,
+      "sectionId": "sidebar",
+      "buttonIds": []
+    },
+    "sidebar_apps_game": {
+      "graphX": -1665,
+      "graphY": 84,
+      "sectionId": "sidebar",
+      "buttonIds": []
+    },
+    "sidebar_apps_news-info": {
+      "graphX": -1385,
+      "graphY": 84,
+      "sectionId": "sidebar",
+      "buttonIds": []
+    },
+    "sidebar_apps_life": {
+      "graphX": -1105,
+      "graphY": 84,
+      "sectionId": "sidebar",
+      "buttonIds": []
+    },
+    "sidebar_apps_education": {
+      "graphX": -825,
+      "graphY": 84,
+      "sectionId": "sidebar",
+      "buttonIds": []
+    },
+    "sidebar_apps_options": {
+      "graphX": -545,
+      "graphY": 84,
+      "sectionId": "sidebar",
+      "buttonIds": []
+    },
+    "sidebar_gaming-portal-menu": {
+      "graphX": -2223,
+      "graphY": 311,
+      "sectionId": "sidebar",
+      "buttonIds": [
+        "68c4cb98-d3c9-4c48-a076-7262b87a9ae2",
+        "42274e6d-0ff8-461d-8a25-731278793ad4",
+        "7c0cf036-4dd1-4dca-acf8-6d0a455835bf",
+        "1008a0c7-add5-45a9-a162-ddd2d7880c2a",
+        "38b1d979-42e1-40bf-b213-577bd7ce154a",
+        "992bc01c-22c2-468a-bcce-c47605df5b23"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "sidebar_gaming-portal_search": {
+      "graphX": -1943,
+      "graphY": 311,
+      "sectionId": "sidebar",
+      "buttonIds": []
+    },
+    "sidebar_gaming-portal_profile": {
+      "graphX": -1663,
+      "graphY": 311,
+      "sectionId": "sidebar",
+      "buttonIds": []
+    },
+    "sidebar_gaming-portal_remote": {
+      "graphX": -1383,
+      "graphY": 311,
+      "sectionId": "sidebar",
+      "buttonIds": []
+    },
+    "sidebar_gaming-portal_gamepad": {
+      "graphX": -1103,
+      "graphY": 311,
+      "sectionId": "sidebar",
+      "buttonIds": []
+    },
+    "quick-settings_accessibility-shortcuts": {
+      "graphX": 0,
+      "graphY": 0,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_internet-connection": {
+      "graphX": 220,
+      "graphY": 0,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_picture-mode-1": {
+      "graphX": 440,
+      "graphY": 0,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_picture-mode-2": {
+      "graphX": 660,
+      "graphY": 0,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_picture-mode-3": {
+      "graphX": 0,
+      "graphY": 185,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_picture-mode-4": {
+      "graphX": 220,
+      "graphY": 185,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_picture-mode-5": {
+      "graphX": 440,
+      "graphY": 185,
+      "sectionId": "quick-settings",
+      "buttonIds": []
     }
   },
   "config": {

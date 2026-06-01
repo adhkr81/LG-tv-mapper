@@ -306,33 +306,87 @@
 .sidebar-screen-picker__trigger {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
   width: 100%;
   text-align: left;
-  cursor: pointer;
   font-size: 12px;
-  padding: 5px var(--space-sm);
+  padding: 0;
+  cursor: text;
 }
 
-.sidebar-screen-picker__trigger:disabled {
+.sidebar-screen-picker--open .sidebar-screen-picker__trigger {
+  border-color: rgba(0, 229, 255, 0.5);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+.sidebar-screen-picker__trigger--disabled {
   opacity: 0.55;
   cursor: not-allowed;
 }
 
-.sidebar-screen-picker__trigger-text {
+.sidebar-screen-picker__input {
   flex: 1;
   min-width: 0;
-  overflow: hidden;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: 12px;
+  padding: 5px var(--space-sm);
   text-overflow: ellipsis;
-  white-space: nowrap;
+}
+
+.sidebar-screen-picker__input::placeholder {
+  color: var(--text-muted);
+}
+
+.sidebar-screen-picker__input:disabled {
+  cursor: not-allowed;
+}
+
+.sidebar-screen-picker__trigger-suffix {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.sidebar-screen-picker__trigger-badge {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding-right: var(--space-xs);
 }
 
 .sidebar-screen-picker__chevron {
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 var(--space-sm);
+  border: none;
+  background: none;
   color: var(--text-muted);
   font-size: 10px;
   line-height: 1;
+  cursor: pointer;
+  transition: color var(--duration) var(--ease);
+}
+
+.sidebar-screen-picker__chevron:hover:not(:disabled) {
+  color: var(--text-primary);
+}
+
+.sidebar-screen-picker__chevron:disabled {
+  cursor: not-allowed;
+}
+
+.sidebar-screen-picker--open .sidebar-screen-picker__chevron {
+  transform: rotate(180deg);
 }
 
 .sidebar-screen-picker__menu {
@@ -381,6 +435,14 @@
 .sidebar-screen-picker__parent {
   font-weight: 700;
   color: var(--accent);
+}
+
+.sidebar-screen-picker__no-results {
+  padding: var(--space-sm);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  font-style: italic;
 }
 
 .sidebar-screen-picker__preview {
