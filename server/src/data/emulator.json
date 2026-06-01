@@ -10352,5 +10352,20 @@
         "target": "support-privacy_app-permissions_delete-personal-menu"
       }
     ]
+  },
+  "homescreen": {
+    "img_filename": "homescreen",
+    "preset": 0,
+    "buttons": []
+  },
+  "homescreen-left": {
+    "img_filename": "homescreen-left",
+    "preset": 0,
+    "buttons": []
+  },
+  "homescreen-down": {
+    "img_filename": "homescreen-down",
+    "preset": 0,
+    "buttons": []
   }
 }

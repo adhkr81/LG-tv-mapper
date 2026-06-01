@@ -523,6 +523,8 @@ export default function GraphView({ isActive = true }) {
         defaultEdgeOptions={{ interactionWidth: 0 }}
         fitView
         fitViewOptions={{ padding: 0.2 }}
+        minZoom={0.05}
+        maxZoom={2}
         className="graph-view__canvas"
         proOptions={{ hideAttribution: true }}
       >

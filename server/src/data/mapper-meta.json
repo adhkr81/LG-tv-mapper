@@ -3508,6 +3508,24 @@
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
+    },
+    "homescreen": {
+      "graphX": 174,
+      "graphY": 8873,
+      "sectionId": null,
+      "buttonIds": []
+    },
+    "homescreen-left": {
+      "graphX": 476,
+      "graphY": 8871,
+      "sectionId": null,
+      "buttonIds": []
+    },
+    "homescreen-down": {
+      "graphX": 170,
+      "graphY": 9159,
+      "sectionId": null,
+      "buttonIds": []
     }
   },
   "config": {

@@ -261,7 +261,11 @@ function isCrossSectionLink(screen, target, sourceId, targetId) {
 function collectAllScreensEdges(screens, collapsedSectionIds = new Set()) {
   const screenIds = new Set(screens.map((s) => s.id));
   const byId = new Map(screens.map((s) => [s.id, s]));
-  const edges = [];
+
+  // Group buttons by their effective (source, target) endpoints after the
+  // collapse remapping. Multiple buttons that all point into the same
+  // collapsed section would otherwise produce overlapping duplicate edges.
+  const grouped = new Map();
 
   screens.forEach((screen) => {
     screen.buttons.forEach((btn) => {
@@ -271,33 +275,47 @@ function collectAllScreensEdges(screens, collapsedSectionIds = new Set()) {
       const targetId = graphEndpointId(target, collapsedSectionIds);
       if (sourceId === targetId) return;
 
-      const crossSection = isCrossSectionLink(
-        screen,
-        target,
-        sourceId,
-        targetId
-      );
-      edges.push({
-        id: `e-${btn.id}`,
-        source: sourceId,
-        target: targetId,
-        label: btn.label,
-        animated: !crossSection,
-        style: {
-          stroke: crossSection ? '#ffab00' : '#00e5ff',
-          strokeWidth: 2,
-          strokeDasharray: crossSection ? '6 4' : undefined,
-        },
-        labelStyle: { fill: '#8a8a9e', fontSize: 11 },
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: crossSection ? '#ffab00' : '#00e5ff',
-          width: 16,
-          height: 16,
-        },
-      });
+      const key = `${sourceId}->${targetId}`;
+      let group = grouped.get(key);
+      if (!group) {
+        group = {
+          sourceId,
+          targetId,
+          buttons: [],
+          crossSection: isCrossSectionLink(screen, target, sourceId, targetId),
+        };
+        grouped.set(key, group);
+      }
+      group.buttons.push(btn);
     });
   });
+
+  const edges = [];
+  for (const { sourceId, targetId, buttons, crossSection } of grouped.values()) {
+    const first = buttons[0];
+    const count = buttons.length;
+    edges.push({
+      // Use a stable per-pair id when consolidating, otherwise keep the
+      // original button id so non-collapsed edges stay individually editable.
+      id: count > 1 ? `e-pair-${sourceId}->${targetId}` : `e-${first.id}`,
+      source: sourceId,
+      target: targetId,
+      label: count > 1 ? undefined : first.label,
+      animated: !crossSection,
+      style: {
+        stroke: crossSection ? '#ffab00' : '#00e5ff',
+        strokeWidth: 2,
+        strokeDasharray: crossSection ? '6 4' : undefined,
+      },
+      labelStyle: { fill: '#8a8a9e', fontSize: 11 },
+      markerEnd: {
+        type: MarkerType.ArrowClosed,
+        color: crossSection ? '#ffab00' : '#00e5ff',
+        width: 16,
+        height: 16,
+      },
+    });
+  }
 
   return edges;
 }
