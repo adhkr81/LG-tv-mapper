@@ -106,16 +106,16 @@
       "id": "sidebar",
       "name": "sidebar",
       "rootScreenId": null,
-      "bandX": -521,
-      "bandY": -211,
+      "bandX": -64,
+      "bandY": -226,
       "collapsed": true
     },
     {
       "id": "quick-settings",
       "name": "quick-settings",
       "rootScreenId": null,
-      "bandX": -881,
-      "bandY": 22,
+      "bandX": -510,
+      "bandY": -224,
       "collapsed": true
     }
   ],
@@ -3527,8 +3527,8 @@
       "sourceHeight": 2160
     },
     "homescreen": {
-      "graphX": -139,
-      "graphY": -229,
+      "graphX": 278,
+      "graphY": -231,
       "sectionId": null,
       "buttonIds": [
         "0d9db044-f12c-4bfb-bd81-eec88dce2df4",
@@ -3548,8 +3548,8 @@
       "sourceHeight": 2160
     },
     "homescreen-left": {
-      "graphX": 153,
-      "graphY": -225,
+      "graphX": 570,
+      "graphY": -227,
       "sectionId": null,
       "buttonIds": [
         "a5c32139-2f21-4fea-b1d9-83cbb2698021",
@@ -3577,8 +3577,8 @@
       "sourceHeight": 2160
     },
     "homescreen-down": {
-      "graphX": -141,
-      "graphY": 5,
+      "graphX": 276,
+      "graphY": 3,
       "sectionId": null,
       "buttonIds": [
         "e69a3ffb-faae-4bbc-837b-1dcf777783a5",

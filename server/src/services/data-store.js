@@ -147,17 +147,15 @@ function readMetaFileFromDisk() {
  * so we one-time bake the old offset into the stored values to preserve the
  * visual position the user is used to.
  */
-function migrateUngroupedToAbsoluteCoords(metaScreens) {
-  const ungrouped = Object.entries(metaScreens).filter(
-    ([, s]) => s && s.sectionId == null
-  );
+function shiftUngroupedToOrigin(screens) {
+  const ungrouped = screens.filter((s) => s && s.sectionId == null);
   if (ungrouped.length === 0) return false;
 
-  const minX = Math.min(...ungrouped.map(([, s]) => s.graphX ?? 0));
-  const minY = Math.min(...ungrouped.map(([, s]) => s.graphY ?? 0));
+  const minX = Math.min(...ungrouped.map((s) => s.graphX ?? 0));
+  const minY = Math.min(...ungrouped.map((s) => s.graphY ?? 0));
   if (minX === 0 && minY === 0) return false;
 
-  for (const [, screen] of ungrouped) {
+  for (const screen of ungrouped) {
     screen.graphX = (screen.graphX ?? 0) - minX;
     screen.graphY = (screen.graphY ?? 0) - minY;
   }
@@ -168,7 +166,7 @@ function migrateUngroupedToAbsoluteCoords(metaScreens) {
 function applyMetaMigrations(meta) {
   let migrated = false;
   if (meta.version < 2) {
-    if (migrateUngroupedToAbsoluteCoords(meta.screens)) migrated = true;
+    shiftUngroupedToOrigin(Object.values(meta.screens));
     meta.version = 2;
     migrated = true;
   }
@@ -293,6 +291,9 @@ function migrateLegacyIntoState() {
 
   state.screens = legacy.screens;
   state.sections = legacy.sections;
+  // Same v2 coords normalization the meta-file migration applies, so a fresh
+  // legacy import doesn't visually jump after the viewOffset removal.
+  shiftUngroupedToOrigin(state.screens);
   markDirty();
   flushSync(); // write the migrated state now so the legacy file is safe to rename
   const backup = LEGACY_FILE + '.bak';
