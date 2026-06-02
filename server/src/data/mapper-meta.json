@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "sections": [
     {
       "id": "Settings",
@@ -3526,8 +3527,8 @@
       "sourceHeight": 2160
     },
     "homescreen": {
-      "graphX": -8006,
-      "graphY": -4783,
+      "graphX": -139,
+      "graphY": -229,
       "sectionId": null,
       "buttonIds": [
         "0d9db044-f12c-4bfb-bd81-eec88dce2df4",
@@ -3547,8 +3548,8 @@
       "sourceHeight": 2160
     },
     "homescreen-left": {
-      "graphX": -7714,
-      "graphY": -4779,
+      "graphX": 153,
+      "graphY": -225,
       "sectionId": null,
       "buttonIds": [
         "a5c32139-2f21-4fea-b1d9-83cbb2698021",
@@ -3576,8 +3577,8 @@
       "sourceHeight": 2160
     },
     "homescreen-down": {
-      "graphX": -8008,
-      "graphY": -4549,
+      "graphX": -141,
+      "graphY": 5,
       "sectionId": null,
       "buttonIds": [
         "e69a3ffb-faae-4bbc-837b-1dcf777783a5",

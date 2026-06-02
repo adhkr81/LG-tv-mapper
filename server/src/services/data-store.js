@@ -24,6 +24,15 @@ const FLUSH_DEBOUNCE_MS = 250;
 /** Hard ceiling so a sustained drag still flushes occasionally. */
 const FLUSH_MAX_DELAY_MS = 2000;
 
+/**
+ * mapper-meta schema version.
+ *  - v2: ungrouped screens (sectionId == null) store absolute display coords.
+ *        Older files had coords that were rendered through a phantom
+ *        band offset, so on load we one-time shift them so the visual
+ *        position is preserved.
+ */
+const META_VERSION = 2;
+
 /** @typedef {{ id: string, name: string, rootScreenId: string | null, bandX?: number | null, bandY?: number | null, collapsed?: boolean }} Section */
 
 /* -------------------------------------------------------------------------- */
@@ -111,6 +120,7 @@ function readMetaFileFromDisk() {
   ensureDataDir();
   if (!fs.existsSync(config.mapperMetaPath)) {
     return {
+      version: META_VERSION,
       sections: [],
       screens: {},
       config: { imageSize: { ...DEFAULT_IMAGE_CONFIG } },
@@ -118,12 +128,51 @@ function readMetaFileFromDisk() {
   }
   const parsed = readJson(config.mapperMetaPath, { sections: [], screens: {} });
   return {
+    version: Number.isInteger(parsed.version) ? parsed.version : 1,
     sections: parsed.sections || [],
     screens: parsed.screens || {},
     config: {
       imageSize: normalizeImageConfig(parsed.config?.imageSize),
     },
   };
+}
+
+/**
+ * Pre-v2 mapper-meta stored ungrouped screens (sectionId == null) at their
+ * "section-relative" graph coords, which were then shifted on render by
+ * `viewOffset = (-minX, -minY)` so the cluster's top-left landed near (0,0).
+ * That offset was recomputed on every layout from the current min, so moving
+ * any single ungrouped screen quietly drifted the others by a few pixels on
+ * the next persist. v2 treats ungrouped screens as absolute display coords,
+ * so we one-time bake the old offset into the stored values to preserve the
+ * visual position the user is used to.
+ */
+function migrateUngroupedToAbsoluteCoords(metaScreens) {
+  const ungrouped = Object.entries(metaScreens).filter(
+    ([, s]) => s && s.sectionId == null
+  );
+  if (ungrouped.length === 0) return false;
+
+  const minX = Math.min(...ungrouped.map(([, s]) => s.graphX ?? 0));
+  const minY = Math.min(...ungrouped.map(([, s]) => s.graphY ?? 0));
+  if (minX === 0 && minY === 0) return false;
+
+  for (const [, screen] of ungrouped) {
+    screen.graphX = (screen.graphX ?? 0) - minX;
+    screen.graphY = (screen.graphY ?? 0) - minY;
+  }
+  return true;
+}
+
+/** Apply any pending meta-file migrations. Returns true if anything changed. */
+function applyMetaMigrations(meta) {
+  let migrated = false;
+  if (meta.version < 2) {
+    if (migrateUngroupedToAbsoluteCoords(meta.screens)) migrated = true;
+    meta.version = 2;
+    migrated = true;
+  }
+  return migrated;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -204,6 +253,7 @@ function screensToEmulatorAndMeta(screens, sections, imageConfig) {
   return {
     emulatorMap,
     meta: {
+      version: META_VERSION,
       sections,
       screens: metaScreens,
       config: { imageSize: imageConfig },
@@ -269,15 +319,18 @@ function loadStateFromDisk() {
   const emulatorMap = readEmulatorMapFromDisk();
   const meta = readMetaFileFromDisk();
 
+  const metaMigrated = applyMetaMigrations(meta);
+
   state.imageConfig = meta.config.imageSize;
   state.sections = meta.sections;
 
   if (emulatorMap === null) {
     state.screens = [];
+    if (metaMigrated) markDirty();
   } else {
     const { screens, needsRepersist } = emulatorAndMetaToScreens(emulatorMap, meta);
     state.screens = screens;
-    if (needsRepersist) markDirty();
+    if (needsRepersist || metaMigrated) markDirty();
   }
 
   state.loaded = true;

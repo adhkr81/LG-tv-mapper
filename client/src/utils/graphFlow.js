@@ -413,6 +413,21 @@ function computeSectionBandLayout(primary, sectionMeta, autoOffsetX, sectionId) 
   const maxX = Math.max(...xs);
   const groupWidth = maxX - minX + NODE_WIDTH + STAGING_GAP_X;
 
+  // Ungrouped screens live in absolute graph coords — no band shift.
+  // Without this, the auto-computed viewOffset depends on the current min(x/y)
+  // of the ungrouped cluster, so moving one screen would shift the offset on
+  // the next render and cause every persist to drift the others by a few px.
+  if (!sectionId) {
+    return {
+      groupNodes,
+      bandX: minX,
+      bandY: minY,
+      viewOffset: { x: 0, y: 0 },
+      groupWidth,
+      hasSavedBand: true,
+    };
+  }
+
   const hasSavedBand =
     sectionMeta != null && Number.isFinite(sectionMeta.bandX);
   const bandX = hasSavedBand ? sectionMeta.bandX : autoOffsetX;
