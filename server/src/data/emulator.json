@@ -11762,5 +11762,155 @@
     "img_filename": "quick-settings_eye-care",
     "preset": 0,
     "buttons": []
+  },
+  "game-optimizer_menu": {
+    "img_filename": "game-optimizer_menu",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_game_reduce-blue-light": {
+    "img_filename": "game-optimizer_game_reduce-blue-light",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_game_dark-room": {
+    "img_filename": "game-optimizer_game_dark-room",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_game_game-dashboard": {
+    "img_filename": "game-optimizer_game_game-dashboard",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_game_vrr": {
+    "img_filename": "game-optimizer_game_vrr",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_game_amd-free-sync": {
+    "img_filename": "game-optimizer_game_amd-free-sync",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_game_allm": {
+    "img_filename": "game-optimizer_game_allm",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_menu-down": {
+    "img_filename": "game-optimizer_menu-down",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_game_menu-color": {
+    "img_filename": "game-optimizer_game_menu-color",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_game_user-guide": {
+    "img_filename": "game-optimizer_game_user-guide",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_picture-menu": {
+    "img_filename": "game-optimizer_picture-menu",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_picture_game-genre": {
+    "img_filename": "game-optimizer_picture_game-genre",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_picture_black-stabilizer": {
+    "img_filename": "game-optimizer_picture_black-stabilizer",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_picture_white-stabilizer": {
+    "img_filename": "game-optimizer_picture_white-stabilizer",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_picture_game-contrast": {
+    "img_filename": "game-optimizer_picture_game-contrast",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_picture_game-black-level": {
+    "img_filename": "game-optimizer_picture_game-black-level",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_picture-menu-2": {
+    "img_filename": "game-optimizer_picture-menu-2",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_picture_adjust-game-sharpness": {
+    "img_filename": "game-optimizer_picture_adjust-game-sharpness",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_picture_game-color-depth": {
+    "img_filename": "game-optimizer_picture_game-color-depth",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_picture_reset": {
+    "img_filename": "game-optimizer_picture_reset",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_picture_hgig": {
+    "img_filename": "game-optimizer_picture_hgig",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_picture_wide-aspect-ratio": {
+    "img_filename": "game-optimizer_picture_wide-aspect-ratio",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_picture-menu-3": {
+    "img_filename": "game-optimizer_picture-menu-3",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_picture_screen-position": {
+    "img_filename": "game-optimizer_picture_screen-position",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_picture_advanced-picture-settings": {
+    "img_filename": "game-optimizer_picture_advanced-picture-settings",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_sound-menu": {
+    "img_filename": "game-optimizer_sound-menu",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_sound_dolby-atmos": {
+    "img_filename": "game-optimizer_sound_dolby-atmos",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_sound_sound-out": {
+    "img_filename": "game-optimizer_sound_sound-out",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_sound_advanced-sound-settings": {
+    "img_filename": "game-optimizer_sound_advanced-sound-settings",
+    "preset": 0,
+    "buttons": []
+  },
+  "game-optimizer_game_daark-room-mode": {
+    "img_filename": "game-optimizer_game_daark-room-mode",
+    "preset": 0,
+    "buttons": []
   }
 }

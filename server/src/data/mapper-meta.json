@@ -117,6 +117,11 @@
       "bandX": -510,
       "bandY": -224,
       "collapsed": true
+    },
+    {
+      "id": "game-optimizer",
+      "name": "game-optimizer",
+      "rootScreenId": null
     }
   ],
   "screens": {
@@ -4053,6 +4058,186 @@
       "graphX": 4,
       "graphY": 1581,
       "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "game-optimizer_menu": {
+      "graphX": 557,
+      "graphY": -452,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_game_reduce-blue-light": {
+      "graphX": 220,
+      "graphY": 0,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_game_dark-room": {
+      "graphX": 440,
+      "graphY": 0,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_game_game-dashboard": {
+      "graphX": 660,
+      "graphY": 0,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_game_vrr": {
+      "graphX": 0,
+      "graphY": 185,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_game_amd-free-sync": {
+      "graphX": 220,
+      "graphY": 185,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_game_allm": {
+      "graphX": 440,
+      "graphY": 185,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_menu-down": {
+      "graphX": 557,
+      "graphY": -229,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_game_menu-color": {
+      "graphX": 2210,
+      "graphY": 5,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_game_user-guide": {
+      "graphX": 2490,
+      "graphY": 5,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_picture-menu": {
+      "graphX": 843,
+      "graphY": 260,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_picture_game-genre": {
+      "graphX": 1123,
+      "graphY": 260,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_picture_black-stabilizer": {
+      "graphX": 1403,
+      "graphY": 260,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_picture_white-stabilizer": {
+      "graphX": 1683,
+      "graphY": 260,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_picture_game-contrast": {
+      "graphX": 1963,
+      "graphY": 260,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_picture_game-black-level": {
+      "graphX": 2243,
+      "graphY": 260,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_picture-menu-2": {
+      "graphX": 2523,
+      "graphY": 260,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_picture_adjust-game-sharpness": {
+      "graphX": 560,
+      "graphY": 532,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_picture_game-color-depth": {
+      "graphX": 840,
+      "graphY": 532,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_picture_reset": {
+      "graphX": 1120,
+      "graphY": 532,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_picture_hgig": {
+      "graphX": 1400,
+      "graphY": 532,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_picture_wide-aspect-ratio": {
+      "graphX": 1680,
+      "graphY": 532,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_picture-menu-3": {
+      "graphX": 1960,
+      "graphY": 532,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_picture_screen-position": {
+      "graphX": 2240,
+      "graphY": 532,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_picture_advanced-picture-settings": {
+      "graphX": 2520,
+      "graphY": 532,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_sound-menu": {
+      "graphX": 554,
+      "graphY": 807,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_sound_dolby-atmos": {
+      "graphX": 834,
+      "graphY": 807,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_sound_sound-out": {
+      "graphX": 1114,
+      "graphY": 807,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_sound_advanced-sound-settings": {
+      "graphX": 1394,
+      "graphY": 807,
+      "sectionId": "game-optimizer",
+      "buttonIds": []
+    },
+    "game-optimizer_game_daark-room-mode": {
+      "graphX": 564,
+      "graphY": 261,
+      "sectionId": "game-optimizer",
       "buttonIds": []
     }
   },
