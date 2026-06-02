@@ -105,14 +105,17 @@
       "id": "sidebar",
       "name": "sidebar",
       "rootScreenId": null,
-      "bandX": 245,
-      "bandY": -61,
+      "bandX": -521,
+      "bandY": -211,
       "collapsed": true
     },
     {
       "id": "quick-settings",
       "name": "quick-settings",
-      "rootScreenId": null
+      "rootScreenId": null,
+      "bandX": 814,
+      "bandY": -211,
+      "collapsed": true
     }
   ],
   "screens": {
@@ -3523,8 +3526,8 @@
       "sourceHeight": 2160
     },
     "homescreen": {
-      "graphX": -7690,
-      "graphY": -983,
+      "graphX": -8074,
+      "graphY": -4367,
       "sectionId": null,
       "buttonIds": [
         "0d9db044-f12c-4bfb-bd81-eec88dce2df4",
@@ -3544,8 +3547,8 @@
       "sourceHeight": 2160
     },
     "homescreen-left": {
-      "graphX": -7398,
-      "graphY": -979,
+      "graphX": -7782,
+      "graphY": -4363,
       "sectionId": null,
       "buttonIds": [
         "a5c32139-2f21-4fea-b1d9-83cbb2698021",
@@ -3573,8 +3576,8 @@
       "sourceHeight": 2160
     },
     "homescreen-down": {
-      "graphX": -7692,
-      "graphY": -749,
+      "graphX": -8076,
+      "graphY": -4133,
       "sectionId": null,
       "buttonIds": [
         "e69a3ffb-faae-4bbc-837b-1dcf777783a5",
@@ -3589,8 +3592,8 @@
       "sourceHeight": 2160
     },
     "sidebar_notifications": {
-      "graphX": -2235,
-      "graphY": -323,
+      "graphX": -2216,
+      "graphY": -557,
       "sectionId": "sidebar",
       "buttonIds": [],
       "sourceWidth": 3840,
@@ -3600,7 +3603,12 @@
       "graphX": -2221,
       "graphY": -124,
       "sectionId": "sidebar",
-      "buttonIds": [],
+      "buttonIds": [
+        "a379875d-5c56-40eb-a91d-47478c38521c",
+        "112ecbfe-3ae8-4209-acd9-b73436d29a69",
+        "f3149dcc-e5e1-4b8a-a9bb-441e6b7eb735",
+        "d03c792e-47f9-4f8b-bddc-a376a3aff9e7"
+      ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
@@ -3608,39 +3616,71 @@
       "graphX": -1941,
       "graphY": -124,
       "sectionId": "sidebar",
-      "buttonIds": []
+      "buttonIds": [
+        "f48d95d0-e5be-4bd4-bf0c-3c78895ee5c0",
+        "9ba1429c-cd5e-4dca-9a5d-6bd55ae75981"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "sidebar_profile_mobile": {
       "graphX": -1661,
       "graphY": -124,
       "sectionId": "sidebar",
-      "buttonIds": []
+      "buttonIds": [
+        "b6cc4c10-eb9d-420c-8c54-4dc25b91355b",
+        "8205ea2c-4c96-4771-bbde-de64726e4d17"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "sidebar_profile_device": {
       "graphX": -1381,
       "graphY": -124,
       "sectionId": "sidebar",
-      "buttonIds": []
+      "buttonIds": [
+        "50a337f7-7305-44c3-a968-8fd4556faadc",
+        "244fb220-d285-46f4-b2ba-aa77d5234088"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "sidebar_profile_search": {
-      "graphX": -2235,
-      "graphY": -527,
+      "graphX": -2219,
+      "graphY": -349,
       "sectionId": "sidebar",
-      "buttonIds": [],
+      "buttonIds": [
+        "370ee866-4142-46fa-b04f-b14951abaa13",
+        "48e42a3f-4af0-43ce-925a-17cdb09d4c9b",
+        "3e5c9a8f-8853-4eb6-9246-e8c01e21bcd4"
+      ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
     "sidebar_search_options": {
-      "graphX": -1968,
-      "graphY": -523,
+      "graphX": -1941,
+      "graphY": -346,
       "sectionId": "sidebar",
-      "buttonIds": []
+      "buttonIds": [
+        "027e993a-61c7-4c47-8c4d-0e510a08f0d2"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "sidebar_apps_menu": {
       "graphX": -2225,
       "graphY": 84,
       "sectionId": "sidebar",
-      "buttonIds": [],
+      "buttonIds": [
+        "d0eb9ffa-a9c5-4ac3-9973-1ed34bb0f089",
+        "58c93862-dc5b-4075-85c1-7281517bc4d7",
+        "ebcfd4bf-f53d-4d06-9ef3-75b82f998d1b",
+        "36fed2e0-6e38-4574-ade4-0ac39364c6af",
+        "4d315550-4624-46e1-973c-42b999c091ca",
+        "638c0269-2502-46d5-b3b2-287a6c8d21ae",
+        "d26e341a-d3c0-4764-80d6-c6ce0fb9d8c7",
+        "cbaed48f-3dbd-4101-800b-5f519fc49273"
+      ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
@@ -3648,37 +3688,96 @@
       "graphX": -1945,
       "graphY": 84,
       "sectionId": "sidebar",
-      "buttonIds": []
+      "buttonIds": [
+        "4bc6aa91-8a25-486d-bbde-7a6e9a2fab26",
+        "0cadfda8-e399-41d8-bca4-7e1f55d9f435",
+        "f7d3a4ee-2b3c-44f1-9d37-034a7094afdc",
+        "e29f0113-7e33-4757-bd27-363877bc2221",
+        "78b37575-caef-4e50-ab49-86ed1cd24cd9",
+        "10ffaa4d-3e38-4f6b-9b37-eb8bc8e1a568",
+        "8b737886-6d9d-4150-a005-fea93aec5ee2",
+        "87e7b793-67a3-48d1-9217-5071a87b66c1"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "sidebar_apps_game": {
       "graphX": -1665,
       "graphY": 84,
       "sectionId": "sidebar",
-      "buttonIds": []
+      "buttonIds": [
+        "aeba9d50-f1b9-4283-b968-43421afb0852",
+        "c3fb07ff-cbb6-441d-a91f-24f82f349e63",
+        "93251dda-06a5-4880-a7c9-78030452547a",
+        "5a21b419-9c15-47d1-b550-1febd316cdf3",
+        "38d02c3d-cf73-4c21-a7d9-1a4db4ef9b67",
+        "266e0667-b90c-4633-88e1-f330cfff2f49",
+        "6da00841-90ac-415a-896a-195f578502c0",
+        "4f167903-b4dc-423a-8c56-4d4a4fd5aaa8"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "sidebar_apps_news-info": {
       "graphX": -1385,
       "graphY": 84,
       "sectionId": "sidebar",
-      "buttonIds": []
+      "buttonIds": [
+        "4183f669-88a8-46e3-9342-58bb878ea6c9",
+        "95100a9c-1e8b-440b-9162-b616e53b6186",
+        "c7d90cd0-9d6d-481e-8b1c-cad50e2f7131",
+        "689285e6-c291-4631-9dfb-0089e9c68f9d",
+        "1aa48605-fc7d-4d1b-96ac-6819790a82ff",
+        "1fbcbaa7-3db5-49a9-b29e-09f72b21e7da",
+        "6a7476e7-f73f-4316-b6a5-eb49bb56f1e4",
+        "88ae02d4-691f-4941-9ac8-360fe4a80633"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "sidebar_apps_life": {
       "graphX": -1105,
       "graphY": 84,
       "sectionId": "sidebar",
-      "buttonIds": []
+      "buttonIds": [
+        "6113a3d6-f8fd-4a3a-a221-7950196cd194",
+        "41287e84-3917-4d21-b976-cc16d5a24d9b",
+        "e1392a48-d8d8-4487-a23e-c6fde68f5da1",
+        "fa9d1c6c-77e8-4ef4-b24e-e21ff945488b",
+        "96fa9e8a-624a-4d1a-8d3b-1789ccd06cc4",
+        "2518f6c3-7af7-4897-8917-8b4b1bae6999",
+        "2e491305-f574-46d0-9556-26d54474ea81",
+        "fd4dc2bd-f3fb-409a-afd3-ef61db6537d6"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "sidebar_apps_education": {
       "graphX": -825,
       "graphY": 84,
       "sectionId": "sidebar",
-      "buttonIds": []
+      "buttonIds": [
+        "23564533-d895-46b9-ac28-3ee5492cb89b",
+        "8d9a7228-a634-4d7f-9508-f358ff363b46",
+        "21dd2b45-43ea-44a4-a2a3-67915b4d576f",
+        "431499c3-690b-4193-8443-33c8041e20b4",
+        "c87d622d-bab2-4837-b5d8-aba94327cf43",
+        "5b0f063e-e13d-4d41-a304-dc17d369b031",
+        "a93c4e0b-cf70-4886-b30d-5ae518332f10",
+        "75d05e90-3c7a-4931-a9fd-ed24e2b1caec"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "sidebar_apps_options": {
       "graphX": -545,
       "graphY": 84,
       "sectionId": "sidebar",
-      "buttonIds": []
+      "buttonIds": [
+        "09696897-0336-46a9-90de-bd3417c14ec0"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "sidebar_gaming-portal-menu": {
       "graphX": -2223,
@@ -3686,7 +3785,6 @@
       "sectionId": "sidebar",
       "buttonIds": [
         "68c4cb98-d3c9-4c48-a076-7262b87a9ae2",
-        "42274e6d-0ff8-461d-8a25-731278793ad4",
         "7c0cf036-4dd1-4dca-acf8-6d0a455835bf",
         "1008a0c7-add5-45a9-a162-ddd2d7880c2a",
         "38b1d979-42e1-40bf-b213-577bd7ce154a",
@@ -3699,25 +3797,56 @@
       "graphX": -1943,
       "graphY": 311,
       "sectionId": "sidebar",
-      "buttonIds": []
+      "buttonIds": [
+        "a441511f-7476-41d7-b501-7f5eaf4629ff",
+        "50f52ea9-8828-4aa2-b830-b603cb5ae2e7",
+        "54ffb660-0e80-4d7a-b61c-de32ca6510bd",
+        "6475f88e-7b1c-4779-9c35-d228f97d95be"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "sidebar_gaming-portal_profile": {
       "graphX": -1663,
       "graphY": 311,
       "sectionId": "sidebar",
-      "buttonIds": []
+      "buttonIds": [
+        "be6fb298-ea8b-4640-b694-d499e03d6fb2",
+        "718a1218-2ca2-4930-808c-520cf3aabfa7",
+        "fe6f9faf-b07e-4d09-a7cc-743075e544b8",
+        "7a50a5d9-5162-4c00-a8f3-74498bdbc569",
+        "b485a45a-dc66-47f3-934b-a7f0cf6a0709"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "sidebar_gaming-portal_remote": {
       "graphX": -1383,
       "graphY": 311,
       "sectionId": "sidebar",
-      "buttonIds": []
+      "buttonIds": [
+        "eb35e257-de5a-44f0-803f-849424989a48",
+        "7c30d68f-b611-43d7-afd4-cdd439f41892",
+        "18c144a3-fd98-42bc-83f7-0c0c2219e68b",
+        "938a7feb-ab4d-4bea-b08b-e7b4545490e1",
+        "c0e10b14-887b-43e2-a195-c7c3fdeb08a7"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "sidebar_gaming-portal_gamepad": {
       "graphX": -1103,
       "graphY": 311,
       "sectionId": "sidebar",
-      "buttonIds": []
+      "buttonIds": [
+        "6665c78e-32eb-4321-9381-17488ceb81ff",
+        "7bb8a960-7627-4768-b6cd-5919b6441b8d",
+        "6c200739-05f7-4cf2-b354-1d43eb785892",
+        "c2f8317a-3e32-4f51-b5e7-bdbfbaf23b2b",
+        "ad20868f-bcbf-4d9a-aeea-f1db31f563eb"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_accessibility-shortcuts": {
       "graphX": 0,

@@ -10751,67 +10751,521 @@
   "sidebar_profile-menu": {
     "img_filename": "sidebar_profile-menu",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "827px",
+        "top": "29px",
+        "width": "24px",
+        "height": "24px",
+        "target": "homescreen"
+      },
+      {
+        "left": "201px",
+        "top": "354px",
+        "width": "189px",
+        "height": "33px",
+        "target": "sidebar_profile_lg-thinq"
+      },
+      {
+        "left": "398px",
+        "top": "356px",
+        "width": "172px",
+        "height": "30px",
+        "target": "sidebar_profile_mobile"
+      },
+      {
+        "left": "587px",
+        "top": "356px",
+        "width": "172px",
+        "height": "30px",
+        "target": "sidebar_profile_device"
+      }
+    ]
   },
   "sidebar_profile_lg-thinq": {
     "img_filename": "sidebar_profile_lg-thinq",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "827px",
+        "top": "29px",
+        "width": "24px",
+        "height": "24px",
+        "target": "homescreen"
+      },
+      {
+        "left": "121px",
+        "top": "54px",
+        "width": "25px",
+        "height": "25px",
+        "target": "sidebar_profile-menu"
+      }
+    ]
   },
   "sidebar_profile_mobile": {
     "img_filename": "sidebar_profile_mobile",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "827px",
+        "top": "29px",
+        "width": "24px",
+        "height": "24px",
+        "target": "homescreen"
+      },
+      {
+        "left": "121px",
+        "top": "54px",
+        "width": "25px",
+        "height": "25px",
+        "target": "sidebar_profile-menu"
+      }
+    ]
   },
   "sidebar_profile_device": {
     "img_filename": "sidebar_profile_device",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "827px",
+        "top": "29px",
+        "width": "24px",
+        "height": "24px",
+        "target": "homescreen"
+      },
+      {
+        "left": "121px",
+        "top": "54px",
+        "width": "25px",
+        "height": "25px",
+        "target": "sidebar_profile-menu"
+      }
+    ]
   },
   "sidebar_profile_search": {
     "img_filename": "sidebar_profile_search",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "784px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_search_options"
+      },
+      {
+        "left": "826px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "homescreen"
+      },
+      {
+        "left": "745px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_profile-menu"
+      }
+    ]
   },
   "sidebar_search_options": {
     "img_filename": "sidebar_search_options",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "644px",
+        "top": "171px",
+        "width": "208px",
+        "height": "31px",
+        "target": "homescreen"
+      }
+    ]
   },
   "sidebar_apps_menu": {
     "img_filename": "sidebar_apps_menu",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "786px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_apps_options"
+      },
+      {
+        "left": "826px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "homescreen"
+      },
+      {
+        "left": "745px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_profile-menu"
+      },
+      {
+        "left": "239px",
+        "top": "70px",
+        "width": "116px",
+        "height": "27px",
+        "target": "sidebar_apps_entertainment"
+      },
+      {
+        "left": "355px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_game"
+      },
+      {
+        "left": "589px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_life"
+      },
+      {
+        "left": "472px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_news-info"
+      },
+      {
+        "left": "705px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_education"
+      }
+    ]
   },
   "sidebar_apps_entertainment": {
     "img_filename": "sidebar_apps_entertainment",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "786px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_apps_options"
+      },
+      {
+        "left": "826px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "homescreen"
+      },
+      {
+        "left": "745px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_profile-menu"
+      },
+      {
+        "left": "122px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_menu"
+      },
+      {
+        "left": "355px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_game"
+      },
+      {
+        "left": "589px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_life"
+      },
+      {
+        "left": "472px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_news-info"
+      },
+      {
+        "left": "705px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_education"
+      }
+    ]
   },
   "sidebar_apps_game": {
     "img_filename": "sidebar_apps_game",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "786px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_apps_options"
+      },
+      {
+        "left": "826px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "homescreen"
+      },
+      {
+        "left": "745px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_profile-menu"
+      },
+      {
+        "left": "121px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_menu"
+      },
+      {
+        "left": "238px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_entertainment"
+      },
+      {
+        "left": "589px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_life"
+      },
+      {
+        "left": "472px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_news-info"
+      },
+      {
+        "left": "705px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_education"
+      }
+    ]
   },
   "sidebar_apps_news-info": {
     "img_filename": "sidebar_apps_news-info",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "786px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_apps_options"
+      },
+      {
+        "left": "826px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "homescreen"
+      },
+      {
+        "left": "745px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_profile-menu"
+      },
+      {
+        "left": "121px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_menu"
+      },
+      {
+        "left": "238px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_entertainment"
+      },
+      {
+        "left": "355px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_game"
+      },
+      {
+        "left": "589px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_life"
+      },
+      {
+        "left": "705px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_education"
+      }
+    ]
   },
   "sidebar_apps_life": {
     "img_filename": "sidebar_apps_life",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "786px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_apps_options"
+      },
+      {
+        "left": "826px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "homescreen"
+      },
+      {
+        "left": "745px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_profile-menu"
+      },
+      {
+        "left": "121px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_menu"
+      },
+      {
+        "left": "238px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_entertainment"
+      },
+      {
+        "left": "355px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_game"
+      },
+      {
+        "left": "472px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_news-info"
+      },
+      {
+        "left": "705px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_education"
+      }
+    ]
   },
   "sidebar_apps_education": {
     "img_filename": "sidebar_apps_education",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "786px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_apps_options"
+      },
+      {
+        "left": "826px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "homescreen"
+      },
+      {
+        "left": "745px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_profile-menu"
+      },
+      {
+        "left": "121px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_menu"
+      },
+      {
+        "left": "238px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_entertainment"
+      },
+      {
+        "left": "355px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_game"
+      },
+      {
+        "left": "589px",
+        "top": "70px",
+        "width": "116px",
+        "height": "27px",
+        "target": "sidebar_apps_life"
+      },
+      {
+        "left": "472px",
+        "top": "70px",
+        "width": "117px",
+        "height": "27px",
+        "target": "sidebar_apps_news-info"
+      }
+    ]
   },
   "sidebar_apps_options": {
     "img_filename": "sidebar_apps_options",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "644px",
+        "top": "211px",
+        "width": "208px",
+        "height": "31px",
+        "target": "homescreen"
+      }
+    ]
   },
   "sidebar_gaming-portal-menu": {
     "img_filename": "sidebar_gaming-portal-menu",
@@ -10822,6 +11276,122 @@
         "top": "116px",
         "width": "31px",
         "height": "31px",
+        "target": "sidebar_gaming-portal_search",
+        "popover": {
+          "title": "Profile",
+          "text": "Enjoy recommended content and services by logging into your LG account.",
+          "style": {
+            "top": "2%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "98px",
+        "top": "391px",
+        "width": "31px",
+        "height": "31px",
+        "target": "homescreen",
+        "popover": {
+          "title": "Settings",
+          "text": "Adjust your preferences by accessing the quick settings panel.",
+          "style": {
+            "top": "18%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "99px",
+        "top": "79px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal_profile",
+        "popover": {
+          "title": "Search",
+          "text": "Search for movie titles, actors, and genre.",
+          "style": {
+            "top": "26%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "99px",
+        "top": "189px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal_remote"
+      },
+      {
+        "left": "99px",
+        "top": "226px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal_gamepad"
+      }
+    ]
+  },
+  "sidebar_gaming-portal_search": {
+    "img_filename": "sidebar_gaming-portal_search",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "99px",
+        "top": "153px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal-menu",
+        "popover": {
+          "title": "Notification",
+          "text": "View your current notifications.",
+          "style": {
+            "top": "10%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "99px",
+        "top": "79px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal_profile",
+        "popover": {
+          "title": "Search",
+          "text": "Search for movie titles, actors, and genre.",
+          "style": {
+            "top": "26%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "99px",
+        "top": "189px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal_remote"
+      },
+      {
+        "left": "99px",
+        "top": "226px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal_gamepad"
+      }
+    ]
+  },
+  "sidebar_gaming-portal_profile": {
+    "img_filename": "sidebar_gaming-portal_profile",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "99px",
+        "top": "116px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal_search",
         "popover": {
           "title": "Profile",
           "text": "Enjoy recommended content and services by logging into your LG account.",
@@ -10836,6 +11406,72 @@
         "top": "153px",
         "width": "31px",
         "height": "31px",
+        "target": "sidebar_gaming-portal-menu",
+        "popover": {
+          "title": "Notification",
+          "text": "View your current notifications.",
+          "style": {
+            "top": "10%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "98px",
+        "top": "391px",
+        "width": "31px",
+        "height": "31px",
+        "target": "homescreen",
+        "popover": {
+          "title": "Settings",
+          "text": "Adjust your preferences by accessing the quick settings panel.",
+          "style": {
+            "top": "18%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "99px",
+        "top": "189px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal_remote"
+      },
+      {
+        "left": "99px",
+        "top": "226px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal_gamepad"
+      }
+    ]
+  },
+  "sidebar_gaming-portal_remote": {
+    "img_filename": "sidebar_gaming-portal_remote",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "99px",
+        "top": "116px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal_search",
+        "popover": {
+          "title": "Profile",
+          "text": "Enjoy recommended content and services by logging into your LG account.",
+          "style": {
+            "top": "2%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "99px",
+        "top": "153px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal-menu",
         "popover": {
           "title": "Notification",
           "text": "View your current notifications.",
@@ -10865,6 +11501,80 @@
         "top": "79px",
         "width": "31px",
         "height": "31px",
+        "target": "sidebar_gaming-portal_profile",
+        "popover": {
+          "title": "Search",
+          "text": "Search for movie titles, actors, and genre.",
+          "style": {
+            "top": "26%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "99px",
+        "top": "226px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal_gamepad"
+      }
+    ]
+  },
+  "sidebar_gaming-portal_gamepad": {
+    "img_filename": "sidebar_gaming-portal_gamepad",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "99px",
+        "top": "116px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal_search",
+        "popover": {
+          "title": "Profile",
+          "text": "Enjoy recommended content and services by logging into your LG account.",
+          "style": {
+            "top": "2%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "99px",
+        "top": "153px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal-menu",
+        "popover": {
+          "title": "Notification",
+          "text": "View your current notifications.",
+          "style": {
+            "top": "10%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "98px",
+        "top": "391px",
+        "width": "31px",
+        "height": "31px",
+        "target": "homescreen",
+        "popover": {
+          "title": "Settings",
+          "text": "Adjust your preferences by accessing the quick settings panel.",
+          "style": {
+            "top": "18%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "99px",
+        "top": "79px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal_profile",
         "popover": {
           "title": "Search",
           "text": "Search for movie titles, actors, and genre.",
@@ -10878,35 +11588,10 @@
         "left": "99px",
         "top": "189px",
         "width": "31px",
-        "height": "31px"
-      },
-      {
-        "left": "99px",
-        "top": "226px",
-        "width": "31px",
-        "height": "31px"
+        "height": "31px",
+        "target": "sidebar_gaming-portal_remote"
       }
     ]
-  },
-  "sidebar_gaming-portal_search": {
-    "img_filename": "sidebar_gaming-portal_search",
-    "preset": 0,
-    "buttons": []
-  },
-  "sidebar_gaming-portal_profile": {
-    "img_filename": "sidebar_gaming-portal_profile",
-    "preset": 0,
-    "buttons": []
-  },
-  "sidebar_gaming-portal_remote": {
-    "img_filename": "sidebar_gaming-portal_remote",
-    "preset": 0,
-    "buttons": []
-  },
-  "sidebar_gaming-portal_gamepad": {
-    "img_filename": "sidebar_gaming-portal_gamepad",
-    "preset": 0,
-    "buttons": []
   },
   "quick-settings_accessibility-shortcuts": {
     "img_filename": "quick-settings_accessibility-shortcuts",
