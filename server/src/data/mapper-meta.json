@@ -114,14 +114,17 @@
       "id": "quick-settings",
       "name": "quick-settings",
       "rootScreenId": null,
-      "bandX": -510,
-      "bandY": -224,
+      "bandX": -848,
+      "bandY": 16,
       "collapsed": true
     },
     {
       "id": "game-optimizer",
       "name": "game-optimizer",
-      "rootScreenId": null
+      "rootScreenId": null,
+      "collapsed": true,
+      "bandX": -854,
+      "bandY": 332
     }
   ],
   "screens": {
@@ -4064,179 +4067,416 @@
       "graphX": 557,
       "graphY": -452,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "8bc3e1ae-60a7-4b5c-ba98-7c80ef515cc5",
+        "f17d28d0-6f00-4a2a-9f46-ad0d2e44bf14",
+        "15cd997a-2d6d-4d0a-bd54-8e2f78457f0f",
+        "255c7250-4f5d-43be-8401-e5786dd20c8e",
+        "6136b175-30a1-428b-851b-f3bdcd9dd24f",
+        "a9b99c75-fd49-4707-b1f3-91e6d2d2f182",
+        "e30b4b05-2783-46dc-b260-f908e2bad51f",
+        "9efa53a9-a529-48b3-95db-f0e37506bddf",
+        "67038cd7-6a52-4e67-8f41-52e5fb57b6d8"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_game_reduce-blue-light": {
-      "graphX": 220,
-      "graphY": 0,
+      "graphX": 511,
+      "graphY": 31,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "31b3636b-1ae0-4c5b-9f31-cccc2293e08d",
+        "30612b15-f7d7-46c2-855c-d036544efe48",
+        "30c2828a-08ce-4b78-a2d4-078b7d337a6f",
+        "b8ff2889-3766-4e3d-96f5-aa72f227d818",
+        "656da33c-4acd-4d7f-a609-44a540aa9726",
+        "49868103-5035-4a05-9b88-b63d439ca921",
+        "97c216da-74f9-4b09-836d-7bb7cb298f1e",
+        "59db4c65-67cf-45e1-a031-7a556465467e"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_game_dark-room": {
-      "graphX": 440,
+      "graphX": 840,
       "graphY": 0,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "09444f88-6f39-426f-a07d-4e0d7e32d366",
+        "ee8fec6b-5c18-467e-a527-9a5d140a15af",
+        "b3b4d358-d533-4289-b4dc-b39dcf3b975d",
+        "e8821edd-0002-4467-83b7-2d9e49f7a320",
+        "a0737135-6423-44b5-8031-5bcca11221e0",
+        "595defa2-79d5-46db-9059-fab5c98ef648",
+        "026624df-33b8-4aa7-9336-c0807fd07c7e",
+        "9ce84a2b-e230-48fc-a1f2-647bac3e76ef"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_game_game-dashboard": {
-      "graphX": 660,
+      "graphX": 1120,
       "graphY": 0,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "72cbb713-70c6-4530-a77a-0fe420a31080",
+        "389b38d9-2fb0-43fb-93c4-eee1552f974a",
+        "f176d862-ead8-4bec-a1d6-090c1bd132a2",
+        "2550d830-b21a-48ce-ba5f-f796f31ed3a4",
+        "2e9041e4-1df2-4c0f-8a9e-026d5d7bf76b",
+        "8570047d-83ef-4bb2-a6da-065546574db4",
+        "777a5372-4080-4448-ab12-755a6534c7f6",
+        "b44edfa8-c4f7-4c04-b89e-b1c4e2962c10"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_game_vrr": {
-      "graphX": 0,
-      "graphY": 185,
+      "graphX": 1400,
+      "graphY": 0,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "08fc9ba8-0e62-47f8-bc73-b4c22b046680",
+        "779220a2-a365-43a3-a012-f873b91e998d",
+        "7e295796-2e78-4897-a078-98bfbe8db6dc",
+        "cbb39e50-4497-451e-9fed-7a86b22c6744",
+        "14a7f11f-16da-48ae-86a1-7da1195d5917",
+        "dbfa8fa3-42bc-4a9d-bc7a-85b00eca9fe5",
+        "a229fb93-fd48-4231-a739-6d1f51608d36",
+        "39c2c155-fcf5-4d99-b707-d2d8c1f23f2c"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_game_amd-free-sync": {
-      "graphX": 220,
-      "graphY": 185,
+      "graphX": 1680,
+      "graphY": 0,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "36ba644e-d8d0-495b-858e-f548575793c3",
+        "07512edb-01d7-410c-974f-fd78ac0d3429",
+        "82c61e47-3c22-4e6b-bacf-f4c931ec7481"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_game_allm": {
-      "graphX": 440,
-      "graphY": 185,
+      "graphX": 1960,
+      "graphY": 0,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "96b8a13f-9ec3-4067-a23f-29a00c12d02a",
+        "af8f0b60-8a6f-4d86-a830-c551392da169",
+        "3cb73495-b0ab-4e07-bd68-926a71bdc331",
+        "f0cb8595-c910-49ba-90b0-39bf2134ec94",
+        "46b71ed4-7f6e-49c9-9cf2-0fd413ec3268",
+        "4205ba62-aa38-46a4-8764-80a5cb7b760c",
+        "cf6efb08-f589-4d9e-93dc-a9808fb3cd58",
+        "ccea0559-d3e0-4fdc-bb85-d284d062f4dc",
+        "497ed0db-1ccd-4224-aed9-f5a82fab4605"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_menu-down": {
-      "graphX": 557,
-      "graphY": -229,
+      "graphX": 297,
+      "graphY": -212,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "42a2c30c-ba99-4012-904a-3b137c91f138",
+        "f63bde68-09a5-42dd-83cb-3cf2dee171c6",
+        "2adac403-3b2d-47d1-bc59-fce7ba120778",
+        "3ed5e27d-bda6-4d75-9490-de6fa03fe379",
+        "979d2242-3835-4af5-96a6-b94aca692a42"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_game_menu-color": {
       "graphX": 2210,
       "graphY": 5,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "7e5d3566-d099-4a01-89a3-7dcb0a10e0a7",
+        "cc4b1af5-6a57-4aac-b097-957235eeb476",
+        "4acee0c0-c6ae-41cc-9031-f8422d566cc4"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_game_user-guide": {
       "graphX": 2490,
       "graphY": 5,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_picture-menu": {
-      "graphX": 843,
-      "graphY": 260,
+      "graphX": 806,
+      "graphY": 263,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "ec848c9f-2291-4d57-8c36-2f3373869988",
+        "ab3b6208-e583-4618-a71a-46170f6ccada",
+        "3c9c8e2b-9bdd-466d-935a-a5ebccf6a2ad",
+        "482d6530-dbc6-4710-a8d5-dbcb4087a280",
+        "51da5997-5c0f-4f41-9ccc-9479ab1c06ac",
+        "b5c8e26a-ef61-43a9-b9cd-69bae2930400",
+        "4e876e3a-1b61-46b0-a805-fc0bddeeae3a",
+        "4770b703-3e91-4315-bc8b-554c09d5e396"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_picture_game-genre": {
       "graphX": 1123,
       "graphY": 260,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "85deb581-8ba9-4060-b29f-ee9d95471103",
+        "6d0f99ca-8cfa-4158-acd6-f155f29ab283",
+        "45eb7b45-4c9f-462b-aa66-4f38f26f971e",
+        "782cb968-53a0-495e-b89e-3d0ecf6c5030",
+        "7c581fdc-c9d1-4eb3-a41c-b0ac11aaecfa",
+        "a5f5bf87-949d-4bd1-a350-05976af1e52c",
+        "01d94d3d-c5d6-4278-90ac-4286abb031a7"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_picture_black-stabilizer": {
       "graphX": 1403,
       "graphY": 260,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "ee30b095-836a-453b-9358-d0e3ccab271f",
+        "7f7ce10e-ad13-4051-a97e-969b206ad291",
+        "8fe0f8b5-7310-4653-ae92-9de7efcdc2c9",
+        "d20ee871-e0cf-4fde-a2a1-2882f7656636",
+        "8ca2a0c1-bd41-4ac3-b3f2-b2a665151a6e",
+        "b53d233c-a2af-4a3d-a4d2-b0e6f66dc2c4",
+        "84b3e8aa-a802-4d56-9c2e-f8f5eabbce73"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_picture_white-stabilizer": {
       "graphX": 1683,
       "graphY": 260,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "1e29b609-bd83-4f5c-b154-c90f4f70a48a",
+        "18f3dea7-a902-4b2b-b226-6d862bbe2d75",
+        "50f93369-9b01-4da8-bba5-a409c6aa502f",
+        "f293c94c-fe7d-4477-a5c3-139257f83a30",
+        "e90cf509-2c46-4267-a6de-9d5431a5f210",
+        "36fdc8ac-4e1e-4581-8f7d-8f6fdf9c8b03",
+        "24b9e661-a105-4fe1-9b37-04393278d951"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_picture_game-contrast": {
       "graphX": 1963,
       "graphY": 260,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "e744be88-f73a-4312-94a3-e60b9ca3e6df",
+        "01746a53-7dbf-42f6-9f0e-3a0409e804a5",
+        "572a4c23-646c-402a-85cc-c2dc246d6089",
+        "509c01e7-009e-49ca-8a10-138cfff8037b",
+        "8b3a0972-2548-4194-8542-984c38d5148b",
+        "8ea2c7ac-a163-431b-b99a-d8876260bdba",
+        "f1a15eca-1843-4a85-9be6-962fc9bfc39f"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_picture_game-black-level": {
       "graphX": 2243,
       "graphY": 260,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "421952ad-7cfd-462b-b98b-45a1bfcc4faa",
+        "8b67f00c-8a5d-4c41-9876-c7cf4769e08b",
+        "bb122a52-4fa4-4759-98a0-9b23b33bf57b",
+        "1db26e31-2bd2-4cf8-b63a-495472171abe",
+        "4fa2859c-b4a5-45b9-bc0d-8e22ca8fbc75",
+        "40b3a00e-6bb7-4b53-8723-43685af253af",
+        "98aa61c8-f0a4-4316-a901-571a05136eb0"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_picture-menu-2": {
       "graphX": 2523,
       "graphY": 260,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "68544b4f-42c1-440b-a562-8a3bf90c4209",
+        "340c081e-82e0-43ab-8303-2a4dc7c6d18c",
+        "3d4ce9a8-57ba-480e-a5a6-e6c264bc01a7",
+        "531fe399-427e-46d8-b200-43b347a06b92",
+        "2bf1a0fc-aac5-4a21-8788-9271b42079e8",
+        "7d0528ea-d106-40c7-99c9-9dcf67998b36",
+        "c7a31310-4b2f-4cd8-b725-93d3e5cc3f7a",
+        "3b2400da-07d8-4cc0-b32d-a8b37658f3ce",
+        "cafb1ef5-266d-4a1d-b273-ed0593821a08"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_picture_adjust-game-sharpness": {
-      "graphX": 560,
-      "graphY": 532,
+      "graphX": 519,
+      "graphY": 539,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "aa03fce7-f3b4-4f1b-9a33-79cd0b68ce1e",
+        "e3e5d17b-41a6-4f28-ae36-36dd5ff4e6ea",
+        "665e3f71-0608-4eb5-b1f4-da39d4a7911d",
+        "0f95cab2-86cc-4270-b639-fb607d1f3825",
+        "138d4824-1551-44c2-8329-3e2f7a144a93",
+        "bad5dd67-114b-45ce-88cd-8714db485829",
+        "f9a85a03-8025-4eb2-b7e2-69391ad4f760",
+        "88427d13-c8c8-46c7-a7ef-c1f54c22f926"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_picture_game-color-depth": {
       "graphX": 840,
       "graphY": 532,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "d3087e04-b36b-4675-9012-2d630085d4d6",
+        "3ec2bff6-ce0b-4058-9549-712122356c1e",
+        "56eb5d12-5765-4add-9027-f15967ee1d80",
+        "f8e5c5d6-5ed9-43e1-b243-5d165dffe17b",
+        "14e4d652-216c-41e7-891a-c6d8044dd02e",
+        "8a47a5cf-3851-4da2-bf35-e6651a2bb792",
+        "ab47f8dc-8c6b-48b2-8d14-a917b59e5d46",
+        "268b31bc-2dc4-42cd-a741-8a2fc8fcb864"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_picture_reset": {
       "graphX": 1120,
       "graphY": 532,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "222006a1-2116-4110-9d3d-8406301b993f",
+        "35ce0885-ead2-4493-8ece-c7ee6721892a",
+        "f71a8ed5-1e96-493a-86e6-d237032a3c59",
+        "7f631475-4bf4-4863-9199-53518b72c061",
+        "c2b70b34-ce8e-4889-9587-40da588bc1e0",
+        "2aa21478-e0e1-4d23-b823-6aa1e75a2e00",
+        "bb566895-2f5f-4e38-84a4-4a91b26cf2b9",
+        "3b3f1b72-f53a-48f1-99da-03a06aa48017"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_picture_hgig": {
       "graphX": 1400,
       "graphY": 532,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "8cc573c5-b7ac-4ec0-9ead-5afd759aea6e",
+        "453a2c69-6c36-4446-bee5-efad92d555f0",
+        "a88b343a-30dd-499b-b6b2-02e61a42510e",
+        "b3545388-0854-426b-af6a-b47b2aa13ed8",
+        "5bf02dbf-624e-4c8c-b295-fff6798045a6",
+        "ae514f0b-f41a-4cdf-b4e3-788542df3b02",
+        "53fad7f8-57ba-4ef2-ae57-1691859e6e22",
+        "ed56eb2f-3371-4e61-b00c-6e80bb1ebee4"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_picture_wide-aspect-ratio": {
       "graphX": 1680,
       "graphY": 532,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "dfe0f71a-a779-4c3a-abea-6dadf9c3d165",
+        "17b4578a-b723-452a-9ebb-2d5be8688c5b",
+        "6bea60fc-5b98-4656-82cd-526e1b1cb834"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_picture-menu-3": {
       "graphX": 1960,
       "graphY": 532,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "bd63cc61-861c-4f6d-8664-7760a80870e2",
+        "5d572c99-134f-4c3d-95b3-07be866d0744",
+        "bf17d057-c3a8-4d9d-8e9c-1e730ae0ca02",
+        "2dae2398-1c64-4351-b260-032058692887",
+        "8b78b22e-25b7-4791-adda-7671919fdc37"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_picture_screen-position": {
       "graphX": 2240,
       "graphY": 532,
       "sectionId": "game-optimizer",
-      "buttonIds": []
-    },
-    "game-optimizer_picture_advanced-picture-settings": {
-      "graphX": 2520,
-      "graphY": 532,
-      "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "2e1505e9-0d32-44fc-a7df-2a6f5fc5e9da",
+        "f41d7aad-ee46-49d0-8de5-79af42ffc4ac",
+        "7abb0a51-0912-430f-a28a-f855d518771f",
+        "fa8a161b-66c8-4b46-890e-6f0a94faf155"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_sound-menu": {
-      "graphX": 554,
-      "graphY": 807,
+      "graphX": 507,
+      "graphY": 810,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "fb07aecf-e69a-4686-a647-3de572b16157",
+        "da57eb7c-674a-448e-b86d-1d92fb52de2f",
+        "83de2f13-3825-4eb9-b78b-b19211085638",
+        "dc1033c1-6d6f-4378-9962-eec9a7eb1f4c",
+        "a6ab5b61-00e0-4d16-a85d-0fa2ee9d0b38"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_sound_dolby-atmos": {
       "graphX": 834,
       "graphY": 807,
       "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "36b99f04-dff8-4ef3-bb6b-146021ffa0ac",
+        "0b98ac7f-deab-4f8b-a723-1e4954514e29",
+        "e8d30305-8db4-460d-9b9d-c7f754dcccf7",
+        "8082297f-7a90-4bf5-a9a4-1add40a09f38"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_sound_sound-out": {
       "graphX": 1114,
       "graphY": 807,
       "sectionId": "game-optimizer",
-      "buttonIds": []
-    },
-    "game-optimizer_sound_advanced-sound-settings": {
-      "graphX": 1394,
-      "graphY": 807,
-      "sectionId": "game-optimizer",
-      "buttonIds": []
+      "buttonIds": [
+        "d4ab33cb-58b4-4e7b-a971-7ae8dcbe9d7a",
+        "6963037f-5648-41a3-9f75-ec82f9cf38f2",
+        "0a0c4cb0-90bd-4c7a-b7fc-e84bcaece5b2"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_game_daark-room-mode": {
-      "graphX": 564,
-      "graphY": 261,
+      "graphX": 504,
+      "graphY": 264,
       "sectionId": "game-optimizer",
       "buttonIds": []
     }

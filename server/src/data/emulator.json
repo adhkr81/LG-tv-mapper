@@ -49,7 +49,8 @@
         "left": "196px",
         "top": "277px",
         "width": "86px",
-        "height": "49px"
+        "height": "49px",
+        "target": "game-optimizer_menu"
       },
       {
         "left": "188px",
@@ -122,7 +123,7 @@
         "top": "206px",
         "width": "245px",
         "height": "37px",
-        "target": "advancedsettings-brightness"
+        "target": "game-optimizer_menu"
       },
       {
         "left": "258px",
@@ -11766,47 +11767,490 @@
   "game-optimizer_menu": {
     "img_filename": "game-optimizer_menu",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "111px",
+        "top": "73px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_picture-menu"
+      },
+      {
+        "left": "260px",
+        "top": "139px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_game_reduce-blue-light"
+      },
+      {
+        "left": "260px",
+        "top": "192px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_game_dark-room"
+      },
+      {
+        "left": "260px",
+        "top": "245px",
+        "width": "243px",
+        "height": "33px",
+        "target": "game-optimizer_game_game-dashboard"
+      },
+      {
+        "left": "260px",
+        "top": "285px",
+        "width": "243px",
+        "height": "33px",
+        "target": "game-optimizer_game_vrr"
+      },
+      {
+        "left": "260px",
+        "top": "326px",
+        "width": "242px",
+        "height": "41px",
+        "target": "game-optimizer_game_amd-free-sync"
+      },
+      {
+        "left": "260px",
+        "top": "376px",
+        "width": "243px",
+        "height": "33px",
+        "target": "game-optimizer_game_allm"
+      },
+      {
+        "left": "348px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_menu-down",
+        "type": "arrow-down"
+      }
+    ]
   },
   "game-optimizer_game_reduce-blue-light": {
     "img_filename": "game-optimizer_game_reduce-blue-light",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "111px",
+        "top": "73px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_picture-menu"
+      },
+      {
+        "left": "260px",
+        "top": "192px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_game_dark-room"
+      },
+      {
+        "left": "260px",
+        "top": "245px",
+        "width": "243px",
+        "height": "33px",
+        "target": "game-optimizer_game_game-dashboard"
+      },
+      {
+        "left": "260px",
+        "top": "285px",
+        "width": "243px",
+        "height": "33px",
+        "target": "game-optimizer_game_vrr"
+      },
+      {
+        "left": "260px",
+        "top": "326px",
+        "width": "242px",
+        "height": "41px",
+        "target": "game-optimizer_game_amd-free-sync"
+      },
+      {
+        "left": "260px",
+        "top": "376px",
+        "width": "243px",
+        "height": "33px",
+        "target": "game-optimizer_game_allm"
+      },
+      {
+        "left": "348px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_menu-down",
+        "type": "arrow-down"
+      }
+    ]
   },
   "game-optimizer_game_dark-room": {
     "img_filename": "game-optimizer_game_dark-room",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "111px",
+        "top": "73px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_picture-menu"
+      },
+      {
+        "left": "260px",
+        "top": "139px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_game_reduce-blue-light"
+      },
+      {
+        "left": "260px",
+        "top": "245px",
+        "width": "243px",
+        "height": "33px",
+        "target": "game-optimizer_game_game-dashboard"
+      },
+      {
+        "left": "260px",
+        "top": "285px",
+        "width": "243px",
+        "height": "33px",
+        "target": "game-optimizer_game_vrr"
+      },
+      {
+        "left": "260px",
+        "top": "326px",
+        "width": "242px",
+        "height": "41px",
+        "target": "game-optimizer_game_amd-free-sync"
+      },
+      {
+        "left": "260px",
+        "top": "376px",
+        "width": "243px",
+        "height": "33px",
+        "target": "game-optimizer_game_allm"
+      },
+      {
+        "left": "348px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_menu-down",
+        "type": "arrow-down"
+      }
+    ]
   },
   "game-optimizer_game_game-dashboard": {
     "img_filename": "game-optimizer_game_game-dashboard",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "111px",
+        "top": "73px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_picture-menu"
+      },
+      {
+        "left": "260px",
+        "top": "139px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_game_reduce-blue-light"
+      },
+      {
+        "left": "260px",
+        "top": "192px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_game_dark-room"
+      },
+      {
+        "left": "260px",
+        "top": "285px",
+        "width": "243px",
+        "height": "33px",
+        "target": "game-optimizer_game_vrr"
+      },
+      {
+        "left": "260px",
+        "top": "326px",
+        "width": "242px",
+        "height": "41px",
+        "target": "game-optimizer_game_amd-free-sync"
+      },
+      {
+        "left": "260px",
+        "top": "376px",
+        "width": "243px",
+        "height": "33px",
+        "target": "game-optimizer_game_allm"
+      },
+      {
+        "left": "348px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_menu-down",
+        "type": "arrow-down"
+      }
+    ]
   },
   "game-optimizer_game_vrr": {
     "img_filename": "game-optimizer_game_vrr",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "111px",
+        "top": "73px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_picture-menu"
+      },
+      {
+        "left": "260px",
+        "top": "139px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_game_reduce-blue-light"
+      },
+      {
+        "left": "260px",
+        "top": "192px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_game_dark-room"
+      },
+      {
+        "left": "260px",
+        "top": "245px",
+        "width": "243px",
+        "height": "33px",
+        "target": "game-optimizer_game_game-dashboard"
+      },
+      {
+        "left": "260px",
+        "top": "326px",
+        "width": "242px",
+        "height": "41px",
+        "target": "game-optimizer_game_amd-free-sync"
+      },
+      {
+        "left": "260px",
+        "top": "376px",
+        "width": "243px",
+        "height": "33px",
+        "target": "game-optimizer_game_allm"
+      },
+      {
+        "left": "348px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_menu-down",
+        "type": "arrow-down"
+      }
+    ]
   },
   "game-optimizer_game_amd-free-sync": {
     "img_filename": "game-optimizer_game_amd-free-sync",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "72px",
+        "width": "33px",
+        "height": "35px",
+        "target": "game-optimizer_picture-menu"
+      },
+      {
+        "left": "109px",
+        "top": "110px",
+        "width": "33px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "169px",
+        "top": "36px",
+        "width": "32px",
+        "height": "32px",
+        "target": "game-optimizer_menu"
+      }
+    ]
   },
   "game-optimizer_game_allm": {
     "img_filename": "game-optimizer_game_allm",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "110px",
+        "top": "110px",
+        "width": "32px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "110px",
+        "top": "73px",
+        "width": "32px",
+        "height": "33px",
+        "target": "game-optimizer_picture-menu"
+      },
+      {
+        "left": "167px",
+        "top": "128px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_game_reduce-blue-light"
+      },
+      {
+        "left": "167px",
+        "top": "182px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_game_dark-room"
+      },
+      {
+        "left": "167px",
+        "top": "237px",
+        "width": "243px",
+        "height": "33px",
+        "target": "game-optimizer_game_game-dashboard"
+      },
+      {
+        "left": "168px",
+        "top": "277px",
+        "width": "243px",
+        "height": "33px",
+        "target": "game-optimizer_game_vrr"
+      },
+      {
+        "left": "169px",
+        "top": "320px",
+        "width": "242px",
+        "height": "41px",
+        "target": "game-optimizer_game_amd-free-sync"
+      },
+      {
+        "left": "168px",
+        "top": "370px",
+        "width": "243px",
+        "height": "33px",
+        "target": "game-optimizer_game_allm"
+      },
+      {
+        "left": "257px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_menu-down",
+        "type": "arrow-down"
+      }
+    ]
   },
   "game-optimizer_menu-down": {
     "img_filename": "game-optimizer_menu-down",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "111px",
+        "top": "73px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_picture-menu"
+      },
+      {
+        "left": "260px",
+        "top": "324px",
+        "width": "242px",
+        "height": "41px",
+        "target": "game-optimizer_game_menu-color"
+      },
+      {
+        "left": "259px",
+        "top": "374px",
+        "width": "243px",
+        "height": "33px",
+        "target": "game-optimizer_game_user-guide"
+      },
+      {
+        "left": "348px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_menu",
+        "type": "arrow-up"
+      }
+    ]
   },
   "game-optimizer_game_menu-color": {
     "img_filename": "game-optimizer_game_menu-color",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "72px",
+        "width": "33px",
+        "height": "35px",
+        "target": "game-optimizer_picture-menu"
+      },
+      {
+        "left": "109px",
+        "top": "110px",
+        "width": "33px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "169px",
+        "top": "36px",
+        "width": "32px",
+        "height": "32px",
+        "target": "game-optimizer_menu-down"
+      }
+    ]
   },
   "game-optimizer_game_user-guide": {
     "img_filename": "game-optimizer_game_user-guide",
@@ -11816,97 +12260,878 @@
   "game-optimizer_picture-menu": {
     "img_filename": "game-optimizer_picture-menu",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "36px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_menu"
+      },
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "259px",
+        "top": "138px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-genre"
+      },
+      {
+        "left": "348px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_picture-menu-2",
+        "type": "arrow-down"
+      },
+      {
+        "left": "259px",
+        "top": "203px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_black-stabilizer"
+      },
+      {
+        "left": "259px",
+        "top": "258px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_white-stabilizer"
+      },
+      {
+        "left": "259px",
+        "top": "313px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-contrast"
+      },
+      {
+        "left": "259px",
+        "top": "369px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-black-level"
+      }
+    ]
   },
   "game-optimizer_picture_game-genre": {
     "img_filename": "game-optimizer_picture_game-genre",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "36px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_menu"
+      },
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "348px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_picture-menu-2",
+        "type": "arrow-down"
+      },
+      {
+        "left": "259px",
+        "top": "203px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_black-stabilizer"
+      },
+      {
+        "left": "259px",
+        "top": "258px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_white-stabilizer"
+      },
+      {
+        "left": "259px",
+        "top": "313px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-contrast"
+      },
+      {
+        "left": "259px",
+        "top": "369px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-black-level"
+      }
+    ]
   },
   "game-optimizer_picture_black-stabilizer": {
     "img_filename": "game-optimizer_picture_black-stabilizer",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "36px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_menu"
+      },
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "259px",
+        "top": "138px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-genre"
+      },
+      {
+        "left": "348px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_picture-menu-2",
+        "type": "arrow-down"
+      },
+      {
+        "left": "259px",
+        "top": "258px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_white-stabilizer"
+      },
+      {
+        "left": "259px",
+        "top": "313px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-contrast"
+      },
+      {
+        "left": "259px",
+        "top": "369px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-black-level"
+      }
+    ]
   },
   "game-optimizer_picture_white-stabilizer": {
     "img_filename": "game-optimizer_picture_white-stabilizer",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "36px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_menu"
+      },
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "259px",
+        "top": "138px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-genre"
+      },
+      {
+        "left": "348px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_picture-menu-2",
+        "type": "arrow-down"
+      },
+      {
+        "left": "259px",
+        "top": "203px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_black-stabilizer"
+      },
+      {
+        "left": "259px",
+        "top": "313px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-contrast"
+      },
+      {
+        "left": "259px",
+        "top": "369px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-black-level"
+      }
+    ]
   },
   "game-optimizer_picture_game-contrast": {
     "img_filename": "game-optimizer_picture_game-contrast",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "36px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_menu"
+      },
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "259px",
+        "top": "138px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-genre"
+      },
+      {
+        "left": "348px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_picture-menu-2",
+        "type": "arrow-down"
+      },
+      {
+        "left": "259px",
+        "top": "203px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_black-stabilizer"
+      },
+      {
+        "left": "259px",
+        "top": "258px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_white-stabilizer"
+      },
+      {
+        "left": "259px",
+        "top": "369px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-black-level"
+      }
+    ]
   },
   "game-optimizer_picture_game-black-level": {
     "img_filename": "game-optimizer_picture_game-black-level",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "36px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_menu"
+      },
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "258px",
+        "top": "126px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-genre"
+      },
+      {
+        "left": "348px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_picture-menu-2",
+        "type": "arrow-down"
+      },
+      {
+        "left": "258px",
+        "top": "192px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_black-stabilizer"
+      },
+      {
+        "left": "258px",
+        "top": "246px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_white-stabilizer"
+      },
+      {
+        "left": "258px",
+        "top": "302px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-contrast"
+      }
+    ]
   },
   "game-optimizer_picture-menu-2": {
     "img_filename": "game-optimizer_picture-menu-2",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "36px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_menu"
+      },
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "259px",
+        "top": "139px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_adjust-game-sharpness"
+      },
+      {
+        "left": "306px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_menu",
+        "type": "arrow-up"
+      },
+      {
+        "left": "259px",
+        "top": "193px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-color-depth"
+      },
+      {
+        "left": "327px",
+        "top": "248px",
+        "width": "110px",
+        "height": "27px",
+        "target": "game-optimizer_picture_reset"
+      },
+      {
+        "left": "259px",
+        "top": "289px",
+        "width": "245px",
+        "height": "31px",
+        "target": "game-optimizer_picture_hgig"
+      },
+      {
+        "left": "259px",
+        "top": "329px",
+        "width": "245px",
+        "height": "46px",
+        "target": "game-optimizer_picture_wide-aspect-ratio"
+      },
+      {
+        "left": "377px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_picture-menu-3",
+        "type": "arrow-down"
+      }
+    ]
   },
   "game-optimizer_picture_adjust-game-sharpness": {
     "img_filename": "game-optimizer_picture_adjust-game-sharpness",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "36px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_menu"
+      },
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "306px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_menu",
+        "type": "arrow-up"
+      },
+      {
+        "left": "259px",
+        "top": "193px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-color-depth"
+      },
+      {
+        "left": "327px",
+        "top": "248px",
+        "width": "110px",
+        "height": "27px",
+        "target": "game-optimizer_picture_reset"
+      },
+      {
+        "left": "259px",
+        "top": "289px",
+        "width": "245px",
+        "height": "31px",
+        "target": "game-optimizer_picture_hgig"
+      },
+      {
+        "left": "259px",
+        "top": "329px",
+        "width": "245px",
+        "height": "46px",
+        "target": "game-optimizer_picture_wide-aspect-ratio"
+      },
+      {
+        "left": "377px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_picture-menu-3",
+        "type": "arrow-down"
+      }
+    ]
   },
   "game-optimizer_picture_game-color-depth": {
     "img_filename": "game-optimizer_picture_game-color-depth",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "36px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_menu"
+      },
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "259px",
+        "top": "139px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_adjust-game-sharpness"
+      },
+      {
+        "left": "306px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_menu",
+        "type": "arrow-up"
+      },
+      {
+        "left": "327px",
+        "top": "248px",
+        "width": "110px",
+        "height": "27px",
+        "target": "game-optimizer_picture_reset"
+      },
+      {
+        "left": "259px",
+        "top": "289px",
+        "width": "245px",
+        "height": "31px",
+        "target": "game-optimizer_picture_hgig"
+      },
+      {
+        "left": "259px",
+        "top": "329px",
+        "width": "245px",
+        "height": "46px",
+        "target": "game-optimizer_picture_wide-aspect-ratio"
+      },
+      {
+        "left": "377px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_picture-menu-3",
+        "type": "arrow-down"
+      }
+    ]
   },
   "game-optimizer_picture_reset": {
     "img_filename": "game-optimizer_picture_reset",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "36px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_menu"
+      },
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "259px",
+        "top": "139px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_adjust-game-sharpness"
+      },
+      {
+        "left": "306px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_menu",
+        "type": "arrow-up"
+      },
+      {
+        "left": "259px",
+        "top": "193px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-color-depth"
+      },
+      {
+        "left": "259px",
+        "top": "289px",
+        "width": "245px",
+        "height": "31px",
+        "target": "game-optimizer_picture_hgig"
+      },
+      {
+        "left": "259px",
+        "top": "329px",
+        "width": "245px",
+        "height": "46px",
+        "target": "game-optimizer_picture_wide-aspect-ratio"
+      },
+      {
+        "left": "377px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_picture-menu-3",
+        "type": "arrow-down"
+      }
+    ]
   },
   "game-optimizer_picture_hgig": {
     "img_filename": "game-optimizer_picture_hgig",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "36px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_menu"
+      },
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "259px",
+        "top": "139px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_adjust-game-sharpness"
+      },
+      {
+        "left": "306px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_menu",
+        "type": "arrow-up"
+      },
+      {
+        "left": "259px",
+        "top": "193px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_game-color-depth"
+      },
+      {
+        "left": "327px",
+        "top": "248px",
+        "width": "110px",
+        "height": "27px",
+        "target": "game-optimizer_picture_reset"
+      },
+      {
+        "left": "259px",
+        "top": "329px",
+        "width": "245px",
+        "height": "46px",
+        "target": "game-optimizer_picture_wide-aspect-ratio"
+      },
+      {
+        "left": "377px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_picture-menu-3",
+        "type": "arrow-down"
+      }
+    ]
   },
   "game-optimizer_picture_wide-aspect-ratio": {
     "img_filename": "game-optimizer_picture_wide-aspect-ratio",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "110px",
+        "top": "35px",
+        "width": "33px",
+        "height": "35px",
+        "target": "game-optimizer_menu"
+      },
+      {
+        "left": "109px",
+        "top": "110px",
+        "width": "33px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "169px",
+        "top": "36px",
+        "width": "32px",
+        "height": "32px",
+        "target": "game-optimizer_picture-menu-2"
+      }
+    ]
   },
   "game-optimizer_picture-menu-3": {
     "img_filename": "game-optimizer_picture-menu-3",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "36px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_menu"
+      },
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "348px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_picture-menu-2",
+        "type": "arrow-up"
+      },
+      {
+        "left": "259px",
+        "top": "322px",
+        "width": "243px",
+        "height": "46px",
+        "target": "game-optimizer_picture_screen-position"
+      },
+      {
+        "left": "259px",
+        "top": "374px",
+        "width": "243px",
+        "height": "38px",
+        "target": "picture-advanced-settings"
+      }
+    ]
   },
   "game-optimizer_picture_screen-position": {
     "img_filename": "game-optimizer_picture_screen-position",
     "preset": 0,
-    "buttons": []
-  },
-  "game-optimizer_picture_advanced-picture-settings": {
-    "img_filename": "game-optimizer_picture_advanced-picture-settings",
-    "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "36px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_menu"
+      },
+      {
+        "left": "111px",
+        "top": "110px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_sound-menu"
+      },
+      {
+        "left": "348px",
+        "top": "397px",
+        "width": "56px",
+        "height": "50px",
+        "target": "game-optimizer_picture-menu-2",
+        "type": "arrow-up"
+      },
+      {
+        "left": "259px",
+        "top": "374px",
+        "width": "243px",
+        "height": "38px",
+        "target": "picture-advanced-settings"
+      }
+    ]
   },
   "game-optimizer_sound-menu": {
     "img_filename": "game-optimizer_sound-menu",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "36px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_menu"
+      },
+      {
+        "left": "111px",
+        "top": "73px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_picture-menu"
+      },
+      {
+        "left": "259px",
+        "top": "174px",
+        "width": "243px",
+        "height": "48px",
+        "target": "game-optimizer_sound_sound-out"
+      },
+      {
+        "left": "259px",
+        "top": "229px",
+        "width": "243px",
+        "height": "33px",
+        "target": "settings-sound_advanced-settings-menu"
+      },
+      {
+        "left": "259px",
+        "top": "135px",
+        "width": "243px",
+        "height": "33px",
+        "target": "game-optimizer_sound_dolby-atmos"
+      }
+    ]
   },
   "game-optimizer_sound_dolby-atmos": {
     "img_filename": "game-optimizer_sound_dolby-atmos",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "111px",
+        "top": "36px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_menu"
+      },
+      {
+        "left": "111px",
+        "top": "73px",
+        "width": "121px",
+        "height": "33px",
+        "target": "game-optimizer_picture-menu"
+      },
+      {
+        "left": "259px",
+        "top": "174px",
+        "width": "243px",
+        "height": "48px",
+        "target": "game-optimizer_sound_sound-out"
+      },
+      {
+        "left": "259px",
+        "top": "229px",
+        "width": "243px",
+        "height": "33px",
+        "target": "settings-sound_advanced-settings-menu"
+      }
+    ]
   },
   "game-optimizer_sound_sound-out": {
     "img_filename": "game-optimizer_sound_sound-out",
     "preset": 0,
-    "buttons": []
-  },
-  "game-optimizer_sound_advanced-sound-settings": {
-    "img_filename": "game-optimizer_sound_advanced-sound-settings",
-    "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "109px",
+        "top": "72px",
+        "width": "33px",
+        "height": "35px",
+        "target": "game-optimizer_picture-menu"
+      },
+      {
+        "left": "109px",
+        "top": "37px",
+        "width": "33px",
+        "height": "33px",
+        "target": "game-optimizer_menu"
+      },
+      {
+        "left": "169px",
+        "top": "36px",
+        "width": "32px",
+        "height": "32px",
+        "target": "game-optimizer_sound-menu"
+      }
+    ]
   },
   "game-optimizer_game_daark-room-mode": {
     "img_filename": "game-optimizer_game_daark-room-mode",
