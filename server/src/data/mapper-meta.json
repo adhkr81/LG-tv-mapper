@@ -113,8 +113,8 @@
       "id": "quick-settings",
       "name": "quick-settings",
       "rootScreenId": null,
-      "bandX": 814,
-      "bandY": -211,
+      "bandX": -881,
+      "bandY": 22,
       "collapsed": true
     }
   ],
@@ -3526,8 +3526,8 @@
       "sourceHeight": 2160
     },
     "homescreen": {
-      "graphX": -8074,
-      "graphY": -4367,
+      "graphX": -8006,
+      "graphY": -4783,
       "sectionId": null,
       "buttonIds": [
         "0d9db044-f12c-4bfb-bd81-eec88dce2df4",
@@ -3547,8 +3547,8 @@
       "sourceHeight": 2160
     },
     "homescreen-left": {
-      "graphX": -7782,
-      "graphY": -4363,
+      "graphX": -7714,
+      "graphY": -4779,
       "sectionId": null,
       "buttonIds": [
         "a5c32139-2f21-4fea-b1d9-83cbb2698021",
@@ -3576,8 +3576,8 @@
       "sourceHeight": 2160
     },
     "homescreen-down": {
-      "graphX": -8076,
-      "graphY": -4133,
+      "graphX": -8008,
+      "graphY": -4549,
       "sectionId": null,
       "buttonIds": [
         "e69a3ffb-faae-4bbc-837b-1dcf777783a5",
@@ -3864,7 +3864,9 @@
       "graphX": 440,
       "graphY": 0,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_picture-mode-2": {
       "graphX": 660,
@@ -3887,6 +3889,168 @@
     "quick-settings_picture-mode-5": {
       "graphX": 440,
       "graphY": 185,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sound-mode-1": {
+      "graphX": 4,
+      "graphY": 386,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sound-mode-2": {
+      "graphX": 284,
+      "graphY": 386,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sound-mode-3": {
+      "graphX": 564,
+      "graphY": 386,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sound-mode-4": {
+      "graphX": 844,
+      "graphY": 386,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sound-mode-5": {
+      "graphX": 1124,
+      "graphY": 386,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sleep-timer-1": {
+      "graphX": 0,
+      "graphY": 625,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sleep-timer-2": {
+      "graphX": 280,
+      "graphY": 625,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sleep-timer-3": {
+      "graphX": 560,
+      "graphY": 625,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sleep-timer-4": {
+      "graphX": 840,
+      "graphY": 625,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sleep-timer-5": {
+      "graphX": 1120,
+      "graphY": 625,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sleep-timer-6": {
+      "graphX": 1400,
+      "graphY": 625,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sleep-timer-7": {
+      "graphX": 1680,
+      "graphY": 625,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sleep-timer-8": {
+      "graphX": 1960,
+      "graphY": 625,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sleep-timer-9": {
+      "graphX": 2240,
+      "graphY": 625,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_multi-view-1": {
+      "graphX": 4,
+      "graphY": 858,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_multi-view-2": {
+      "graphX": 284,
+      "graphY": 858,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_panel-brightness": {
+      "graphX": 4,
+      "graphY": 1085,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sound-out-1": {
+      "graphX": 15,
+      "graphY": 1348,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sound-out-2": {
+      "graphX": 295,
+      "graphY": 1348,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sound-out-3": {
+      "graphX": 575,
+      "graphY": 1348,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sound-out-4": {
+      "graphX": 855,
+      "graphY": 1348,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sound-out-5": {
+      "graphX": 1135,
+      "graphY": 1348,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sound-out-6": {
+      "graphX": 1415,
+      "graphY": 1348,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sound-out-7": {
+      "graphX": 1695,
+      "graphY": 1348,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sound-out-8": {
+      "graphX": 1975,
+      "graphY": 1348,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_sound-out-9": {
+      "graphX": 2228,
+      "graphY": 1347,
+      "sectionId": "quick-settings",
+      "buttonIds": []
+    },
+    "quick-settings_eye-care": {
+      "graphX": 4,
+      "graphY": 1581,
       "sectionId": "quick-settings",
       "buttonIds": []
     }

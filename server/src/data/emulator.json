@@ -11627,5 +11627,140 @@
     "img_filename": "quick-settings_picture-mode-5",
     "preset": 0,
     "buttons": []
+  },
+  "quick-settings_sound-mode-1": {
+    "img_filename": "quick-settings_sound-mode-1",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sound-mode-2": {
+    "img_filename": "quick-settings_sound-mode-2",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sound-mode-3": {
+    "img_filename": "quick-settings_sound-mode-3",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sound-mode-4": {
+    "img_filename": "quick-settings_sound-mode-4",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sound-mode-5": {
+    "img_filename": "quick-settings_sound-mode-5",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sleep-timer-1": {
+    "img_filename": "quick-settings_sleep-timer-1",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sleep-timer-2": {
+    "img_filename": "quick-settings_sleep-timer-2",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sleep-timer-3": {
+    "img_filename": "quick-settings_sleep-timer-3",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sleep-timer-4": {
+    "img_filename": "quick-settings_sleep-timer-4",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sleep-timer-5": {
+    "img_filename": "quick-settings_sleep-timer-5",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sleep-timer-6": {
+    "img_filename": "quick-settings_sleep-timer-6",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sleep-timer-7": {
+    "img_filename": "quick-settings_sleep-timer-7",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sleep-timer-8": {
+    "img_filename": "quick-settings_sleep-timer-8",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sleep-timer-9": {
+    "img_filename": "quick-settings_sleep-timer-9",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_multi-view-1": {
+    "img_filename": "quick-settings_multi-view-1",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_multi-view-2": {
+    "img_filename": "quick-settings_multi-view-2",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_panel-brightness": {
+    "img_filename": "quick-settings_panel-brightness",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sound-out-1": {
+    "img_filename": "quick-settings_sound-out-1",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sound-out-2": {
+    "img_filename": "quick-settings_sound-out-2",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sound-out-3": {
+    "img_filename": "quick-settings_sound-out-3",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sound-out-4": {
+    "img_filename": "quick-settings_sound-out-4",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sound-out-5": {
+    "img_filename": "quick-settings_sound-out-5",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sound-out-6": {
+    "img_filename": "quick-settings_sound-out-6",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sound-out-7": {
+    "img_filename": "quick-settings_sound-out-7",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sound-out-8": {
+    "img_filename": "quick-settings_sound-out-8",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_sound-out-9": {
+    "img_filename": "quick-settings_sound-out-9",
+    "preset": 0,
+    "buttons": []
+  },
+  "quick-settings_eye-care": {
+    "img_filename": "quick-settings_eye-care",
+    "preset": 0,
+    "buttons": []
   }
 }
