@@ -114,17 +114,17 @@
       "id": "quick-settings",
       "name": "quick-settings",
       "rootScreenId": null,
-      "bandX": -848,
-      "bandY": 16,
-      "collapsed": true
+      "bandX": 1456,
+      "bandY": -89,
+      "collapsed": false
     },
     {
       "id": "game-optimizer",
       "name": "game-optimizer",
       "rootScreenId": null,
       "collapsed": true,
-      "bandX": -854,
-      "bandY": 332
+      "bandX": -835,
+      "bandY": 308
     }
   ],
   "screens": {
@@ -3859,19 +3859,19 @@
     },
     "quick-settings_accessibility-shortcuts": {
       "graphX": 0,
-      "graphY": 0,
+      "graphY": -68,
       "sectionId": "quick-settings",
       "buttonIds": []
     },
     "quick-settings_internet-connection": {
       "graphX": 220,
-      "graphY": 0,
+      "graphY": -68,
       "sectionId": "quick-settings",
       "buttonIds": []
     },
     "quick-settings_picture-mode-1": {
       "graphX": 440,
-      "graphY": 0,
+      "graphY": -68,
       "sectionId": "quick-settings",
       "buttonIds": [],
       "sourceWidth": 3840,
@@ -3879,7 +3879,7 @@
     },
     "quick-settings_picture-mode-2": {
       "graphX": 660,
-      "graphY": 0,
+      "graphY": -68,
       "sectionId": "quick-settings",
       "buttonIds": []
     },
@@ -4064,8 +4064,8 @@
       "buttonIds": []
     },
     "game-optimizer_menu": {
-      "graphX": 557,
-      "graphY": -452,
+      "graphX": 508,
+      "graphY": -211,
       "sectionId": "game-optimizer",
       "buttonIds": [
         "8bc3e1ae-60a7-4b5c-ba98-7c80ef515cc5",
@@ -4180,8 +4180,8 @@
       "sourceHeight": 2160
     },
     "game-optimizer_menu-down": {
-      "graphX": 297,
-      "graphY": -212,
+      "graphX": 839,
+      "graphY": -215,
       "sectionId": "game-optimizer",
       "buttonIds": [
         "42a2c30c-ba99-4012-904a-3b137c91f138",
