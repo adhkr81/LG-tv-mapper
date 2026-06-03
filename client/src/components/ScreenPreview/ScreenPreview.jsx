@@ -11,7 +11,9 @@ import './ScreenPreview.css';
 export default function ScreenPreview() {
   const screensById = useStore((s) => s.screensById);
   const selectedScreenId = useStore((s) => s.selectedScreenId);
+  const selectScreen = useStore((s) => s.selectScreen);
   const imageConfig = useStore((s) => s.imageConfig);
+  const skipGraphSyncRef = useRef(false);
 
   /** Graph pick that started preview; kept when navigating off-canvas. */
   const [anchorScreenId, setAnchorScreenId] = useState(selectedScreenId);
@@ -34,6 +36,10 @@ export default function ScreenPreview() {
   // GraphView clears selection because the preview screen is off-canvas.
   useEffect(() => {
     if (!selectedScreenId) return;
+    if (skipGraphSyncRef.current) {
+      skipGraphSyncRef.current = false;
+      return;
+    }
     setAnchorScreenId(selectedScreenId);
     setCurrentScreenId(selectedScreenId);
     setHistory([]);
@@ -81,8 +87,10 @@ export default function ScreenPreview() {
       if (!screensById.has(targetId)) return;
       setHistory((prev) => [...prev, currentScreenId]);
       setCurrentScreenId(targetId);
+      skipGraphSyncRef.current = true;
+      selectScreen(targetId);
     },
-    [currentScreenId, screensById]
+    [currentScreenId, screensById, selectScreen]
   );
 
   const goBack = useCallback(() => {
@@ -91,9 +99,11 @@ export default function ScreenPreview() {
       const next = [...prev];
       const previousId = next.pop();
       setCurrentScreenId(previousId);
+      skipGraphSyncRef.current = true;
+      selectScreen(previousId);
       return next;
     });
-  }, []);
+  }, [selectScreen]);
 
   const resetToAnchor = useCallback(() => {
     if (!anchorScreenId) return;

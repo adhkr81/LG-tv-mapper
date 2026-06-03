@@ -152,8 +152,16 @@ export default function GraphView({ isActive = true }) {
 
     const validSelected = filterSelectionToNodes(initialNodes, selectedScreenIds);
     if (validSelected.length !== selectedScreenIds.length) {
-      setSelectedScreenIds(validSelected);
-      return;
+      const primaryId = selectedScreenIds[selectedScreenIds.length - 1];
+      const preserveOffCanvas =
+        selectedScreenIds.length === 1 &&
+        primaryId &&
+        validSelected.length === 0 &&
+        useStore.getState().screensById.has(primaryId);
+      if (!preserveOffCanvas) {
+        setSelectedScreenIds(validSelected);
+        return;
+      }
     }
 
     const selected = new Set(validSelected);

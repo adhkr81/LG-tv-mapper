@@ -3865,10 +3865,14 @@
       "sourceHeight": 2160
     },
     "quick-settings_internet-connection": {
-      "graphX": 220,
-      "graphY": -68,
+      "graphX": 211,
+      "graphY": -66,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "ee1e6e08-eb59-4901-a827-a0a33b99ff92"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_picture-mode-1": {
       "graphX": 440,
@@ -3946,7 +3950,9 @@
       "graphX": 284,
       "graphY": 386,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sound-mode-3": {
       "graphX": 564,

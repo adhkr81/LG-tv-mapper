@@ -11605,7 +11605,15 @@
   "quick-settings_internet-connection": {
     "img_filename": "quick-settings_internet-connection",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "807px",
+        "top": "51px",
+        "width": "32px",
+        "height": "32px",
+        "target": "quick-settings-main"
+      }
+    ]
   },
   "quick-settings_picture-mode-1": {
     "img_filename": "quick-settings_picture-mode-1",
