@@ -3544,15 +3544,13 @@
         "6cd75582-ad32-4b47-8913-9818f3302e5a",
         "85aee43a-4b80-41a7-a383-9fb53005a148",
         "26b1c022-516d-4344-84e4-15dcf2585152",
-        "992b34b6-2daa-4c24-bfa7-0056bafd4a23",
         "88232ab9-d360-4a9d-b260-85bc0f33d634",
         "ce0f65af-8c59-433d-a490-f9c0835fe5e8",
         "d4bd2a97-ef96-4023-affb-25ba3b829bdf",
-        "5a26601a-0038-4f73-9dcf-ea0488a124ad",
-        "49b2e2b4-3c6b-4767-a9a4-831527ae7ab6"
+        "5a26601a-0038-4f73-9dcf-ea0488a124ad"
       ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+      "sourceWidth": 1275,
+      "sourceHeight": 717
     },
     "homescreen-left": {
       "graphX": 570,
