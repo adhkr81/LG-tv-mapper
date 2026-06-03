@@ -11600,7 +11600,15 @@
   "quick-settings_accessibility-shortcuts": {
     "img_filename": "quick-settings_accessibility-shortcuts",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "664px",
+        "top": "380px",
+        "width": "167px",
+        "height": "23px",
+        "target": "quick-settings_accessibility-app-menu"
+      }
+    ]
   },
   "quick-settings_internet-connection": {
     "img_filename": "quick-settings_internet-connection",
@@ -12847,63 +12855,56 @@
     "preset": 0,
     "buttons": [
       {
-        "left": "110px",
+        "left": "111px",
         "top": "110px",
-        "width": "32px",
+        "width": "121px",
         "height": "33px",
         "target": "game-optimizer_sound-menu"
       },
       {
-        "left": "110px",
+        "left": "111px",
         "top": "73px",
-        "width": "32px",
+        "width": "121px",
         "height": "33px",
         "target": "game-optimizer_picture-menu"
       },
       {
-        "left": "167px",
-        "top": "128px",
+        "left": "258px",
+        "top": "130px",
         "width": "243px",
         "height": "46px",
         "target": "game-optimizer_game_reduce-blue-light"
       },
       {
-        "left": "167px",
-        "top": "182px",
+        "left": "258px",
+        "top": "186px",
         "width": "243px",
         "height": "46px",
         "target": "game-optimizer_game_dark-room"
       },
       {
-        "left": "167px",
-        "top": "237px",
+        "left": "257px",
+        "top": "239px",
         "width": "243px",
         "height": "33px",
         "target": "game-optimizer_game_game-dashboard"
       },
       {
-        "left": "168px",
-        "top": "277px",
+        "left": "258px",
+        "top": "279px",
         "width": "243px",
         "height": "33px",
         "target": "game-optimizer_game_vrr"
       },
       {
-        "left": "169px",
+        "left": "258px",
         "top": "320px",
         "width": "242px",
         "height": "41px",
         "target": "game-optimizer_game_amd-free-sync"
       },
       {
-        "left": "168px",
-        "top": "370px",
-        "width": "243px",
-        "height": "33px",
-        "target": "game-optimizer_game_allm"
-      },
-      {
-        "left": "257px",
+        "left": "348px",
         "top": "397px",
         "width": "56px",
         "height": "50px",
@@ -13866,5 +13867,118 @@
     "img_filename": "game-optimizer_game_daark-room-mode",
     "preset": 0,
     "buttons": []
+  },
+  "quick-settings_accessibility-app-menu": {
+    "img_filename": "quick-settings_accessibility-app-menu",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "820px",
+        "top": "23px",
+        "width": "28px",
+        "height": "28px",
+        "target": "homescreen"
+      },
+      {
+        "left": "113px",
+        "top": "190px",
+        "width": "188px",
+        "height": "94px",
+        "target": "quick-settings_accessibility-app_vision"
+      },
+      {
+        "left": "308px",
+        "top": "196px",
+        "width": "164px",
+        "height": "83px",
+        "target": "quick-settings_accessibility-app_hearing"
+      },
+      {
+        "left": "491px",
+        "top": "196px",
+        "width": "164px",
+        "height": "83px",
+        "target": "quick-settings_accessibility-app_control"
+      },
+      {
+        "left": "677px",
+        "top": "196px",
+        "width": "164px",
+        "height": "83px",
+        "target": "quick-settings_accessibility-app_edit"
+      },
+      {
+        "left": "125px",
+        "top": "335px",
+        "width": "164px",
+        "height": "83px",
+        "target": "quick-settings_accessibility-app_remote"
+      }
+    ]
+  },
+  "quick-settings_accessibility-app_vision": {
+    "img_filename": "quick-settings_accessibility-app_vision",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "127px",
+        "top": "23px",
+        "width": "28px",
+        "height": "28px",
+        "target": "quick-settings_accessibility-app-menu"
+      }
+    ]
+  },
+  "quick-settings_accessibility-app_hearing": {
+    "img_filename": "quick-settings_accessibility-app_hearing",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "127px",
+        "top": "23px",
+        "width": "28px",
+        "height": "28px",
+        "target": "quick-settings_accessibility-app-menu"
+      }
+    ]
+  },
+  "quick-settings_accessibility-app_control": {
+    "img_filename": "quick-settings_accessibility-app_control",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "127px",
+        "top": "23px",
+        "width": "28px",
+        "height": "28px",
+        "target": "quick-settings_accessibility-app-menu"
+      }
+    ]
+  },
+  "quick-settings_accessibility-app_edit": {
+    "img_filename": "quick-settings_accessibility-app_edit",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "127px",
+        "top": "23px",
+        "width": "28px",
+        "height": "28px",
+        "target": "quick-settings_accessibility-app-menu"
+      }
+    ]
+  },
+  "quick-settings_accessibility-app_remote": {
+    "img_filename": "quick-settings_accessibility-app_remote",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "353px",
+        "top": "147px",
+        "width": "28px",
+        "height": "28px",
+        "target": "quick-settings_accessibility-app-menu"
+      }
+    ]
   }
 }

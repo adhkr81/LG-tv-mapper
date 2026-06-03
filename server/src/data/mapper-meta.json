@@ -114,9 +114,9 @@
       "id": "quick-settings",
       "name": "quick-settings",
       "rootScreenId": null,
-      "bandX": 1456,
-      "bandY": -89,
-      "collapsed": false
+      "bandX": -844,
+      "bandY": 16,
+      "collapsed": true
     },
     {
       "id": "game-optimizer",
@@ -3860,7 +3860,9 @@
       "graphX": 0,
       "graphY": -68,
       "sectionId": "quick-settings",
-      "buttonIds": [],
+      "buttonIds": [
+        "a11b8fcb-c924-44dc-bc44-d12e29898bfb"
+      ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
@@ -4363,15 +4365,14 @@
       "graphY": 0,
       "sectionId": "game-optimizer",
       "buttonIds": [
-        "96b8a13f-9ec3-4067-a23f-29a00c12d02a",
-        "af8f0b60-8a6f-4d86-a830-c551392da169",
-        "3cb73495-b0ab-4e07-bd68-926a71bdc331",
-        "f0cb8595-c910-49ba-90b0-39bf2134ec94",
-        "46b71ed4-7f6e-49c9-9cf2-0fd413ec3268",
-        "4205ba62-aa38-46a4-8764-80a5cb7b760c",
-        "cf6efb08-f589-4d9e-93dc-a9808fb3cd58",
-        "ccea0559-d3e0-4fdc-bb85-d284d062f4dc",
-        "497ed0db-1ccd-4224-aed9-f5a82fab4605"
+        "19228950-fa83-4f30-821f-1c1aa78f7737",
+        "ef3acb26-fa49-4c24-9c14-c74187ff273e",
+        "1ee260ed-0c83-4d54-a75d-059a57adf808",
+        "d550f5b7-2cd1-4c07-9a1b-492b245355a2",
+        "bf443a4f-7fe2-4ad6-9783-f612f40aa0cb",
+        "84b8b651-5952-4b5f-bddd-6a13d9331ed6",
+        "5dcedfa0-7250-443d-80b0-2038b391c5fb",
+        "a32fd288-b02f-4f01-93a1-67bf6510d749"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
@@ -4676,6 +4677,71 @@
       "graphY": 264,
       "sectionId": "game-optimizer",
       "buttonIds": []
+    },
+    "quick-settings_accessibility-app-menu": {
+      "graphX": 1464,
+      "graphY": -82,
+      "sectionId": "quick-settings",
+      "buttonIds": [
+        "d65218fc-6ef2-4b84-8458-087ab1b4f824",
+        "8ba3f47f-4d28-4981-a851-cea39c40a323",
+        "b039a430-fa66-4c4a-b037-9792fb0006d3",
+        "381ba0a1-33cc-486c-adf2-ed18078e115b",
+        "3de6ecd7-c14e-4d27-bb36-4b1c305ecf24",
+        "55a65183-711f-4773-8961-495321ac7be7"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "quick-settings_accessibility-app_vision": {
+      "graphX": 1911,
+      "graphY": -60,
+      "sectionId": "quick-settings",
+      "buttonIds": [
+        "add970ca-9554-4622-9a16-5b8923760afb"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "quick-settings_accessibility-app_hearing": {
+      "graphX": 1471,
+      "graphY": 125,
+      "sectionId": "quick-settings",
+      "buttonIds": [
+        "5ad30b74-5bb3-49a7-8a7f-5b10c18ba0cb"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "quick-settings_accessibility-app_control": {
+      "graphX": 1691,
+      "graphY": 125,
+      "sectionId": "quick-settings",
+      "buttonIds": [
+        "db896321-ae43-4e51-8d50-d50617a36bdc"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "quick-settings_accessibility-app_edit": {
+      "graphX": 1911,
+      "graphY": 125,
+      "sectionId": "quick-settings",
+      "buttonIds": [
+        "bfa1b033-b840-4ffe-9693-1577f4aceafb"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "quick-settings_accessibility-app_remote": {
+      "graphX": 1577,
+      "graphY": 310,
+      "sectionId": "quick-settings",
+      "buttonIds": [
+        "f3ff90d6-03cb-40cc-b649-7a425d90d8b5"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     }
   },
   "config": {
