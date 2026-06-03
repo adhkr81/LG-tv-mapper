@@ -3950,7 +3950,11 @@
       "graphX": 284,
       "graphY": 386,
       "sectionId": "quick-settings",
-      "buttonIds": [],
+      "buttonIds": [
+        "cc6a0da2-8e89-4a6d-bc81-fbea52d94405",
+        "1cb696d1-bb0e-4274-8037-8bf7eafb7161",
+        "3e5bc651-80d2-4ab5-b0b5-de4145ca9070"
+      ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
@@ -3958,19 +3962,37 @@
       "graphX": 564,
       "graphY": 386,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "54fa760e-355d-44e6-b98e-2ccfcca48b42",
+        "93d4a9c4-03b0-4dfa-8908-fe537413fe32",
+        "92287742-389f-4b98-925b-00f522764e9a"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sound-mode-4": {
       "graphX": 844,
       "graphY": 386,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "a2439949-e6ff-4dff-8640-80a0d4e6b2b0",
+        "03d4eebe-c2a5-4155-bfef-f8b0ee77d5d4",
+        "a092d528-dc28-40b4-a055-2ca5c8532b46"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sound-mode-5": {
       "graphX": 1124,
       "graphY": 386,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "d566f1a6-9392-4172-8e56-74db0b5f0a61",
+        "1ed1c6f6-a607-445e-893c-beaf5066add5",
+        "68ba4516-cbd1-485f-976b-2e74076e8ef4"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sleep-timer-1": {
       "graphX": 0,
@@ -3988,55 +4010,105 @@
       "graphX": 280,
       "graphY": 625,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "02782929-1c64-4653-8327-b5bbfebe9fa7",
+        "53588803-58c8-4bf5-95b1-da13fcfe5d48",
+        "da62cb9c-a0f6-4ded-be93-4da71d0fb983"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sleep-timer-3": {
       "graphX": 560,
       "graphY": 625,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "70219634-63f4-4345-a309-71aa8ae290db",
+        "76bcc006-889a-4ed3-8f1b-5ae5680225f5",
+        "160b8378-b27a-4037-90f5-65b6e983609b"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sleep-timer-4": {
       "graphX": 840,
       "graphY": 625,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "f178b173-fe6d-4241-aa66-c4a23215357f",
+        "447d796c-bd96-408e-8f75-30efd5d55c39",
+        "824fbf1c-d319-4bc0-bce3-93921563d5d5"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sleep-timer-5": {
       "graphX": 1120,
       "graphY": 625,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "f522c61f-67d9-4787-939f-39ee319a5dbb",
+        "6f6e3a14-5808-4e41-93bd-329dd800b7ae",
+        "34723447-a5d5-45ca-9e27-e62e61b2decf"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sleep-timer-6": {
       "graphX": 1400,
       "graphY": 625,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "e9b45bec-8e75-4e21-b343-2a0801dca214",
+        "624465d4-83ca-4382-b2d2-fc8362dc0108",
+        "9612cb36-4b85-44f3-92ea-ae01a211155a"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sleep-timer-7": {
       "graphX": 1680,
       "graphY": 625,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "d3084278-8fcb-415a-b02e-be3bc872e908",
+        "9af25fd7-7846-4b61-8003-25497e2bfd5b",
+        "2231179c-e6e5-47fb-b4e9-c5ff986e8ac7"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sleep-timer-8": {
       "graphX": 1960,
       "graphY": 625,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "9802941e-34fb-452a-9e6c-ea4fc96a0413",
+        "ac1ff33a-f377-4227-a5bd-61d399aa1141",
+        "4fd59448-a114-41cc-a518-5affd6af0509"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sleep-timer-9": {
       "graphX": 2240,
       "graphY": 625,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "2abe2038-86cf-49c2-bbfd-e7372a3fc18c",
+        "b0795c01-2c17-4dbd-8e3a-fab4b0d06ec4",
+        "15a09fbc-2e0c-473f-bd90-46ab7f19b975"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_multi-view-1": {
       "graphX": 4,
       "graphY": 858,
       "sectionId": "quick-settings",
-      "buttonIds": [],
+      "buttonIds": [
+        "28eb62e8-f3fd-4401-a3d1-274cda3d38c6"
+      ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
@@ -4044,7 +4116,11 @@
       "graphX": 284,
       "graphY": 858,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "4899d07b-a952-4504-ad99-68c74fd70244"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_panel-brightness": {
       "graphX": 4,
@@ -4072,49 +4148,97 @@
       "graphX": 295,
       "graphY": 1348,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "22eb447d-6518-4ea7-9190-70e6b909b434",
+        "37ad2153-b15d-490c-b45d-59219c3c71b5",
+        "5dd64194-054c-42e1-b3ed-45d4424d3a89"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sound-out-3": {
       "graphX": 575,
       "graphY": 1348,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "a1eac8fc-81b8-4ea4-afbb-4edac5873b41",
+        "d7c7b0de-8e27-4a0f-a620-4ce8dbb18534",
+        "5cf10dfb-b983-458e-85c8-4b4c6a3bd690"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sound-out-4": {
       "graphX": 855,
       "graphY": 1348,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "163bb3c9-04e0-47a9-ade6-54fa24141cce",
+        "80d6761f-ab94-4c34-8fd6-02ff869693d5",
+        "ed9939e8-16df-4f88-8660-d1423b82ffb2"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sound-out-5": {
       "graphX": 1135,
       "graphY": 1348,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "e27d8ade-4a96-47f4-b7f7-adeaaa5eefac",
+        "e4ae0f75-e087-4840-aa38-e0a6ee013aad",
+        "1452428f-f24d-4a21-bb5e-46cb8f69fab0"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sound-out-6": {
       "graphX": 1415,
       "graphY": 1348,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "8ccb16f3-adce-41de-8757-0923fccd9644",
+        "c9c3b8b2-fb3e-4b0d-bb4e-164516958e94",
+        "7e5db114-f011-4e40-877c-2496ee524b8e"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sound-out-7": {
       "graphX": 1695,
       "graphY": 1348,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "dbad3c1a-030c-4894-a0d8-a347e5fee5bf",
+        "18dc4b45-7cee-4894-a452-da3001a1d6a2",
+        "d00d4e0d-2581-41b4-992c-68859577a866"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sound-out-8": {
       "graphX": 1975,
       "graphY": 1348,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "696c467f-47f3-4415-9973-10c0fc0894fb",
+        "68a20e6a-8add-43b4-8e72-490696dd7646",
+        "48460c48-59b6-4ba1-8f0a-337e194a83db"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sound-out-9": {
       "graphX": 2228,
       "graphY": 1347,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "3310ee60-2988-4391-b15a-5088d27989b2",
+        "0f674b48-615b-4ac6-b998-5009d71a64d8",
+        "e4b13783-f447-4b05-bca3-911f04de2789"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_eye-care": {
       "graphX": 4,
