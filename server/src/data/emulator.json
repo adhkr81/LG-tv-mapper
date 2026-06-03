@@ -7,43 +7,50 @@
         "left": "213px",
         "top": "23px",
         "width": "25px",
-        "height": "25px"
+        "height": "25px",
+        "target": "quick-settings_internet-connection"
       },
       {
         "left": "196px",
         "top": "167px",
         "width": "86px",
-        "height": "49px"
+        "height": "49px",
+        "target": "quick-settings_sound-out-1"
       },
       {
         "left": "105px",
         "top": "112px",
         "width": "84px",
-        "height": "49px"
+        "height": "49px",
+        "target": "quick-settings_picture-mode-1"
       },
       {
         "left": "103px",
         "top": "167px",
         "width": "86px",
-        "height": "49px"
+        "height": "49px",
+        "target": "quick-settings_sound-mode-1"
       },
       {
         "left": "103px",
         "top": "222px",
         "width": "86px",
-        "height": "49px"
+        "height": "49px",
+        "target": "quick-settings_sleep-timer-1"
       },
       {
         "left": "103px",
-        "top": "333px",
+        "top": "332px",
         "width": "86px",
-        "height": "49px"
+        "height": "49px",
+        "target": "quick-settings_multi-view-1"
       },
       {
         "left": "196px",
         "top": "222px",
         "width": "86px",
-        "height": "49px"
+        "height": "49px",
+        "target": "quick-settings_eye-care"
       },
       {
         "left": "196px",
@@ -56,19 +63,15 @@
         "left": "188px",
         "top": "23px",
         "width": "25px",
-        "height": "25px"
-      },
-      {
-        "left": "249px",
-        "top": "23px",
-        "width": "25px",
-        "height": "25px"
+        "height": "25px",
+        "target": "quick-settings_accessibility-shortcuts"
       },
       {
         "left": "196px",
         "top": "112px",
         "width": "84px",
-        "height": "49px"
+        "height": "49px",
+        "target": "quick-settings_panel-brightness"
       },
       {
         "left": "162px",
@@ -11607,32 +11610,164 @@
   "quick-settings_picture-mode-1": {
     "img_filename": "quick-settings_picture-mode-1",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "187px",
+        "width": "124px",
+        "height": "20px",
+        "target": "quick-settings-main"
+      },
+      {
+        "left": "115px",
+        "top": "126px",
+        "width": "19px",
+        "height": "19px",
+        "target": "quick-settings_picture-mode-5"
+      },
+      {
+        "left": "251px",
+        "top": "126px",
+        "width": "19px",
+        "height": "19px",
+        "target": "quick-settings_picture-mode-2"
+      }
+    ]
   },
   "quick-settings_picture-mode-2": {
     "img_filename": "quick-settings_picture-mode-2",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "187px",
+        "width": "124px",
+        "height": "20px",
+        "target": "quick-settings-main"
+      },
+      {
+        "left": "115px",
+        "top": "126px",
+        "width": "19px",
+        "height": "19px",
+        "target": "quick-settings_picture-mode-1"
+      },
+      {
+        "left": "251px",
+        "top": "126px",
+        "width": "19px",
+        "height": "19px",
+        "target": "quick-settings_picture-mode-3"
+      }
+    ]
   },
   "quick-settings_picture-mode-3": {
     "img_filename": "quick-settings_picture-mode-3",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "187px",
+        "width": "124px",
+        "height": "20px",
+        "target": "quick-settings-main"
+      },
+      {
+        "left": "115px",
+        "top": "126px",
+        "width": "19px",
+        "height": "19px",
+        "target": "quick-settings_picture-mode-2"
+      },
+      {
+        "left": "251px",
+        "top": "126px",
+        "width": "19px",
+        "height": "19px",
+        "target": "quick-settings_picture-mode-4"
+      }
+    ]
   },
   "quick-settings_picture-mode-4": {
     "img_filename": "quick-settings_picture-mode-4",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "187px",
+        "width": "124px",
+        "height": "20px",
+        "target": "quick-settings-main"
+      },
+      {
+        "left": "115px",
+        "top": "126px",
+        "width": "19px",
+        "height": "19px",
+        "target": "quick-settings_picture-mode-3"
+      },
+      {
+        "left": "251px",
+        "top": "126px",
+        "width": "19px",
+        "height": "19px",
+        "target": "quick-settings_picture-mode-5"
+      }
+    ]
   },
   "quick-settings_picture-mode-5": {
     "img_filename": "quick-settings_picture-mode-5",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "187px",
+        "width": "124px",
+        "height": "20px",
+        "target": "quick-settings-main"
+      },
+      {
+        "left": "115px",
+        "top": "126px",
+        "width": "19px",
+        "height": "19px",
+        "target": "quick-settings_picture-mode-4"
+      },
+      {
+        "left": "251px",
+        "top": "126px",
+        "width": "19px",
+        "height": "19px",
+        "target": "quick-settings_picture-mode-1"
+      }
+    ]
   },
   "quick-settings_sound-mode-1": {
     "img_filename": "quick-settings_sound-mode-1",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "242px",
+        "width": "124px",
+        "height": "20px",
+        "target": "quick-settings-main"
+      },
+      {
+        "left": "114px",
+        "top": "182px",
+        "width": "19px",
+        "height": "19px",
+        "target": "quick-settings_sound-mode-5"
+      },
+      {
+        "left": "251px",
+        "top": "182px",
+        "width": "19px",
+        "height": "19px",
+        "target": "quick-settings_sound-mode-2"
+      }
+    ]
   },
   "quick-settings_sound-mode-2": {
     "img_filename": "quick-settings_sound-mode-2",
@@ -11657,7 +11792,29 @@
   "quick-settings_sleep-timer-1": {
     "img_filename": "quick-settings_sleep-timer-1",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "274px",
+        "width": "124px",
+        "height": "20px",
+        "target": "quick-settings-main"
+      },
+      {
+        "left": "115px",
+        "top": "237px",
+        "width": "19px",
+        "height": "19px",
+        "target": "quick-settings_sleep-timer-9"
+      },
+      {
+        "left": "251px",
+        "top": "237px",
+        "width": "19px",
+        "height": "19px",
+        "target": "quick-settings_sleep-timer-2"
+      }
+    ]
   },
   "quick-settings_sleep-timer-2": {
     "img_filename": "quick-settings_sleep-timer-2",
@@ -11712,12 +11869,42 @@
   "quick-settings_panel-brightness": {
     "img_filename": "quick-settings_panel-brightness",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "139px",
+        "top": "37px",
+        "width": "25px",
+        "height": "25px",
+        "target": "quick-settings-main"
+      }
+    ]
   },
   "quick-settings_sound-out-1": {
     "img_filename": "quick-settings_sound-out-1",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "130px",
+        "top": "243px",
+        "width": "124px",
+        "height": "20px",
+        "target": "quick-settings-main"
+      },
+      {
+        "left": "115px",
+        "top": "182px",
+        "width": "19px",
+        "height": "19px",
+        "target": "quick-settings_sound-out-9"
+      },
+      {
+        "left": "251px",
+        "top": "182px",
+        "width": "19px",
+        "height": "19px",
+        "target": "quick-settings_sound-out-2"
+      }
+    ]
   },
   "quick-settings_sound-out-2": {
     "img_filename": "quick-settings_sound-out-2",
@@ -11762,7 +11949,85 @@
   "quick-settings_eye-care": {
     "img_filename": "quick-settings_eye-care",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "213px",
+        "top": "23px",
+        "width": "25px",
+        "height": "25px",
+        "target": "quick-settings_internet-connection"
+      },
+      {
+        "left": "196px",
+        "top": "167px",
+        "width": "86px",
+        "height": "49px",
+        "target": "quick-settings_sound-out-1"
+      },
+      {
+        "left": "105px",
+        "top": "112px",
+        "width": "84px",
+        "height": "49px",
+        "target": "quick-settings_picture-mode-1"
+      },
+      {
+        "left": "103px",
+        "top": "167px",
+        "width": "86px",
+        "height": "49px",
+        "target": "quick-settings_sound-mode-1"
+      },
+      {
+        "left": "103px",
+        "top": "222px",
+        "width": "86px",
+        "height": "49px",
+        "target": "quick-settings_sleep-timer-1"
+      },
+      {
+        "left": "103px",
+        "top": "332px",
+        "width": "86px",
+        "height": "49px",
+        "target": "quick-settings_multi-view-1"
+      },
+      {
+        "left": "196px",
+        "top": "222px",
+        "width": "86px",
+        "height": "49px",
+        "target": "quick-settings-main"
+      },
+      {
+        "left": "196px",
+        "top": "277px",
+        "width": "86px",
+        "height": "49px",
+        "target": "game-optimizer_menu"
+      },
+      {
+        "left": "188px",
+        "top": "23px",
+        "width": "25px",
+        "height": "25px",
+        "target": "quick-settings_accessibility-shortcuts"
+      },
+      {
+        "left": "196px",
+        "top": "112px",
+        "width": "84px",
+        "height": "49px",
+        "target": "quick-settings_panel-brightness"
+      },
+      {
+        "left": "162px",
+        "top": "23px",
+        "width": "25px",
+        "height": "25px",
+        "target": "settings-picture"
+      }
+    ]
   },
   "game-optimizer_menu": {
     "img_filename": "game-optimizer_menu",

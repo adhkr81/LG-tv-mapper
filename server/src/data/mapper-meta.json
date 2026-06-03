@@ -142,7 +142,6 @@
         "12a1d3f5-d296-4ba0-9e7c-1eb2c54ac0ac",
         "c6a5a9ac-9232-4556-a3a3-4718f03abf2a",
         "51e4d4f9-ecff-4567-92e5-705a87239e00",
-        "c7ab1352-3f82-4ba0-9dc1-7cf77962d5f7",
         "a2cabced-5813-463d-93d0-b6b11324a8cf",
         "f7094933-2352-4f96-9836-2816e427bf53"
       ],
@@ -3861,7 +3860,9 @@
       "graphX": 0,
       "graphY": -68,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_internet-connection": {
       "graphX": 220,
@@ -3873,7 +3874,11 @@
       "graphX": 440,
       "graphY": -68,
       "sectionId": "quick-settings",
-      "buttonIds": [],
+      "buttonIds": [
+        "64ac198f-2a3e-43a8-a2bd-d95a814b4ca1",
+        "8059948c-fba7-4e9a-85d8-428d8a931f29",
+        "6ec074fc-671b-41d8-b51a-1d6429996083"
+      ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
@@ -3881,31 +3886,61 @@
       "graphX": 660,
       "graphY": -68,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "f6b7663d-3e20-4c84-95df-9ce35fdcb95f",
+        "10ae7d01-324b-45fa-ac70-e688969a7fbb",
+        "d308b1fb-a83c-4229-8049-1e6d7861a247"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_picture-mode-3": {
       "graphX": 0,
       "graphY": 185,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "71613287-2586-49c6-9f36-6de50b78c95e",
+        "2fa899f9-dfd0-4bc5-b6fd-b8c485d5ce5e",
+        "701be1d1-930e-4b20-b931-41e3a2691fa8"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_picture-mode-4": {
       "graphX": 220,
       "graphY": 185,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "713dd83c-e447-4f1c-9af4-02d9ef3c4087",
+        "deda8585-4594-4111-8ea7-7d5bb805d5b6",
+        "32673092-b91a-45ea-9926-772d17a4956e"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_picture-mode-5": {
       "graphX": 440,
       "graphY": 185,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "fd94eb29-dfb0-413d-8a9b-485687e79909",
+        "8c30fe0b-c939-43ce-86f7-1be8488f343e",
+        "88bed67c-bd8b-472d-8b15-43e0e05afc37"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sound-mode-1": {
       "graphX": 4,
       "graphY": 386,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "e23e2972-7fca-4d69-80f4-ea148fca14b5",
+        "b6ab00a9-368d-4172-a42c-ccefbde4cca1",
+        "c976b122-5292-4509-a66e-f0930effe9b9"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sound-mode-2": {
       "graphX": 284,
@@ -3935,7 +3970,13 @@
       "graphX": 0,
       "graphY": 625,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "903e0db7-d30e-4d67-89f1-9b58961e7afb",
+        "cf9cae72-e504-43c1-8e91-e45895a4693b",
+        "79d4479d-2bf6-454f-860d-027d9cbce977"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sleep-timer-2": {
       "graphX": 280,
@@ -3989,7 +4030,9 @@
       "graphX": 4,
       "graphY": 858,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_multi-view-2": {
       "graphX": 284,
@@ -4001,13 +4044,23 @@
       "graphX": 4,
       "graphY": 1085,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "570f2f94-160a-4cd0-bea4-77cccf500e90"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sound-out-1": {
       "graphX": 15,
       "graphY": 1348,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "551bfe8f-7508-48fc-86ed-1c9112b67131",
+        "6cf9422f-4f96-457e-86da-e4832bbe4407",
+        "db0ab43d-6552-4f56-a048-9faf971e02e2"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "quick-settings_sound-out-2": {
       "graphX": 295,
@@ -4061,7 +4114,21 @@
       "graphX": 4,
       "graphY": 1581,
       "sectionId": "quick-settings",
-      "buttonIds": []
+      "buttonIds": [
+        "7083f826-8c6b-4f96-8c40-18a849626fe3",
+        "aedf0ee0-2eb7-4525-ba55-4217e3f71d45",
+        "9bc07653-d4c0-4a18-9581-d77fd76d5ec1",
+        "36dace3f-a15e-4f74-8750-882c306264a0",
+        "de3dc7d3-1bbf-4d0f-b84d-ffc6bfa1f266",
+        "e7277905-4271-402b-b335-c82040036700",
+        "ef8246fb-612c-4a9a-a212-8737b7ede17c",
+        "9f40b409-df0b-4f58-b756-00065b05263b",
+        "6193d07b-8476-463b-81ba-1a6a71a8056e",
+        "1699ddfb-1c2e-40ea-8f8e-eca25172ba0e",
+        "f6152890-02d7-4ace-a548-3db7273dada3"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "game-optimizer_menu": {
       "graphX": 508,

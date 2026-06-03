@@ -11,9 +11,10 @@ import './ScreenPreview.css';
 export default function ScreenPreview() {
   const screensById = useStore((s) => s.screensById);
   const selectedScreenId = useStore((s) => s.selectedScreenId);
-  const selectScreen = useStore((s) => s.selectScreen);
   const imageConfig = useStore((s) => s.imageConfig);
 
+  /** Graph pick that started preview; kept when navigating off-canvas. */
+  const [anchorScreenId, setAnchorScreenId] = useState(selectedScreenId);
   const [currentScreenId, setCurrentScreenId] = useState(selectedScreenId);
   const [history, setHistory] = useState([]);
   const [sourceSize, setSourceSize] = useState({
@@ -29,12 +30,14 @@ export default function ScreenPreview() {
     currentScreenId ? (s.imageVersions[currentScreenId] ?? 0) : 0
   );
 
+  // Follow graph selection only when the user picks a visible node — not when
+  // GraphView clears selection because the preview screen is off-canvas.
   useEffect(() => {
-    if (selectedScreenId && selectedScreenId !== currentScreenId) {
-      setCurrentScreenId(selectedScreenId);
-      setHistory([]);
-    }
-  }, [selectedScreenId, currentScreenId]);
+    if (!selectedScreenId) return;
+    setAnchorScreenId(selectedScreenId);
+    setCurrentScreenId(selectedScreenId);
+    setHistory([]);
+  }, [selectedScreenId]);
 
   const screen = currentScreenId ? screensById.get(currentScreenId) : undefined;
 
@@ -78,9 +81,8 @@ export default function ScreenPreview() {
       if (!screensById.has(targetId)) return;
       setHistory((prev) => [...prev, currentScreenId]);
       setCurrentScreenId(targetId);
-      selectScreen(targetId);
     },
-    [currentScreenId, screensById, selectScreen]
+    [currentScreenId, screensById]
   );
 
   const goBack = useCallback(() => {
@@ -89,19 +91,17 @@ export default function ScreenPreview() {
       const next = [...prev];
       const previousId = next.pop();
       setCurrentScreenId(previousId);
-      selectScreen(previousId);
       return next;
     });
-  }, [selectScreen]);
+  }, []);
 
-  const resetToSelected = useCallback(() => {
-    if (!selectedScreenId) return;
-    setCurrentScreenId(selectedScreenId);
+  const resetToAnchor = useCallback(() => {
+    if (!anchorScreenId) return;
+    setCurrentScreenId(anchorScreenId);
     setHistory([]);
-    selectScreen(selectedScreenId);
-  }, [selectedScreenId, selectScreen]);
+  }, [anchorScreenId]);
 
-  if (!selectedScreenId) {
+  if (!anchorScreenId) {
     return (
       <div className="screen-preview screen-preview--empty">
         <div className="screen-viewer__empty-state">
@@ -140,9 +140,9 @@ export default function ScreenPreview() {
             </svg>
             Back
           </button>
-          {currentScreenId !== selectedScreenId && (
-            <button type="button" className="btn btn-sm" onClick={resetToSelected}>
-              Reset to {selectedScreenId}
+          {currentScreenId !== anchorScreenId && (
+            <button type="button" className="btn btn-sm" onClick={resetToAnchor}>
+              Reset to {anchorScreenId}
             </button>
           )}
         </div>
