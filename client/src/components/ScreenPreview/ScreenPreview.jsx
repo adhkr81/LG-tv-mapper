@@ -33,17 +33,25 @@ export default function ScreenPreview() {
   );
 
   // Follow graph selection only when the user picks a visible node — not when
-  // GraphView clears selection because the preview screen is off-canvas.
+  // GraphView clears or reverts selection because the preview screen is off-canvas.
   useEffect(() => {
     if (!selectedScreenId) return;
     if (skipGraphSyncRef.current) {
       skipGraphSyncRef.current = false;
       return;
     }
+    if (
+      history.length > 0 &&
+      currentScreenId &&
+      currentScreenId !== selectedScreenId &&
+      selectedScreenId === anchorScreenId
+    ) {
+      return;
+    }
     setAnchorScreenId(selectedScreenId);
     setCurrentScreenId(selectedScreenId);
     setHistory([]);
-  }, [selectedScreenId]);
+  }, [selectedScreenId, currentScreenId, anchorScreenId, history.length]);
 
   const screen = currentScreenId ? screensById.get(currentScreenId) : undefined;
 

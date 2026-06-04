@@ -22,6 +22,7 @@ import {
   buildGraphPositionUpdates,
   buildSectionGraphFlow,
   filterSelectionToNodes,
+  isOffCanvasScreenSelection,
   graphLayoutSignature,
   nextNewNodePosition,
   toStoredGraphPosition,
@@ -65,6 +66,8 @@ export default function GraphView({ isActive = true }) {
   });
   const dragSessionRef = useRef(null);
   const dragSaveTimerRef = useRef(null);
+  /** Recent on-canvas screen pick (distinguishes user click from stale Flow selection). */
+  const lastUserGraphPickRef = useRef({ id: null, at: 0 });
 
   // Memoize the React Flow layout by structural signature, not by `screens`
   // reference — button rect edits change `screens` ref every keystroke, but
@@ -156,7 +159,7 @@ export default function GraphView({ isActive = true }) {
       const preserveOffCanvas =
         selectedScreenIds.length === 1 &&
         primaryId &&
-        validSelected.length === 0 &&
+        isOffCanvasScreenSelection(initialNodes, selectedScreenIds) &&
         useStore.getState().screensById.has(primaryId);
       if (!preserveOffCanvas) {
         setSelectedScreenIds(validSelected);
@@ -353,17 +356,52 @@ export default function GraphView({ isActive = true }) {
     scheduleDragPositionSave();
   }, [scheduleDragPositionSave]);
 
+  const isRecentUserGraphPick = useCallback((screenId) => {
+    const { id, at } = lastUserGraphPickRef.current;
+    return id === screenId && Date.now() - at < 200;
+  }, []);
+
   const onSelectionChange = useCallback(
     ({ nodes: selectedNodes }) => {
-      setSelectedScreenIds(
-        selectedNodes.filter((n) => n.type === 'screenNode').map((n) => n.id)
-      );
+      const nextIds = selectedNodes
+        .filter((n) => n.type === 'screenNode')
+        .map((n) => n.id);
+      const { selectedScreenIds: current, screensById } = useStore.getState();
+
+      if (
+        nextIds.length === 0 &&
+        current.length === 1 &&
+        isOffCanvasScreenSelection(nodesRef.current, current) &&
+        screensById.has(current[0])
+      ) {
+        return;
+      }
+
+      if (
+        nextIds.length === 1 &&
+        current.length === 1 &&
+        nextIds[0] !== current[0] &&
+        isOffCanvasScreenSelection(nodesRef.current, current) &&
+        screensById.has(current[0]) &&
+        !isRecentUserGraphPick(nextIds[0])
+      ) {
+        return;
+      }
+
+      if (nextIds.length === 1 && isRecentUserGraphPick(nextIds[0])) {
+        lastUserGraphPickRef.current = { id: null, at: 0 };
+      }
+
+      setSelectedScreenIds(nextIds);
     },
-    [setSelectedScreenIds]
+    [setSelectedScreenIds, isRecentUserGraphPick]
   );
 
   const onNodeClick = useCallback(
     (_, node) => {
+      if (node.type === 'screenNode') {
+        lastUserGraphPickRef.current = { id: node.id, at: Date.now() };
+      }
       if (
         node.type === 'sectionNode' &&
         node.data?.sectionId &&

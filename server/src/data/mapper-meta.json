@@ -114,17 +114,17 @@
       "id": "quick-settings",
       "name": "quick-settings",
       "rootScreenId": null,
-      "bandX": -844,
-      "bandY": 16,
+      "bandX": -832,
+      "bandY": 20,
       "collapsed": true
     },
     {
       "id": "game-optimizer",
       "name": "game-optimizer",
       "rootScreenId": null,
-      "collapsed": true,
-      "bandX": -835,
-      "bandY": 308
+      "collapsed": false,
+      "bandX": 1434,
+      "bandY": -18
     }
   ],
   "screens": {

@@ -106,6 +106,12 @@ export function filterSelectionToNodes(nodes, selectedIds) {
   return selectedIds.filter((id) => ids.has(id));
 }
 
+/** True when every selected id is missing from the current graph (e.g. collapsed section). */
+export function isOffCanvasScreenSelection(nodes, selectedIds) {
+  if (!selectedIds?.length) return false;
+  return filterSelectionToNodes(nodes, selectedIds).length === 0;
+}
+
 /** First free slot in the staging column (right of the main flow). */
 export function nextStagingPosition(occupied, stagingX, startIndex = 0) {
   let index = startIndex;
