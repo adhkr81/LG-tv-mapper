@@ -10383,10 +10383,10 @@
         "height": "31px",
         "target": "sidebar_profile_search",
         "popover": {
-          "title": "Notification",
-          "text": "View your current notifications.",
+          "title": "Search",
+          "text": "Search for movie titles, actors, and genre.",
           "style": {
-            "top": "10%",
+            "top": "22%",
             "left": "7%"
           }
         }
@@ -10401,7 +10401,7 @@
           "title": "Settings",
           "text": "Adjust your preferences by accessing the quick settings panel.",
           "style": {
-            "top": "18%",
+            "top": "79%",
             "left": "7%"
           }
         }
@@ -10415,8 +10415,8 @@
           "title": "Content Providers",
           "text": "View content from all your favorite providers and the webOS TV LG Channels service.",
           "style": {
-            "top": "72%",
-            "left": "8%"
+            "top": "55%",
+            "left": "15%"
           }
         }
       },
@@ -10427,10 +10427,10 @@
         "height": "31px",
         "target": "sidebar_notifications",
         "popover": {
-          "title": "Search",
-          "text": "Search for movie titles, actors, and genre.",
+          "title": "Notification",
+          "text": "View your current notifications.",
           "style": {
-            "top": "26%",
+            "top": "70%",
             "left": "7%"
           }
         }
