@@ -14052,21 +14052,101 @@
   "apps_home-office": {
     "img_filename": "apps_home-office",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "822px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "homescreen"
+      },
+      {
+        "left": "748px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_profile-menu"
+      }
+    ]
   },
   "apps_music": {
     "img_filename": "apps_music",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "822px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "homescreen"
+      },
+      {
+        "left": "785px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_profile-menu"
+      }
+    ]
   },
   "apps_home-hub": {
     "img_filename": "apps_home-hub",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "815px",
+        "top": "27px",
+        "width": "24px",
+        "height": "24px",
+        "target": "homescreen"
+      },
+      {
+        "left": "778px",
+        "top": "27px",
+        "width": "24px",
+        "height": "24px",
+        "target": "apps_home-hub_options"
+      },
+      {
+        "left": "741px",
+        "top": "27px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_profile-menu"
+      }
+    ]
   },
   "apps_learning": {
     "img_filename": "apps_learning",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "815px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "homescreen"
+      },
+      {
+        "left": "778px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_profile-menu"
+      }
+    ]
+  },
+  "apps_home-hub_options": {
+    "img_filename": "apps_home-hub_options",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "647px",
+        "top": "325px",
+        "width": "202px",
+        "height": "31px",
+        "target": "homescreen"
+      }
+    ]
   }
 }

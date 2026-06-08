@@ -4860,10 +4860,13 @@
       "sourceHeight": 2160
     },
     "apps_home-office": {
-      "graphX": 546,
-      "graphY": 195,
+      "graphX": 545,
+      "graphY": 193,
       "sectionId": "apps",
-      "buttonIds": [],
+      "buttonIds": [
+        "8c85c964-b928-4d96-b96f-87ba1af21014",
+        "3152f827-b7f0-43d2-9abb-5c7ae5cb2e52"
+      ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
@@ -4871,19 +4874,45 @@
       "graphX": 798,
       "graphY": 198,
       "sectionId": "apps",
-      "buttonIds": []
+      "buttonIds": [
+        "f0859038-b579-4cc7-8438-d239ea4a55c7",
+        "65872071-0115-4b15-b5df-dadf06eed641"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "apps_home-hub": {
       "graphX": 940,
       "graphY": 0,
       "sectionId": "apps",
-      "buttonIds": []
+      "buttonIds": [
+        "29f6fa7d-0800-4b68-af51-3778895091d0",
+        "fd384288-a190-44e2-869e-58447d687369",
+        "60135ede-796a-4fdf-815d-f3d79afe1a40"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "apps_learning": {
-      "graphX": 280,
-      "graphY": 185,
+      "graphX": 278,
+      "graphY": 191,
       "sectionId": "apps",
-      "buttonIds": []
+      "buttonIds": [
+        "9bc760d4-2897-4a86-af53-04561a0b9227",
+        "59af572d-a5d1-4938-9b0e-b12ba936b6f1"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_home-hub_options": {
+      "graphX": 0,
+      "graphY": 0,
+      "sectionId": "apps",
+      "buttonIds": [
+        "a515bcb8-25d4-4ed2-a64a-93fdb7dee263"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     }
   },
   "config": {
