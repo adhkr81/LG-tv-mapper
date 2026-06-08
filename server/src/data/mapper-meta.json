@@ -3542,8 +3542,8 @@
       "sourceHeight": 2160
     },
     "homescreen": {
-      "graphX": 278,
-      "graphY": -231,
+      "graphX": 274,
+      "graphY": -212,
       "sectionId": null,
       "buttonIds": [
         "0d9db044-f12c-4bfb-bd81-eec88dce2df4",
@@ -4905,7 +4905,7 @@
       "sourceHeight": 2160
     },
     "apps_home-hub_options": {
-      "graphX": 0,
+      "graphX": 1220,
       "graphY": 0,
       "sectionId": "apps",
       "buttonIds": [
