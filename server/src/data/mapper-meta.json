@@ -6,7 +6,7 @@
       "name": "Settings",
       "rootScreenId": "quick-settings-main",
       "bandX": -507,
-      "bandY": 8,
+      "bandY": 27,
       "collapsed": false
     },
     {
@@ -106,16 +106,16 @@
       "id": "sidebar",
       "name": "sidebar",
       "rootScreenId": null,
-      "bandX": -64,
-      "bandY": -226,
+      "bandX": -91,
+      "bandY": -206,
       "collapsed": true
     },
     {
       "id": "quick-settings",
       "name": "quick-settings",
       "rootScreenId": null,
-      "bandX": -832,
-      "bandY": 20,
+      "bandX": -77,
+      "bandY": 38,
       "collapsed": true
     },
     {
@@ -123,14 +123,22 @@
       "name": "game-optimizer",
       "rootScreenId": null,
       "collapsed": true,
-      "bandX": -842,
-      "bandY": 313
+      "bandX": 598,
+      "bandY": 36
+    },
+    {
+      "id": "apps",
+      "name": "apps",
+      "rootScreenId": null,
+      "bandX": 593,
+      "bandY": -206,
+      "collapsed": true
     }
   ],
   "screens": {
     "quick-settings-main": {
-      "graphX": -95,
-      "graphY": -188,
+      "graphX": 675,
+      "graphY": -169,
       "sectionId": "Settings",
       "buttonIds": [
         "88306f45-9a3b-4c6b-9a17-6226761d6fed",
@@ -3541,61 +3549,21 @@
         "0d9db044-f12c-4bfb-bd81-eec88dce2df4",
         "ef9132ca-0f23-41b6-994a-18783c69e1b6",
         "07e47702-80c2-4897-bb93-521427beee76",
-        "6cd75582-ad32-4b47-8913-9818f3302e5a",
         "85aee43a-4b80-41a7-a383-9fb53005a148",
         "26b1c022-516d-4344-84e4-15dcf2585152",
         "88232ab9-d360-4a9d-b260-85bc0f33d634",
         "ce0f65af-8c59-433d-a490-f9c0835fe5e8",
         "d4bd2a97-ef96-4023-affb-25ba3b829bdf",
-        "5a26601a-0038-4f73-9dcf-ea0488a124ad"
+        "18409359-bdb8-4292-9bcd-518c8767bb13",
+        "e6c5ea74-e998-4134-bb17-29ec4eb3bcb0",
+        "4dbf1562-f5ce-43bf-88db-e82e2d8f9eb2",
+        "402c89ff-a278-4a7e-8d69-2438bcc459d1",
+        "bef2e4d8-4505-427a-94c3-680ee5c6286d",
+        "58b8aa72-70dd-4ea6-8a01-225330b1e70a",
+        "f6463625-4b11-43f0-aba9-cb9975fa6137"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2159
-    },
-    "homescreen-left": {
-      "graphX": 570,
-      "graphY": -227,
-      "sectionId": null,
-      "buttonIds": [
-        "a5c32139-2f21-4fea-b1d9-83cbb2698021",
-        "ede078aa-253a-422c-8563-44ed7bc12c95",
-        "680f44ac-c027-4bca-889f-10242c318cbd",
-        "6ccb0534-8004-40ba-91a9-7f8ac70115bb",
-        "aec482f8-b1f1-4530-b9ec-d5686594cc98",
-        "923ff6dd-e02b-4311-9342-f0f5e8bf232f",
-        "73683935-78dc-4f15-98cc-8b1b15863521",
-        "bb93ae92-24cc-4e46-b416-8bedc29865e5",
-        "c9891116-380f-4f87-b1fc-de8d82672276",
-        "feb35480-9067-428d-8ee9-9db9e0b2d90b",
-        "f72f0071-d653-4e6e-a3ce-99c2372c4b54",
-        "db7060a8-0c15-4679-a813-e3d58935b3af",
-        "bedeb4e6-96ce-4575-a1c6-dbd7acab688e",
-        "e5569d9c-6666-4ed7-8f2c-3dd4ac7a16c7",
-        "17b25049-97a2-4b8b-9016-26fb9bfcced6",
-        "e3bc9f62-8ae4-4dbf-8038-393c05b0ba99",
-        "c854ac03-083b-41a0-aaf2-5eb82a0ba663",
-        "84934f48-186a-41ff-8e7b-d0fd1b5356e3",
-        "a6a47f04-86b5-43e0-9b3f-a518d746be83",
-        "dce69e3d-206f-4c34-8878-067767bd022e"
-      ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
-    },
-    "homescreen-down": {
-      "graphX": 276,
-      "graphY": 3,
-      "sectionId": null,
-      "buttonIds": [
-        "e69a3ffb-faae-4bbc-837b-1dcf777783a5",
-        "d0b69581-149c-4cbd-8db0-834e5cdaf7d9",
-        "24f633ad-21ab-485c-af98-b4891c4c2947",
-        "aa4b2104-c019-4790-bf55-a184063a47b4",
-        "cf66439f-6d8b-41ac-a748-e2c8e4938176",
-        "e5d13a04-6ed1-4114-b866-3debffa98afd",
-        "723c79b1-c1b6-4c26-b81c-80b3e416b7b8"
-      ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
     },
     "sidebar_notifications": {
       "graphX": -2216,
@@ -4740,6 +4708,182 @@
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
+    },
+    "sidebar_guide": {
+      "graphX": -2224,
+      "graphY": 601,
+      "sectionId": "sidebar",
+      "buttonIds": [
+        "00383b93-3e4b-49a5-b0a4-16e81acf3f92",
+        "34cc9698-c8c1-4a36-b358-ddd969f88e0c",
+        "54278496-24f7-4553-a049-363865f4e562",
+        "288c4935-ac93-4750-8047-edcb31fff651"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "sidebar_options_channel-row": {
+      "graphX": -1655,
+      "graphY": 583,
+      "sectionId": "sidebar",
+      "buttonIds": [
+        "c825fe5d-24ea-4ee7-8b05-c901c5f22c08"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "sidebar_options_filters": {
+      "graphX": -1375,
+      "graphY": 583,
+      "sectionId": "sidebar",
+      "buttonIds": [
+        "fdf4e68b-aa79-430c-91ac-f33f256fd653"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "sidebar_options_channel-manager-1": {
+      "graphX": -1095,
+      "graphY": 583,
+      "sectionId": "sidebar",
+      "buttonIds": [
+        "4f829086-48f4-4146-9d29-4f4b45d2d2dd",
+        "8442f18a-2f70-4cf6-9354-867fc978274b"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "sidebar_options_channel-manager-2": {
+      "graphX": -804,
+      "graphY": 580,
+      "sectionId": "sidebar",
+      "buttonIds": [
+        "bd454008-9745-4fc8-ad9f-0656d1acdf26",
+        "fefea5e6-6f68-4ca0-9902-e3d5e0ae15d1"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "sidebar_channels": {
+      "graphX": -1868,
+      "graphY": 838,
+      "sectionId": "sidebar",
+      "buttonIds": [
+        "6df253ff-d5a2-406e-a5b4-981f81f8ee34",
+        "2ce066ce-e0f5-4a46-845c-7714ccbba5c5"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "sidebar_tv-scheduler": {
+      "graphX": -1592,
+      "graphY": 835,
+      "sectionId": "sidebar",
+      "buttonIds": [
+        "df5ae79e-0855-47d9-ae70-30d566869151",
+        "977e86b5-aef1-487b-b316-745a802bc7b5",
+        "45df7958-2bfd-4c1e-961d-340dd6dc1bbd",
+        "7e154ff2-1bf7-4957-be0c-437d532205e2"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "sidebar_tv-scheduler_tv-scheduler": {
+      "graphX": -1310,
+      "graphY": 832,
+      "sectionId": "sidebar",
+      "buttonIds": [
+        "4bd827e1-eca9-4f98-b912-531b147770a1",
+        "139cdb25-40a6-47b7-b755-ae58aada9bf8"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "sidebar_tv-scheduler_tv-scheduler_options": {
+      "graphX": -1041,
+      "graphY": 838,
+      "sectionId": "sidebar",
+      "buttonIds": [
+        "345d0e3c-0ccc-4383-8011-8e5857f54b17"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "sidebar_options": {
+      "graphX": -1931,
+      "graphY": 590,
+      "sectionId": "sidebar",
+      "buttonIds": [
+        "09c932ce-bcdc-4ffc-841a-3b89a5d48398",
+        "7038a519-8207-43b4-8eab-7093eedc7eb7",
+        "536101d1-37a8-454a-a249-1f6da4abad39"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_lg-channels-1": {
+      "graphX": 280,
+      "graphY": 0,
+      "sectionId": "apps",
+      "buttonIds": [
+        "8685645e-7c4a-45be-9a08-8d683505d8e3",
+        "1826e9ad-e4c1-4303-a91d-b789c3922efb",
+        "370d59d9-7765-4184-9b25-6153f4339ff6",
+        "f46ec7fb-9d0d-4a10-a4f4-9baf51b239b5"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_lg-channels-2": {
+      "graphX": 500,
+      "graphY": 0,
+      "sectionId": "apps",
+      "buttonIds": [
+        "3a27a814-d646-4975-b2a3-0496eabdb07a",
+        "4d52d7e3-59f8-45a7-aa4e-bd6ff31481d9",
+        "dedd6712-6271-4ede-8ed4-0b4b5b55fd81"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_lg-channels-3": {
+      "graphX": 720,
+      "graphY": 0,
+      "sectionId": "apps",
+      "buttonIds": [
+        "782943b7-329c-4741-b819-a7be75f879d4",
+        "7fce7926-4793-4d74-8b3a-29ca587b1cf0",
+        "cc851b79-b6f9-4e8e-9875-058188ee2b8c",
+        "f672425a-3306-4c86-9f62-2e8d6238b90a"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_home-office": {
+      "graphX": 546,
+      "graphY": 195,
+      "sectionId": "apps",
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_music": {
+      "graphX": 798,
+      "graphY": 198,
+      "sectionId": "apps",
+      "buttonIds": []
+    },
+    "apps_home-hub": {
+      "graphX": 940,
+      "graphY": 0,
+      "sectionId": "apps",
+      "buttonIds": []
+    },
+    "apps_learning": {
+      "graphX": 280,
+      "graphY": 185,
+      "sectionId": "apps",
+      "buttonIds": []
     }
   },
   "config": {
