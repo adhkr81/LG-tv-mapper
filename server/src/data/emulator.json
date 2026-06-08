@@ -10362,7 +10362,7 @@
     "preset": 0,
     "buttons": [
       {
-        "left": "107px",
+        "left": "106px",
         "top": "20px",
         "width": "31px",
         "height": "31px",
@@ -10370,31 +10370,40 @@
         "popover": {
           "title": "Profile",
           "text": "Enjoy recommended content and services by logging into your LG account.",
-          "style": { "top": "2%", "left": "7%" }
+          "style": {
+            "top": "2%",
+            "left": "7%"
+          }
         }
       },
       {
-        "left": "107px",
+        "left": "106px",
         "top": "139px",
         "width": "31px",
         "height": "31px",
         "target": "sidebar_profile_search",
         "popover": {
-          "title": "Search",
-          "text": "Search for movie titles, actors, and genre.",
-          "style": { "top": "26%", "left": "7%" }
+          "title": "Notification",
+          "text": "View your current notifications.",
+          "style": {
+            "top": "10%",
+            "left": "7%"
+          }
         }
       },
       {
         "left": "107px",
-        "top": "401px",
+        "top": "402px",
         "width": "31px",
         "height": "31px",
         "target": "quick-settings-main",
         "popover": {
           "title": "Settings",
           "text": "Adjust your preferences by accessing the quick settings panel.",
-          "style": { "top": "18%", "left": "7%" }
+          "style": {
+            "top": "18%",
+            "left": "7%"
+          }
         }
       },
       {
@@ -10402,23 +10411,28 @@
         "top": "335px",
         "width": "214px",
         "height": "54px",
-        "target": null,
         "popover": {
           "title": "Content Providers",
           "text": "View content from all your favorite providers and the webOS TV LG Channels service.",
-          "style": { "top": "72%", "left": "8%" }
+          "style": {
+            "top": "72%",
+            "left": "8%"
+          }
         }
       },
       {
-        "left": "107px",
-        "top": "368px",
+        "left": "106px",
+        "top": "367px",
         "width": "31px",
         "height": "31px",
         "target": "sidebar_notifications",
         "popover": {
-          "title": "Notification",
-          "text": "View your current notifications.",
-          "style": { "top": "10%", "left": "7%" }
+          "title": "Search",
+          "text": "Search for movie titles, actors, and genre.",
+          "style": {
+            "top": "26%",
+            "left": "7%"
+          }
         }
       },
       {
@@ -10426,84 +10440,49 @@
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "apps_lg-channels-1",
-        "popover": {
-          "title": "LG Channels",
-          "text": "Stream over 300+ free channels, including TV shows, movies, breaking news, sports, and more.",
-          "style": { "top": "72%", "left": "1%" }
-        }
+        "target": "apps_lg-channels-1"
       },
       {
         "left": "106px",
         "top": "176px",
         "width": "31px",
         "height": "31px",
-        "target": "sidebar_apps_menu",
-        "popover": {
-          "title": "Content Store",
-          "text": "A portal to limitless premium content and apps.",
-          "style": { "top": "72%", "left": "37%" }
-        }
+        "target": "sidebar_apps_menu"
       },
       {
         "left": "106px",
         "top": "212px",
         "width": "31px",
         "height": "31px",
-        "target": "sidebar_gaming-portal-menu",
-        "popover": {
-          "title": "Game",
-          "text": "Access a connected game console or PC.",
-          "style": { "bottom": "54%", "left": "21%" }
-        }
+        "target": "sidebar_gaming-portal-menu"
       },
       {
         "left": "421px",
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "sidebar_gaming-portal-menu",
-        "popover": {
-          "title": "Game",
-          "text": "Access a connected game console or PC.",
-          "style": { "bottom": "54%", "left": "21%" }
-        }
+        "target": "sidebar_gaming-portal-menu"
       },
       {
         "left": "474px",
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "apps_home-office",
-        "popover": {
-          "title": "Home Office",
-          "text": "Access the Remote PC feature.",
-          "style": { "bottom": "54%", "left": "1%" }
-        }
+        "target": "apps_home-office"
       },
       {
         "left": "528px",
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "apps_music",
-        "popover": {
-          "title": "Music",
-          "text": "Browse popular music, new recommendations, and daily hits.",
-          "style": { "bottom": "54%", "left": "41.5%" }
-        }
+        "target": "apps_music"
       },
       {
         "left": "582px",
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "apps_home-hub",
-        "popover": {
-          "title": "Home Hub",
-          "text": "View all inputs, featured channels, and connected devices in one place.",
-          "style": { "bottom": "54%", "left": "61.5%" }
-        }
+        "target": "apps_home-hub"
       },
       {
         "left": "636px",
@@ -10517,12 +10496,7 @@
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "quick-settings_accessibility-app-menu",
-        "popover": {
-          "title": "Accessibility",
-          "text": "Your TV’s convenient Accessibility features are designed to assist with hearing and vision impairments. If you’re looking for more information about your TV, you can view tips, helpful guides, and speak to LG’s Chatbot.",
-          "style": { "bottom": "54%", "left": "59.5%" }
-        }
+        "target": "quick-settings_accessibility-app-menu"
       },
       {
         "left": "106px",
@@ -13985,12 +13959,6 @@
     "img_filename": "apps_lg-channels-1",
     "preset": 0,
     "buttons": [
-      {
-        "left": "108px",
-        "top": "158px",
-        "width": "24px",
-        "height": "24px"
-      },
       {
         "left": "108px",
         "top": "190px",

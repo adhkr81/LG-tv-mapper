@@ -66,3 +66,30 @@
   opacity: 0.45;
   pointer-events: none;
 }
+
+.preview-hotspot.hotspot-region--unlinked.preview-hotspot--has-popover {
+  cursor: help;
+  pointer-events: auto;
+}
+
+.preview-popover {
+  max-width: 300px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.96);
+  color: #111;
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  line-height: 1.45;
+}
+
+.preview-popover__title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.preview-popover__text {
+  font-size: 13px;
+  font-weight: 400;
+}

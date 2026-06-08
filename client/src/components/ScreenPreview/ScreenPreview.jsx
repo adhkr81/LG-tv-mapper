@@ -205,8 +205,15 @@ export default function ScreenPreview() {
   );
 }
 
+function hasPopoverContent(popover) {
+  return Boolean(popover?.title?.trim() || popover?.text?.trim());
+}
+
 function PreviewHotspot({ button, screenForCoords, imageConfig, onNavigate }) {
   const normalized = normalizeButton(button);
+  const [hovered, setHovered] = useState(false);
+  const popover = button.popover;
+  const showPopover = hasPopoverContent(popover);
   const hasTarget = useStore((s) =>
     Boolean(normalized.target && s.screensById.has(normalized.target))
   );
@@ -226,35 +233,62 @@ function PreviewHotspot({ button, screenForCoords, imageConfig, onNavigate }) {
 
   const style = emulatorButtonStyle(rect);
 
+  const popoverStyle = useMemo(() => {
+    if (!showPopover) return null;
+    const pos = { position: 'absolute', zIndex: 20 };
+    const style = popover.style || {};
+    for (const key of ['top', 'left', 'bottom', 'right']) {
+      const value = style[key];
+      if (value) pos[key] = value;
+    }
+    if (!pos.top && !pos.bottom) pos.top = '0%';
+    if (!pos.left && !pos.right) pos.left = '0%';
+    return pos;
+  }, [showPopover, popover]);
+
   const handleClick = (e) => {
     e.stopPropagation();
     if (hasTarget) onNavigate(normalized.target);
   };
 
   return (
-    <div
-      role={hasTarget ? 'button' : undefined}
-      tabIndex={hasTarget ? 0 : undefined}
-      className={`emulator-button hotspot-region preview-hotspot ${hasTarget ? 'hotspot-region--linked' : 'hotspot-region--unlinked'}`}
-      style={style}
-      title={
-        hasTarget
-          ? `Go to ${normalized.target}`
-          : normalized.label || 'No target'
-      }
-      onClick={hasTarget ? handleClick : undefined}
-      onKeyDown={(e) => {
-        if (hasTarget && (e.key === 'Enter' || e.key === ' ')) {
-          e.preventDefault();
-          handleClick(e);
+    <>
+      <div
+        role={hasTarget ? 'button' : undefined}
+        tabIndex={hasTarget ? 0 : undefined}
+        className={`emulator-button hotspot-region preview-hotspot ${hasTarget ? 'hotspot-region--linked' : 'hotspot-region--unlinked'} ${showPopover ? 'preview-hotspot--has-popover' : ''}`}
+        style={style}
+        title={
+          hasTarget
+            ? `Go to ${normalized.target}`
+            : normalized.label || 'No target'
         }
-      }}
-    >
-      {hasTarget ? (
-        <span className="hotspot-region__tag">→ {normalized.target}</span>
-      ) : (
-        <span className="hotspot-region__tag">{normalized.label}</span>
+        onMouseEnter={showPopover ? () => setHovered(true) : undefined}
+        onMouseLeave={showPopover ? () => setHovered(false) : undefined}
+        onClick={hasTarget ? handleClick : undefined}
+        onKeyDown={(e) => {
+          if (hasTarget && (e.key === 'Enter' || e.key === ' ')) {
+            e.preventDefault();
+            handleClick(e);
+          }
+        }}
+      >
+        {hasTarget ? (
+          <span className="hotspot-region__tag">→ {normalized.target}</span>
+        ) : (
+          <span className="hotspot-region__tag">{normalized.label}</span>
+        )}
+      </div>
+      {hovered && showPopover && (
+        <div className="preview-popover" style={popoverStyle} role="tooltip">
+          {popover.title?.trim() && (
+            <div className="preview-popover__title">{popover.title}</div>
+          )}
+          {popover.text?.trim() && (
+            <div className="preview-popover__text">{popover.text}</div>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 }
