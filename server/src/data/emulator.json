@@ -4,10 +4,10 @@
     "preset": 0,
     "buttons": [
       {
-        "left": "213px",
+        "left": "212px",
         "top": "23px",
-        "width": "25px",
-        "height": "25px",
+        "width": "26px",
+        "height": "26px",
         "target": "quick-settings_internet-connection"
       },
       {
@@ -60,10 +60,10 @@
         "target": "game-optimizer_menu"
       },
       {
-        "left": "188px",
+        "left": "187px",
         "top": "23px",
-        "width": "25px",
-        "height": "25px",
+        "width": "26px",
+        "height": "26px",
         "target": "quick-settings_accessibility-shortcuts"
       },
       {
@@ -74,10 +74,10 @@
         "target": "quick-settings_panel-brightness"
       },
       {
-        "left": "162px",
+        "left": "161px",
         "top": "23px",
-        "width": "25px",
-        "height": "25px",
+        "width": "26px",
+        "height": "26px",
         "target": "settings-picture"
       }
     ]
