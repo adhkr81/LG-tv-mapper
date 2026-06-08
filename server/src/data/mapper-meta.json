@@ -122,9 +122,9 @@
       "id": "game-optimizer",
       "name": "game-optimizer",
       "rootScreenId": null,
-      "collapsed": false,
-      "bandX": 1434,
-      "bandY": -18
+      "collapsed": true,
+      "bandX": -842,
+      "bandY": 313
     }
   ],
   "screens": {
@@ -3549,8 +3549,8 @@
         "d4bd2a97-ef96-4023-affb-25ba3b829bdf",
         "5a26601a-0038-4f73-9dcf-ea0488a124ad"
       ],
-      "sourceWidth": 1275,
-      "sourceHeight": 717
+      "sourceWidth": 3840,
+      "sourceHeight": 2159
     },
     "homescreen-left": {
       "graphX": 570,
