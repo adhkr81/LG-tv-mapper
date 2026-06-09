@@ -99,23 +99,23 @@
       "name": "support-privacy",
       "rootScreenId": null,
       "bandX": 1057,
-      "bandY": 843,
+      "bandY": 848,
       "collapsed": true
     },
     {
       "id": "sidebar",
       "name": "sidebar",
       "rootScreenId": null,
-      "bandX": -91,
-      "bandY": -206,
+      "bandX": -112,
+      "bandY": -186,
       "collapsed": true
     },
     {
       "id": "quick-settings",
       "name": "quick-settings",
       "rootScreenId": null,
-      "bandX": -77,
-      "bandY": 38,
+      "bandX": -110,
+      "bandY": 33,
       "collapsed": true
     },
     {
