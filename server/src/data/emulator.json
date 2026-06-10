@@ -10440,151 +10440,70 @@
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "apps_lg-channels-1",
-        "popover": {
-          "title": "LG Channels",
-          "text": "Stream over 300+ free channels, including TV shows, movies, breaking news, sports, and more.",
-          "style": {
-            "top": "55%",
-            "left": "8%"
-          }
-        }
+        "target": "apps_lg-channels-1"
       },
       {
         "left": "106px",
         "top": "176px",
         "width": "31px",
         "height": "31px",
-        "target": "sidebar_apps_menu",
-        "popover": {
-          "title": "Apps",
-          "text": "A portal to limitless premium content and apps.",
-          "style": {
-            "top": "31%",
-            "left": "7%"
-          }
-        }
+        "target": "sidebar_apps_menu"
       },
       {
         "left": "106px",
         "top": "212px",
         "width": "31px",
         "height": "31px",
-        "target": "sidebar_gaming-portal-menu",
-        "popover": {
-          "title": "Gaming Portal",
-          "text": "Various Cloud Games You Can Enjoy All-in-One on Your TV.",
-          "style": {
-            "top": "39%",
-            "left": "7%"
-          }
-        }
+        "target": "sidebar_gaming-portal-menu"
       },
       {
         "left": "421px",
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "sidebar_gaming-portal-menu",
-        "popover": {
-          "title": "Gaming Portal",
-          "text": "Various Cloud Games You Can Enjoy All-in-One on Your TV.",
-          "style": {
-            "top": "58%",
-            "left": "42%"
-          }
-        }
+        "target": "sidebar_gaming-portal-menu"
       },
       {
         "left": "474px",
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "apps_home-office",
-        "popover": {
-          "title": "Home Office",
-          "text": "Access productivity tools and work directly from your TV.",
-          "style": {
-            "top": "58%",
-            "left": "49%"
-          }
-        }
+        "target": "apps_home-office"
       },
       {
         "left": "528px",
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "apps_music",
-        "popover": {
-          "title": "Music",
-          "text": "Enjoy music streaming services, playlists, and other audio content from a variety of music apps.",
-          "style": {
-            "top": "55%",
-            "left": "55%"
-          }
-        }
+        "target": "apps_music"
       },
       {
         "left": "582px",
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "apps_home-hub",
-        "popover": {
-          "title": "Home Hub",
-          "text": "Monitor and control compatible smart home devices from one place.",
-          "style": {
-            "top": "55%",
-            "left": "62%"
-          }
-        }
+        "target": "apps_home-hub"
       },
       {
         "left": "636px",
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "apps_learning",
-        "popover": {
-          "title": "Learning",
-          "text": "Explore educational content, online courses, tutorials, and learning applications for users of all ages.",
-          "style": {
-            "top": "55%",
-            "left": "39%"
-          }
-        }
-
+        "target": "apps_learning"
       },
       {
         "left": "690px",
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "quick-settings_accessibility-app-menu",
-        "popover": {
-          "title": "Accessibility",
-          "text": "Access features and settings designed to improve usability, including visual, hearing, and navigation assistance options.",
-          "style": {
-            "top": "55%",
-            "left": "45%"
-          }
-        }
+        "target": "quick-settings_accessibility-app-menu"
       },
       {
         "left": "106px",
         "top": "247px",
         "width": "31px",
         "height": "31px",
-        "target": "sidebar_guide",
-        "popover": {
-          "title": "TV Guide",
-          "text": "View the current TV channel lineup and browse upcoming program schedules.",
-          "style": {
-            "top": "43%",
-            "left": "7%"
-          }
-        }
+        "target": "sidebar_guide"
       }
     ]
   },
@@ -10605,24 +10524,24 @@
         "target": "homescreen"
       },
       {
-        "left": "201px",
-        "top": "354px",
-        "width": "189px",
-        "height": "33px",
+        "left": "199px",
+        "top": "352px",
+        "width": "193px",
+        "height": "37px",
         "target": "sidebar_profile_lg-thinq"
       },
       {
-        "left": "398px",
-        "top": "356px",
-        "width": "172px",
-        "height": "30px",
+        "left": "396px",
+        "top": "354px",
+        "width": "176px",
+        "height": "34px",
         "target": "sidebar_profile_mobile"
       },
       {
-        "left": "587px",
-        "top": "356px",
-        "width": "172px",
-        "height": "30px",
+        "left": "584px",
+        "top": "354px",
+        "width": "177px",
+        "height": "34px",
         "target": "sidebar_profile_device"
       }
     ]
@@ -14129,17 +14048,17 @@
     "preset": 0,
     "buttons": [
       {
-        "left": "822px",
-        "top": "28px",
-        "width": "24px",
-        "height": "24px",
+        "left": "820px",
+        "top": "26px",
+        "width": "28px",
+        "height": "28px",
         "target": "homescreen"
       },
       {
-        "left": "748px",
-        "top": "28px",
-        "width": "24px",
-        "height": "24px",
+        "left": "746px",
+        "top": "26px",
+        "width": "28px",
+        "height": "28px",
         "target": "sidebar_profile-menu"
       }
     ]
@@ -14149,17 +14068,17 @@
     "preset": 0,
     "buttons": [
       {
-        "left": "822px",
-        "top": "28px",
-        "width": "24px",
-        "height": "24px",
+        "left": "820px",
+        "top": "26px",
+        "width": "28px",
+        "height": "28px",
         "target": "homescreen"
       },
       {
-        "left": "785px",
-        "top": "28px",
-        "width": "24px",
-        "height": "24px",
+        "left": "783px",
+        "top": "26px",
+        "width": "28px",
+        "height": "28px",
         "target": "sidebar_profile-menu"
       }
     ]
@@ -14196,17 +14115,17 @@
     "preset": 0,
     "buttons": [
       {
-        "left": "815px",
-        "top": "28px",
-        "width": "24px",
-        "height": "24px",
+        "left": "812px",
+        "top": "26px",
+        "width": "29px",
+        "height": "28px",
         "target": "homescreen"
       },
       {
-        "left": "778px",
-        "top": "28px",
-        "width": "24px",
-        "height": "24px",
+        "left": "776px",
+        "top": "26px",
+        "width": "28px",
+        "height": "28px",
         "target": "sidebar_profile-menu"
       }
     ]

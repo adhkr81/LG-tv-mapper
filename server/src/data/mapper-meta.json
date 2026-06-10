@@ -90,24 +90,24 @@
       "id": "settings-support",
       "name": "settings-support",
       "rootScreenId": null,
-      "bandX": 1034,
-      "bandY": 587,
+      "bandX": 1458,
+      "bandY": 566,
       "collapsed": true
     },
     {
       "id": "support-privacy",
       "name": "support-privacy",
       "rootScreenId": null,
-      "bandX": 1057,
-      "bandY": 848,
+      "bandX": 1457,
+      "bandY": 822,
       "collapsed": true
     },
     {
       "id": "sidebar",
       "name": "sidebar",
       "rootScreenId": null,
-      "bandX": -112,
-      "bandY": -186,
+      "bandX": 2031,
+      "bandY": 573,
       "collapsed": true
     },
     {
@@ -123,8 +123,8 @@
       "name": "game-optimizer",
       "rootScreenId": null,
       "collapsed": true,
-      "bandX": 598,
-      "bandY": 36
+      "bandX": 557,
+      "bandY": 37
     },
     {
       "id": "apps",
