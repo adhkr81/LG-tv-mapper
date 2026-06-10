@@ -617,9 +617,9 @@
         "target": "settings-support"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "92px",
-        "width": "246px",
+        "width": "249px",
         "height": "36px",
         "target": "picture-advanced_brightness"
       },
@@ -631,37 +631,37 @@
         "target": "settings-picture"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "131px",
-        "width": "246px",
+        "width": "249px",
         "height": "36px",
         "target": "picture-advanced-color_menu"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "171px",
-        "width": "246px",
+        "width": "249px",
         "height": "36px",
         "target": "picture-advanced-clarity_menu"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "210px",
-        "width": "246px",
+        "width": "249px",
         "height": "36px",
         "target": "picture-advanced-brightness_apply"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "249px",
-        "width": "246px",
+        "width": "249px",
         "height": "32px",
         "target": "picture-advanced-brightness_reset-no"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "295px",
-        "width": "246px",
+        "width": "249px",
         "height": "36px",
         "target": "picture-advanced-brightness_blue-light"
       }
@@ -686,30 +686,30 @@
         "target": "settings-general"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "207px",
-        "width": "245px",
+        "width": "249px",
         "height": "47px",
         "target": "picture-advanced_black"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "258px",
-        "width": "245px",
+        "width": "249px",
         "height": "49px",
         "target": "picture-advanced_auto-dynamic-low"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "353px",
-        "width": "245px",
+        "width": "249px",
         "height": "57px",
         "target": "picture-advanced_gamma-bt"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "310px",
-        "width": "245px",
+        "width": "249px",
         "height": "40px",
         "target": "picture-advanced_hgig"
       },
@@ -721,16 +721,16 @@
         "target": "settings-support"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "92px",
-        "width": "245px",
+        "width": "249px",
         "height": "53px",
         "target": "picture-advanced_panel"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "149px",
-        "width": "245px",
+        "width": "249px",
         "height": "53px",
         "target": "picture-advanced_adjust"
       },
@@ -1061,10 +1061,10 @@
         "target": "settings-general"
       },
       {
-        "left": "168px",
-        "top": "353px",
-        "width": "245px",
-        "height": "57px",
+        "left": "165px",
+        "top": "355px",
+        "width": "250px",
+        "height": "55px",
         "target": "picture-advanced_video-range-limited"
       },
       {
@@ -2566,51 +2566,51 @@
         "target": "settings-support"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "92px",
-        "width": "245px",
+        "width": "249px",
         "height": "36px",
         "target": "settings-sound_advanced-settings_dolby-off"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "131px",
-        "width": "245px",
+        "width": "249px",
         "height": "50px",
         "target": "settings-sound_advanced-settings_balance"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "184px",
-        "width": "245px",
+        "width": "249px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_equalizer"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "224px",
-        "width": "245px",
+        "width": "249px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_apply"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "263px",
-        "width": "245px",
+        "width": "249px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_reset"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "321px",
-        "width": "245px",
+        "width": "249px",
         "height": "50px",
         "target": "settings-sound_advanced-settings_installation"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "374px",
-        "width": "245px",
+        "width": "249px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_automatic"
       },
@@ -8126,51 +8126,51 @@
         "target": "settings-general"
       },
       {
-        "left": "167px",
-        "top": "94px",
-        "width": "247px",
-        "height": "49px",
+        "left": "165px",
+        "top": "92px",
+        "width": "250px",
+        "height": "53px",
         "target": "general-accessibility_audio-guidance-menu"
       },
       {
-        "left": "166px",
+        "left": "164px",
         "top": "148px",
-        "width": "248px",
+        "width": "251px",
         "height": "35px",
         "target": "general-accessibility_learn-remote-control"
       },
       {
-        "left": "166px",
+        "left": "164px",
         "top": "188px",
-        "width": "248px",
+        "width": "251px",
         "height": "49px",
         "target": "general-accessibility_audio-guidance_extended-menu"
       },
       {
-        "left": "166px",
+        "left": "164px",
         "top": "242px",
-        "width": "248px",
+        "width": "251px",
         "height": "35px",
         "target": "general-accessibility_device-power-sound"
       },
       {
-        "left": "166px",
+        "left": "164px",
         "top": "281px",
-        "width": "248px",
+        "width": "251px",
         "height": "35px",
         "target": "general-accessibility_screen-zoom"
       },
       {
-        "left": "166px",
+        "left": "164px",
         "top": "320px",
-        "width": "248px",
+        "width": "251px",
         "height": "49px",
         "target": "general-accessibility_listen-simultaneously"
       },
       {
-        "left": "165px",
+        "left": "163px",
         "top": "373px",
-        "width": "248px",
+        "width": "251px",
         "height": "49px",
         "target": "general-accessibility_sign-language-menu"
       },
@@ -8225,37 +8225,37 @@
         "type": "arrow-up"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "374px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "general-accessibility_invert-colors"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "336px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "general-accessibility_grayscale"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "298px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "general-accessibility_focus-with-high-contrast"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "260px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "general-accessibility_text-with-high-contrast"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "209px",
-        "width": "247px",
+        "width": "250px",
         "height": "46px",
         "target": "general-accessibility_closed-caption-menu"
       }
@@ -9594,17 +9594,17 @@
         "target": "settings-support"
       },
       {
-        "left": "167px",
-        "top": "149px",
-        "width": "247px",
-        "height": "32px",
+        "left": "165px",
+        "top": "147px",
+        "width": "250px",
+        "height": "36px",
         "target": "settings-software-update_on"
       },
       {
-        "left": "220px",
-        "top": "200px",
-        "width": "141px",
-        "height": "30px",
+        "left": "218px",
+        "top": "199px",
+        "width": "145px",
+        "height": "34px",
         "target": "settings-software-update_check"
       }
     ]

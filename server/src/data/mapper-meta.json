@@ -21,8 +21,8 @@
       "id": "picture-advanced",
       "name": "picture-advanced-brightness",
       "rootScreenId": null,
-      "bandX": -502,
-      "bandY": 839,
+      "bandX": -513,
+      "bandY": 844,
       "collapsed": true
     },
     {
@@ -46,8 +46,8 @@
       "name": "settings-sound",
       "rootScreenId": null,
       "collapsed": true,
-      "bandX": 29,
-      "bandY": 568
+      "bandX": 34,
+      "bandY": 578
     },
     {
       "id": "settings-general",
@@ -83,15 +83,15 @@
       "name": "general-accessibility",
       "rootScreenId": null,
       "collapsed": true,
-      "bandX": 554,
-      "bandY": 1328
+      "bandX": 31,
+      "bandY": 834
     },
     {
       "id": "settings-support",
       "name": "settings-support",
       "rootScreenId": null,
-      "bandX": 1052,
-      "bandY": 582,
+      "bandX": 1034,
+      "bandY": 587,
       "collapsed": true
     },
     {
@@ -114,8 +114,8 @@
       "id": "quick-settings",
       "name": "quick-settings",
       "rootScreenId": null,
-      "bandX": -110,
-      "bandY": 33,
+      "bandX": -146,
+      "bandY": 38,
       "collapsed": true
     },
     {
@@ -130,9 +130,9 @@
       "id": "apps",
       "name": "apps",
       "rootScreenId": null,
-      "bandX": 593,
-      "bandY": -206,
-      "collapsed": true
+      "bandX": 1449,
+      "bandY": -186,
+      "collapsed": false
     }
   ],
   "screens": {
