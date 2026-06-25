@@ -296,9 +296,9 @@
       },
       {
         "left": "258px",
-        "top": "86px",
+        "top": "91px",
         "width": "245px",
-        "height": "43px",
+        "height": "39px",
         "target": "settings-software-update-menu"
       },
       {
@@ -945,30 +945,30 @@
         "target": "settings-general"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "207px",
-        "width": "245px",
+        "width": "249px",
         "height": "47px",
         "target": "picture-advanced_black"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "258px",
-        "width": "245px",
+        "width": "249px",
         "height": "49px",
         "target": "picture-advanced_auto-dynamic-low"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "353px",
-        "width": "245px",
+        "width": "249px",
         "height": "57px",
         "target": "picture-advanced_gamma-bt"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "310px",
-        "width": "245px",
+        "width": "249px",
         "height": "40px",
         "target": "picture-advanced_brightness"
       },
@@ -980,16 +980,16 @@
         "target": "settings-support"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "92px",
-        "width": "245px",
+        "width": "249px",
         "height": "53px",
         "target": "picture-advanced_panel"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "149px",
-        "width": "245px",
+        "width": "249px",
         "height": "53px",
         "target": "picture-advanced_adjust"
       },
@@ -2566,51 +2566,51 @@
         "target": "settings-support"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "92px",
-        "width": "249px",
+        "width": "250px",
         "height": "36px",
         "target": "settings-sound_advanced-settings_dolby-off"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "131px",
-        "width": "249px",
+        "width": "250px",
         "height": "50px",
         "target": "settings-sound_advanced-settings_balance"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "184px",
-        "width": "249px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_equalizer"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "224px",
-        "width": "249px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_apply"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "263px",
-        "width": "249px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_reset"
       },
       {
-        "left": "165px",
+        "left": "164px",
         "top": "321px",
-        "width": "249px",
+        "width": "250px",
         "height": "50px",
         "target": "settings-sound_advanced-settings_installation"
       },
       {
-        "left": "165px",
+        "left": "164px",
         "top": "374px",
-        "width": "249px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_automatic"
       },
@@ -2657,51 +2657,51 @@
         "target": "settings-support"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "92px",
-        "width": "245px",
+        "width": "250px",
         "height": "36px",
         "target": "settings-sound_advanced-settings-menu"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "131px",
-        "width": "245px",
+        "width": "250px",
         "height": "50px",
         "target": "settings-sound_advanced-settings_balance"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "184px",
-        "width": "245px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_equalizer"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "224px",
-        "width": "245px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_apply"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "263px",
-        "width": "245px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_reset"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "321px",
-        "width": "245px",
+        "width": "250px",
         "height": "50px",
         "target": "settings-sound_advanced-settings_installation"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "374px",
-        "width": "245px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_automatic"
       },
@@ -2753,10 +2753,10 @@
     "preset": 0,
     "buttons": [
       {
-        "left": "593px",
-        "top": "328px",
-        "width": "68px",
-        "height": "34px",
+        "left": "591px",
+        "top": "326px",
+        "width": "72px",
+        "height": "37px",
         "target": "settings-sound_advanced-settings-menu"
       }
     ]
@@ -2834,51 +2834,51 @@
         "target": "settings-support"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "89px",
-        "width": "245px",
+        "width": "250px",
         "height": "36px",
         "target": "settings-sound_advanced-settings_dolby-off"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "128px",
-        "width": "245px",
+        "width": "250px",
         "height": "50px",
         "target": "settings-sound_advanced-settings_balance"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "181px",
-        "width": "245px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_equalizer"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "221px",
-        "width": "245px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_apply"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "261px",
-        "width": "245px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_reset"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "316px",
-        "width": "245px",
+        "width": "250px",
         "height": "50px",
         "target": "settings-sound_advanced-settings_installation"
       },
       {
-        "left": "168px",
+        "left": "166px",
         "top": "369px",
-        "width": "245px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings-menu"
       },
@@ -2932,30 +2932,30 @@
         "target": "settings-sound"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "241px",
-        "width": "245px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_match"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "281px",
-        "width": "245px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_select-hdmi"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "322px",
-        "width": "245px",
+        "width": "250px",
         "height": "50px",
         "target": "settings-sound_advanced-settings_digital-sound"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "375px",
-        "width": "245px",
+        "width": "250px",
         "height": "35px",
         "target": "settings-sound_advanced-settings-earc"
       },
@@ -3002,23 +3002,23 @@
         "target": "settings-sound"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "241px",
-        "width": "245px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_match"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "322px",
-        "width": "245px",
+        "width": "250px",
         "height": "50px",
         "target": "settings-sound_advanced-settings_digital-sound"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "375px",
-        "width": "245px",
+        "width": "250px",
         "height": "35px",
         "target": "settings-sound_advanced-settings-earc"
       },
@@ -3065,23 +3065,23 @@
         "target": "settings-sound"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "241px",
-        "width": "245px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_match"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "281px",
-        "width": "245px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_select-hdmi"
       },
       {
-        "left": "168px",
+        "left": "164px",
         "top": "375px",
-        "width": "245px",
+        "width": "250px",
         "height": "35px",
         "target": "settings-sound_advanced-settings-earc"
       },
@@ -3128,23 +3128,23 @@
         "target": "settings-sound"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "241px",
-        "width": "245px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_match"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "281px",
-        "width": "245px",
+        "width": "250px",
         "height": "37px",
         "target": "settings-sound_advanced-settings_select-hdmi"
       },
       {
-        "left": "168px",
+        "left": "165px",
         "top": "322px",
-        "width": "245px",
+        "width": "250px",
         "height": "50px",
         "target": "settings-sound_advanced-settings_digital-sound"
       },
@@ -3273,16 +3273,16 @@
         "type": "arrow-up"
       },
       {
-        "left": "258px",
-        "top": "375px",
-        "width": "246px",
-        "height": "33px",
+        "left": "256px",
+        "top": "373px",
+        "width": "250px",
+        "height": "36px",
         "target": "settings-general_energy-saving-menu"
       },
       {
-        "left": "258px",
+        "left": "256px",
         "top": "335px",
-        "width": "245px",
+        "width": "250px",
         "height": "35px",
         "target": "general-system_menu"
       },
@@ -3322,7 +3322,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -3363,7 +3363,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -3411,7 +3411,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -3459,7 +3459,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -4657,7 +4657,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -4705,7 +4705,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -4753,7 +4753,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -4801,7 +4801,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -4961,7 +4961,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5089,7 +5089,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5158,7 +5158,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5192,7 +5192,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5239,7 +5239,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5265,10 +5265,10 @@
     "preset": 0,
     "buttons": [
       {
-        "left": "593px",
-        "top": "328px",
-        "width": "69px",
-        "height": "34px",
+        "left": "591px",
+        "top": "326px",
+        "width": "72px",
+        "height": "37px",
         "target": "settings-general_external-devices-menu"
       }
     ]
@@ -5286,7 +5286,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5327,7 +5327,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5401,7 +5401,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5477,7 +5477,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5497,23 +5497,23 @@
         "target": "general-system_menu"
       },
       {
-        "left": "167px",
-        "top": "94px",
-        "width": "247px",
-        "height": "49px",
+        "left": "165px",
+        "top": "92px",
+        "width": "250px",
+        "height": "54px",
         "target": "general-system_language-english"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "151px",
-        "width": "247px",
+        "width": "250px",
         "height": "49px",
         "target": "general-system_audio-english"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "207px",
-        "width": "247px",
+        "width": "250px",
         "height": "49px",
         "target": "general-system_keyboard-english"
       }
@@ -5532,7 +5532,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5566,7 +5566,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5600,7 +5600,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5634,7 +5634,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5654,23 +5654,23 @@
         "target": "general-system_menu"
       },
       {
-        "left": "167px",
-        "top": "94px",
-        "width": "247px",
-        "height": "33px",
+        "left": "165px",
+        "top": "92px",
+        "width": "250px",
+        "height": "36px",
         "target": "general-system_location_zip-code"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "134px",
-        "width": "247px",
+        "width": "250px",
         "height": "49px",
         "target": "general-system_location_service-country"
       },
       {
-        "left": "167px",
-        "top": "190px",
-        "width": "247px",
+        "left": "165px",
+        "top": "189px",
+        "width": "250px",
         "height": "49px",
         "target": "general-system_location_weather"
       }
@@ -5702,7 +5702,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5749,7 +5749,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5804,7 +5804,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5873,7 +5873,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5907,7 +5907,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5941,7 +5941,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -5975,7 +5975,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6037,7 +6037,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6071,7 +6071,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6160,7 +6160,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6194,7 +6194,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6228,7 +6228,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6262,7 +6262,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6344,7 +6344,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6392,7 +6392,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6468,7 +6468,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6523,7 +6523,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6600,7 +6600,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6634,7 +6634,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6668,7 +6668,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6702,7 +6702,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6736,7 +6736,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6775,7 +6775,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6824,7 +6824,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6858,7 +6858,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6905,7 +6905,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6939,7 +6939,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -6986,7 +6986,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -7076,7 +7076,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -7131,7 +7131,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -7165,7 +7165,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -7213,7 +7213,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -7247,7 +7247,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -7281,7 +7281,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -7328,7 +7328,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -7369,7 +7369,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -7424,7 +7424,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -7458,7 +7458,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -7492,7 +7492,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -7547,7 +7547,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -7595,7 +7595,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -7678,7 +7678,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -7761,7 +7761,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -7844,7 +7844,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -7927,7 +7927,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8010,7 +8010,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8058,7 +8058,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8106,7 +8106,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8197,7 +8197,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8274,7 +8274,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8294,10 +8294,10 @@
         "target": "general-accessibility_menu"
       },
       {
-        "left": "167px",
-        "top": "94px",
-        "width": "247px",
-        "height": "32px",
+        "left": "165px",
+        "top": "92px",
+        "width": "250px",
+        "height": "36px",
         "target": "general-accessibility_audio-guidance-menu-on"
       }
     ]
@@ -8315,7 +8315,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8335,37 +8335,37 @@
         "target": "general-accessibility_menu"
       },
       {
-        "left": "167px",
-        "top": "94px",
-        "width": "247px",
-        "height": "32px",
+        "left": "165px",
+        "top": "92px",
+        "width": "250px",
+        "height": "36px",
         "target": "general-accessibility_audio-guidance-menu"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "187px",
-        "width": "248px",
+        "width": "250px",
         "height": "49px",
         "target": "general-accessibility_audio-guidance_volume"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "133px",
-        "width": "248px",
+        "width": "250px",
         "height": "49px",
         "target": "general-accessibility_audio-guidance_speed"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "240px",
-        "width": "248px",
+        "width": "250px",
         "height": "49px",
         "target": "general-accessibility_audio-guidance_pitch"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "293px",
-        "width": "248px",
+        "width": "250px",
         "height": "46px",
         "target": "general-accessibility_audio-guidance_high-quality"
       }
@@ -8384,7 +8384,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8418,7 +8418,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8452,7 +8452,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8486,7 +8486,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8533,7 +8533,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8553,10 +8553,10 @@
         "target": "general-accessibility_menu"
       },
       {
-        "left": "167px",
-        "top": "94px",
-        "width": "247px",
-        "height": "32px",
+        "left": "165px",
+        "top": "92px",
+        "width": "250px",
+        "height": "36px",
         "target": "general-accessibility_audio-guidance_extended-menu-on"
       }
     ]
@@ -8574,7 +8574,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8594,23 +8594,23 @@
         "target": "general-accessibility_menu"
       },
       {
-        "left": "167px",
-        "top": "94px",
-        "width": "247px",
-        "height": "32px",
+        "left": "165px",
+        "top": "92px",
+        "width": "250px",
+        "height": "36px",
         "target": "general-accessibility_audio-guidance_extended-menu"
       },
       {
-        "left": "166px",
+        "left": "164px",
         "top": "187px",
-        "width": "248px",
+        "width": "250px",
         "height": "49px",
         "target": "general-accessibility_audio-guidance_interval-time"
       },
       {
-        "left": "166px",
+        "left": "164px",
         "top": "133px",
-        "width": "248px",
+        "width": "250px",
         "height": "49px",
         "target": "general-accessibility_audio-guidance_extended_activate-time"
       }
@@ -8629,7 +8629,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8663,7 +8663,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8697,7 +8697,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8794,7 +8794,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8828,7 +8828,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8869,7 +8869,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8910,7 +8910,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -8930,30 +8930,30 @@
         "target": "general-accessibility_menu-down"
       },
       {
-        "left": "167px",
-        "top": "94px",
-        "width": "247px",
-        "height": "32px",
+        "left": "165px",
+        "top": "92px",
+        "width": "250px",
+        "height": "36px",
         "target": "general-accessibility_closed-caption-menu-on"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "185px",
-        "width": "248px",
+        "width": "250px",
         "height": "41px",
         "target": "general-accessibility_closed-caption_digital-mode-menu"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "135px",
-        "width": "248px",
+        "width": "250px",
         "height": "45px",
         "target": "general-accessibility_closed-caption_analog-mode"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "231px",
-        "width": "248px",
+        "width": "250px",
         "height": "43px",
         "target": "general-accessibility_closed-caption_position-settings"
       }
@@ -8972,7 +8972,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -9034,7 +9034,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -9068,7 +9068,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -9088,16 +9088,16 @@
         "target": "general-accessibility_closed-caption-menu"
       },
       {
-        "left": "167px",
-        "top": "94px",
-        "width": "247px",
-        "height": "49px",
+        "left": "165px",
+        "top": "92px",
+        "width": "250px",
+        "height": "54px",
         "target": "general-accessibility_closed-caption_digital-mode_hd-mode"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "149px",
-        "width": "248px",
+        "width": "250px",
         "height": "35px",
         "target": "general-accessibility_closed-caption_digital-mode_hd-mode-option-menu"
       }
@@ -9116,7 +9116,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -9150,7 +9150,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -9170,10 +9170,10 @@
         "target": "general-accessibility_closed-caption_digital-mode-menu"
       },
       {
-        "left": "167px",
-        "top": "94px",
-        "width": "247px",
-        "height": "49px",
+        "left": "165px",
+        "top": "92px",
+        "width": "250px",
+        "height": "54px",
         "target": "general-accessibility_closed-caption_digital-mode_hd-mode-optiom_style"
       }
     ]
@@ -9191,7 +9191,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -9225,7 +9225,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -9253,37 +9253,37 @@
         "type": "arrow-up"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "374px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "general-accessibility_invert-colors"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "336px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "general-accessibility_grayscale"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "298px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "general-accessibility_focus-with-high-contrast"
       },
       {
-        "left": "167px",
-        "top": "260px",
-        "width": "247px",
-        "height": "34px",
+        "left": "165px",
+        "top": "258px",
+        "width": "250px",
+        "height": "38px",
         "target": "general-accessibility_menu-down"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "209px",
-        "width": "247px",
+        "width": "250px",
         "height": "46px",
         "target": "general-accessibility_closed-caption-menu"
       }
@@ -9302,7 +9302,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -9330,30 +9330,30 @@
         "type": "arrow-up"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "374px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "general-accessibility_invert-colors"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "336px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "general-accessibility_grayscale"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "260px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "general-accessibility_text-with-high-contrast"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "209px",
-        "width": "247px",
+        "width": "250px",
         "height": "46px",
         "target": "general-accessibility_closed-caption-menu"
       }
@@ -9372,7 +9372,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -9400,30 +9400,30 @@
         "type": "arrow-up"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "374px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "general-accessibility_invert-colors"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "298px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "general-accessibility_focus-with-high-contrast"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "260px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "general-accessibility_text-with-high-contrast"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "209px",
-        "width": "247px",
+        "width": "250px",
         "height": "46px",
         "target": "general-accessibility_closed-caption-menu"
       }
@@ -9442,7 +9442,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -9470,37 +9470,37 @@
         "type": "arrow-up"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "374px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "general-accessibility_menu-down"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "336px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "general-accessibility_grayscale"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "298px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "general-accessibility_focus-with-high-contrast"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "260px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "general-accessibility_text-with-high-contrast"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "209px",
-        "width": "247px",
+        "width": "250px",
         "height": "46px",
         "target": "general-accessibility_closed-caption-menu"
       }
@@ -9519,7 +9519,7 @@
       },
       {
         "left": "108px",
-        "top": "69px",
+        "top": "72px",
         "width": "35px",
         "height": "35px",
         "target": "settings-sound"
@@ -9843,52 +9843,52 @@
         "target": "settings-support"
       },
       {
-        "left": "167px",
+        "left": "166px",
         "top": "321px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "support-privacy_app-permissions_delete-personal-menu"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "283px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "support-privacy_app-permissions-menu"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "245px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "support-privacy_advertisement"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "207px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "support-privacy_do-not-sell"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "170px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "support-privacy_open-source"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "132px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "support-privacy_legal-notice"
       },
       {
-        "left": "167px",
-        "top": "93px",
-        "width": "247px",
-        "height": "34px",
+        "left": "165px",
+        "top": "92px",
+        "width": "250px",
+        "height": "36px",
         "target": "support-privacy_user-agreements"
       }
     ]
@@ -10007,44 +10007,44 @@
         "target": "settings-support"
       },
       {
-        "left": "167px",
+        "left": "166px",
         "top": "321px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "support-privacy_app-permissions_delete-personal-menu"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "283px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "support-privacy_app-permissions-menu"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "245px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "support-privacy_advertisement"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "170px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "support-privacy_open-source"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "132px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "support-privacy_legal-notice"
       },
       {
-        "left": "167px",
+        "left": "165px",
         "top": "93px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "support-privacy_user-agreements"
       }
@@ -10117,24 +10117,24 @@
         "target": "support-privacy_menu"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "170px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "support-privacy_app-permissions_nearby-devices"
       },
       {
-        "left": "166px",
+        "left": "165px",
         "top": "132px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "support-privacy_app-permissions_microphone"
       },
       {
-        "left": "167px",
-        "top": "93px",
-        "width": "247px",
-        "height": "34px",
+        "left": "165px",
+        "top": "92px",
+        "width": "250px",
+        "height": "36px",
         "target": "support-privacy_app-permissions_camera"
       }
     ]
@@ -10274,17 +10274,17 @@
         "target": "support-privacy_menu"
       },
       {
-        "left": "166px",
+        "left": "164px",
         "top": "132px",
-        "width": "247px",
+        "width": "250px",
         "height": "34px",
         "target": "support-privacy_app-permissions_delete-voice"
       },
       {
-        "left": "167px",
-        "top": "93px",
-        "width": "247px",
-        "height": "34px",
+        "left": "165px",
+        "top": "91px",
+        "width": "250px",
+        "height": "38px",
         "target": "support-privacy_app-permissions_delete-viewing"
       }
     ]
@@ -10440,70 +10440,150 @@
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "apps_lg-channels-1"
+        "target": "apps_lg-channels-1",
+        "popover": {
+          "title": "LG Channels",
+          "text": "Stream over 300+ free channels, including TV shows, movies, breaking news, sports, and more.",
+          "style": {
+            "top": "55%",
+            "left": "8%"
+          }
+        }
       },
       {
         "left": "106px",
         "top": "176px",
         "width": "31px",
         "height": "31px",
-        "target": "sidebar_apps_menu"
+        "target": "sidebar_apps_menu",
+        "popover": {
+          "title": "Apps",
+          "text": "A portal to limitless premium content and apps.",
+          "style": {
+            "top": "31%",
+            "left": "7%"
+          }
+        }
       },
       {
         "left": "106px",
         "top": "212px",
         "width": "31px",
         "height": "31px",
-        "target": "sidebar_gaming-portal-menu"
+        "target": "sidebar_gaming-portal-menu",
+        "popover": {
+          "title": "Gaming Portal",
+          "text": "Various Cloud Games You Can Enjoy All-in-One on Your TV.",
+          "style": {
+            "top": "39%",
+            "left": "7%"
+          }
+        }
       },
       {
         "left": "421px",
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "sidebar_gaming-portal-menu"
+        "target": "sidebar_gaming-portal-menu",
+        "popover": {
+          "title": "Gaming Portal",
+          "text": "Various Cloud Games You Can Enjoy All-in-One on Your TV.",
+          "style": {
+            "top": "58%",
+            "left": "42%"
+          }
+        }
       },
       {
         "left": "474px",
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "apps_home-office"
+        "target": "apps_home-office",
+        "popover": {
+          "title": "Home Office",
+          "text": "Access productivity tools and work directly from your TV.",
+          "style": {
+            "top": "58%",
+            "left": "49%"
+          }
+        }
       },
       {
         "left": "528px",
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "apps_music"
+        "target": "apps_music",
+        "popover": {
+          "title": "Music",
+          "text": "Enjoy music streaming services, playlists, and other audio content from a variety of music apps.",
+          "style": {
+            "top": "55%",
+            "left": "55%"
+          }
+        }
       },
       {
         "left": "582px",
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "apps_home-hub"
+        "target": "apps_home-hub",
+        "popover": {
+          "title": "Home Hub",
+          "text": "Monitor and control compatible smart home devices from one place.",
+          "style": {
+            "top": "55%",
+            "left": "62%"
+          }
+        }
       },
       {
         "left": "636px",
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "apps_learning"
+        "target": "apps_learning",
+        "popover": {
+          "title": "Learning",
+          "text": "Explore educational content, online courses, tutorials, and learning applications for users of all ages.",
+          "style": {
+            "top": "55%",
+            "left": "39%"
+          }
+        }
       },
       {
         "left": "690px",
         "top": "335px",
         "width": "52px",
         "height": "54px",
-        "target": "quick-settings_accessibility-app-menu"
+        "target": "quick-settings_accessibility-app-menu",
+        "popover": {
+          "title": "Accessibility",
+          "text": "Access features and settings designed to improve usability, including visual, hearing, and navigation assistance options.",
+          "style": {
+            "top": "55%",
+            "left": "45%"
+          }
+        }
       },
       {
         "left": "106px",
         "top": "247px",
         "width": "31px",
         "height": "31px",
-        "target": "sidebar_guide"
+        "target": "sidebar_guide",
+        "popover": {
+          "title": "TV Guide",
+          "text": "View the current TV channel lineup and browse upcoming program schedules.",
+          "style": {
+            "top": "43%",
+            "left": "7%"
+          }
+        }
       }
     ]
   },
@@ -10558,10 +10638,10 @@
         "target": "homescreen"
       },
       {
-        "left": "121px",
-        "top": "54px",
-        "width": "25px",
-        "height": "25px",
+        "left": "118px",
+        "top": "51px",
+        "width": "31px",
+        "height": "31px",
         "target": "sidebar_profile-menu"
       }
     ]
@@ -13880,17 +13960,17 @@
         "target": "sidebar_channels"
       },
       {
-        "left": "325px",
-        "top": "265px",
-        "width": "166px",
-        "height": "23px",
+        "left": "322px",
+        "top": "264px",
+        "width": "171px",
+        "height": "26px",
         "target": "sidebar_guide"
       },
       {
-        "left": "324px",
-        "top": "300px",
-        "width": "167px",
-        "height": "23px",
+        "left": "322px",
+        "top": "298px",
+        "width": "171px",
+        "height": "26px",
         "target": "sidebar_tv-scheduler_tv-scheduler"
       }
     ]
@@ -13900,17 +13980,17 @@
     "preset": 0,
     "buttons": [
       {
-        "left": "785px",
-        "top": "27px",
-        "width": "26px",
-        "height": "26px",
+        "left": "783px",
+        "top": "25px",
+        "width": "29px",
+        "height": "30px",
         "target": "sidebar_tv-scheduler_tv-scheduler_options"
       },
       {
-        "left": "821px",
-        "top": "27px",
-        "width": "26px",
-        "height": "26px",
+        "left": "819px",
+        "top": "25px",
+        "width": "29px",
+        "height": "30px",
         "target": "sidebar_guide"
       }
     ]
@@ -13933,23 +14013,23 @@
     "preset": 0,
     "buttons": [
       {
-        "left": "638px",
+        "left": "636px",
         "top": "93px",
-        "width": "209px",
+        "width": "213px",
         "height": "33px",
         "target": "sidebar_options_channel-manager-1"
       },
       {
-        "left": "638px",
+        "left": "636px",
         "top": "128px",
-        "width": "209px",
+        "width": "213px",
         "height": "29px",
         "target": "sidebar_options_channel-row"
       },
       {
-        "left": "638px",
+        "left": "636px",
         "top": "159px",
-        "width": "209px",
+        "width": "213px",
         "height": "29px",
         "target": "sidebar_options_filters"
       }
