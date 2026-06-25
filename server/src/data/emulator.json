@@ -14189,9 +14189,9 @@
         "target": "sidebar_profile-menu"
       },
       {
-        "left": "125px",
+        "left": "123px",
         "top": "352px",
-        "width": "107px",
+        "width": "110px",
         "height": "40px",
         "target": "apps_home-hub_airplay-menu"
       }
@@ -14275,9 +14275,9 @@
         "target": "apps_home-hub_airplay-menu"
       },
       {
-        "left": "518px",
+        "left": "517px",
         "top": "112px",
-        "width": "323px",
+        "width": "325px",
         "height": "30px",
         "target": "apps_home-hub_homekit-menu-off"
       },
@@ -14330,9 +14330,9 @@
         "target": "apps_home-hub_airplay-menu"
       },
       {
-        "left": "518px",
+        "left": "517px",
         "top": "112px",
-        "width": "323px",
+        "width": "325px",
         "height": "30px",
         "target": "apps_home-hub_homekit-menu"
       },
