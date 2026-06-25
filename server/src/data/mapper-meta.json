@@ -106,8 +106,8 @@
       "id": "sidebar",
       "name": "sidebar",
       "rootScreenId": null,
-      "bandX": 2031,
-      "bandY": 573,
+      "bandX": 1354,
+      "bandY": -221,
       "collapsed": true
     },
     {
@@ -130,8 +130,8 @@
       "id": "apps",
       "name": "apps",
       "rootScreenId": null,
-      "bandX": 1449,
-      "bandY": -186,
+      "bandX": 1535,
+      "bandY": 73,
       "collapsed": false
     }
   ],
@@ -3342,7 +3342,9 @@
       "graphX": -2425,
       "graphY": 753,
       "sectionId": "settings-support",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "settings-support_tv-information": {
       "graphX": -2205,
