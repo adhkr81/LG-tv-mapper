@@ -4935,12 +4935,6 @@
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
-    "always-ready": {
-      "graphX": 0,
-      "graphY": 0,
-      "sectionId": "Screenshots",
-      "buttonIds": []
-    },
     "apps_home-hub_homekit-menu": {
       "graphX": 1254,
       "graphY": 395,
@@ -5026,8 +5020,8 @@
       "sourceHeight": 2160
     },
     "apps_home-hub_homekit_reset": {
-      "graphX": 0,
-      "graphY": 0,
+      "graphX": 1255,
+      "graphY": 775,
       "sectionId": "apps",
       "buttonIds": [
         "a0cd44a3-16ad-4a92-b263-a525cb404ea5"
@@ -5036,20 +5030,12 @@
       "sourceHeight": 2160
     },
     "apps_home-hub_homekit_setup": {
-      "graphX": 0,
-      "graphY": 185,
+      "graphX": 1512,
+      "graphY": 776,
       "sectionId": "apps",
       "buttonIds": [
         "ed42d3bc-1ec8-473c-b1c1-8575cc18097e"
       ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
-    },
-    "apps_home-hub_airplay_homekit-menu": {
-      "graphX": 361,
-      "graphY": 549,
-      "sectionId": "apps",
-      "buttonIds": [],
       "sourceWidth": 3840,
       "sourceHeight": 2160
     }
