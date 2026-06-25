@@ -106,8 +106,8 @@
       "id": "sidebar",
       "name": "sidebar",
       "rootScreenId": null,
-      "bandX": 2031,
-      "bandY": 573,
+      "bandX": 1474,
+      "bandY": 327,
       "collapsed": true
     },
     {
@@ -130,8 +130,8 @@
       "id": "apps",
       "name": "apps",
       "rootScreenId": null,
-      "bandX": 1449,
-      "bandY": -186,
+      "bandX": 1289,
+      "bandY": -204,
       "collapsed": false
     }
   ],
@@ -3563,7 +3563,7 @@
         "f6463625-4b11-43f0-aba9-cb9975fa6137"
       ],
       "sourceWidth": 3840,
-      "sourceHeight": 2159
+      "sourceHeight": 2160
     },
     "sidebar_notifications": {
       "graphX": -2216,
@@ -4881,13 +4881,14 @@
       "sourceHeight": 2160
     },
     "apps_home-hub": {
-      "graphX": 940,
-      "graphY": 0,
+      "graphX": 999,
+      "graphY": -16,
       "sectionId": "apps",
       "buttonIds": [
         "29f6fa7d-0800-4b68-af51-3778895091d0",
         "fd384288-a190-44e2-869e-58447d687369",
-        "60135ede-796a-4fdf-815d-f3d79afe1a40"
+        "60135ede-796a-4fdf-815d-f3d79afe1a40",
+        "b8335006-86c7-456f-ac79-26b1ab7d2b80"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
@@ -4904,12 +4905,151 @@
       "sourceHeight": 2160
     },
     "apps_home-hub_options": {
-      "graphX": 1220,
-      "graphY": 0,
+      "graphX": 1254,
+      "graphY": -16,
       "sectionId": "apps",
       "buttonIds": [
         "a515bcb8-25d4-4ed2-a64a-93fdb7dee263"
       ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_home-hub_airplay-menu": {
+      "graphX": 1256,
+      "graphY": 209,
+      "sectionId": "apps",
+      "buttonIds": [
+        "e1fb3350-3494-4f6f-85ad-680cc913dea4",
+        "a4299a14-3c93-4175-81ab-4dfed9fdbb90"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_home-hub_airplay_how-to-use": {
+      "graphX": 1497,
+      "graphY": 211,
+      "sectionId": "apps",
+      "buttonIds": [
+        "b56853de-6159-478b-843c-ddeb1d40a4a6"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "always-ready": {
+      "graphX": 0,
+      "graphY": 0,
+      "sectionId": "Screenshots",
+      "buttonIds": []
+    },
+    "apps_home-hub_homekit-menu": {
+      "graphX": 1254,
+      "graphY": 395,
+      "sectionId": "apps",
+      "buttonIds": [
+        "b0d516cf-ee77-46f2-9529-c34ce1b94677",
+        "7226ce89-1130-46a4-8a62-c0ae07e2830c",
+        "37642d68-d7bf-420a-9786-259387a7aead",
+        "a0cc1b12-51d8-417c-888e-6ad0f1c6c621",
+        "9dc2fc09-89f6-44a3-8125-fe2285f80573",
+        "bdca77dd-c0c9-491d-9688-65736137b823",
+        "ad105fdf-879d-4768-bcef-c5454cb5b816"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_home-hub_homekit-menu-off": {
+      "graphX": 1503,
+      "graphY": 400,
+      "sectionId": "apps",
+      "buttonIds": [
+        "b38351f9-5ff0-4074-a92b-aa06f679ff7b",
+        "0744e122-f12e-4296-a4f7-e4c54f704917",
+        "cf238fa2-f775-4ddb-9f85-ea9350762f98",
+        "73ef6d17-401e-4cd6-97b4-522f3759ef1e",
+        "6aaad7dc-6358-404b-9298-b8350eecd9da",
+        "adde4c17-31f3-4292-836e-60ce381c16bb",
+        "51d63037-898d-4138-b3a7-cdf8d31e2076"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_home-hub_homekit_require-code": {
+      "graphX": 1730,
+      "graphY": 215,
+      "sectionId": "apps",
+      "buttonIds": [
+        "af44703f-04b8-42c0-b197-2994b1e472b9"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_home-hub_homekit-subtitles": {
+      "graphX": 1743,
+      "graphY": 405,
+      "sectionId": "apps",
+      "buttonIds": [
+        "3283e4f7-4bb1-4488-8209-c37fe20072b7"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_home-hub_homekit_about-airplay": {
+      "graphX": 1251,
+      "graphY": 589,
+      "sectionId": "apps",
+      "buttonIds": [
+        "34faf268-47b5-461c-891f-da889e2daf04",
+        "7cd1e35a-301a-415a-97d6-27f2a772d230",
+        "063807c8-e099-4eb6-8a52-1aed6f066438"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_home-hub_homekit_about-airplay_logging": {
+      "graphX": 1498,
+      "graphY": 593,
+      "sectionId": "apps",
+      "buttonIds": [
+        "ae306755-8ab9-455b-bbee-7a2442e72d73"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_home-hub_homekit_about-airplay_acknowledgements": {
+      "graphX": 1740,
+      "graphY": 597,
+      "sectionId": "apps",
+      "buttonIds": [
+        "2cd1a2b5-e768-46fa-8c6d-f2516b57632b"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_home-hub_homekit_reset": {
+      "graphX": 0,
+      "graphY": 0,
+      "sectionId": "apps",
+      "buttonIds": [
+        "a0cd44a3-16ad-4a92-b263-a525cb404ea5"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_home-hub_homekit_setup": {
+      "graphX": 0,
+      "graphY": 185,
+      "sectionId": "apps",
+      "buttonIds": [
+        "ed42d3bc-1ec8-473c-b1c1-8575cc18097e"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_home-hub_airplay_homekit-menu": {
+      "graphX": 361,
+      "graphY": 549,
+      "sectionId": "apps",
+      "buttonIds": [],
       "sourceWidth": 3840,
       "sourceHeight": 2160
     }

@@ -14107,6 +14107,13 @@
         "width": "24px",
         "height": "24px",
         "target": "sidebar_profile-menu"
+      },
+      {
+        "left": "125px",
+        "top": "352px",
+        "width": "107px",
+        "height": "40px",
+        "target": "apps_home-hub_airplay-menu"
       }
     ]
   },
@@ -14142,5 +14149,263 @@
         "target": "homescreen"
       }
     ]
+  },
+  "apps_home-hub_airplay-menu": {
+    "img_filename": "apps_home-hub_airplay-menu",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "533px",
+        "top": "229px",
+        "width": "294px",
+        "height": "37px",
+        "target": "apps_home-hub_airplay_how-to-use"
+      },
+      {
+        "left": "539px",
+        "top": "269px",
+        "width": "282px",
+        "height": "37px",
+        "target": "apps_home-hub_homekit-menu"
+      }
+    ]
+  },
+  "apps_home-hub_airplay_how-to-use": {
+    "img_filename": "apps_home-hub_airplay_how-to-use",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "106px",
+        "top": "33px",
+        "width": "105px",
+        "height": "31px",
+        "target": "apps_home-hub_airplay-menu"
+      }
+    ]
+  },
+  "always-ready": {
+    "img_filename": "always-ready",
+    "preset": 0,
+    "buttons": []
+  },
+  "apps_home-hub_homekit-menu": {
+    "img_filename": "apps_home-hub_homekit-menu",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "124px",
+        "top": "34px",
+        "width": "94px",
+        "height": "29px",
+        "target": "apps_home-hub_airplay-menu"
+      },
+      {
+        "left": "518px",
+        "top": "112px",
+        "width": "323px",
+        "height": "30px",
+        "target": "apps_home-hub_homekit-menu-off"
+      },
+      {
+        "left": "524px",
+        "top": "145px",
+        "width": "312px",
+        "height": "29px",
+        "target": "apps_home-hub_homekit_require-code"
+      },
+      {
+        "left": "524px",
+        "top": "178px",
+        "width": "312px",
+        "height": "29px",
+        "target": "apps_home-hub_homekit-subtitles"
+      },
+      {
+        "left": "524px",
+        "top": "211px",
+        "width": "312px",
+        "height": "29px",
+        "target": "apps_home-hub_homekit_about-airplay"
+      },
+      {
+        "left": "524px",
+        "top": "275px",
+        "width": "312px",
+        "height": "29px",
+        "target": "apps_home-hub_homekit_reset"
+      },
+      {
+        "left": "524px",
+        "top": "339px",
+        "width": "312px",
+        "height": "29px",
+        "target": "apps_home-hub_homekit_setup"
+      }
+    ]
+  },
+  "apps_home-hub_homekit-menu-off": {
+    "img_filename": "apps_home-hub_homekit-menu-off",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "124px",
+        "top": "34px",
+        "width": "94px",
+        "height": "29px",
+        "target": "apps_home-hub_airplay-menu"
+      },
+      {
+        "left": "518px",
+        "top": "112px",
+        "width": "323px",
+        "height": "30px",
+        "target": "apps_home-hub_homekit-menu"
+      },
+      {
+        "left": "524px",
+        "top": "145px",
+        "width": "312px",
+        "height": "29px",
+        "target": "apps_home-hub_homekit_require-code"
+      },
+      {
+        "left": "524px",
+        "top": "178px",
+        "width": "312px",
+        "height": "29px",
+        "target": "apps_home-hub_homekit-subtitles"
+      },
+      {
+        "left": "524px",
+        "top": "211px",
+        "width": "312px",
+        "height": "29px",
+        "target": "apps_home-hub_homekit_about-airplay"
+      },
+      {
+        "left": "524px",
+        "top": "275px",
+        "width": "312px",
+        "height": "29px",
+        "target": "apps_home-hub_homekit_reset"
+      },
+      {
+        "left": "524px",
+        "top": "339px",
+        "width": "312px",
+        "height": "29px",
+        "target": "apps_home-hub_homekit_setup"
+      }
+    ]
+  },
+  "apps_home-hub_homekit_require-code": {
+    "img_filename": "apps_home-hub_homekit_require-code",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "124px",
+        "top": "34px",
+        "width": "95px",
+        "height": "29px",
+        "target": "apps_home-hub_homekit-menu"
+      }
+    ]
+  },
+  "apps_home-hub_homekit-subtitles": {
+    "img_filename": "apps_home-hub_homekit-subtitles",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "124px",
+        "top": "34px",
+        "width": "95px",
+        "height": "29px",
+        "target": "apps_home-hub_homekit-menu"
+      }
+    ]
+  },
+  "apps_home-hub_homekit_about-airplay": {
+    "img_filename": "apps_home-hub_homekit_about-airplay",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "124px",
+        "top": "34px",
+        "width": "95px",
+        "height": "29px",
+        "target": "apps_home-hub_homekit-menu"
+      },
+      {
+        "left": "518px",
+        "top": "94px",
+        "width": "323px",
+        "height": "29px",
+        "target": "apps_home-hub_homekit_about-airplay_logging"
+      },
+      {
+        "left": "524px",
+        "top": "159px",
+        "width": "312px",
+        "height": "29px",
+        "target": "apps_home-hub_homekit_about-airplay_acknowledgements"
+      }
+    ]
+  },
+  "apps_home-hub_homekit_about-airplay_logging": {
+    "img_filename": "apps_home-hub_homekit_about-airplay_logging",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "376px",
+        "top": "355px",
+        "width": "216px",
+        "height": "29px",
+        "target": "apps_home-hub_homekit_about-airplay"
+      }
+    ]
+  },
+  "apps_home-hub_homekit_about-airplay_acknowledgements": {
+    "img_filename": "apps_home-hub_homekit_about-airplay_acknowledgements",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "135px",
+        "top": "27px",
+        "width": "95px",
+        "height": "32px",
+        "target": "apps_home-hub_homekit_about-airplay"
+      }
+    ]
+  },
+  "apps_home-hub_homekit_reset": {
+    "img_filename": "apps_home-hub_homekit_reset",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "376px",
+        "top": "299px",
+        "width": "216px",
+        "height": "29px",
+        "target": "apps_home-hub_homekit-menu"
+      }
+    ]
+  },
+  "apps_home-hub_homekit_setup": {
+    "img_filename": "apps_home-hub_homekit_setup",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "135px",
+        "top": "95px",
+        "width": "95px",
+        "height": "31px",
+        "target": "apps_home-hub_homekit-menu"
+      }
+    ]
+  },
+  "apps_home-hub_airplay_homekit-menu": {
+    "img_filename": "apps_home-hub_airplay_homekit-menu",
+    "preset": 0,
+    "buttons": []
   }
 }
