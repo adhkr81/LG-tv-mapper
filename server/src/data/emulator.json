@@ -13746,32 +13746,32 @@
     "preset": 0,
     "buttons": [
       {
-        "left": "108px",
-        "top": "201px",
-        "width": "24px",
-        "height": "24px",
-        "target": "apps_lg-channels-1"
-      },
-      {
-        "left": "108px",
-        "top": "262px",
-        "width": "24px",
-        "height": "24px",
-        "target": "apps_lg-channels-2"
-      },
-      {
-        "left": "107px",
-        "top": "398px",
+        "left": "826px",
+        "top": "28px",
         "width": "24px",
         "height": "24px",
         "target": "homescreen"
       },
       {
-        "left": "426px",
-        "top": "252px",
-        "width": "392px",
-        "height": "90px",
-        "target": "apps_lg-channels-3"
+        "left": "789px",
+        "top": "28px",
+        "width": "24px",
+        "height": "24px",
+        "target": "sidebar_options"
+      },
+      {
+        "left": "110px",
+        "top": "74px",
+        "width": "121px",
+        "height": "33px",
+        "target": "sidebar_channels"
+      },
+      {
+        "left": "110px",
+        "top": "111px",
+        "width": "121px",
+        "height": "33px",
+        "target": "sidebar_tv-scheduler"
       }
     ]
   },
@@ -13971,7 +13971,7 @@
         "top": "232px",
         "width": "24px",
         "height": "24px",
-        "target": "sidebar_guide"
+        "target": "apps_lg-channels-guide"
       },
       {
         "left": "107px",
@@ -14039,7 +14039,7 @@
         "top": "395px",
         "width": "70px",
         "height": "28px",
-        "target": "sidebar_guide"
+        "target": "apps_lg-channels-guide"
       }
     ]
   },
@@ -14395,6 +14395,40 @@
         "width": "95px",
         "height": "31px",
         "target": "apps_home-hub_homekit-menu"
+      }
+    ]
+  },
+  "apps_lg-channels-guide": {
+    "img_filename": "apps_lg-channels-guide",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "108px",
+        "top": "262px",
+        "width": "24px",
+        "height": "24px",
+        "target": "apps_lg-channels-2"
+      },
+      {
+        "left": "108px",
+        "top": "201px",
+        "width": "24px",
+        "height": "24px",
+        "target": "apps_lg-channels-1"
+      },
+      {
+        "left": "107px",
+        "top": "398px",
+        "width": "24px",
+        "height": "24px",
+        "target": "homescreen"
+      },
+      {
+        "left": "425px",
+        "top": "252px",
+        "width": "394px",
+        "height": "90px",
+        "target": "apps_lg-channels-3"
       }
     ]
   }

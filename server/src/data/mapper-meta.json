@@ -106,9 +106,9 @@
       "id": "sidebar",
       "name": "sidebar",
       "rootScreenId": null,
-      "bandX": 1774,
-      "bandY": 81,
-      "collapsed": false
+      "bandX": 1472,
+      "bandY": 1104,
+      "collapsed": true
     },
     {
       "id": "quick-settings",
@@ -4710,8 +4710,8 @@
       "sourceHeight": 2160
     },
     "sidebar_guide": {
-      "graphX": -2224,
-      "graphY": 601,
+      "graphX": -2219,
+      "graphY": 840,
       "sectionId": "sidebar",
       "buttonIds": [
         "a6321c07-5461-4cc6-9715-aa19907eb801",
@@ -4719,8 +4719,8 @@
         "be24f9db-8b2a-4d87-a9bd-ca6dc064d8a2",
         "c52dab80-4413-4659-aadd-24b7c7ceac74"
       ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "sidebar_options_channel-row": {
       "graphX": -1655,
@@ -4822,8 +4822,8 @@
       "sourceHeight": 2160
     },
     "apps_lg-channels-1": {
-      "graphX": 280,
-      "graphY": 0,
+      "graphX": 105,
+      "graphY": 4,
       "sectionId": "apps",
       "buttonIds": [
         "1826e9ad-e4c1-4303-a91d-b789c3922efb",
@@ -4834,8 +4834,8 @@
       "sourceHeight": 2160
     },
     "apps_lg-channels-2": {
-      "graphX": 500,
-      "graphY": 0,
+      "graphX": 325,
+      "graphY": 4,
       "sectionId": "apps",
       "buttonIds": [
         "3a27a814-d646-4975-b2a3-0496eabdb07a",
@@ -4846,8 +4846,8 @@
       "sourceHeight": 2160
     },
     "apps_lg-channels-3": {
-      "graphX": 720,
-      "graphY": 0,
+      "graphX": 545,
+      "graphY": 4,
       "sectionId": "apps",
       "buttonIds": [
         "782943b7-329c-4741-b819-a7be75f879d4",
@@ -5035,6 +5035,19 @@
       "sectionId": "apps",
       "buttonIds": [
         "ed42d3bc-1ec8-473c-b1c1-8575cc18097e"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_lg-channels-guide": {
+      "graphX": 771,
+      "graphY": 3,
+      "sectionId": "apps",
+      "buttonIds": [
+        "f58521a0-b302-414b-9954-d867acaf2630",
+        "be31a67c-158c-4e64-aab1-b0f7f99d095a",
+        "67d4e4fc-df8e-4382-a816-2508cc99f317",
+        "ea8ae61c-73f1-4037-8908-7a3868ff0d4e"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
