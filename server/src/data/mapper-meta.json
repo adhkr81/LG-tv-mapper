@@ -106,9 +106,9 @@
       "id": "sidebar",
       "name": "sidebar",
       "rootScreenId": null,
-      "bandX": 1474,
-      "bandY": 327,
-      "collapsed": true
+      "bandX": 1774,
+      "bandY": 81,
+      "collapsed": false
     },
     {
       "id": "quick-settings",
@@ -132,7 +132,7 @@
       "rootScreenId": null,
       "bandX": 1289,
       "bandY": -204,
-      "collapsed": false
+      "collapsed": true
     }
   ],
   "screens": {
@@ -3342,9 +3342,7 @@
       "graphX": -2425,
       "graphY": 753,
       "sectionId": "settings-support",
-      "buttonIds": [],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+      "buttonIds": []
     },
     "settings-support_tv-information": {
       "graphX": -2205,
@@ -4716,10 +4714,10 @@
       "graphY": 601,
       "sectionId": "sidebar",
       "buttonIds": [
-        "00383b93-3e4b-49a5-b0a4-16e81acf3f92",
-        "34cc9698-c8c1-4a36-b358-ddd969f88e0c",
-        "54278496-24f7-4553-a049-363865f4e562",
-        "288c4935-ac93-4750-8047-edcb31fff651"
+        "a6321c07-5461-4cc6-9715-aa19907eb801",
+        "49597d43-b13a-4952-ae6e-419484e8c87f",
+        "be24f9db-8b2a-4d87-a9bd-ca6dc064d8a2",
+        "c52dab80-4413-4659-aadd-24b7c7ceac74"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
