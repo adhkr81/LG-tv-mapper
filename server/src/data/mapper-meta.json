@@ -3542,8 +3542,8 @@
       "sourceHeight": 2160
     },
     "homescreen": {
-      "graphX": 274,
-      "graphY": -212,
+      "graphX": 380,
+      "graphY": -280,
       "sectionId": null,
       "buttonIds": [
         "0d9db044-f12c-4bfb-bd81-eec88dce2df4",
@@ -3764,8 +3764,8 @@
         "38b1d979-42e1-40bf-b213-577bd7ce154a",
         "992bc01c-22c2-468a-bcce-c47605df5b23"
       ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+      "sourceWidth": 2172,
+      "sourceHeight": 1247
     },
     "sidebar_gaming-portal_search": {
       "graphX": -1943,

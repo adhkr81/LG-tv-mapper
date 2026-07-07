@@ -11036,8 +11036,8 @@
     "preset": 0,
     "buttons": [
       {
-        "left": "99px",
-        "top": "116px",
+        "left": "96px",
+        "top": "132px",
         "width": "31px",
         "height": "31px",
         "target": "sidebar_gaming-portal_search",
@@ -11051,8 +11051,8 @@
         }
       },
       {
-        "left": "98px",
-        "top": "391px",
+        "left": "95px",
+        "top": "337px",
         "width": "31px",
         "height": "31px",
         "target": "homescreen",
@@ -11066,8 +11066,8 @@
         }
       },
       {
-        "left": "99px",
-        "top": "79px",
+        "left": "95px",
+        "top": "67px",
         "width": "31px",
         "height": "31px",
         "target": "sidebar_gaming-portal_profile",
@@ -11081,15 +11081,15 @@
         }
       },
       {
-        "left": "99px",
-        "top": "189px",
+        "left": "96px",
+        "top": "197px",
         "width": "31px",
         "height": "31px",
         "target": "sidebar_gaming-portal_remote"
       },
       {
-        "left": "99px",
-        "top": "226px",
+        "left": "96px",
+        "top": "229px",
         "width": "31px",
         "height": "31px",
         "target": "sidebar_gaming-portal_gamepad"
