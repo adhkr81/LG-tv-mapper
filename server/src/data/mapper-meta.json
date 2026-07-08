@@ -3560,7 +3560,8 @@
         "402c89ff-a278-4a7e-8d69-2438bcc459d1",
         "bef2e4d8-4505-427a-94c3-680ee5c6286d",
         "58b8aa72-70dd-4ea6-8a01-225330b1e70a",
-        "f6463625-4b11-43f0-aba9-cb9975fa6137"
+        "f6463625-4b11-43f0-aba9-cb9975fa6137",
+        "84cc0cf1-4002-433c-b34c-6b94c0c608d6"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
@@ -5051,6 +5052,23 @@
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
+    },
+    "apps_lg-gallery": {
+      "graphX": 282,
+      "graphY": 392,
+      "sectionId": "apps",
+      "buttonIds": [
+        "f76db522-ca50-4892-b16a-3a4be93a75f4",
+        "ad15264c-15eb-4707-8694-4d619824e846"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "Screenshots_on-the-right": {
+      "graphX": 0,
+      "graphY": 0,
+      "sectionId": "Screenshots",
+      "buttonIds": []
     }
   },
   "config": {

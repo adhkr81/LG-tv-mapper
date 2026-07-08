@@ -10504,6 +10504,13 @@
         "width": "31px",
         "height": "31px",
         "target": "sidebar_guide"
+      },
+      {
+        "left": "744px",
+        "top": "335px",
+        "width": "52px",
+        "height": "54px",
+        "target": "apps_lg-gallery"
       }
     ]
   },
@@ -14431,5 +14438,30 @@
         "target": "apps_lg-channels-3"
       }
     ]
+  },
+  "apps_lg-gallery": {
+    "img_filename": "apps_lg-gallery",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "821px",
+        "top": "25px",
+        "width": "29px",
+        "height": "28px",
+        "target": "homescreen"
+      },
+      {
+        "left": "785px",
+        "top": "25px",
+        "width": "28px",
+        "height": "28px",
+        "target": "sidebar_profile-menu"
+      }
+    ]
+  },
+  "Screenshots_on-the-right": {
+    "img_filename": "Screenshots_on-the-right",
+    "preset": 0,
+    "buttons": []
   }
 }
