@@ -10420,7 +10420,7 @@
         "height": "54px",
         "popover": {
           "title": "Content Providers",
-          "text": "View content from all your favorite providers and the webOS TV LG Channels service.",
+          "text": "View content from all your favorite providers.",
           "style": {
             "top": "55%",
             "left": "15%"
