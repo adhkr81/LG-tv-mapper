@@ -130,8 +130,8 @@
       "id": "apps",
       "name": "apps",
       "rootScreenId": null,
-      "bandX": 1289,
-      "bandY": -204,
+      "bandX": 1456,
+      "bandY": -254,
       "collapsed": true
     }
   ],
@@ -4646,8 +4646,8 @@
       "buttonIds": []
     },
     "quick-settings_accessibility-app-menu": {
-      "graphX": 1464,
-      "graphY": -82,
+      "graphX": -53,
+      "graphY": -1240,
       "sectionId": "quick-settings",
       "buttonIds": [
         "d65218fc-6ef2-4b84-8458-087ab1b4f824",
@@ -4661,8 +4661,8 @@
       "sourceHeight": 2160
     },
     "quick-settings_accessibility-app_vision": {
-      "graphX": 1911,
-      "graphY": -60,
+      "graphX": 758,
+      "graphY": -1263,
       "sectionId": "quick-settings",
       "buttonIds": [
         "add970ca-9554-4622-9a16-5b8923760afb"
@@ -4671,8 +4671,8 @@
       "sourceHeight": 2160
     },
     "quick-settings_accessibility-app_hearing": {
-      "graphX": 1471,
-      "graphY": 125,
+      "graphX": 755,
+      "graphY": -356,
       "sectionId": "quick-settings",
       "buttonIds": [
         "5ad30b74-5bb3-49a7-8a7f-5b10c18ba0cb"
@@ -4681,8 +4681,8 @@
       "sourceHeight": 2160
     },
     "quick-settings_accessibility-app_control": {
-      "graphX": 1691,
-      "graphY": 125,
+      "graphX": 1463,
+      "graphY": -1254,
       "sectionId": "quick-settings",
       "buttonIds": [
         "db896321-ae43-4e51-8d50-d50617a36bdc"
@@ -4691,8 +4691,8 @@
       "sourceHeight": 2160
     },
     "quick-settings_accessibility-app_edit": {
-      "graphX": 1911,
-      "graphY": 125,
+      "graphX": 738,
+      "graphY": -801,
       "sectionId": "quick-settings",
       "buttonIds": [
         "bfa1b033-b840-4ffe-9693-1577f4aceafb"
@@ -4701,8 +4701,8 @@
       "sourceHeight": 2160
     },
     "quick-settings_accessibility-app_remote": {
-      "graphX": 1577,
-      "graphY": 310,
+      "graphX": 1545,
+      "graphY": -780,
       "sectionId": "quick-settings",
       "buttonIds": [
         "f3ff90d6-03cb-40cc-b649-7a425d90d8b5"
@@ -5063,12 +5063,6 @@
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
-    },
-    "Screenshots_on-the-right": {
-      "graphX": 0,
-      "graphY": 0,
-      "sectionId": "Screenshots",
-      "buttonIds": []
     }
   },
   "config": {
