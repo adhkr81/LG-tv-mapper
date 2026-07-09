@@ -3333,7 +3333,8 @@
         "a8bde13d-8902-4ef4-9067-391441b30f5e",
         "0541c658-bb12-4765-9eac-83a506e0259f",
         "70a6e961-cc36-4d9a-b101-92a173da12aa",
-        "1c8dc9ec-615a-4446-bfff-1991c5212c21"
+        "1c8dc9ec-615a-4446-bfff-1991c5212c21",
+        "b38ea422-96b6-4179-9ac6-25cafa048de4"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
@@ -5195,6 +5196,62 @@
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
+    },
+    "settings-store-mode": {
+      "graphX": -2635,
+      "graphY": 1016,
+      "sectionId": "settings-support",
+      "buttonIds": [
+        "11553871-b692-49ce-bf34-9c75f7b1ae94"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-store-mode-2": {
+      "graphX": -2356,
+      "graphY": 1012,
+      "sectionId": "settings-support",
+      "buttonIds": [
+        "455d851b-9750-42d7-8900-edda3e40d0e4"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-store-mode-3": {
+      "graphX": -2076,
+      "graphY": 1012,
+      "sectionId": "settings-support",
+      "buttonIds": [
+        "19c399af-2814-494b-9004-3ea3a6e8e7e3"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-store-mode-4": {
+      "graphX": -1796,
+      "graphY": 1012,
+      "sectionId": "settings-support",
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_disney": {
+      "graphX": 284,
+      "graphY": 624,
+      "sectionId": "apps",
+      "buttonIds": []
+    },
+    "apps_prime": {
+      "graphX": 564,
+      "graphY": 624,
+      "sectionId": "apps",
+      "buttonIds": []
+    },
+    "apps_netflix": {
+      "graphX": 844,
+      "graphY": 624,
+      "sectionId": "apps",
+      "buttonIds": []
     }
   },
   "config": {

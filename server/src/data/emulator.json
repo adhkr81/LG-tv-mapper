@@ -9768,6 +9768,13 @@
         "width": "32px",
         "height": "32px",
         "target": "settings-support"
+      },
+      {
+        "left": "167px",
+        "top": "130px",
+        "width": "246px",
+        "height": "36px",
+        "target": "settings-store-mode"
       }
     ]
   },
@@ -14786,5 +14793,64 @@
         "target": "quick-settings_accessibility-app_edit"
       }
     ]
+  },
+  "settings-store-mode": {
+    "img_filename": "settings-store-mode",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "592px",
+        "top": "290px",
+        "width": "70px",
+        "height": "34px",
+        "target": "settings-store-mode-2"
+      }
+    ]
+  },
+  "settings-store-mode-2": {
+    "img_filename": "settings-store-mode-2",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "166px",
+        "top": "180px",
+        "width": "249px",
+        "height": "52px",
+        "target": "settings-store-mode-3"
+      }
+    ]
+  },
+  "settings-store-mode-3": {
+    "img_filename": "settings-store-mode-3",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "167px",
+        "top": "162px",
+        "width": "247px",
+        "height": "33px",
+        "target": "settings-store-mode-4"
+      }
+    ]
+  },
+  "settings-store-mode-4": {
+    "img_filename": "settings-store-mode-4",
+    "preset": 0,
+    "buttons": []
+  },
+  "apps_disney": {
+    "img_filename": "apps_disney",
+    "preset": 0,
+    "buttons": []
+  },
+  "apps_prime": {
+    "img_filename": "apps_prime",
+    "preset": 0,
+    "buttons": []
+  },
+  "apps_netflix": {
+    "img_filename": "apps_netflix",
+    "preset": 0,
+    "buttons": []
   }
 }
