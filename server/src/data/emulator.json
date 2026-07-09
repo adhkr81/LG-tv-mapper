@@ -13781,6 +13781,55 @@
         "width": "28px",
         "height": "28px",
         "target": "quick-settings_accessibility-app-menu"
+      },
+      {
+        "left": "161px",
+        "top": "125px",
+        "width": "314px",
+        "height": "50px",
+        "target": "quick-settings_vision-audio"
+      },
+      {
+        "left": "160px",
+        "top": "181px",
+        "width": "314px",
+        "height": "50px",
+        "target": "quick-settings_vision-text"
+      },
+      {
+        "left": "161px",
+        "top": "236px",
+        "width": "314px",
+        "height": "50px",
+        "target": "quick-settings_vision-screen"
+      },
+      {
+        "left": "161px",
+        "top": "291px",
+        "width": "314px",
+        "height": "50px",
+        "target": "quick-settings_vision-invert"
+      },
+      {
+        "left": "488px",
+        "top": "126px",
+        "width": "314px",
+        "height": "50px",
+        "target": "quick-settings_vision-device"
+      },
+      {
+        "left": "488px",
+        "top": "181px",
+        "width": "314px",
+        "height": "50px",
+        "target": "quick-settings_vision-focus"
+      },
+      {
+        "left": "488px",
+        "top": "236px",
+        "width": "314px",
+        "height": "50px",
+        "target": "quick-settings_vision-grayscale"
       }
     ]
   },
@@ -13794,6 +13843,27 @@
         "width": "28px",
         "height": "28px",
         "target": "quick-settings_accessibility-app-menu"
+      },
+      {
+        "left": "161px",
+        "top": "125px",
+        "width": "314px",
+        "height": "50px",
+        "target": "quick-settings_hearing-closed"
+      },
+      {
+        "left": "160px",
+        "top": "181px",
+        "width": "314px",
+        "height": "50px",
+        "target": "quick-settings_hearing-listen"
+      },
+      {
+        "left": "488px",
+        "top": "126px",
+        "width": "314px",
+        "height": "50px",
+        "target": "quick-settings_hearing-sign-language"
       }
     ]
   },
@@ -13807,6 +13877,13 @@
         "width": "28px",
         "height": "28px",
         "target": "quick-settings_accessibility-app-menu"
+      },
+      {
+        "left": "326px",
+        "top": "125px",
+        "width": "314px",
+        "height": "50px",
+        "target": "quick-settings_hearing-control-extend"
       }
     ]
   },
@@ -13820,6 +13897,13 @@
         "width": "28px",
         "height": "28px",
         "target": "quick-settings_accessibility-app-menu"
+      },
+      {
+        "left": "425px",
+        "top": "386px",
+        "width": "118px",
+        "height": "32px",
+        "target": "quick-settings_edit-edit"
       }
     ]
   },
@@ -14544,6 +14628,162 @@
         "width": "28px",
         "height": "28px",
         "target": "sidebar_profile-menu"
+      }
+    ]
+  },
+  "quick-settings_vision-audio": {
+    "img_filename": "quick-settings_vision-audio",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "127px",
+        "top": "23px",
+        "width": "28px",
+        "height": "28px",
+        "target": "quick-settings_accessibility-app_vision"
+      }
+    ]
+  },
+  "quick-settings_vision-text": {
+    "img_filename": "quick-settings_vision-text",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "127px",
+        "top": "23px",
+        "width": "28px",
+        "height": "28px",
+        "target": "quick-settings_accessibility-app_vision"
+      }
+    ]
+  },
+  "quick-settings_vision-screen": {
+    "img_filename": "quick-settings_vision-screen",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "127px",
+        "top": "23px",
+        "width": "28px",
+        "height": "28px",
+        "target": "quick-settings_accessibility-app_vision"
+      }
+    ]
+  },
+  "quick-settings_vision-invert": {
+    "img_filename": "quick-settings_vision-invert",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "127px",
+        "top": "23px",
+        "width": "28px",
+        "height": "28px",
+        "target": "quick-settings_accessibility-app_vision"
+      }
+    ]
+  },
+  "quick-settings_vision-device": {
+    "img_filename": "quick-settings_vision-device",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "127px",
+        "top": "23px",
+        "width": "28px",
+        "height": "28px",
+        "target": "quick-settings_accessibility-app_vision"
+      }
+    ]
+  },
+  "quick-settings_vision-focus": {
+    "img_filename": "quick-settings_vision-focus",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "127px",
+        "top": "23px",
+        "width": "28px",
+        "height": "28px",
+        "target": "quick-settings_accessibility-app_vision"
+      }
+    ]
+  },
+  "quick-settings_vision-grayscale": {
+    "img_filename": "quick-settings_vision-grayscale",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "127px",
+        "top": "23px",
+        "width": "28px",
+        "height": "28px",
+        "target": "quick-settings_accessibility-app_vision"
+      }
+    ]
+  },
+  "quick-settings_hearing-closed": {
+    "img_filename": "quick-settings_hearing-closed",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "127px",
+        "top": "23px",
+        "width": "28px",
+        "height": "28px",
+        "target": "quick-settings_accessibility-app_hearing"
+      }
+    ]
+  },
+  "quick-settings_hearing-listen": {
+    "img_filename": "quick-settings_hearing-listen",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "127px",
+        "top": "23px",
+        "width": "28px",
+        "height": "28px",
+        "target": "quick-settings_accessibility-app_hearing"
+      }
+    ]
+  },
+  "quick-settings_hearing-sign-language": {
+    "img_filename": "quick-settings_hearing-sign-language",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "127px",
+        "top": "23px",
+        "width": "28px",
+        "height": "28px",
+        "target": "quick-settings_accessibility-app_hearing"
+      }
+    ]
+  },
+  "quick-settings_hearing-control-extend": {
+    "img_filename": "quick-settings_hearing-control-extend",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "127px",
+        "top": "23px",
+        "width": "28px",
+        "height": "28px",
+        "target": "quick-settings_accessibility-app_control"
+      }
+    ]
+  },
+  "quick-settings_edit-edit": {
+    "img_filename": "quick-settings_edit-edit",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "663px",
+        "top": "380px",
+        "width": "168px",
+        "height": "23px",
+        "target": "quick-settings_accessibility-app_edit"
       }
     ]
   }
