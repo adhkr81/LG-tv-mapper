@@ -10416,11 +10416,12 @@
       {
         "left": "205px",
         "top": "335px",
-        "width": "214px",
+        "width": "52px",
         "height": "54px",
+        "target": "apps_netflix",
         "popover": {
           "title": "Content Providers",
-          "text": "View content from all your favorite providers and the webOS TV LG Channels service.",
+          "text": "View content from all your favorite providers.",
           "style": {
             "top": "55%",
             "left": "15%"
@@ -10450,7 +10451,7 @@
         "target": "apps_lg-channels-1",
         "popover": {
           "title": "LG Channels",
-          "text": "Stream over 300+ free channels, including TV shows, movies, breaking news, sports, and more.",
+          "text": "Stream over 400+ free channels, including TV shows, movies, breaking news, sports, and more.",
           "style": {
             "top": "55%",
             "left": "8%"
@@ -10604,6 +10605,51 @@
           "style": {
             "top": "55%",
             "left": "51%"
+          }
+        }
+      },
+      {
+        "left": "259px",
+        "top": "335px",
+        "width": "52px",
+        "height": "54px",
+        "target": "apps_prime",
+        "popover": {
+          "title": "Content Providers",
+          "text": "View content from all your favorite providers.",
+          "style": {
+            "top": "55%",
+            "left": "22%"
+          }
+        }
+      },
+      {
+        "left": "313px",
+        "top": "335px",
+        "width": "52px",
+        "height": "54px",
+        "target": "apps_disney",
+        "popover": {
+          "title": "Content Providers",
+          "text": "View content from all your favorite providers.",
+          "style": {
+            "top": "55%",
+            "left": "29%"
+          }
+        }
+      },
+      {
+        "left": "367px",
+        "top": "335px",
+        "width": "52px",
+        "height": "54px",
+        "target": "apps_youtube",
+        "popover": {
+          "title": "Content Providers",
+          "text": "View content from all your favorite providers.",
+          "style": {
+            "top": "55%",
+            "left": "36%"
           }
         }
       }
@@ -14865,6 +14911,26 @@
   },
   "apps_netflix": {
     "img_filename": "apps_netflix",
+    "preset": 0,
+    "buttons": []
+  },
+  "apps_short-press": {
+    "img_filename": "apps_short-press",
+    "preset": 0,
+    "buttons": []
+  },
+  "apps_long-press": {
+    "img_filename": "apps_long-press",
+    "preset": 0,
+    "buttons": []
+  },
+  "apps_logo-off": {
+    "img_filename": "apps_logo-off",
+    "preset": 0,
+    "buttons": []
+  },
+  "apps_youtube": {
+    "img_filename": "apps_youtube",
     "preset": 0,
     "buttons": []
   }

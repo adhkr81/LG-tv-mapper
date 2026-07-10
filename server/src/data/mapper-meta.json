@@ -3562,7 +3562,10 @@
         "bef2e4d8-4505-427a-94c3-680ee5c6286d",
         "58b8aa72-70dd-4ea6-8a01-225330b1e70a",
         "f6463625-4b11-43f0-aba9-cb9975fa6137",
-        "84cc0cf1-4002-433c-b34c-6b94c0c608d6"
+        "84cc0cf1-4002-433c-b34c-6b94c0c608d6",
+        "57a58249-d30b-42fa-bd6d-9f6f438c7e15",
+        "86035f96-ceb0-4908-a9c5-f4c71a9fd2f3",
+        "5ae145de-2803-49a9-8c7a-02dca57e8e99"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
@@ -5240,19 +5243,51 @@
       "graphX": 284,
       "graphY": 624,
       "sectionId": "apps",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "apps_prime": {
       "graphX": 564,
       "graphY": 624,
       "sectionId": "apps",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     },
     "apps_netflix": {
       "graphX": 844,
       "graphY": 624,
       "sectionId": "apps",
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "apps_short-press": {
+      "graphX": 283,
+      "graphY": 837,
+      "sectionId": "apps",
       "buttonIds": []
+    },
+    "apps_long-press": {
+      "graphX": 567,
+      "graphY": 838,
+      "sectionId": "apps",
+      "buttonIds": []
+    },
+    "apps_logo-off": {
+      "graphX": 847,
+      "graphY": 834,
+      "sectionId": "apps",
+      "buttonIds": []
+    },
+    "apps_youtube": {
+      "graphX": 22,
+      "graphY": 627,
+      "sectionId": "apps",
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
     }
   },
   "config": {
