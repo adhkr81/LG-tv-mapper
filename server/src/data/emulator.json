@@ -14864,20 +14864,7 @@
         "top": "290px",
         "width": "70px",
         "height": "34px",
-        "target": "settings-store-mode-2"
-      }
-    ]
-  },
-  "settings-store-mode-2": {
-    "img_filename": "settings-store-mode-2",
-    "preset": 0,
-    "buttons": [
-      {
-        "left": "166px",
-        "top": "180px",
-        "width": "249px",
-        "height": "52px",
-        "target": "settings-store-mode-3"
+        "target": "settings-store-mode-disabled"
       }
     ]
   },
@@ -14886,11 +14873,25 @@
     "preset": 0,
     "buttons": [
       {
-        "left": "167px",
+        "left": "166px",
         "top": "162px",
         "width": "247px",
         "height": "33px",
+        "target": "settings-store-mode-6"
+      },
+      {
+        "left": "166px",
+        "top": "124px",
+        "width": "247px",
+        "height": "33px",
         "target": "settings-store-mode-4"
+      },
+      {
+        "left": "166px",
+        "top": "86px",
+        "width": "247px",
+        "height": "33px",
+        "target": "settings-store-mode-5"
       }
     ]
   },
@@ -14931,6 +14932,49 @@
   },
   "apps_youtube": {
     "img_filename": "apps_youtube",
+    "preset": 0,
+    "buttons": []
+  },
+  "settings-store-mode-disabled": {
+    "img_filename": "settings-store-mode-disabled",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "166px",
+        "top": "85px",
+        "width": "248px",
+        "height": "34px",
+        "target": "settings-store-mode-on"
+      }
+    ]
+  },
+  "settings-store-mode-on": {
+    "img_filename": "settings-store-mode-on",
+    "preset": 0,
+    "buttons": [
+      {
+        "left": "166px",
+        "top": "85px",
+        "width": "248px",
+        "height": "34px",
+        "target": "settings-store-mode-disabled"
+      },
+      {
+        "left": "166px",
+        "top": "180px",
+        "width": "249px",
+        "height": "52px",
+        "target": "settings-store-mode-3"
+      }
+    ]
+  },
+  "settings-store-mode-5": {
+    "img_filename": "settings-store-mode-5",
+    "preset": 0,
+    "buttons": []
+  },
+  "settings-store-mode-6": {
+    "img_filename": "settings-store-mode-6",
     "preset": 0,
     "buttons": []
   }

@@ -5202,8 +5202,8 @@
       "sourceHeight": 2160
     },
     "settings-store-mode": {
-      "graphX": -2635,
-      "graphY": 1016,
+      "graphX": -2682,
+      "graphY": 1005,
       "sectionId": "settings-support",
       "buttonIds": [
         "11553871-b692-49ce-bf34-9c75f7b1ae94"
@@ -5211,29 +5211,21 @@
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
-    "settings-store-mode-2": {
-      "graphX": -2356,
-      "graphY": 1012,
-      "sectionId": "settings-support",
-      "buttonIds": [
-        "455d851b-9750-42d7-8900-edda3e40d0e4"
-      ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
-    },
     "settings-store-mode-3": {
-      "graphX": -2076,
-      "graphY": 1012,
+      "graphX": -1923,
+      "graphY": 997,
       "sectionId": "settings-support",
       "buttonIds": [
-        "19c399af-2814-494b-9004-3ea3a6e8e7e3"
+        "19c399af-2814-494b-9004-3ea3a6e8e7e3",
+        "46acf30a-6bb4-485e-82be-98aaf70b5bc9",
+        "299ad1a1-33d4-40de-9a0b-a27f9306ed03"
       ],
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
     "settings-store-mode-4": {
-      "graphX": -1796,
-      "graphY": 1012,
+      "graphX": -1918,
+      "graphY": 1292,
       "sectionId": "settings-support",
       "buttonIds": [],
       "sourceWidth": 3840,
@@ -5285,6 +5277,43 @@
       "graphX": 22,
       "graphY": 627,
       "sectionId": "apps",
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-store-mode-disabled": {
+      "graphX": -2428,
+      "graphY": 997,
+      "sectionId": "settings-support",
+      "buttonIds": [
+        "e0976aea-16b2-49cb-a755-f6136a6c2e2b"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-store-mode-on": {
+      "graphX": -2181,
+      "graphY": 997,
+      "sectionId": "settings-support",
+      "buttonIds": [
+        "2e404ade-afd3-406f-b633-f948d522c07b",
+        "9b692142-8cb3-4007-9d3c-a2516ca4375b"
+      ],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-store-mode-5": {
+      "graphX": -1673,
+      "graphY": 1294,
+      "sectionId": "settings-support",
+      "buttonIds": [],
+      "sourceWidth": 3840,
+      "sourceHeight": 2160
+    },
+    "settings-store-mode-6": {
+      "graphX": -2148,
+      "graphY": 1300,
+      "sectionId": "settings-support",
       "buttonIds": [],
       "sourceWidth": 3840,
       "sourceHeight": 2160
