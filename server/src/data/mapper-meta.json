@@ -153,8 +153,8 @@
         "a2cabced-5813-463d-93d0-b6b11324a8cf",
         "f7094933-2352-4f96-9836-2816e427bf53"
       ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "settings-general": {
       "graphX": 944,
@@ -189,8 +189,8 @@
         "797c5d19-3b94-4d45-9fb7-088a0049c15e",
         "c99cf133-a3b5-4fb5-b79d-745731a65f62"
       ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "settings-sound": {
       "graphX": 457,
@@ -223,8 +223,8 @@
         "e8f54764-e565-4318-b132-9ff0893557cf",
         "cc4a6077-e23d-48a6-a266-c8793b7a1514"
       ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "settings-picture_basic": {
       "graphX": -266,
@@ -3336,8 +3336,8 @@
         "1c8dc9ec-615a-4446-bfff-1991c5212c21",
         "b38ea422-96b6-4179-9ac6-25cafa048de4"
       ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "settings-support_ip-control-settings": {
       "graphX": -2425,
