@@ -14780,15 +14780,7 @@
   "quick-settings_vision-grayscale": {
     "img_filename": "quick-settings_vision-grayscale",
     "preset": 0,
-    "buttons": [
-      {
-        "left": "127px",
-        "top": "23px",
-        "width": "28px",
-        "height": "28px",
-        "target": "quick-settings_accessibility-app_vision"
-      }
-    ]
+    "buttons": []
   },
   "quick-settings_hearing-closed": {
     "img_filename": "quick-settings_hearing-closed",

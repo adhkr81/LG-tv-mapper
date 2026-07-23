@@ -174,8 +174,8 @@
         "31eff290-2f93-4781-9e0d-a1d33e9f9eaf",
         "2cfc096f-d49d-429c-ad61-fdd5af3c7f84"
       ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "settings-picture": {
       "graphX": -97,
@@ -237,8 +237,8 @@
         "73161fe6-d97f-4e8b-9889-0cad79d07984",
         "87a027fe-f032-4492-9c9a-0f3a43123ef8"
       ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "settings-picture_vivid": {
       "graphX": -46,
@@ -2825,8 +2825,8 @@
         "c740c79a-4a67-48da-9a41-4a65372f2cfa",
         "60624a2d-2b53-425b-b602-0ff863c98995"
       ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "general-accessibility_menu-down": {
       "graphX": 560,
@@ -2844,8 +2844,8 @@
         "1c97d503-24a3-4a7d-a462-9a26f294d67a",
         "6b0a5df2-e2ef-4dfa-bf4c-6c21ae24603c"
       ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "general-accessibility_audio-guidance-menu": {
       "graphX": 840,
@@ -3588,8 +3588,8 @@
         "f3149dcc-e5e1-4b8a-a9bb-441e6b7eb735",
         "d03c792e-47f9-4f8b-bddc-a376a3aff9e7"
       ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "sidebar_profile_lg-thinq": {
       "graphX": -1941,
@@ -3857,8 +3857,8 @@
         "8059948c-fba7-4e9a-85d8-428d8a931f29",
         "6ec074fc-671b-41d8-b51a-1d6429996083"
       ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "quick-settings_picture-mode-2": {
       "graphX": 660,
@@ -4662,8 +4662,8 @@
         "3de6ecd7-c14e-4d27-bb36-4b1c305ecf24",
         "55a65183-711f-4773-8961-495321ac7be7"
       ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "quick-settings_accessibility-app_vision": {
       "graphX": 2223,
@@ -4679,8 +4679,8 @@
         "876835e3-08a5-4d05-a66d-983b9fcc2643",
         "35cee25b-0047-4c87-86b2-921d880add38"
       ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "quick-settings_accessibility-app_hearing": {
       "graphX": 2202,
@@ -4884,8 +4884,8 @@
         "8c85c964-b928-4d96-b96f-87ba1af21014",
         "3152f827-b7f0-43d2-9abb-5c7ae5cb2e52"
       ],
-      "sourceWidth": 3840,
-      "sourceHeight": 2160
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "apps_music": {
       "graphX": 798,
@@ -5145,9 +5145,7 @@
       "graphX": 2379,
       "graphY": -675,
       "sectionId": "quick-settings",
-      "buttonIds": [
-        "8c29eece-84d6-40d9-9825-4cbe6aa78a94"
-      ],
+      "buttonIds": [],
       "sourceWidth": 3840,
       "sourceHeight": 2160
     },
