@@ -14780,7 +14780,293 @@
   "quick-settings_vision-grayscale": {
     "img_filename": "quick-settings_vision-grayscale",
     "preset": 0,
-    "buttons": []
+    "buttons": [
+      {
+        "left": "106px",
+        "top": "20px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_profile-menu",
+        "popover": {
+          "title": "Profile",
+          "text": "Enjoy recommended content and services by logging into your LG account.",
+          "style": {
+            "top": "2%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "106px",
+        "top": "139px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_profile_search",
+        "popover": {
+          "title": "Search",
+          "text": "Search for movie titles, actors, and genre.",
+          "style": {
+            "top": "22%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "107px",
+        "top": "402px",
+        "width": "31px",
+        "height": "31px",
+        "target": "quick-settings-main",
+        "popover": {
+          "title": "Settings",
+          "text": "Adjust your preferences by accessing the quick settings panel.",
+          "style": {
+            "top": "79%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "205px",
+        "top": "335px",
+        "width": "52px",
+        "height": "54px",
+        "target": "apps_netflix",
+        "popover": {
+          "title": "Content Providers",
+          "text": "View content from all your favorite providers.",
+          "style": {
+            "top": "55%",
+            "left": "15%"
+          }
+        }
+      },
+      {
+        "left": "106px",
+        "top": "367px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_notifications",
+        "popover": {
+          "title": "Notification",
+          "text": "View your current notifications.",
+          "style": {
+            "top": "70%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "151px",
+        "top": "335px",
+        "width": "52px",
+        "height": "54px",
+        "target": "apps_lg-channels-1",
+        "popover": {
+          "title": "LG Channels",
+          "text": "Stream over 400+ free channels, including TV shows, movies, breaking news, sports, and more.",
+          "style": {
+            "top": "55%",
+            "left": "8%"
+          }
+        }
+      },
+      {
+        "left": "106px",
+        "top": "176px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_apps_menu",
+        "popover": {
+          "title": "Apps",
+          "text": "A portal to limitless premium content and apps.",
+          "style": {
+            "top": "31%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "106px",
+        "top": "212px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_gaming-portal-menu",
+        "popover": {
+          "title": "Gaming Portal",
+          "text": "Various Cloud Games You Can Enjoy All-in-One on Your TV.",
+          "style": {
+            "top": "39%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "421px",
+        "top": "335px",
+        "width": "52px",
+        "height": "54px",
+        "target": "sidebar_gaming-portal-menu",
+        "popover": {
+          "title": "Gaming Portal",
+          "text": "Various Cloud Games You Can Enjoy All-in-One on Your TV.",
+          "style": {
+            "top": "58%",
+            "left": "42%"
+          }
+        }
+      },
+      {
+        "left": "474px",
+        "top": "335px",
+        "width": "52px",
+        "height": "54px",
+        "target": "apps_home-office",
+        "popover": {
+          "title": "Home Office",
+          "text": "Access productivity tools and work directly from your TV.",
+          "style": {
+            "top": "58%",
+            "left": "49%"
+          }
+        }
+      },
+      {
+        "left": "528px",
+        "top": "335px",
+        "width": "52px",
+        "height": "54px",
+        "target": "apps_music",
+        "popover": {
+          "title": "Music",
+          "text": "Enjoy music streaming services, playlists, and other audio content from a variety of music apps.",
+          "style": {
+            "top": "55%",
+            "left": "55%"
+          }
+        }
+      },
+      {
+        "left": "582px",
+        "top": "335px",
+        "width": "52px",
+        "height": "54px",
+        "target": "apps_home-hub",
+        "popover": {
+          "title": "Home Hub",
+          "text": "Monitor and control compatible smart home devices from one place.",
+          "style": {
+            "top": "55%",
+            "left": "62%"
+          }
+        }
+      },
+      {
+        "left": "636px",
+        "top": "335px",
+        "width": "52px",
+        "height": "54px",
+        "target": "apps_learning",
+        "popover": {
+          "title": "Learning",
+          "text": "Explore educational content, online courses, tutorials, and learning applications for users of all ages.",
+          "style": {
+            "top": "55%",
+            "left": "39%"
+          }
+        }
+      },
+      {
+        "left": "690px",
+        "top": "335px",
+        "width": "52px",
+        "height": "54px",
+        "target": "quick-settings_accessibility-app-menu",
+        "popover": {
+          "title": "Accessibility",
+          "text": "Access features and settings designed to improve usability, including visual, hearing, and navigation assistance options.",
+          "style": {
+            "top": "55%",
+            "left": "45%"
+          }
+        }
+      },
+      {
+        "left": "106px",
+        "top": "247px",
+        "width": "31px",
+        "height": "31px",
+        "target": "sidebar_guide",
+        "popover": {
+          "title": "TV Guide",
+          "text": "View the current TV channel lineup and browse upcoming program schedules.",
+          "style": {
+            "top": "43%",
+            "left": "7%"
+          }
+        }
+      },
+      {
+        "left": "744px",
+        "top": "335px",
+        "width": "52px",
+        "height": "54px",
+        "target": "apps_lg-gallery",
+        "popover": {
+          "title": "LG Gallery+",
+          "text": "Access an integrated visual curation service that turns your TV into a digital canvas.",
+          "style": {
+            "top": "55%",
+            "left": "51%"
+          }
+        }
+      },
+      {
+        "left": "259px",
+        "top": "335px",
+        "width": "52px",
+        "height": "54px",
+        "target": "apps_prime",
+        "popover": {
+          "title": "Content Providers",
+          "text": "View content from all your favorite providers.",
+          "style": {
+            "top": "55%",
+            "left": "22%"
+          }
+        }
+      },
+      {
+        "left": "313px",
+        "top": "335px",
+        "width": "52px",
+        "height": "54px",
+        "target": "apps_disney",
+        "popover": {
+          "title": "Content Providers",
+          "text": "View content from all your favorite providers.",
+          "style": {
+            "top": "55%",
+            "left": "29%"
+          }
+        }
+      },
+      {
+        "left": "367px",
+        "top": "335px",
+        "width": "52px",
+        "height": "54px",
+        "target": "apps_youtube",
+        "popover": {
+          "title": "Content Providers",
+          "text": "View content from all your favorite providers.",
+          "style": {
+            "top": "55%",
+            "left": "36%"
+          }
+        }
+      }
+    ]
   },
   "quick-settings_hearing-closed": {
     "img_filename": "quick-settings_hearing-closed",
