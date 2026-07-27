@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { v4 as uuidv4 } from 'uuid';
-import config from '../config.js';
 import {
   buttonToEmulator,
   parsePx,
@@ -11,11 +10,22 @@ import {
   stripImageExtension,
 } from './emulator-format.js';
 import { DEFAULT_IMAGE_CONFIG, normalizeImageConfig } from './coords.js';
+import {
+  getProjectPaths,
+  migrateLegacyProjectLayout,
+  projectExists,
+  touchProject,
+} from './projects.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const LEGACY_FILE = path.join(DATA_DIR, 'screens.json');
-const SCREENSHOTS_DIR = path.join(DATA_DIR, 'screenshots');
+
+/** Active project paths — set by activateProject(). */
+let activeProjectId = null;
+let emulatorDataPath = null;
+let mapperMetaPath = null;
+let screenshotsDir = null;
 
 const DEFAULT_BUTTON_SIZE = { width: 120, height: 60 };
 
@@ -95,9 +105,16 @@ function atomicWrite(filePath, data) {
   throw lastErr;
 }
 
+function ensureActiveProject() {
+  if (!activeProjectId || !emulatorDataPath || !mapperMetaPath || !screenshotsDir) {
+    throw new Error('No project is active. Open a project first.');
+  }
+}
+
 function ensureDataDir() {
+  ensureActiveProject();
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-  if (!fs.existsSync(SCREENSHOTS_DIR)) fs.mkdirSync(SCREENSHOTS_DIR, { recursive: true });
+  fs.mkdirSync(screenshotsDir, { recursive: true });
 }
 
 function readJson(filePath, fallback) {
@@ -110,15 +127,15 @@ function readJson(filePath, fallback) {
 
 function readEmulatorMapFromDisk() {
   ensureDataDir();
-  if (!fs.existsSync(config.emulatorDataPath)) return null;
-  const parsed = readJson(config.emulatorDataPath, null);
+  if (!fs.existsSync(emulatorDataPath)) return null;
+  const parsed = readJson(emulatorDataPath, null);
   if (!parsed || Array.isArray(parsed) || typeof parsed !== 'object') return {};
   return parsed;
 }
 
 function readMetaFileFromDisk() {
   ensureDataDir();
-  if (!fs.existsSync(config.mapperMetaPath)) {
+  if (!fs.existsSync(mapperMetaPath)) {
     return {
       version: META_VERSION,
       sections: [],
@@ -126,7 +143,7 @@ function readMetaFileFromDisk() {
       config: { imageSize: { ...DEFAULT_IMAGE_CONFIG } },
     };
   }
-  const parsed = readJson(config.mapperMetaPath, { sections: [], screens: {} });
+  const parsed = readJson(mapperMetaPath, { sections: [], screens: {} });
   return {
     version: Number.isInteger(parsed.version) ? parsed.version : 1,
     sections: parsed.sections || [],
@@ -183,7 +200,7 @@ function resolveImageFilenameOnDisk(screenId, imgFilename) {
   const base = imgFilename || screenId;
   for (const ext of ['.jpg', '.jpeg', '.png', '.webp']) {
     const name = base.includes('.') ? base : base + ext;
-    if (fs.existsSync(path.join(SCREENSHOTS_DIR, name))) {
+    if (fs.existsSync(path.join(screenshotsDir, name))) {
       return name;
     }
   }
@@ -349,8 +366,15 @@ function persistToDisk() {
     state.sections,
     state.imageConfig
   );
-  atomicWrite(config.emulatorDataPath, emulatorMap);
-  atomicWrite(config.mapperMetaPath, meta);
+  atomicWrite(emulatorDataPath, emulatorMap);
+  atomicWrite(mapperMetaPath, meta);
+  if (activeProjectId) {
+    try {
+      touchProject(activeProjectId);
+    } catch {
+      /* ignore touch failures */
+    }
+  }
 }
 
 /** Schedule a debounced flush. Coalesces bursts of mutations into one write. */
@@ -549,9 +573,73 @@ function deleteScreenshotFiles(screen) {
 /* Public API                                                                 */
 /* -------------------------------------------------------------------------- */
 
+export function getActiveProjectId() {
+  return activeProjectId;
+}
+
+/**
+ * Switch the in-memory store to a project. Flushes the previous project first.
+ * No-op if the same project is already active and loaded.
+ */
+export function activateProject(projectId) {
+  migrateLegacyProjectLayout();
+  if (!projectExists(projectId)) {
+    throw new Error(`Project not found: ${projectId}`);
+  }
+
+  if (activeProjectId === projectId && state.loaded) {
+    return activeProjectId;
+  }
+
+  if (state.loaded) {
+    flushSync();
+  }
+
+  const paths = getProjectPaths(projectId);
+  activeProjectId = projectId;
+  emulatorDataPath = paths.emulatorJson;
+  mapperMetaPath = paths.mapperMeta;
+  screenshotsDir = paths.screenshots;
+
+  state.screens = [];
+  state.sections = [];
+  state.imageConfig = { ...DEFAULT_IMAGE_CONFIG };
+  state.version = 0;
+  state.loaded = false;
+  dirty = false;
+  if (flushTimer) {
+    clearTimeout(flushTimer);
+    flushTimer = null;
+  }
+  if (flushDeadlineTimer) {
+    clearTimeout(flushDeadlineTimer);
+    flushDeadlineTimer = null;
+  }
+
+  ensureLoaded();
+  return activeProjectId;
+}
+
+/** Drop the active project from memory (after delete). */
+export function clearActiveProject() {
+  if (state.loaded) {
+    flushSync();
+  }
+  activeProjectId = null;
+  emulatorDataPath = null;
+  mapperMetaPath = null;
+  screenshotsDir = null;
+  state.screens = [];
+  state.sections = [];
+  state.imageConfig = { ...DEFAULT_IMAGE_CONFIG };
+  state.version = 0;
+  state.loaded = false;
+  dirty = false;
+}
+
 export function getScreenshotsDir() {
   ensureDataDir();
-  return SCREENSHOTS_DIR;
+  return screenshotsDir;
 }
 
 export function getScreenshotPath(filename) {

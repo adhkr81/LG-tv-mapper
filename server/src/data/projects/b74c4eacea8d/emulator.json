@@ -1,0 +1,32 @@
+{
+  "homescreen": {
+    "img_filename": "homescreen",
+    "preset": 0,
+    "buttons": []
+  },
+  "homescreen_login": {
+    "img_filename": "homescreen_login",
+    "preset": 0,
+    "buttons": []
+  },
+  "homescreen_search": {
+    "img_filename": "homescreen_search",
+    "preset": 0,
+    "buttons": []
+  },
+  "homescreen_connected-devices": {
+    "img_filename": "homescreen_connected-devices",
+    "preset": 0,
+    "buttons": []
+  },
+  "homescreen_settings": {
+    "img_filename": "homescreen_settings",
+    "preset": 0,
+    "buttons": []
+  },
+  "homescreen_vision-ai-1": {
+    "img_filename": "homescreen_vision-ai-1",
+    "preset": 0,
+    "buttons": []
+  }
+}

@@ -12,12 +12,7 @@ const config = {
     baudRate: parseInt(process.env.SERIAL_BAUD || '115200', 10),
   },
   usbWatchPath: process.env.USB_WATCH_PATH || '',
-  emulatorDataPath:
-    process.env.EMULATOR_DATA_PATH ||
-    path.join(DATA_DIR, 'emulator.json'),
-  mapperMetaPath:
-    process.env.MAPPER_META_PATH ||
-    path.join(DATA_DIR, 'mapper-meta.json'),
+  projectsDir: path.join(DATA_DIR, 'projects'),
 };
 
 export default config;

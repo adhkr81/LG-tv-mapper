@@ -2,6 +2,24 @@ const API = '';
 
 const RETRYABLE_STATUSES = new Set([500, 502, 503, 504]);
 
+/** Active project for scoped API calls. Set when entering a mapper workspace. */
+let currentProjectId = null;
+
+export function setCurrentProjectId(projectId) {
+  currentProjectId = projectId || null;
+}
+
+export function getCurrentProjectId() {
+  return currentProjectId;
+}
+
+function projectPath(suffix) {
+  if (!currentProjectId) {
+    throw new Error('No project selected');
+  }
+  return `/api/projects/${currentProjectId}${suffix}`;
+}
+
 async function request(url, options = {}, attempt = 0) {
   let res;
   try {
@@ -30,16 +48,53 @@ async function request(url, options = {}, attempt = 0) {
   return res.json();
 }
 
-// Serial
+// Projects
+export const getProjects = () => request('/api/projects');
+export const getProject = (id) => request(`/api/projects/${id}`);
+export const createProject = ({ name, platform } = {}) =>
+  request('/api/projects', {
+    method: 'POST',
+    body: JSON.stringify({ name, platform }),
+  });
+export const renameProject = (id, name) =>
+  request(`/api/projects/${id}`, { method: 'PUT', body: JSON.stringify({ name }) });
+export const deleteProject = (id) =>
+  request(`/api/projects/${id}`, { method: 'DELETE' });
+export const openProject = (id) =>
+  request(`/api/projects/${id}/open`, { method: 'POST' });
+
+// Serial (global — shared hardware, LG)
 export const getSerialStatus = () => request('/api/serial/status');
 export const connectSerial = () => request('/api/serial/connect', { method: 'POST' });
 export const disconnectSerial = () => request('/api/serial/disconnect', { method: 'POST' });
 
-// Capture
-export const captureScreen = (screenId, saveToLaptop = false, sectionId = null) =>
-  request('/api/capture', {
+// Samsung RMUS remote-management portal
+export const getRmusStatus = () => request('/api/rmus/status');
+export const connectRmus = ({ fresh = false } = {}) =>
+  request('/api/rmus/connect', {
     method: 'POST',
-    body: JSON.stringify({ screenId, saveToLaptop, sectionId }),
+    body: JSON.stringify({ fresh }),
+  });
+export const confirmRmusPin = () =>
+  request('/api/rmus/confirm-pin', { method: 'POST' });
+export const disconnectRmus = () =>
+  request('/api/rmus/disconnect', { method: 'POST' });
+
+// Capture
+export const captureScreen = (
+  screenId,
+  saveToLaptop = false,
+  sectionId = null,
+  source = null
+) =>
+  request(projectPath('/capture'), {
+    method: 'POST',
+    body: JSON.stringify({
+      screenId,
+      saveToLaptop,
+      sectionId,
+      ...(source ? { source } : {}),
+    }),
   });
 
 /** Capture with NDJSON progress events from the server (USB save polling, etc.). */
@@ -47,12 +102,18 @@ export async function captureScreenWithProgress(
   screenId,
   saveToLaptop = false,
   sectionId = null,
-  onProgress
+  onProgress,
+  source = null
 ) {
-  const res = await fetch(`${API}/api/capture?stream=1`, {
+  const res = await fetch(`${API}${projectPath('/capture')}?stream=1`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ screenId, saveToLaptop, sectionId }),
+    body: JSON.stringify({
+      screenId,
+      saveToLaptop,
+      sectionId,
+      ...(source ? { source } : {}),
+    }),
   });
 
   if (!res.ok) {
@@ -110,7 +171,10 @@ export const importScreen = async (screenId, file, sectionId = null) => {
   formData.append('screenId', screenId);
   formData.append('file', file);
   if (sectionId) formData.append('sectionId', sectionId);
-  const res = await fetch(`${API}/api/capture/import`, { method: 'POST', body: formData });
+  const res = await fetch(`${API}${projectPath('/capture/import')}`, {
+    method: 'POST',
+    body: formData,
+  });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
     throw new Error(body.error || 'Import failed');
@@ -119,54 +183,65 @@ export const importScreen = async (screenId, file, sectionId = null) => {
 };
 
 // Screens
-export const getScreens = () => request('/api/screens');
-export const getScreen = (id) => request(`/api/screens/${id}`);
+export const getScreens = () => request(projectPath('/screens'));
+export const getScreen = (id) => request(projectPath(`/screens/${id}`));
 export const createScreen = (data) =>
-  request('/api/screens', { method: 'POST', body: JSON.stringify(data) });
+  request(projectPath('/screens'), { method: 'POST', body: JSON.stringify(data) });
 export const updateScreen = (id, data) =>
-  request(`/api/screens/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+  request(projectPath(`/screens/${id}`), { method: 'PUT', body: JSON.stringify(data) });
 export const deleteScreen = (id, { removeParentButtons = false } = {}) => {
   const q = removeParentButtons ? '?removeParentButtons=1' : '';
-  return request(`/api/screens/${id}${q}`, { method: 'DELETE' });
+  return request(projectPath(`/screens/${id}${q}`), { method: 'DELETE' });
 };
 
 // Buttons
 export const getButtons = (screenId) =>
-  request(`/api/screens/${screenId}/buttons`);
+  request(projectPath(`/screens/${screenId}/buttons`));
 export const addButton = (screenId, data) =>
-  request(`/api/screens/${screenId}/buttons`, { method: 'POST', body: JSON.stringify(data) });
+  request(projectPath(`/screens/${screenId}/buttons`), {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
 export const importButtons = (screenId, fromScreenId, options = {}) => {
   const { includeTargets = true, buttonIds = null } = options;
-  return request(`/api/screens/${screenId}/buttons/import`, {
+  return request(projectPath(`/screens/${screenId}/buttons/import`), {
     method: 'POST',
     body: JSON.stringify({ fromScreenId, includeTargets, buttonIds }),
   });
 };
 export const updateButton = (screenId, buttonId, data) =>
-  request(`/api/screens/${screenId}/buttons/${buttonId}`, { method: 'PUT', body: JSON.stringify(data) });
+  request(projectPath(`/screens/${screenId}/buttons/${buttonId}`), {
+    method: 'PUT',
+    body: JSON.stringify(data),
+  });
 export const deleteButtonApi = (screenId, buttonId) =>
-  request(`/api/screens/${screenId}/buttons/${buttonId}`, { method: 'DELETE' });
+  request(projectPath(`/screens/${screenId}/buttons/${buttonId}`), {
+    method: 'DELETE',
+  });
 
 // Graph
-export const getGraph = () => request('/api/graph');
+export const getGraph = () => request(projectPath('/graph'));
 
 // Full mapper state (undo restore)
 export const restoreMapperState = (screens, sections) =>
-  request('/api/state', {
+  request(projectPath('/state'), {
     method: 'PUT',
     body: JSON.stringify({ screens, sections }),
   });
 
 // Config
-export const getConfig = () => request('/api/config');
+export const getConfig = () => request(projectPath('/config'));
 export const updateConfig = (imageSize) =>
-  request('/api/config', { method: 'PUT', body: JSON.stringify({ imageSize }) });
+  request(projectPath('/config'), {
+    method: 'PUT',
+    body: JSON.stringify({ imageSize }),
+  });
 
 // Sections
-export const getSections = () => request('/api/sections');
+export const getSections = () => request(projectPath('/sections'));
 export const createSection = (data) =>
-  request('/api/sections', { method: 'POST', body: JSON.stringify(data) });
+  request(projectPath('/sections'), { method: 'POST', body: JSON.stringify(data) });
 export const updateSection = (id, data) =>
-  request(`/api/sections/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+  request(projectPath(`/sections/${id}`), { method: 'PUT', body: JSON.stringify(data) });
 export const deleteSection = (id) =>
-  request(`/api/sections/${id}`, { method: 'DELETE' });
+  request(projectPath(`/sections/${id}`), { method: 'DELETE' });

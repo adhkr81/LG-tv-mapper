@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import {
@@ -8,10 +9,19 @@ import {
   registerScreenshotImport,
 } from '../services/capture.js';
 import { createScreen, getScreen, updateScreen } from '../services/screens.js';
-import { ensureConnected, getStatus } from '../services/serial.js';
+import { ensureConnected, getStatus as getSerialStatus } from '../services/serial.js';
+import {
+  ensureReady as ensureRmusReady,
+  captureScreenshot as captureFromRmus,
+  getStatus as getRmusStatus,
+} from '../services/rmus.js';
+import { getActiveProjectId } from '../services/data-store.js';
+import { getProject } from '../services/projects.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const upload = multer({ dest: path.join(__dirname, '..', 'data', 'screenshots', '.tmp') });
+const uploadTmpDir = path.join(__dirname, '..', 'data', '.upload-tmp');
+fs.mkdirSync(uploadTmpDir, { recursive: true });
+const upload = multer({ dest: uploadTmpDir });
 
 const router = Router();
 
@@ -20,7 +30,7 @@ function writeNdjson(res, payload) {
   if (typeof res.flush === 'function') res.flush();
 }
 
-// POST /api/capture — capture via serial (?stream=1 for progress NDJSON)
+// POST /api/capture — capture via serial (LG) or RMUS (Samsung)
 router.post('/', async (req, res) => {
   const streamProgress = req.query.stream === '1' || req.query.stream === 'true';
 
@@ -31,7 +41,15 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: 'screenId is required' });
     }
 
-    await ensureConnected();
+    const activeId = getActiveProjectId();
+    const project = activeId ? getProject(activeId) : null;
+    const requestedSource = String(req.body.source || '').toLowerCase();
+    const source =
+      requestedSource === 'rmus' || requestedSource === 'serial'
+        ? requestedSource
+        : project?.platform === 'samsung'
+          ? 'rmus'
+          : 'serial';
 
     const onProgress = streamProgress
       ? (progress) => writeNdjson(res, { type: 'progress', ...progress })
@@ -44,10 +62,20 @@ router.post('/', async (req, res) => {
     }
 
     let filename;
-    if (saveToLaptop) {
-      filename = await captureFromTVStream(screenId, onProgress);
+    let connectionStatus;
+
+    if (source === 'rmus') {
+      await ensureRmusReady();
+      filename = await captureFromRmus(screenId, onProgress);
+      connectionStatus = getRmusStatus().status;
     } else {
-      filename = await captureFromTV(screenId, onProgress);
+      await ensureConnected();
+      if (saveToLaptop) {
+        filename = await captureFromTVStream(screenId, onProgress);
+      } else {
+        filename = await captureFromTV(screenId, onProgress);
+      }
+      connectionStatus = getSerialStatus().status;
     }
 
     onProgress?.({
@@ -60,7 +88,12 @@ router.post('/', async (req, res) => {
     const screen = existing
       ? updateScreen(screenId, { image: filename })
       : createScreen({ id: screenId, image: filename, sectionId: sectionId || null });
-    const result = { ...screen, serialStatus: getStatus().status };
+    const result = {
+      ...screen,
+      source,
+      serialStatus: source === 'serial' ? connectionStatus : undefined,
+      rmusStatus: source === 'rmus' ? connectionStatus : undefined,
+    };
 
     if (streamProgress) {
       writeNdjson(res, { type: 'done', ...result });
@@ -69,14 +102,21 @@ router.post('/', async (req, res) => {
 
     res.json(result);
   } catch (err) {
+    const activeId = getActiveProjectId();
+    const project = activeId ? getProject(activeId) : null;
+    const isRmus = project?.platform === 'samsung' || req.body?.source === 'rmus';
+    const statusPayload = isRmus
+      ? { rmusStatus: getRmusStatus().status }
+      : { serialStatus: getSerialStatus().status };
+
     if (streamProgress && !res.headersSent) {
       res.setHeader('Content-Type', 'application/x-ndjson');
     }
     if (streamProgress && res.headersSent) {
-      writeNdjson(res, { type: 'error', error: err.message, serialStatus: getStatus().status });
+      writeNdjson(res, { type: 'error', error: err.message, ...statusPayload });
       return res.end();
     }
-    res.status(500).json({ error: err.message, serialStatus: getStatus().status });
+    res.status(500).json({ error: err.message, ...statusPayload });
   }
 });
 

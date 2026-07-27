@@ -1,0 +1,48 @@
+{
+  "version": 2,
+  "sections": [],
+  "screens": {
+    "homescreen": {
+      "graphX": 94,
+      "graphY": -232,
+      "sectionId": null,
+      "buttonIds": []
+    },
+    "homescreen_login": {
+      "graphX": 427,
+      "graphY": -243,
+      "sectionId": null,
+      "buttonIds": []
+    },
+    "homescreen_search": {
+      "graphX": 433,
+      "graphY": -43,
+      "sectionId": null,
+      "buttonIds": []
+    },
+    "homescreen_connected-devices": {
+      "graphX": 423,
+      "graphY": 148,
+      "sectionId": null,
+      "buttonIds": []
+    },
+    "homescreen_settings": {
+      "graphX": 435,
+      "graphY": 351,
+      "sectionId": null,
+      "buttonIds": []
+    },
+    "homescreen_vision-ai-1": {
+      "graphX": 220,
+      "graphY": 185,
+      "sectionId": null,
+      "buttonIds": []
+    }
+  },
+  "config": {
+    "imageSize": {
+      "intrinsicWidth": 1031,
+      "intrinsicHeight": 580
+    }
+  }
+}

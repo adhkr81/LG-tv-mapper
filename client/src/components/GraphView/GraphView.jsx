@@ -47,6 +47,8 @@ export default function GraphView({ isActive = true }) {
   const updateScreenGraphPositions = useStore((s) => s.updateScreenGraphPositions);
   const persistGraphLayoutFromNodes = useStore((s) => s.persistGraphLayoutFromNodes);
   const serialStatus = useStore((s) => s.serialStatus);
+  const rmusStatus = useStore((s) => s.rmusStatus);
+  const projectPlatform = useStore((s) => s.projectPlatform);
   const isCapturing = useStore((s) => s.isCapturing);
   const capturingScreenId = useStore((s) => s.capturingScreenId);
   const locateSectionRequest = useStore((s) => s.locateSectionRequest);
@@ -505,6 +507,17 @@ export default function GraphView({ isActive = true }) {
   };
 
   const flowKey = activeSectionId ?? 'all';
+  const isSamsung = projectPlatform === 'samsung';
+  const captureReady = isSamsung
+    ? rmusStatus === 'ready'
+    : serialStatus === 'shell-ready' || serialStatus === 'connected';
+  const captureTitle = isSamsung
+    ? captureReady
+      ? 'Capture from Samsung TV (RMUS)'
+      : 'Connect RMUS first'
+    : captureReady
+      ? 'Capture from TV'
+      : 'Connect serial first';
 
   return (
     <div className={`graph-view ${isActive ? '' : 'graph-view--inactive'}`}>
@@ -514,15 +527,15 @@ export default function GraphView({ isActive = true }) {
             <rect x="2" y="3" width="20" height="14" rx="2" />
             <path d="M8 21h8M12 17v4" />
           </svg>
-          <span>LG TV UI Mapper</span>
+          <span>{isSamsung ? 'Samsung TV UI Mapper' : 'LG TV UI Mapper'}</span>
         </div>
 
         <div className="graph-view__actions">
           <button
             className="btn btn-accent"
             onClick={openCaptureModal}
-            disabled={serialStatus !== 'shell-ready' && serialStatus !== 'connected'}
-            title={serialStatus !== 'shell-ready' ? 'Connect serial first' : 'Capture from TV'}
+            disabled={!captureReady}
+            title={captureTitle}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />

@@ -19,12 +19,21 @@ import {
   recordUndo,
 } from '../utils/undoHistory.js';
 
-const SECTION_STORAGE_KEY = 'lg-mapper-active-section';
+const SECTION_STORAGE_KEY_PREFIX = 'lg-mapper-active-section';
 const BUTTON_RECT_CLIPBOARD_KEY = 'lg-mapper-button-rect-clipboard';
+
+/** Scoped per open project so section selection doesn't leak across projects. */
+let storageProjectId = null;
+
+function sectionStorageKey() {
+  return storageProjectId
+    ? `${SECTION_STORAGE_KEY_PREFIX}:${storageProjectId}`
+    : SECTION_STORAGE_KEY_PREFIX;
+}
 
 function loadActiveSectionId() {
   try {
-    const stored = localStorage.getItem(SECTION_STORAGE_KEY);
+    const stored = localStorage.getItem(sectionStorageKey());
     if (!stored || stored === LEGACY_ALL_SCREENS_COLLAPSED_ID) return null;
     return stored;
   } catch {
@@ -34,10 +43,10 @@ function loadActiveSectionId() {
 
 async function migrateLegacyCollapsedView(sections) {
   try {
-    if (localStorage.getItem(SECTION_STORAGE_KEY) !== LEGACY_ALL_SCREENS_COLLAPSED_ID) {
+    if (localStorage.getItem(sectionStorageKey()) !== LEGACY_ALL_SCREENS_COLLAPSED_ID) {
       return sections;
     }
-    localStorage.removeItem(SECTION_STORAGE_KEY);
+    localStorage.removeItem(sectionStorageKey());
     if (!sections.length) return sections;
     await Promise.all(
       sections.map((s) => api.updateSection(s.id, { collapsed: true }))
@@ -272,6 +281,8 @@ const useStore = create((rawSet, get) => {
     captureProgress: null,
     isAddingHotspot: false,
     serialStatus: 'disconnected',
+    rmusStatus: 'disconnected',
+    projectPlatform: 'lg',
     canUndo: historyCanUndo(),
     /**
      * Bumped each time the user asks the graph to focus on a section.
@@ -281,6 +292,33 @@ const useStore = create((rawSet, get) => {
     locateSectionRequest: null,
 
     // ---- Actions ----
+
+    resetForProject: (projectId) => {
+      cancelAllButtonSaves();
+      clearUndoHistory();
+      storageProjectId = projectId || null;
+      set({
+        screens: [],
+        screensById: new Map(),
+        sections: [],
+        imageConfig: { ...DEFAULT_IMAGE_CONFIG },
+        imageVersions: {},
+        activeSectionId: loadActiveSectionId(),
+        selectedScreenId: null,
+        selectedScreenIds: [],
+        selectedButtonId: null,
+        importCompareScreenId: null,
+        importSourceButtonIds: [],
+        isCapturing: false,
+        capturingScreenId: null,
+        captureProgress: null,
+        isAddingHotspot: false,
+        canUndo: false,
+        locateSectionRequest: null,
+        projectPlatform: 'lg',
+        rmusStatus: 'disconnected',
+      });
+    },
 
     undo: async () => {
       const snapshot = popUndoSnapshot();
@@ -415,8 +453,9 @@ const useStore = create((rawSet, get) => {
           ? sectionId
           : null;
       try {
-        if (id) localStorage.setItem(SECTION_STORAGE_KEY, id);
-        else localStorage.removeItem(SECTION_STORAGE_KEY);
+        const key = sectionStorageKey();
+        if (id) localStorage.setItem(key, id);
+        else localStorage.removeItem(key);
       } catch {
         // ignore
       }
@@ -533,6 +572,7 @@ const useStore = create((rawSet, get) => {
 
     captureScreen: async (screenId) => {
       const sectionId = effectiveSectionId(get().activeSectionId);
+      const source = get().projectPlatform === 'samsung' ? 'rmus' : 'serial';
       set({
         isCapturing: true,
         capturingScreenId: screenId,
@@ -543,18 +583,27 @@ const useStore = create((rawSet, get) => {
           screenId,
           false,
           sectionId,
-          (progress) => set({ captureProgress: progress })
+          (progress) => set({ captureProgress: progress }),
+          source
         );
         if (result?.serialStatus) {
           set({ serialStatus: result.serialStatus });
+        }
+        if (result?.rmusStatus) {
+          set({ rmusStatus: result.rmusStatus });
         }
         set({
           captureProgress: { phase: 'complete', percent: 100, label: 'Done' },
         });
 
-        // result is `{ ...screen, serialStatus }` — merge it into local state.
-        // Strip out non-screen fields before patching.
-        const { serialStatus: _ignored, type: _t, ...screenFields } = result || {};
+        // result is `{ ...screen, serialStatus/rmusStatus }` — merge into local state.
+        const {
+          serialStatus: _s,
+          rmusStatus: _r,
+          source: _src,
+          type: _t,
+          ...screenFields
+        } = result || {};
         if (screenFields?.id) {
           const screens = get().screens;
           const exists = screens.some((s) => s.id === screenFields.id);
@@ -990,7 +1039,7 @@ const useStore = create((rawSet, get) => {
       set({ buttonRectClipboard: null });
     },
 
-    // Serial
+    // Serial (LG)
     fetchSerialStatus: async () => {
       try {
         const data = await api.getSerialStatus();
@@ -1018,6 +1067,74 @@ const useStore = create((rawSet, get) => {
         set({ serialStatus: 'disconnected' });
       } catch (err) {
         console.error('Serial disconnect failed:', err);
+      }
+    },
+
+    // Samsung RMUS
+    setProjectPlatform: (platform) => {
+      set({ projectPlatform: platform === 'samsung' ? 'samsung' : 'lg' });
+    },
+
+    fetchRmusStatus: async () => {
+      try {
+        const data = await api.getRmusStatus();
+        set({ rmusStatus: data.status });
+      } catch {
+        set({ rmusStatus: 'disconnected' });
+      }
+    },
+
+    connectRmus: async ({ fresh = false } = {}) => {
+      set({ rmusStatus: 'connecting' });
+      const poll = setInterval(() => {
+        api.getRmusStatus()
+          .then((data) => set({ rmusStatus: data.status }))
+          .catch(() => {});
+      }, 1500);
+      try {
+        const data = await api.connectRmus({ fresh });
+        set({ rmusStatus: data.status });
+        return data;
+      } catch (err) {
+        // connect() may leave browser open in awaiting-pin — sync status
+        try {
+          const data = await api.getRmusStatus();
+          set({ rmusStatus: data.status });
+        } catch {
+          set({ rmusStatus: 'error' });
+        }
+        console.error('RMUS connect failed:', err);
+        throw err;
+      } finally {
+        clearInterval(poll);
+      }
+    },
+
+    confirmRmusPin: async () => {
+      set({ rmusStatus: 'awaiting-pin' });
+      const poll = setInterval(() => {
+        api.getRmusStatus()
+          .then((data) => set({ rmusStatus: data.status }))
+          .catch(() => {});
+      }, 1500);
+      try {
+        const data = await api.confirmRmusPin();
+        set({ rmusStatus: data.status });
+        return data;
+      } catch (err) {
+        console.error('RMUS confirm PIN failed:', err);
+        throw err;
+      } finally {
+        clearInterval(poll);
+      }
+    },
+
+    disconnectRmus: async () => {
+      try {
+        await api.disconnectRmus();
+        set({ rmusStatus: 'disconnected' });
+      } catch (err) {
+        console.error('RMUS disconnect failed:', err);
       }
     },
   };

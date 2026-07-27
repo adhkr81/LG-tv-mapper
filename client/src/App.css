@@ -24,10 +24,29 @@
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  padding: 0 var(--space-md) 0 var(--space-xs);
+  padding: 0 var(--space-md) 0 0;
   margin-right: var(--space-xs);
   border-right: 1px solid var(--border);
   flex-shrink: 0;
+  min-width: 0;
+}
+
+.app__brand-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: background var(--duration) var(--ease), color var(--duration) var(--ease);
+}
+
+.app__brand-back:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .app__brand-icon {
@@ -43,12 +62,46 @@
   flex-shrink: 0;
 }
 
+.app__brand-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 0;
+  line-height: 1.15;
+}
+
 .app__brand-name {
   font-size: 13px;
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: -0.25px;
   white-space: nowrap;
+}
+
+.app__brand-project {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}
+
+.app--boot {
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+}
+
+.app__boot-loading,
+.app__boot-error {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.app__boot-error {
+  color: var(--danger);
 }
 
 /* ── Tab nav ─────────────────────────────────── */
@@ -111,6 +164,14 @@
   font-size: 11px;
   color: var(--text-secondary);
   white-space: nowrap;
+}
+
+.app__connect-error {
+  padding: 6px var(--space-md);
+  background: var(--danger-dim);
+  border-bottom: 1px solid rgba(244, 63, 94, 0.25);
+  color: var(--danger);
+  font-size: 12px;
 }
 
 /* ── Content area ────────────────────────────── */
