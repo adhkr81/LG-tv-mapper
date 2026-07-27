@@ -3,7 +3,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { v4 as uuidv4 } from 'uuid';
 import {
-  buttonToEmulator,
   parsePx,
   screenFromEmulator,
   screenToEmulator,
@@ -12,6 +11,7 @@ import {
 import { DEFAULT_IMAGE_CONFIG, normalizeImageConfig } from './coords.js';
 import {
   getProjectPaths,
+  getProject,
   migrateLegacyProjectLayout,
   projectExists,
   touchProject,
@@ -109,6 +109,13 @@ function ensureActiveProject() {
   if (!activeProjectId || !emulatorDataPath || !mapperMetaPath || !screenshotsDir) {
     throw new Error('No project is active. Open a project first.');
   }
+}
+
+/** @returns {'lg' | 'samsung'} */
+function getActivePlatform() {
+  if (!activeProjectId) return 'lg';
+  const project = getProject(activeProjectId);
+  return project?.platform === 'samsung' ? 'samsung' : 'lg';
 }
 
 function ensureDataDir() {
@@ -230,13 +237,20 @@ function alignScreenButtonIds(screen, screenMeta) {
 }
 
 function emulatorAndMetaToScreens(emulatorMap, meta) {
+  const platform = getActivePlatform();
   let needsRepersist = false;
   const screens = Object.entries(emulatorMap).map(([screenId, entry]) => {
     const screenMeta = meta.screens[screenId];
     const imgFilename =
       typeof entry.img_filename === 'string' ? entry.img_filename : screenId;
     const image = resolveImageFilenameOnDisk(screenId, imgFilename);
-    const screen = screenFromEmulator(screenId, entry, screenMeta, image);
+    const screen = screenFromEmulator(
+      screenId,
+      entry,
+      screenMeta,
+      image,
+      platform
+    );
     const { screen: aligned, dirty: alignDirty } = alignScreenButtonIds(
       screen,
       screenMeta
@@ -250,11 +264,12 @@ function emulatorAndMetaToScreens(emulatorMap, meta) {
 }
 
 function screensToEmulatorAndMeta(screens, sections, imageConfig) {
+  const platform = getActivePlatform();
   const emulatorMap = {};
   const metaScreens = {};
 
   for (const screen of screens) {
-    emulatorMap[screen.id] = screenToEmulator(screen);
+    emulatorMap[screen.id] = screenToEmulator(screen, platform);
     metaScreens[screen.id] = {
       graphX: screen.graphX ?? 0,
       graphY: screen.graphY ?? 0,
@@ -348,7 +363,17 @@ function loadStateFromDisk() {
   } else {
     const { screens, needsRepersist } = emulatorAndMetaToScreens(emulatorMap, meta);
     state.screens = screens;
-    if (needsRepersist || metaMigrated) markDirty();
+    const platform = getActivePlatform();
+    const needsSamsungRewrite =
+      platform === 'samsung' &&
+      Object.values(emulatorMap).some((entry) => {
+        if (!entry || typeof entry !== 'object') return false;
+        if (!entry.model || !entry.back_button) return true;
+        return (entry.buttons || []).some(
+          (btn) => btn && (btn.left != null || btn.top != null)
+        );
+      });
+    if (needsRepersist || metaMigrated || needsSamsungRewrite) markDirty();
   }
 
   state.loaded = true;
@@ -710,11 +735,15 @@ export function createScreen({
   }
 
   const img_filename = image?.trim() ? stripImageExtension(image) || id : '';
+  const platform = getActivePlatform();
   const screen = {
     id,
     image: image || '',
     img_filename,
-    preset: 0,
+    preset: platform === 'samsung' ? 'preset2' : 0,
+    ...(platform === 'samsung'
+      ? { model: 'smart-tv', backButtonTarget: '' }
+      : {}),
     buttons: [],
     sectionId: sectionId || null,
     sourceWidth: null,
@@ -760,6 +789,10 @@ export function updateScreen(id, updates) {
     screen.sectionId = updates.sectionId || null;
   }
   if (updates.preset !== undefined) screen.preset = updates.preset;
+  if (updates.model !== undefined) screen.model = updates.model;
+  if (updates.backButtonTarget !== undefined) {
+    screen.backButtonTarget = updates.backButtonTarget;
+  }
   if (updates.image !== undefined) {
     if (updates.image === null || updates.image === '') {
       deleteScreenshotFiles(screen);

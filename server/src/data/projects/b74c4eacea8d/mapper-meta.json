@@ -3,38 +3,105 @@
   "sections": [],
   "screens": {
     "homescreen": {
-      "graphX": 94,
-      "graphY": -232,
+      "graphX": 142,
+      "graphY": -239,
       "sectionId": null,
-      "buttonIds": []
+      "buttonIds": [
+        "60d1a190-4c13-40de-b86e-4167f7aae6d7",
+        "3a60c534-04cc-4680-a583-6928453e0e40",
+        "c553423f-4f52-44c9-a725-1507935f4eda",
+        "78d628bb-5963-4da3-80ee-39586b8e6f76",
+        "b2289239-9d37-476d-aca7-efe9c9c4f3e3",
+        "4c7f9159-62f9-47f8-8c46-2e6eb90d0a46",
+        "bcc1a089-ed95-477f-9e23-f4e59e9be36d",
+        "a11b9cd0-3de2-4e28-9e22-0130ff8fc8f7",
+        "74d6b4ca-c8bd-4958-a555-841556faab9e",
+        "d504b649-9018-45e7-9d4f-a30401f17695"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "homescreen_login": {
       "graphX": 427,
       "graphY": -243,
       "sectionId": null,
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "homescreen_search": {
       "graphX": 433,
       "graphY": -43,
       "sectionId": null,
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "homescreen_connected-devices": {
       "graphX": 423,
       "graphY": 148,
       "sectionId": null,
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "homescreen_settings": {
       "graphX": 435,
       "graphY": 351,
       "sectionId": null,
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "homescreen_vision-ai-1": {
-      "graphX": 220,
-      "graphY": 185,
+      "graphX": 695,
+      "graphY": -114,
+      "sectionId": null,
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "homescreen_vision-ai-2": {
+      "graphX": 692,
+      "graphY": 72,
+      "sectionId": null,
+      "buttonIds": []
+    },
+    "homescreen_vision-ai-3": {
+      "graphX": 686,
+      "graphY": 264,
+      "sectionId": null,
+      "buttonIds": []
+    },
+    "homescreen_live": {
+      "graphX": 975,
+      "graphY": 0,
+      "sectionId": null,
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "homescreen_games": {
+      "graphX": 973,
+      "graphY": 189,
+      "sectionId": null,
+      "buttonIds": []
+    },
+    "homescreen_art": {
+      "graphX": 1255,
+      "graphY": 0,
+      "sectionId": null,
+      "buttonIds": []
+    },
+    "homescreen_daily": {
+      "graphX": 1253,
+      "graphY": 197,
+      "sectionId": null,
+      "buttonIds": []
+    },
+    "homescreen_apps": {
+      "graphX": 0,
+      "graphY": 555,
       "sectionId": null,
       "buttonIds": []
     }
