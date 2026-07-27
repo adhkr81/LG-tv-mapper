@@ -273,8 +273,8 @@
 .hotspot-region--pickable { cursor: pointer; }
 
 .hotspot-region--pickable.hotspot-region--selected {
-  border-color: var(--amber);
-  box-shadow: 0 0 0 2px rgba(245,158,11,.2), 0 0 14px rgba(245,158,11,.3);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-dim), 0 0 14px var(--accent-glow);
   z-index: 11;
 }
 
@@ -352,8 +352,8 @@
   position: absolute;
   box-sizing: border-box;
   z-index: 5;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
+  border: 1.20px solid var(--accent);
+  border-radius: 4px;
   cursor: grab;
   touch-action: none;
   user-select: none;
@@ -375,9 +375,9 @@
   box-sizing: border-box;
   pointer-events: none;
   z-index: 21;
-  border: 3px dashed var(--accent);
-  border-radius: 8px;
-  background: rgba(0, 229, 255, 0.1);
+  border: 1.20px dashed var(--accent);
+  border-radius: 4px;
+  background: var(--accent-dim);
   cursor: grabbing;
 }
 
@@ -385,13 +385,13 @@
 
 .hotspot-region--linked {
   border-color: var(--accent);
-  background: rgba(0, 229, 255, 0.1);
-  box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+  background: var(--accent-dim);
+  box-shadow: 0 0 10px var(--accent-glow);
 }
 
 .hotspot-region--unlinked {
-  border-color: var(--amber);
-  background: rgba(245, 158, 11, 0.08);
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 4%, transparent);
 }
 
 .hotspot-region--selected {
@@ -420,7 +420,7 @@
 
 .hotspot-region--linked .hotspot-region__tag {
   color: var(--accent);
-  border: 1px solid rgba(0, 229, 255, 0.3);
+  border: 1px solid var(--border-accent);
 }
 
 .hotspot-region--unlinked .hotspot-region__tag {

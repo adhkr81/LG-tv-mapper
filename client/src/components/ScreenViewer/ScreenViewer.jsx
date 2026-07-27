@@ -92,6 +92,7 @@ export default function ScreenViewer() {
   const addButton = useStore((s) => s.addButton);
   const updateButton = useStore((s) => s.updateButton);
   const imageConfig = useStore((s) => s.imageConfig);
+  const projectPlatform = useStore((s) => s.projectPlatform);
   const reportScreenSourceSize = useStore((s) => s.reportScreenSourceSize);
   const buttonRectClipboard = useStore((s) => s.buttonRectClipboard);
   const importSourceButtonIds = useStore((s) => s.importSourceButtonIds);
@@ -194,7 +195,8 @@ export default function ScreenViewer() {
         y,
         placementSize,
         screenForCoords,
-        imageConfig
+        imageConfig,
+        projectPlatform
       );
 
       addButton(targetScreen.id, {
@@ -204,7 +206,15 @@ export default function ScreenViewer() {
       });
       setAddingHotspot(false);
     },
-    [isAddingHotspot, isCompareMode, addButton, setAddingHotspot, placementSize, imageConfig]
+    [
+      isAddingHotspot,
+      isCompareMode,
+      addButton,
+      setAddingHotspot,
+      placementSize,
+      imageConfig,
+      projectPlatform,
+    ]
   );
 
   const canvasContent = !screen ? (
@@ -341,6 +351,7 @@ function ComparePane({
   showPickHint = false,
   onHeaderClose,
 }) {
+  const projectPlatform = useStore((s) => s.projectPlatform);
   const imageVersion = useStore((s) =>
     screen?.id ? (s.imageVersions[screen.id] ?? 0) : 0
   );
@@ -391,10 +402,15 @@ function ComparePane({
     return new Map(
       screen.buttons.map((btn) => [
         btn.id,
-        toDisplayRect(normalizeButton(btn), screenForCoords, imageConfig),
+        toDisplayRect(
+          normalizeButton(btn),
+          screenForCoords,
+          imageConfig,
+          projectPlatform
+        ),
       ])
     );
-  }, [pickable, screen?.buttons, screenForCoords, imageConfig]);
+  }, [pickable, screen?.buttons, screenForCoords, imageConfig, projectPlatform]);
 
   const selectedPickSet = useMemo(
     () => new Set(selectedButtonIds || []),
@@ -504,6 +520,7 @@ function ComparePane({
               screen={screen}
               imageConfig={imageConfig}
               imageSize={sourceSize}
+              platform={projectPlatform}
               selected={
                 pickable
                   ? selectedPickSet.has(btn.id)
@@ -554,6 +571,7 @@ function HotspotRegion({
   screen,
   imageConfig,
   imageSize,
+  platform = 'lg',
   selected,
   draggable,
   readonly,
@@ -580,7 +598,7 @@ function HotspotRegion({
   );
 
   const saved = useMemo(
-    () => toDisplayRect(savedIntrinsic, screenForCoords, imageConfig),
+    () => toDisplayRect(savedIntrinsic, screenForCoords, imageConfig, platform),
     [
       savedIntrinsic.left,
       savedIntrinsic.top,
@@ -589,6 +607,7 @@ function HotspotRegion({
       screenForCoords.sourceWidth,
       screenForCoords.sourceHeight,
       imageConfig,
+      platform,
     ]
   );
 
@@ -637,7 +656,7 @@ function HotspotRegion({
     const fullSource = { ...savedRef.current, ...partial };
     onUpdate(
       buttonId,
-      fromDisplayRect(fullSource, screenForCoords, imageConfig)
+      fromDisplayRect(fullSource, screenForCoords, imageConfig, platform)
     );
   };
 
@@ -677,7 +696,8 @@ function HotspotRegion({
           height: ghost.height,
         },
         screenForCoords,
-        imageConfig
+        imageConfig,
+        platform
       );
       onDuplicate(button, sourceRect);
     }

@@ -200,7 +200,7 @@
 }
 
 .sidebar__button-item--selected {
-  border-color: rgba(0, 229, 255, 0.35);
+  border-color: var(--border-accent);
   background: color-mix(in srgb, var(--bg-elevated) 85%, var(--accent));
   box-shadow: 0 0 0 1px var(--accent-dim);
 }
@@ -298,6 +298,10 @@
   margin-bottom: var(--space-xs);
 }
 
+.sidebar__back-button {
+  margin-top: var(--space-md);
+}
+
 .sidebar-screen-picker {
   position: relative;
   width: 100%;
@@ -315,7 +319,7 @@
 }
 
 .sidebar-screen-picker--open .sidebar-screen-picker__trigger {
-  border-color: rgba(0, 229, 255, 0.5);
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
   box-shadow: 0 0 0 3px var(--accent-dim);
 }
 

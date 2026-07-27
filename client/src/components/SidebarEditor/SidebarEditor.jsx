@@ -34,6 +34,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const importButtonsFromScreen = useStore((s) => s.importButtonsFromScreen);
   const imageConfig = useStore((s) => s.imageConfig);
   const updateScreenName = useStore((s) => s.updateScreenName);
+  const updateScreenBackButton = useStore((s) => s.updateScreenBackButton);
   const replaceScreenImage = useStore((s) => s.replaceScreenImage);
   const clearScreenImage = useStore((s) => s.clearScreenImage);
   const createScreenNode = useStore((s) => s.createScreenNode);
@@ -46,6 +47,8 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const setImportSourceButtonIds = useStore((s) => s.setImportSourceButtonIds);
   const buttonRectClipboard = useStore((s) => s.buttonRectClipboard);
   const copyButtonRect = useStore((s) => s.copyButtonRect);
+  const projectPlatform = useStore((s) => s.projectPlatform);
+  const isSamsung = projectPlatform === 'samsung';
 
   const screen = selectedScreenId ? screensById.get(selectedScreenId) : undefined;
   const activeSection = isRealSectionView(activeSectionId)
@@ -263,6 +266,15 @@ export default function SidebarEditor({ mode = 'viewer' }) {
     }
   };
 
+  const handleBackButtonChange = async (targetId) => {
+    if (!screen) return;
+    try {
+      await updateScreenBackButton(screen.id, targetId || '');
+    } catch (err) {
+      alert('Update failed: ' + err.message);
+    }
+  };
+
   const handleTargetChange = async (buttonId, newTarget) => {
     try {
       await updateButton(screen.id, buttonId, { target: newTarget });
@@ -458,6 +470,34 @@ export default function SidebarEditor({ mode = 'viewer' }) {
               Remove image
             </button>
           </div>
+          {isSamsung && (
+            <div className="sidebar__button-target sidebar__back-button">
+              <label className="label">Back button</label>
+              <ScreenPickerSelect
+                value={screen.backButtonTarget || ''}
+                onChange={handleBackButtonChange}
+                allowEmpty
+                emptyLabel="— none —"
+                isParent={isParentScreen}
+                showPreviewOnHover
+                screens={screens}
+                groups={[
+                  ...(targetOptions.inSection.length > 0
+                    ? [{
+                        label: 'This section',
+                        options: targetOptions.inSection.map((s) => ({ id: s.id })),
+                      }]
+                    : []),
+                  ...(targetOptions.other.length > 0
+                    ? [{
+                        label: 'Other screens',
+                        options: targetOptions.other.map((s) => ({ id: s.id })),
+                      }]
+                    : []),
+                ]}
+              />
+            </div>
+          )}
         </div>
       )}
 

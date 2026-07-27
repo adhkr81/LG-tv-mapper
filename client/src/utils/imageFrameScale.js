@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
-/** Scale factor so a W×H frame fits inside its container. */
+/** Scale factor so a W×H frame fills 80% of its container (may upscale small images). */
 export function computeImageFrameScale(containerWidth, containerHeight, imageWidth, imageHeight) {
   if (!containerWidth || !containerHeight || !imageWidth || !imageHeight) return 1;
-  return Math.min(1, containerWidth / imageWidth, containerHeight / imageHeight);
+  return Math.min(containerWidth / imageWidth, containerHeight / imageHeight) * 0.8;
 }
 
 export function useImageFrameScale(containerRef, imageSize) {

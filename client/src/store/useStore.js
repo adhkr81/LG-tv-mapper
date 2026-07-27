@@ -853,22 +853,41 @@ const useStore = create((rawSet, get) => {
                 ),
               };
             }
+            if (next.backButtonTarget === oldId) {
+              next = { ...next, backButtonTarget: newId };
+            }
             return next;
           }),
           sections: get().sections.map((sec) =>
             sec.rootScreenId === oldId ? { ...sec, rootScreenId: newId } : sec
           ),
+          selectedScreenId:
+            get().selectedScreenId === oldId ? newId : get().selectedScreenId,
+          selectedScreenIds: get().selectedScreenIds.map((id) =>
+            id === oldId ? newId : id
+          ),
         });
-        if (get().selectedScreenId === oldId) {
-          set({
-            selectedScreenId: newId,
-            selectedScreenIds: get().selectedScreenIds.map((id) =>
-              id === oldId ? newId : id
-            ),
-          });
-        }
+        return updated;
       } catch (err) {
         console.error('Rename screen failed:', err);
+        throw err;
+      }
+    },
+
+    updateScreenBackButton: async (screenId, backButtonTarget) => {
+      markUndoAvailable(set, get);
+      try {
+        const updated = await api.updateScreen(screenId, {
+          backButtonTarget: backButtonTarget || '',
+        });
+        set({
+          screens: get().screens.map((s) =>
+            s.id === screenId ? { ...s, ...updated } : s
+          ),
+        });
+        return updated;
+      } catch (err) {
+        console.error('Update back button failed:', err);
         throw err;
       }
     },
@@ -892,13 +911,17 @@ const useStore = create((rawSet, get) => {
           screens: get()
             .screens.filter((s) => !removed.has(s.id))
             .map((s) => {
-              if (!removeParentButtons) return s;
-              if (!s.buttons.some((b) => b.target && removed.has(b.target))) {
-                return s;
+              let next = s;
+              if (next.backButtonTarget && removed.has(next.backButtonTarget)) {
+                next = { ...next, backButtonTarget: '' };
+              }
+              if (!removeParentButtons) return next;
+              if (!next.buttons.some((b) => b.target && removed.has(b.target))) {
+                return next;
               }
               return {
-                ...s,
-                buttons: s.buttons.filter(
+                ...next,
+                buttons: next.buttons.filter(
                   (b) => !b.target || !removed.has(b.target)
                 ),
               };

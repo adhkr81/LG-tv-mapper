@@ -231,14 +231,14 @@ function collectSectionEdges(visibleScreens, screenIds, externalIds) {
           label: btn.label,
           animated: !crossSection,
           style: {
-            stroke: crossSection ? '#ffab00' : '#00e5ff',
+            stroke: crossSection ? '#ffab00' : 'var(--accent)',
             strokeWidth: 2,
             strokeDasharray: crossSection ? '6 4' : undefined,
           },
           labelStyle: { fill: '#8a8a9e', fontSize: 11 },
           markerEnd: {
             type: MarkerType.ArrowClosed,
-            color: crossSection ? '#ffab00' : '#00e5ff',
+            color: crossSection ? '#ffab00' : 'var(--accent)',
             width: 16,
             height: 16,
           },
@@ -309,14 +309,14 @@ function collectAllScreensEdges(screens, collapsedSectionIds = new Set()) {
       label: count > 1 ? undefined : first.label,
       animated: !crossSection,
       style: {
-        stroke: crossSection ? '#ffab00' : '#00e5ff',
+        stroke: crossSection ? '#ffab00' : 'var(--accent)',
         strokeWidth: 2,
         strokeDasharray: crossSection ? '6 4' : undefined,
       },
       labelStyle: { fill: '#8a8a9e', fontSize: 11 },
       markerEnd: {
         type: MarkerType.ArrowClosed,
-        color: crossSection ? '#ffab00' : '#00e5ff',
+        color: crossSection ? '#ffab00' : 'var(--accent)',
         width: 16,
         height: 16,
       },

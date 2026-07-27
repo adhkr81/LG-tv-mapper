@@ -5,6 +5,7 @@ import { rmusConfig } from './rmus-config.js';
 import { loginAndWaitAuthenticated } from './rmus-login.js';
 import { captureWithRetries } from './rmus-capture.js';
 import { getScreenshotsDir } from './data-store.js';
+import { normalizeCaptureToPreset2 } from './samsung-image.js';
 
 /** @type {import('playwright').Browser | null} */
 let browser = null;
@@ -286,10 +287,19 @@ export function captureScreenshot(screenId, onProgress) {
 
     onProgress?.({
       phase: 'finishing',
+      percent: 90,
+      label: 'Normalizing to preset2…',
+    });
+
+    const finalPath = path.join(screenshotsDir, `${screenId}.jpg`);
+    const filename = await normalizeCaptureToPreset2(result.destPath, finalPath);
+
+    onProgress?.({
+      phase: 'finishing',
       percent: 95,
       label: 'Saving screenshot…',
     });
 
-    return path.basename(result.destPath);
+    return filename;
   });
 }

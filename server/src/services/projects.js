@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { v4 as uuidv4 } from 'uuid';
 import { DEFAULT_IMAGE_CONFIG } from './coords.js';
+import { SAMSUNG_PRESET2 } from './samsung-preset2.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, '..', 'data');
@@ -57,12 +58,19 @@ function isSafeProjectId(id) {
   return typeof id === 'string' && /^[a-zA-Z0-9_-]+$/.test(id) && id.length <= 64;
 }
 
-function emptyMeta() {
+function emptyMeta(platform = 'lg') {
+  const imageSize =
+    platform === 'samsung'
+      ? {
+          intrinsicWidth: SAMSUNG_PRESET2.width,
+          intrinsicHeight: SAMSUNG_PRESET2.height,
+        }
+      : { ...DEFAULT_IMAGE_CONFIG };
   return {
     version: 2,
     sections: [],
     screens: {},
-    config: { imageSize: { ...DEFAULT_IMAGE_CONFIG } },
+    config: { imageSize },
   };
 }
 
@@ -109,7 +117,10 @@ function ensureProjectFiles(
     atomicWrite(paths.emulatorJson, {});
   }
   if (!fs.existsSync(paths.mapperMeta)) {
-    atomicWrite(paths.mapperMeta, emptyMeta());
+    atomicWrite(
+      paths.mapperMeta,
+      emptyMeta(normalizePlatform(platform || 'lg'))
+    );
   }
 }
 
@@ -263,6 +274,11 @@ export function createProject({ name, platform } = {}) {
     createdAt: now,
     updatedAt: now,
   });
+  // ensureProjectFiles may have written empty meta before platform was known — force samsung size
+  if (normalizedPlatform === 'samsung') {
+    const metaPath = getProjectPaths(id).mapperMeta;
+    atomicWrite(metaPath, emptyMeta('samsung'));
+  }
   writeProjectJson(id, {
     name: trimmed,
     platform: normalizedPlatform,

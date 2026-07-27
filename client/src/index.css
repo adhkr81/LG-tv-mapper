@@ -15,7 +15,7 @@
   --text-secondary: #7c8ea8;
   --text-muted:     #3e5070;
 
-  /* ── Accent (cyan brand) ─────────────────── */
+  /* ── Accent (cyan brand — LG) ────────────── */
   --accent:        #00e5ff;
   --accent-dim:    rgba(0, 229, 255, 0.08);
   --accent-glow:   rgba(0, 229, 255, 0.22);
@@ -64,6 +64,14 @@
   --ease:     cubic-bezier(0.4, 0, 0.2, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
   --duration: 150ms;
+}
+
+/* Samsung projects: swap cyan accents for dodgerblue */
+:root[data-platform="samsung"] {
+  --accent:        dodgerblue;
+  --accent-dim:    rgba(30, 144, 255, 0.08);
+  --accent-glow:   rgba(30, 144, 255, 0.22);
+  --border-accent: rgba(30, 144, 255, 0.22);
 }
 
 /* ── Reset ───────────────────────────────────── */
@@ -162,10 +170,10 @@ select {
 }
 
 .btn-accent:hover:not(:disabled) {
-  background: rgba(0, 229, 255, 0.14);
-  border-color: rgba(0, 229, 255, 0.38);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 38%, transparent);
   color: var(--accent);
-  box-shadow: 0 0 18px rgba(0, 229, 255, 0.12);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 12%, transparent);
 }
 
 .btn-danger {
@@ -207,7 +215,7 @@ select {
 }
 
 .input:focus {
-  border-color: rgba(0, 229, 255, 0.5);
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
   box-shadow: 0 0 0 3px var(--accent-dim);
 }
 

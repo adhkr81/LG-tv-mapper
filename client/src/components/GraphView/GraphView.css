@@ -185,7 +185,7 @@
 
 .screen-node__capture-progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, var(--accent), #7c9eff);
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 55%, white));
   border-radius: 99px;
   transition: width 0.25s var(--ease);
 }

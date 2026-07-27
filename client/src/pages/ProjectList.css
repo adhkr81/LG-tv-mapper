@@ -178,9 +178,9 @@
 }
 
 .project-pill--samsung {
-  color: #93c5fd;
-  background: rgba(59, 130, 246, 0.12);
-  border: 1px solid rgba(59, 130, 246, 0.28);
+  color: dodgerblue;
+  background: rgba(30, 144, 255, 0.12);
+  border: 1px solid rgba(30, 144, 255, 0.28);
 }
 
 .project-card__actions {

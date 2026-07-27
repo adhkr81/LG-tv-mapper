@@ -13,6 +13,7 @@ export default function ScreenPreview() {
   const selectedScreenId = useStore((s) => s.selectedScreenId);
   const selectScreen = useStore((s) => s.selectScreen);
   const imageConfig = useStore((s) => s.imageConfig);
+  const projectPlatform = useStore((s) => s.projectPlatform);
   const skipGraphSyncRef = useRef(false);
 
   /** Graph pick that started preview; kept when navigating off-canvas. */
@@ -113,6 +114,17 @@ export default function ScreenPreview() {
     });
   }, [selectScreen]);
 
+  const isSamsung = projectPlatform === 'samsung';
+  const backButtonTarget = String(screen?.backButtonTarget || '').trim();
+  const canUseBackButton = Boolean(
+    backButtonTarget && screensById.has(backButtonTarget)
+  );
+
+  const goRemoteBack = useCallback(() => {
+    if (!canUseBackButton) return;
+    navigateTo(backButtonTarget);
+  }, [canUseBackButton, backButtonTarget, navigateTo]);
+
   const resetToAnchor = useCallback(() => {
     if (!anchorScreenId) return;
     setCurrentScreenId(anchorScreenId);
@@ -166,6 +178,24 @@ export default function ScreenPreview() {
         </div>
         <h3 className="screen-preview__title">{screen.id}</h3>
         <span className="screen-preview__hint">Click hotspots to navigate</span>
+        {isSamsung && (
+          <button
+            type="button"
+            className="btn btn-sm btn-accent screen-preview__remote-back"
+            onClick={goRemoteBack}
+            disabled={!canUseBackButton}
+            title={
+              canUseBackButton
+                ? `Remote back → ${backButtonTarget}`
+                : 'No back button target'
+            }
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+            Remote back
+          </button>
+        )}
       </div>
 
       <div ref={containerRef} className="screen-viewer__image-container">
@@ -180,6 +210,7 @@ export default function ScreenPreview() {
                     button={btn}
                     screenForCoords={screenForCoords}
                     imageConfig={imageConfig}
+                    platform={projectPlatform}
                     onNavigate={navigateTo}
                   />
                 ))
@@ -209,7 +240,7 @@ function hasPopoverContent(popover) {
   return Boolean(popover?.title?.trim() || popover?.text?.trim());
 }
 
-function PreviewHotspot({ button, screenForCoords, imageConfig, onNavigate }) {
+function PreviewHotspot({ button, screenForCoords, imageConfig, platform = 'lg', onNavigate }) {
   const normalized = normalizeButton(button);
   const [hovered, setHovered] = useState(false);
   const popover = button.popover;
@@ -219,7 +250,7 @@ function PreviewHotspot({ button, screenForCoords, imageConfig, onNavigate }) {
   );
 
   const rect = useMemo(
-    () => toDisplayRect(normalized, screenForCoords, imageConfig),
+    () => toDisplayRect(normalized, screenForCoords, imageConfig, platform),
     [
       normalized.left,
       normalized.top,
@@ -228,6 +259,7 @@ function PreviewHotspot({ button, screenForCoords, imageConfig, onNavigate }) {
       screenForCoords?.sourceWidth,
       screenForCoords?.sourceHeight,
       imageConfig,
+      platform,
     ]
   );
 

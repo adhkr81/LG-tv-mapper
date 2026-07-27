@@ -41,7 +41,16 @@ export function scaleRect(rect, from, to) {
 
 /** Align emulator.json coords with full screenshots (LG screen-stack inset). */
 export const BUTTON_DISPLAY_OFFSET = { left: -92, top: -5 };
+export const BUTTON_DISPLAY_OFFSET_NONE = { left: 0, top: 0 };
 
+/** Samsung preset2 screen size (simulator data.json). */
+export const SAMSUNG_PRESET2_SIZE = { intrinsicWidth: 658, intrinsicHeight: 370 };
+
+export function displayOffsetForPlatform(platform) {
+  return platform === 'samsung' ? BUTTON_DISPLAY_OFFSET_NONE : BUTTON_DISPLAY_OFFSET;
+}
+
+/** Align emulator.json coords with full screenshots (LG screen-stack inset). */
 function offsetRect(rect, delta) {
   return {
     ...rect,
@@ -60,9 +69,9 @@ export function toSourceRect(rect, screen, config) {
 }
 
 /** Emulator storage → on-screen pixels (scale + display offset). */
-export function toDisplayRect(rect, screen, config) {
+export function toDisplayRect(rect, screen, config, platform = 'lg') {
   return toSourceRect(
-    offsetRect(rect, BUTTON_DISPLAY_OFFSET),
+    offsetRect(rect, displayOffsetForPlatform(platform)),
     screen,
     config
   );
@@ -78,10 +87,11 @@ export function toIntrinsicRect(rect, screen, config) {
 }
 
 /** On-screen pixels → emulator.json storage (inverse scale + offset). */
-export function fromDisplayRect(rect, screen, config) {
+export function fromDisplayRect(rect, screen, config, platform = 'lg') {
+  const delta = displayOffsetForPlatform(platform);
   return offsetRect(toIntrinsicRect(rect, screen, config), {
-    left: -BUTTON_DISPLAY_OFFSET.left,
-    top: -BUTTON_DISPLAY_OFFSET.top,
+    left: -delta.left,
+    top: -delta.top,
   });
 }
 
@@ -94,7 +104,7 @@ export function defaultButtonSize(config) {
 }
 
 /** Click in screenshot pixels; returns rect in emulator storage space. */
-export function centerFromSourceClick(x, y, productSize, screen, config) {
+export function centerFromSourceClick(x, y, productSize, screen, config, platform = 'lg') {
   const src = sourceSize(screen) || intrinsicSize(config);
   const product = intrinsicSize(config);
   const sourceBtnSize = {
@@ -107,5 +117,5 @@ export function centerFromSourceClick(x, y, productSize, screen, config) {
     width: sourceBtnSize.width,
     height: sourceBtnSize.height,
   };
-  return fromDisplayRect(sourceRect, screen, config);
+  return fromDisplayRect(sourceRect, screen, config, platform);
 }

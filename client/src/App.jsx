@@ -88,6 +88,13 @@ export default function App() {
   const isSamsung = projectPlatform === 'samsung';
   const connectionStatus = isSamsung ? rmusStatus : serialStatus;
 
+  useEffect(() => {
+    document.documentElement.dataset.platform = projectPlatform || 'lg';
+    return () => {
+      delete document.documentElement.dataset.platform;
+    };
+  }, [projectPlatform]);
+
   const connectionLabel = isSamsung
     ? connectionStatus === 'ready'
       ? 'RMUS Ready'

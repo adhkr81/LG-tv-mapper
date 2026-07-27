@@ -50,6 +50,11 @@
   white-space: nowrap;
 }
 
+.screen-preview__remote-back {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
 .screen-preview .screen-viewer__image-container {
   flex: 1;
   min-height: 0;

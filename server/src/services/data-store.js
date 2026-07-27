@@ -16,6 +16,7 @@ import {
   projectExists,
   touchProject,
 } from './projects.js';
+import { SAMSUNG_PRESET2 } from './samsung-preset2.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, '..', 'data');
@@ -550,6 +551,9 @@ function renameScreenIdInTargets(screens, oldId, newId) {
     for (const btn of screen.buttons) {
       if (btn.target === oldId) btn.target = newId;
     }
+    if (screen.backButtonTarget === oldId) {
+      screen.backButtonTarget = newId;
+    }
   }
 }
 
@@ -567,6 +571,22 @@ function removeButtonsTargetingScreens(screens, targetIds) {
     screen.buttons = screen.buttons.filter(
       (btn) => !btn.target || !idSet.has(btn.target)
     );
+  }
+}
+
+function clearBackButtonTargets(screens, targetIds) {
+  const idSet =
+    targetIds instanceof Set
+      ? targetIds
+      : Array.isArray(targetIds)
+        ? new Set(targetIds)
+        : new Set([targetIds]);
+  if (!idSet.size) return;
+
+  for (const screen of screens) {
+    if (screen.backButtonTarget && idSet.has(screen.backButtonTarget)) {
+      screen.backButtonTarget = '';
+    }
   }
 }
 
@@ -746,8 +766,8 @@ export function createScreen({
       : {}),
     buttons: [],
     sectionId: sectionId || null,
-    sourceWidth: null,
-    sourceHeight: null,
+    sourceWidth: platform === 'samsung' ? SAMSUNG_PRESET2.width : null,
+    sourceHeight: platform === 'samsung' ? SAMSUNG_PRESET2.height : null,
     ...layout,
   };
 
@@ -831,6 +851,7 @@ export function deleteScreen(id, { removeParentButtons = false } = {}) {
   if (removeParentButtons) {
     removeButtonsTargetingScreens(state.screens, id);
   }
+  clearBackButtonTargets(state.screens, id);
   state.screens.splice(idx, 1);
   markDirty();
 }
