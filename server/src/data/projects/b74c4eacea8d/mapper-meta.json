@@ -1,6 +1,39 @@
 {
   "version": 2,
-  "sections": [],
+  "sections": [
+    {
+      "id": "Home_Navbar",
+      "name": "Home Navbar",
+      "rootScreenId": "homescreen_live",
+      "bandX": 469,
+      "bandY": -230,
+      "collapsed": true
+    },
+    {
+      "id": "Vision_AI",
+      "name": "Vision AI",
+      "rootScreenId": "homescreen_vision-ai-1",
+      "collapsed": true,
+      "bandX": -204,
+      "bandY": -214
+    },
+    {
+      "id": "My_Account",
+      "name": "My Account",
+      "rootScreenId": "homescreen_login",
+      "bandX": -271,
+      "bandY": 3,
+      "collapsed": true
+    },
+    {
+      "id": "Screenshots",
+      "name": "Screenshots",
+      "rootScreenId": null,
+      "bandX": 127,
+      "bandY": -495,
+      "collapsed": true
+    }
+  ],
   "screens": {
     "homescreen": {
       "graphX": 142,
@@ -22,32 +55,32 @@
       "sourceHeight": 370
     },
     "homescreen_login": {
-      "graphX": 427,
-      "graphY": -243,
-      "sectionId": null,
+      "graphX": -1742,
+      "graphY": 36,
+      "sectionId": "My_Account",
       "buttonIds": [],
       "sourceWidth": 658,
       "sourceHeight": 370
     },
     "homescreen_search": {
-      "graphX": 433,
-      "graphY": -43,
+      "graphX": 42,
+      "graphY": 32,
       "sectionId": null,
       "buttonIds": [],
       "sourceWidth": 658,
       "sourceHeight": 370
     },
     "homescreen_connected-devices": {
-      "graphX": 423,
-      "graphY": 148,
+      "graphX": 289,
+      "graphY": 33,
       "sectionId": null,
       "buttonIds": [],
-      "sourceWidth": 658,
-      "sourceHeight": 370
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "homescreen_settings": {
-      "graphX": 435,
-      "graphY": 351,
+      "graphX": 549,
+      "graphY": 32,
       "sectionId": null,
       "buttonIds": [],
       "sourceWidth": 658,
@@ -56,63 +89,288 @@
     "homescreen_vision-ai-1": {
       "graphX": 695,
       "graphY": -114,
-      "sectionId": null,
-      "buttonIds": [],
+      "sectionId": "Vision_AI",
+      "buttonIds": [
+        "f28db721-9a04-4227-9349-dd0ec98bf6ed"
+      ],
       "sourceWidth": 658,
       "sourceHeight": 370
     },
     "homescreen_vision-ai-2": {
-      "graphX": 692,
-      "graphY": 72,
-      "sectionId": null,
-      "buttonIds": [],
+      "graphX": 940,
+      "graphY": -113,
+      "sectionId": "Vision_AI",
+      "buttonIds": [
+        "d86170cf-96d8-4ec1-932e-9edbfb9b4cdc",
+        "b67ea750-690f-4f2c-8db6-141194393f0b"
+      ],
       "sourceWidth": 658,
       "sourceHeight": 370
     },
     "homescreen_vision-ai-3": {
-      "graphX": 686,
-      "graphY": 264,
-      "sectionId": null,
-      "buttonIds": [],
+      "graphX": 1181,
+      "graphY": -114,
+      "sectionId": "Vision_AI",
+      "buttonIds": [
+        "085a6030-a72e-49f1-8a26-4bbbd504f321",
+        "eef8590c-6718-4b87-94d4-e682d8dc6918",
+        "768bc8c8-2592-4b3a-a86d-6340fbe32a7f"
+      ],
       "sourceWidth": 658,
       "sourceHeight": 370
     },
     "homescreen_live": {
-      "graphX": 975,
-      "graphY": 0,
-      "sectionId": null,
-      "buttonIds": [],
+      "graphX": 922,
+      "graphY": -727,
+      "sectionId": "Home_Navbar",
+      "buttonIds": [
+        "e9adfb47-0e8e-42b1-ae04-73ec8802c20b",
+        "c95037c1-edb4-457c-ae57-51683422f727",
+        "c37c62d0-9c6f-436f-b83d-9963c963811e",
+        "d6ce75f0-8e33-467d-91b3-e3cfcf0cd1fd",
+        "4d30eaab-fc59-4c08-a73c-9040e7f95047",
+        "0d420217-7234-4d88-984d-5cda7e938331",
+        "617dcfc8-9ce5-4192-ab32-8ec11ae4ed7f",
+        "2f0a23e2-55b0-49ed-8d11-3e2e87625463",
+        "99b00090-a6d5-4ea1-96a9-62015c3e2fe4",
+        "af760788-752e-4519-bd5c-6b00c998cf43"
+      ],
       "sourceWidth": 658,
       "sourceHeight": 370
     },
     "homescreen_games": {
-      "graphX": 973,
-      "graphY": 189,
-      "sectionId": null,
-      "buttonIds": [],
+      "graphX": 1256,
+      "graphY": -705,
+      "sectionId": "Home_Navbar",
+      "buttonIds": [
+        "8f34148e-c266-4d53-b3b5-33e8f1ac4c96",
+        "212fcc14-0b9f-4292-81e2-969f636a6085",
+        "f55a90fd-946c-4efd-ada1-3ae913965ee4",
+        "ee251dee-7eb3-437a-8937-fd7fff35aba0",
+        "f3dca13b-400b-4740-a53a-a9df0083257f",
+        "9eb43964-a850-4902-bfe6-00745aedc14c",
+        "426f0128-d637-4407-9a64-34065c5dd929",
+        "e57cdbf5-e15d-49f2-9d45-f5150290eff6",
+        "516b7c31-72e1-4862-b2b0-8c7ac7e03b09",
+        "5c5a5183-16cf-42cd-94a6-986253a0c4d2"
+      ],
       "sourceWidth": 658,
       "sourceHeight": 370
     },
     "homescreen_art": {
-      "graphX": 1255,
-      "graphY": 0,
-      "sectionId": null,
-      "buttonIds": [],
+      "graphX": 1540,
+      "graphY": -712,
+      "sectionId": "Home_Navbar",
+      "buttonIds": [
+        "da73c497-8a3b-4578-afbb-4e57840d4a83",
+        "2a06d1fd-488e-48bb-bdef-516e524ba29c",
+        "6e030a20-e896-474b-920c-a2ffdb6e3d0d",
+        "0f7e1450-4fa4-4fb2-81b6-e750ec1365c0",
+        "ff2c4d0c-7563-481b-a318-7622c81aabda",
+        "b2c0190c-8a20-4d45-a4c8-c673c1cdea1e",
+        "4df04226-8052-4da3-a18a-51c154f162bc",
+        "b2b16b9f-4b95-4435-a3bf-2e953953562f",
+        "9958954e-ce7f-4ebf-97e8-0bf43170ac60",
+        "cd1e69f5-25bb-4a1e-b26d-0966065f7abd"
+      ],
       "sourceWidth": 658,
       "sourceHeight": 370
     },
     "homescreen_daily": {
-      "graphX": 1253,
-      "graphY": 197,
-      "sectionId": null,
-      "buttonIds": [],
+      "graphX": 1825,
+      "graphY": -726,
+      "sectionId": "Home_Navbar",
+      "buttonIds": [
+        "1b4a528f-68f4-45ed-9fe6-9f8f60086037",
+        "97cd7073-16b3-4b10-8e89-3a4663686fa9",
+        "aa7d5987-d658-4a75-ad1f-223eb44aacf8",
+        "6ea07d88-88f9-4530-bd40-8d5ed99acbe5",
+        "6d274d9e-347c-4a91-a037-6d21de12ac5f",
+        "d7085f3c-f412-45cf-919e-e825028a195f",
+        "94ca2504-ec1a-4e72-a622-9f5f6f057dd2",
+        "588a5c79-9871-4ba9-924c-621a1c83b43b",
+        "725e653c-99c3-4d31-933d-3cedae86b540",
+        "1582134d-5fa5-4290-8898-4e557ceff73e"
+      ],
       "sourceWidth": 658,
       "sourceHeight": 370
     },
     "homescreen_apps": {
+      "graphX": 2102,
+      "graphY": -727,
+      "sectionId": "Home_Navbar",
+      "buttonIds": [
+        "7eddd2d7-fc87-44db-b4b7-6350a5eacd53",
+        "150a3978-1c70-43c2-afcc-25e65aae93ee",
+        "7c193ba5-4ee6-422d-a3e1-0c6f8e582294",
+        "358be7dd-e441-4e6b-a01a-75857235dd20",
+        "e4616b43-86b2-4e12-94ae-d86ce39d08f2",
+        "09f530f9-4337-4d10-b568-382119eafe99",
+        "b27fbdb4-8d8c-4af5-a669-4264a3804fcd",
+        "7eaa04d7-b665-4f25-af4d-e8f6753675ed",
+        "c09a5756-3203-44b7-9527-0554fa2b0b30",
+        "f4311094-3f26-4976-9309-f04c84782a96"
+      ],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "Vision_AI_question": {
+      "graphX": 937,
+      "graphY": 126,
+      "sectionId": "Vision_AI",
+      "buttonIds": [
+        "8a20a3af-1bf1-447b-a470-ec49594f9536"
+      ],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "Vision_AI_settings": {
+      "graphX": 1192,
+      "graphY": 124,
+      "sectionId": "Vision_AI",
+      "buttonIds": [
+        "961629a8-bcff-43f0-8446-cb8785a3cc18",
+        "d2c9da1e-085d-40e4-ad18-032581507e0d"
+      ],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "Vision_AI_settings_user-guide": {
+      "graphX": 1184,
+      "graphY": 318,
+      "sectionId": "Vision_AI",
+      "buttonIds": [
+        "f055247b-b5fd-4e13-9f95-14fa08f6d45d"
+      ],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "Vision_AI_settings_terms-conditions": {
+      "graphX": 1195,
+      "graphY": 526,
+      "sectionId": "Vision_AI",
+      "buttonIds": [
+        "7c536aca-5cc6-4511-8965-55ae928a9d00"
+      ],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "My_Account_long-1": {
+      "graphX": -1377,
+      "graphY": 133,
+      "sectionId": "My_Account",
+      "buttonIds": [],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "My_Account_long-2": {
+      "graphX": -1374,
+      "graphY": 315,
+      "sectionId": "My_Account",
+      "buttonIds": [],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "My_Account_long-3": {
+      "graphX": -1373,
+      "graphY": 501,
+      "sectionId": "My_Account",
+      "buttonIds": [],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "My_Account_edit-profile": {
+      "graphX": -1095,
+      "graphY": 229,
+      "sectionId": "My_Account",
+      "buttonIds": [],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "My_Account_payment": {
+      "graphX": -1095,
+      "graphY": 414,
+      "sectionId": "My_Account",
+      "buttonIds": [],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "My_Account_subscriptions": {
+      "graphX": -1095,
+      "graphY": 599,
+      "sectionId": "My_Account",
+      "buttonIds": [],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "My_Account_pin-setting": {
+      "graphX": -1095,
+      "graphY": 784,
+      "sectionId": "My_Account",
+      "buttonIds": [],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "My_Account_security-prrivacy": {
+      "graphX": -1095,
+      "graphY": 969,
+      "sectionId": "My_Account",
+      "buttonIds": [],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "My_Account_product-registration": {
+      "graphX": -715,
+      "graphY": 44,
+      "sectionId": "My_Account",
+      "buttonIds": [],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "My_Account_backup": {
+      "graphX": -715,
+      "graphY": 229,
+      "sectionId": "My_Account",
+      "buttonIds": [],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "My_Account_about-samsung-account": {
+      "graphX": -721,
+      "graphY": 442,
+      "sectionId": "My_Account",
+      "buttonIds": [],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "6-5": {
       "graphX": 0,
-      "graphY": 555,
-      "sectionId": null,
+      "graphY": 0,
+      "sectionId": "Screenshots",
+      "buttonIds": [],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "6-6": {
+      "graphX": 220,
+      "graphY": 0,
+      "sectionId": "Screenshots",
+      "buttonIds": [],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "39-7": {
+      "graphX": 440,
+      "graphY": 0,
+      "sectionId": "Screenshots",
+      "buttonIds": [],
+      "sourceWidth": 658,
+      "sourceHeight": 370
+    },
+    "39-8": {
+      "graphX": 674,
+      "graphY": 30,
+      "sectionId": "Screenshots",
       "buttonIds": [],
       "sourceWidth": 658,
       "sourceHeight": 370

@@ -16,6 +16,11 @@ export const rmusConfig = {
     process.env.RMUS_BASE_URL ||
     'https://rmus.samsungcsportal.com/RemoteControl#none',
 
+  /** Used when RemoteControl returns ServerError (stale session). */
+  loginUrl:
+    process.env.RMUS_LOGIN_URL ||
+    'https://rmus.samsungcsportal.com/',
+
   storageStatePath:
     process.env.RMUS_STORAGE_STATE_PATH ||
     path.join(DATA_DIR, '.cache', 'rmus-storage-state.json'),

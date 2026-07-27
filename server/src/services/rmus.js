@@ -2,7 +2,12 @@ import fs from 'fs';
 import path from 'path';
 import { chromium } from 'playwright';
 import { rmusConfig } from './rmus-config.js';
-import { loginAndWaitAuthenticated } from './rmus-login.js';
+import {
+  loginAndWaitAuthenticated,
+  isRmusFailurePage,
+  clearSavedRmusSession,
+  recoverFromStaleSession,
+} from './rmus-login.js';
 import { captureWithRetries } from './rmus-capture.js';
 import { getScreenshotsDir } from './data-store.js';
 import { normalizeCaptureToPreset2 } from './samsung-image.js';
@@ -90,6 +95,13 @@ async function waitForRemoteReady(activePage) {
       throw new Error('RMUS browser window was closed before login finished.');
     }
 
+    if (await isRmusFailurePage(activePage)) {
+      throw new Error(
+        'RMUS Remote Control hit Internal Server Error (often an expired session). ' +
+          'Disconnect, then Connect again to force a fresh login.'
+      );
+    }
+
     await tryClickRemoteStart(activePage);
 
     const captureVisible = await activePage
@@ -160,11 +172,12 @@ export function connect({ fresh = false } = {}) {
       const storagePath = rmusConfig.storageStatePath;
       fs.mkdirSync(path.dirname(storagePath), { recursive: true });
 
+      const useSavedSession = !fresh && fs.existsSync(storagePath);
       const contextOptions = {
         acceptDownloads: true,
         viewport: { width: 1440, height: 900 },
       };
-      if (!fresh && fs.existsSync(storagePath)) {
+      if (useSavedSession) {
         contextOptions.storageState = storagePath;
         console.log(`[RMUS] Loading saved session from ${storagePath}`);
       }
@@ -175,9 +188,45 @@ export function connect({ fresh = false } = {}) {
       context = await browser.newContext(contextOptions);
       page = await context.newPage();
 
-      const loginResult = await loginAndWaitAuthenticated(page, {
-        interactivePinConfirmation: true,
-      });
+      let loginResult;
+      try {
+        loginResult = await loginAndWaitAuthenticated(page, {
+          interactivePinConfirmation: true,
+        });
+      } catch (loginErr) {
+        // First attempt with a stale storageState often lands on ServerError.
+        if (useSavedSession) {
+          console.warn(
+            '[RMUS] Login with saved session failed — retrying fresh:',
+            loginErr.message
+          );
+          clearSavedRmusSession();
+          await cleanupBrowser();
+          browser = await chromium.launch({
+            headless: rmusConfig.headless,
+          });
+          context = await browser.newContext({
+            acceptDownloads: true,
+            viewport: { width: 1440, height: 900 },
+          });
+          page = await context.newPage();
+          loginResult = await loginAndWaitAuthenticated(page, {
+            interactivePinConfirmation: true,
+          });
+        } else {
+          throw loginErr;
+        }
+      }
+
+      // Reused session still on ServerError (login thought we were authed).
+      if (loginResult.reusedSession && (await isRmusFailurePage(page))) {
+        console.warn('[RMUS] Reused session is on ServerError — recovering…');
+        await recoverFromStaleSession(page);
+        loginResult = await loginAndWaitAuthenticated(page, {
+          interactivePinConfirmation: true,
+          skipNavigation: true,
+        });
+      }
 
       // Always enter PIN-wait mode after login attempt (fresh or reused session).
       status = 'awaiting-pin';
@@ -242,6 +291,9 @@ export function confirmPin() {
 export function disconnect() {
   return enqueue(async () => {
     await cleanupBrowser();
+    // Drop saved cookies so the next Connect does not reuse an expired ASP.NET session
+    // that lands on /Error/ServerError?aspxerrorpath=/RemoteControl.
+    clearSavedRmusSession();
     status = 'disconnected';
     lastError = null;
     return getStatus();
