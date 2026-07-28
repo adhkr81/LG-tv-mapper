@@ -363,8 +363,9 @@ export async function captureFromTVStream(screenId, onProgress) {
   );
 }
 
-export function importScreenshot(screenId, sourcePath) {
-  const filename = `${screenId}.jpg`;
+export function importScreenshot(screenId, sourcePath, { kind = 'base' } = {}) {
+  const filename =
+    kind === 'scroll' ? `${screenId}_scroll.jpg` : `${screenId}.jpg`;
   const destPath = path.join(getScreenshotsDir(), filename);
 
   fs.copyFileSync(sourcePath, destPath);
@@ -377,9 +378,21 @@ export function importScreenshot(screenId, sourcePath) {
 }
 
 /** Copy screenshot file and attach it to an existing screen or create a new one. */
-export function registerScreenshotImport(screenId, sourcePath, { sectionId = null } = {}) {
-  const filename = importScreenshot(screenId, sourcePath);
+export function registerScreenshotImport(
+  screenId,
+  sourcePath,
+  { sectionId = null, kind = 'base' } = {}
+) {
+  const filename = importScreenshot(screenId, sourcePath, { kind });
   const existing = getScreen(screenId);
+  if (kind === 'scroll') {
+    if (!existing) {
+      throw new Error(
+        `Screen "${screenId}" must exist before uploading a scroll strip`
+      );
+    }
+    return updateScreen(screenId, { scrollImage: filename });
+  }
   if (existing) {
     return updateScreen(screenId, { image: filename });
   }

@@ -18,6 +18,7 @@ router.post('/import', async (req, res) => {
       {
         includeTargets: req.body.includeTargets !== false,
         buttonIds: Array.isArray(req.body.buttonIds) ? req.body.buttonIds : null,
+        layer: req.body.layer === 'scroll' ? 'scroll' : 'base',
       }
     );
     res.status(201).json(buttons);

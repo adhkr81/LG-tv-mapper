@@ -36,7 +36,11 @@ export function getSectionGraphScreens(screens, activeSectionId) {
   const externalIds = new Set();
 
   primary.forEach((screen) => {
-    screen.buttons.forEach((btn) => {
+    const buttons = [
+      ...(screen.buttons || []),
+      ...(screen.scrollArea?.buttons || []),
+    ];
+    buttons.forEach((btn) => {
       if (btn.target && !primaryIds.has(btn.target)) {
         externalIds.add(btn.target);
       }
@@ -45,7 +49,11 @@ export function getSectionGraphScreens(screens, activeSectionId) {
 
   screens.forEach((screen) => {
     if (primaryIds.has(screen.id)) return;
-    const pointsIn = screen.buttons.some(
+    const buttons = [
+      ...(screen.buttons || []),
+      ...(screen.scrollArea?.buttons || []),
+    ];
+    const pointsIn = buttons.some(
       (btn) => btn.target && primaryIds.has(btn.target)
     );
     if (pointsIn) externalIds.add(screen.id);
@@ -172,9 +180,14 @@ export function suggestScreenIdForSection(section, screens) {
 export function sectionProgress(screens, sectionId) {
   const inSection = screens.filter((s) => s.sectionId === sectionId);
   const unlinkedButtons = inSection.reduce((n, s) => {
+    const buttons = [
+      ...(s.buttons || []),
+      ...(s.scrollArea?.buttons || []),
+    ];
     return (
       n +
-      s.buttons.filter((b) => !b.target || !screens.some((t) => t.id === b.target)).length
+      buttons.filter((b) => !b.target || !screens.some((t) => t.id === b.target))
+        .length
     );
   }, 0);
   return { screenCount: inSection.length, unlinkedButtons };

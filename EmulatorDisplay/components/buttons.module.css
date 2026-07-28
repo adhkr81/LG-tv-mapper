@@ -1,0 +1,20 @@
+.screen_button {
+  position: absolute;
+  border: 1.65px solid dodgerblue;
+  z-index: 3;
+  transition: 0.5s ease;
+  border-radius: 4px;
+}
+.screen_button.no_outline {
+  border: 1px solid transparent;
+}
+
+.screen_button:hover {
+  /* opacity: 0.5 !important; */
+  background-color: rgba(33, 137, 255, .35);
+  cursor: pointer;
+}
+
+.screen_button:active {
+  background-color: rgba(255, 255, 255, 0.3);
+}

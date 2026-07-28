@@ -15,6 +15,10 @@ import { countInboundButtons } from '../../utils/deleteScreenPrompt.js';
 import ImageConfigSection from '../ImageConfig/ImageConfigSection.jsx';
 import SectionBar from '../SectionBar/SectionBar.jsx';
 import '../SectionBar/SectionBar.css';
+import {
+  isSamsungScrollPreset,
+  SAMSUNG_PRESET_OPTIONS,
+} from '../../data/samsungScrollPresets.js';
 import './SidebarEditor.css';
 
 export default function SidebarEditor({ mode = 'viewer' }) {
@@ -27,6 +31,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const selectedScreenIds = useStore((s) => s.selectedScreenIds);
   const selectScreen = useStore((s) => s.selectScreen);
   const assignScreenToSection = useStore((s) => s.assignScreenToSection);
+  const createSectionFromScreens = useStore((s) => s.createSectionFromScreens);
   const deleteScreens = useStore((s) => s.deleteScreens);
   const deleteButton = useStore((s) => s.deleteButton);
   const updateButton = useStore((s) => s.updateButton);
@@ -35,10 +40,18 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const imageConfig = useStore((s) => s.imageConfig);
   const updateScreenName = useStore((s) => s.updateScreenName);
   const updateScreenBackButton = useStore((s) => s.updateScreenBackButton);
+  const updateScreenPreset = useStore((s) => s.updateScreenPreset);
   const replaceScreenImage = useStore((s) => s.replaceScreenImage);
   const clearScreenImage = useStore((s) => s.clearScreenImage);
+  const replaceScrollImage = useStore((s) => s.replaceScrollImage);
+  const clearScrollImage = useStore((s) => s.clearScrollImage);
+  const editLayer = useStore((s) => s.editLayer);
+  const setEditLayer = useStore((s) => s.setEditLayer);
   const createScreenNode = useStore((s) => s.createScreenNode);
+  const captureScreen = useStore((s) => s.captureScreen);
   const isCapturing = useStore((s) => s.isCapturing);
+  const serialStatus = useStore((s) => s.serialStatus);
+  const rmusStatus = useStore((s) => s.rmusStatus);
   const selectedButtonId = useStore((s) => s.selectedButtonId);
   const selectButton = useStore((s) => s.selectButton);
   const importCompareScreenId = useStore((s) => s.importCompareScreenId);
@@ -88,19 +101,47 @@ export default function SidebarEditor({ mode = 'viewer' }) {
     if (!screen?.id) return new Set();
     const ids = new Set();
     screens.forEach((s) => {
-      if (s.buttons.some((btn) => btn.target === screen.id)) ids.add(s.id);
+      const buttons = [
+        ...(s.buttons || []),
+        ...(s.scrollArea?.buttons || []),
+      ];
+      if (buttons.some((btn) => btn.target === screen.id)) ids.add(s.id);
     });
     return ids;
   }, [screens, screen?.id]);
 
   const isParentScreen = (screenId) => parentScreenIds.has(screenId);
 
+  const layerButtons = useMemo(() => {
+    if (!screen) return [];
+    if (editLayer === 'scroll') return screen.scrollArea?.buttons || [];
+    return screen.buttons || [];
+  }, [screen, editLayer]);
+
+  const selectedButton = useMemo(() => {
+    if (!selectedButtonId || !screen) return null;
+    return (
+      screen.buttons?.find((b) => b.id === selectedButtonId) ||
+      screen.scrollArea?.buttons?.find((b) => b.id === selectedButtonId) ||
+      null
+    );
+  }, [screen, selectedButtonId]);
+
+  const canEditScroll = isSamsung && isSamsungScrollPreset(screen?.preset);
+  const hasScrollImage = Boolean(screen?.scrollArea?.image?.trim());
+
   const importSourceOptions = useMemo(() => {
     if (!screen?.id) return [];
     return screens
-      .filter((s) => s.id !== screen.id && s.buttons.length > 0)
+      .filter((s) => {
+        if (s.id === screen.id) return false;
+        if (editLayer === 'scroll') {
+          return (s.scrollArea?.buttons || []).length > 0;
+        }
+        return s.buttons.length > 0;
+      })
       .sort((a, b) => a.id.localeCompare(b.id));
-  }, [screens, screen?.id]);
+  }, [screens, screen?.id, editLayer]);
 
   const importSourceGroups = useMemo(() => {
     if (!isRealSectionView(activeSectionId)) {
@@ -121,15 +162,33 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const [newNodeId, setNewNodeId] = useState('');
   const [isCreatingNode, setIsCreatingNode] = useState(false);
   const [removeParentButtons, setRemoveParentButtons] = useState(true);
+  const [assignSectionId, setAssignSectionId] = useState('');
+  const [newGroupName, setNewGroupName] = useState('');
+  const [isAssigningGroup, setIsAssigningGroup] = useState(false);
   const replaceImageInputRef = useRef(null);
+  const replaceScrollImageInputRef = useRef(null);
 
   const inboundToSelection = useMemo(
     () => countInboundButtons(screens, selectedScreenIds),
     [screens, selectedScreenIds]
   );
+
+  const ungroupedSelectedIds = useMemo(
+    () =>
+      selectedScreenIds.filter((id) => {
+        const s = screensById.get(id);
+        return s && !s.sectionId;
+      }),
+    [selectedScreenIds, screensById]
+  );
   useEffect(() => {
     if (screen) setNameValue(screen.id);
   }, [screen?.id]);
+
+  useEffect(() => {
+    setAssignSectionId('');
+    setNewGroupName('');
+  }, [selectedScreenIds]);
 
   useEffect(() => {
     setImportCompareScreenId(null);
@@ -143,13 +202,13 @@ export default function SidebarEditor({ mode = 'viewer' }) {
       if (!isDeleteKey) return;
       if (e.target.closest('input, textarea, select, [contenteditable="true"]')) return;
       const buttonId = selectedButtonId;
-      if (!buttonId || !screen?.buttons.some((b) => b.id === buttonId)) return;
+      if (!buttonId || !layerButtons.some((b) => b.id === buttonId)) return;
       e.preventDefault();
       deleteButton(screen.id, buttonId);
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [isEditMode, selectedButtonId, screen?.id, screen?.buttons, deleteButton]);
+  }, [isEditMode, selectedButtonId, screen?.id, layerButtons, deleteButton]);
 
   useEffect(() => {
     if (mode !== 'graph') return;
@@ -184,6 +243,47 @@ export default function SidebarEditor({ mode = 'viewer' }) {
     }
   };
 
+  const handleReplaceScrollImage = async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file || !screen) return;
+    if (!file.type.startsWith('image/')) {
+      alert('Please choose an image file.');
+      return;
+    }
+    setIsImageBusy(true);
+    try {
+      await replaceScrollImage(screen.id, file);
+      setEditLayer('scroll');
+    } catch (err) {
+      alert('Replace scroll strip failed: ' + err.message);
+    } finally {
+      setIsImageBusy(false);
+    }
+  };
+
+  const handleClearScrollImage = async () => {
+    if (!screen || !hasScrollImage) return;
+    if (!confirm('Remove the scroll strip image? Scroll buttons are kept.')) return;
+    setIsImageBusy(true);
+    try {
+      await clearScrollImage(screen.id);
+    } catch (err) {
+      alert('Remove scroll strip failed: ' + err.message);
+    } finally {
+      setIsImageBusy(false);
+    }
+  };
+
+  const handlePresetChange = async (e) => {
+    if (!screen) return;
+    try {
+      await updateScreenPreset(screen.id, e.target.value);
+    } catch (err) {
+      alert('Update preset failed: ' + err.message);
+    }
+  };
+
   const confirmDeleteNodes = () => {
     const count = selectedScreenIds.length;
     const ids =
@@ -201,6 +301,64 @@ export default function SidebarEditor({ mode = 'viewer' }) {
     if (!selectedScreenIds.length) return;
     if (!confirmDeleteNodes()) return;
     deleteScreens(selectedScreenIds, { removeParentButtons });
+  };
+
+  const captureReady = isSamsung
+    ? rmusStatus === 'ready'
+    : serialStatus === 'shell-ready' || serialStatus === 'connected';
+  const captureReadyTitle = isSamsung
+    ? captureReady
+      ? 'Retake screenshot from Samsung TV (RMUS)'
+      : 'Connect RMUS first'
+    : captureReady
+      ? 'Retake screenshot from TV'
+      : 'Connect serial first';
+
+  const handleRetakeScreenshot = async () => {
+    if (selectedScreenIds.length !== 1 || !captureReady || isCapturing) return;
+    const screenId = selectedScreenIds[0];
+    try {
+      await captureScreen(screenId);
+    } catch (err) {
+      alert('Retake failed: ' + err.message);
+    }
+  };
+
+  const handleAddSelectionToGroup = async () => {
+    if (!assignSectionId || !ungroupedSelectedIds.length) return;
+    setIsAssigningGroup(true);
+    try {
+      for (const id of ungroupedSelectedIds) {
+        await assignScreenToSection(id, assignSectionId);
+      }
+      setAssignSectionId('');
+    } catch (err) {
+      alert('Add to group failed: ' + err.message);
+    } finally {
+      setIsAssigningGroup(false);
+    }
+  };
+
+  const handleCreateGroupFromSelection = async () => {
+    const name = newGroupName.trim();
+    if (!name) {
+      alert('Enter a name for the new canvas group.');
+      return;
+    }
+    if (!ungroupedSelectedIds.length) return;
+    setIsAssigningGroup(true);
+    try {
+      await createSectionFromScreens({
+        name,
+        screenIds: ungroupedSelectedIds,
+        rootScreenId: ungroupedSelectedIds[0],
+      });
+      setNewGroupName('');
+    } catch (err) {
+      alert('Create group failed: ' + err.message);
+    } finally {
+      setIsAssigningGroup(false);
+    }
   };
 
   const handleCreateNode = async () => {
@@ -327,7 +485,11 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const handleImportButtons = async () => {
     if (!screen || !importCompareScreenId) return;
     const source = screens.find((s) => s.id === importCompareScreenId);
-    if (!source?.buttons.length) return;
+    const sourceButtons =
+      editLayer === 'scroll'
+        ? source?.scrollArea?.buttons || []
+        : source?.buttons || [];
+    if (!sourceButtons.length) return;
 
     if (!importSourceButtonIds.length) {
       alert('Select buttons on the import screen (right panel): drag an area or Ctrl+click.');
@@ -335,19 +497,23 @@ export default function SidebarEditor({ mode = 'viewer' }) {
     }
 
     const count = importSourceButtonIds.length;
-
-    const message =
-      screen.buttons.length > 0
-        ? `Import ${count} button${count === 1 ? '' : 's'} from "${importCompareScreenId}"? They will be added to the ${screen.buttons.length} existing button${screen.buttons.length === 1 ? '' : 's'} on this screen.`
-        : `Import ${count} button${count === 1 ? '' : 's'} from "${importCompareScreenId}"?`;
-
-    if (!confirm(message)) return;
+    const layerLabel = editLayer === 'scroll' ? 'scroll' : 'base';
+    if (
+      !confirm(
+        layerButtons.length > 0
+          ? `Import ${count} ${layerLabel} button${count === 1 ? '' : 's'} from "${importCompareScreenId}"? They will be added to the ${layerButtons.length} existing ${layerLabel} button${layerButtons.length === 1 ? '' : 's'} on this screen.`
+          : `Import ${count} ${layerLabel} button${count === 1 ? '' : 's'} from "${importCompareScreenId}" onto this empty ${layerLabel} layer?`
+      )
+    ) {
+      return;
+    }
 
     setIsImportingButtons(true);
     try {
       await importButtonsFromScreen(screen.id, importCompareScreenId, {
         includeTargets: importIncludeTargets,
         buttonIds: importSourceButtonIds,
+        layer: editLayer === 'scroll' ? 'scroll' : 'base',
       });
       setImportSourceButtonIds([]);
     } catch (err) {
@@ -471,32 +637,110 @@ export default function SidebarEditor({ mode = 'viewer' }) {
             </button>
           </div>
           {isSamsung && (
-            <div className="sidebar__button-target sidebar__back-button">
-              <label className="label">Back button</label>
-              <ScreenPickerSelect
-                value={screen.backButtonTarget || ''}
-                onChange={handleBackButtonChange}
-                allowEmpty
-                emptyLabel="— none —"
-                isParent={isParentScreen}
-                showPreviewOnHover
-                screens={screens}
-                groups={[
-                  ...(targetOptions.inSection.length > 0
-                    ? [{
-                        label: 'This section',
-                        options: targetOptions.inSection.map((s) => ({ id: s.id })),
-                      }]
-                    : []),
-                  ...(targetOptions.other.length > 0
-                    ? [{
-                        label: 'Other screens',
-                        options: targetOptions.other.map((s) => ({ id: s.id })),
-                      }]
-                    : []),
-                ]}
-              />
-            </div>
+            <>
+              <div className="sidebar__button-target sidebar__back-button">
+                <label className="label">Back button</label>
+                <ScreenPickerSelect
+                  value={screen.backButtonTarget || ''}
+                  onChange={handleBackButtonChange}
+                  allowEmpty
+                  emptyLabel="— none —"
+                  isParent={isParentScreen}
+                  showPreviewOnHover
+                  screens={screens}
+                  groups={[
+                    ...(targetOptions.inSection.length > 0
+                      ? [{
+                          label: 'This section',
+                          options: targetOptions.inSection.map((s) => ({ id: s.id })),
+                        }]
+                      : []),
+                    ...(targetOptions.other.length > 0
+                      ? [{
+                          label: 'Other screens',
+                          options: targetOptions.other.map((s) => ({ id: s.id })),
+                        }]
+                      : []),
+                  ]}
+                />
+              </div>
+              <div className="sidebar__button-target">
+                <label className="label" htmlFor="sidebar-preset">
+                  Preset
+                </label>
+                <select
+                  id="sidebar-preset"
+                  className="input"
+                  value={screen.preset || 'preset2'}
+                  onChange={handlePresetChange}
+                >
+                  {SAMSUNG_PRESET_OPTIONS.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {canEditScroll && (
+                <div className="sidebar__scroll-section">
+                  <div className="sidebar__section-title">Scroll strip</div>
+                  <div className="sidebar__image-actions">
+                    <input
+                      ref={replaceScrollImageInputRef}
+                      type="file"
+                      accept="image/*"
+                      className="sidebar__image-file-input"
+                      onChange={handleReplaceScrollImage}
+                      disabled={isImageBusy || isCapturing}
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-accent"
+                      onClick={() => replaceScrollImageInputRef.current?.click()}
+                      disabled={isImageBusy || isCapturing}
+                    >
+                      {hasScrollImage ? 'Replace strip' : 'Add strip'}
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-sm"
+                      onClick={handleClearScrollImage}
+                      disabled={!hasScrollImage || isImageBusy || isCapturing}
+                    >
+                      Remove strip
+                    </button>
+                  </div>
+                  <div className="sidebar__layer-toggle" role="group" aria-label="Edit layer">
+                    <button
+                      type="button"
+                      className={`btn btn-sm ${editLayer === 'base' ? 'btn-accent' : ''}`}
+                      onClick={() => setEditLayer('base')}
+                    >
+                      Base
+                    </button>
+                    <button
+                      type="button"
+                      className={`btn btn-sm ${editLayer === 'scroll' ? 'btn-accent' : ''}`}
+                      onClick={() => setEditLayer('scroll')}
+                      disabled={!hasScrollImage}
+                      title={
+                        hasScrollImage
+                          ? 'Edit scroll-strip hotspots'
+                          : 'Upload a scroll strip first'
+                      }
+                    >
+                      Scroll
+                    </button>
+                  </div>
+                  {editLayer === 'scroll' && (
+                    <p className="sidebar__import-pick-hint">
+                      Editing the tall strip full-height. Preset {screen.preset} sets the
+                      simulator viewport only.
+                    </p>
+                  )}
+                </div>
+              )}
+            </>
           )}
         </div>
       )}
@@ -521,7 +765,10 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                         label: 'This section',
                         options: importSourceGroups.inSection.map((s) => ({
                           id: s.id,
-                          suffix: s.buttons.length,
+                          suffix:
+                            editLayer === 'scroll'
+                              ? (s.scrollArea?.buttons || []).length
+                              : s.buttons.length,
                         })),
                       }]
                     : []),
@@ -530,7 +777,10 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                         label: 'Other screens',
                         options: importSourceGroups.other.map((s) => ({
                           id: s.id,
-                          suffix: s.buttons.length,
+                          suffix:
+                            editLayer === 'scroll'
+                              ? (s.scrollArea?.buttons || []).length
+                              : s.buttons.length,
                         })),
                       }]
                     : []),
@@ -559,6 +809,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                 {importSourceButtonIds.length > 0
                   ? `${importSourceButtonIds.length} button${importSourceButtonIds.length === 1 ? '' : 's'} selected on the import screen.`
                   : 'Drag on the import screen to select an area, or Ctrl+click buttons.'}
+                {editLayer === 'scroll' ? ' (scroll layer)' : ''}
               </p>
             )}
           </div>
@@ -617,6 +868,62 @@ export default function SidebarEditor({ mode = 'viewer' }) {
           <p className="sidebar__flow-select-hint">
             Ctrl+click or drag a box to multi-select. Drag selected nodes together.
           </p>
+          {ungroupedSelectedIds.length > 0 && (
+            <div className="sidebar__add-to-group">
+              <div className="sidebar__section-title sidebar__section-title--nested">
+                {ungroupedSelectedIds.length === selectedScreenIds.length
+                  ? 'Add to canvas group'
+                  : `Add ${ungroupedSelectedIds.length} ungrouped to canvas group`}
+              </div>
+              {sections.length > 0 && (
+                <div className="sidebar__add-to-group-row">
+                  <select
+                    className="input"
+                    value={assignSectionId}
+                    onChange={(e) => setAssignSectionId(e.target.value)}
+                    disabled={isAssigningGroup}
+                    aria-label="Existing canvas group"
+                  >
+                    <option value="">Choose a group…</option>
+                    {sections.map((sec) => (
+                      <option key={sec.id} value={sec.id}>
+                        {sec.name || sec.id}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-accent"
+                    onClick={handleAddSelectionToGroup}
+                    disabled={isAssigningGroup || !assignSectionId}
+                  >
+                    {isAssigningGroup ? 'Working…' : 'Add'}
+                  </button>
+                </div>
+              )}
+              <div className="sidebar__add-to-group-row">
+                <input
+                  className="input"
+                  value={newGroupName}
+                  onChange={(e) => setNewGroupName(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') handleCreateGroupFromSelection();
+                  }}
+                  disabled={isAssigningGroup}
+                  placeholder="New group name"
+                  aria-label="New canvas group name"
+                />
+                <button
+                  type="button"
+                  className="btn btn-sm"
+                  onClick={handleCreateGroupFromSelection}
+                  disabled={isAssigningGroup || !newGroupName.trim()}
+                >
+                  Create
+                </button>
+              </div>
+            </div>
+          )}
           {inboundToSelection.count > 0 && (
             <label className="sidebar__delete-parent-option">
               <input
@@ -631,15 +938,28 @@ export default function SidebarEditor({ mode = 'viewer' }) {
               </span>
             </label>
           )}
-          <button
-            type="button"
-            className="btn btn-danger btn-sm sidebar__delete-btn"
-            onClick={handleDeleteNodes}
-          >
-            {selectedScreenIds.length === 1
-              ? 'Delete node'
-              : `Delete ${selectedScreenIds.length} nodes`}
-          </button>
+          <div className="sidebar__selection-actions">
+            {selectedScreenIds.length === 1 && (
+              <button
+                type="button"
+                className="btn btn-sm btn-accent sidebar__retake-btn"
+                onClick={handleRetakeScreenshot}
+                disabled={!captureReady || isCapturing}
+                title={captureReadyTitle}
+              >
+                {isCapturing ? 'Capturing…' : 'Retake screenshot'}
+              </button>
+            )}
+            <button
+              type="button"
+              className="btn btn-danger btn-sm sidebar__delete-btn"
+              onClick={handleDeleteNodes}
+            >
+              {selectedScreenIds.length === 1
+                ? 'Delete node'
+                : `Delete ${selectedScreenIds.length} nodes`}
+            </button>
+          </div>
         </div>
       )}
 
@@ -684,11 +1004,11 @@ export default function SidebarEditor({ mode = 'viewer' }) {
       {screen && isEditMode ? (
         <>
           {/* Selected button details */}
-          {selectedButtonId && screen.buttons.find(b => b.id === selectedButtonId) && (
+          {selectedButtonId && selectedButton && (
             <div className="sidebar__section sidebar__section--grow">
               <div className="sidebar__section-title">Button Details</div>
               {(() => {
-                const selectedBtn = screen.buttons.find(b => b.id === selectedButtonId);
+                const selectedBtn = selectedButton;
                 return (
                   <>
                     <div className="sidebar__button-target">
@@ -828,7 +1148,9 @@ export default function SidebarEditor({ mode = 'viewer' }) {
           {/* Buttons list */}
           <div className="sidebar__section">
             <div className="sidebar__section-title">
-              <span>Buttons ({screen.buttons.length})</span>
+              <span>
+                {editLayer === 'scroll' ? 'Scroll buttons' : 'Buttons'} ({layerButtons.length})
+              </span>
               <button
                 className="btn btn-sm btn-accent"
                 onClick={handleAddButton}
@@ -839,11 +1161,11 @@ export default function SidebarEditor({ mode = 'viewer' }) {
               </button>
             </div>
 
-            {screen.buttons.length === 0 ? (
+            {layerButtons.length === 0 ? (
               <div className="sidebar__empty">No buttons yet. Click "Add Hotspot" in the viewer.</div>
             ) : (
               <div className="sidebar__button-list">
-                {screen.buttons.map((btn) => (
+                {layerButtons.map((btn) => (
                   <div
                     key={btn.id}
                     className={`sidebar__button-item ${btn.id === selectedButtonId ? 'sidebar__button-item--selected' : ''}`}

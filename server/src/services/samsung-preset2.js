@@ -1,12 +1,12 @@
 /**
  * Samsung preset2 screen size (simulator data.json screen width/height).
- * Full HDMI captures (1920×1080) are scaled to this size — no crop —
- * so the entire TV UI fits the preset2 screen.
+ * Button/hotspot coords are stored in this space; screenshots keep their
+ * original capture resolution and are scaled to this size via CSS.
  */
 export const SAMSUNG_PRESET2 = {
   width: 658,
   height: 370,
-  /** Source capture size we normalize from. */
+  /** Typical HDMI capture size (coords may scale from this when mapping). */
   sourceWidth: 1920,
   sourceHeight: 1080,
 };

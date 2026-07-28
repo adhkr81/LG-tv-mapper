@@ -5,7 +5,9 @@ import { screenshotUrl } from '../../utils/screenshotUrl.js';
 import './GraphView.css';
 
 function ScreenNode({ id, data, selected }) {
-  const { label, image, buttonCount, isExternal } = data;
+  const { label, buttonCount, isExternal } = data;
+  const storeImage = useStore((s) => s.screensById.get(id)?.image);
+  const image = storeImage || data.image;
   const imageVersion = useStore((s) => s.imageVersions[id] ?? 0);
   const capturingScreenId = useStore((s) => s.capturingScreenId);
   const captureProgress = useStore((s) => s.captureProgress);

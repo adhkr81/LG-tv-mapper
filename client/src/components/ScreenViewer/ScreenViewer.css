@@ -334,6 +334,15 @@
   z-index: 0;
 }
 
+.screen-viewer__scroll-viewport-guide {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  border: 2px solid dodgerblue;
+  box-sizing: border-box;
+  box-shadow: inset 0 0 0 1px rgba(30, 144, 255, 0.35);
+}
+
 /* ── Hint bar ────────────────────────────────── */
 .screen-viewer__hint {
   padding: var(--space-sm) var(--space-lg);

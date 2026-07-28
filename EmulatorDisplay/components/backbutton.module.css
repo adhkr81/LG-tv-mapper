@@ -1,0 +1,27 @@
+
+.button_st {
+    width: 44px;
+    height: 44px;
+    background-color: #b5b5b5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 300ms
+}
+
+.button_st:hover {
+    background-color: #2AA9F0;
+    transition: background-color 300ms;
+    cursor: pointer;
+  }
+
+.disabled {
+    width: 44px;
+    height: 44px;
+    background-color: #b5b5b5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7
+}
+  

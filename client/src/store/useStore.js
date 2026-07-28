@@ -102,18 +102,44 @@ const BUTTON_SAVE_DEBOUNCE_MS = 400;
 const buttonPendingPatches = new Map();
 const buttonSaveEntries = new Map();
 
-function applyButtonPatch(set, get, screenId, buttonId, updates) {
-  set({
-    screens: get().screens.map((s) =>
-      s.id !== screenId
-        ? s
-        : {
-            ...s,
-            buttons: s.buttons.map((b) =>
-              b.id === buttonId ? { ...b, ...updates } : b
-            ),
-          }
+function patchScreenButtons(screen, buttonId, updates, layer) {
+  if (layer === 'scroll') {
+    const scrollArea = screen.scrollArea || {
+      img_filename: '',
+      image: '',
+      buttons: [],
+    };
+    return {
+      ...screen,
+      scrollArea: {
+        ...scrollArea,
+        buttons: (scrollArea.buttons || []).map((b) =>
+          b.id === buttonId ? { ...b, ...updates } : b
+        ),
+      },
+    };
+  }
+  return {
+    ...screen,
+    buttons: screen.buttons.map((b) =>
+      b.id === buttonId ? { ...b, ...updates } : b
     ),
+  };
+}
+
+function findButtonLayer(screen, buttonId) {
+  if (screen.buttons?.some((b) => b.id === buttonId)) return 'base';
+  if (screen.scrollArea?.buttons?.some((b) => b.id === buttonId)) return 'scroll';
+  return 'base';
+}
+
+function applyButtonPatch(set, get, screenId, buttonId, updates, layer) {
+  set({
+    screens: get().screens.map((s) => {
+      if (s.id !== screenId) return s;
+      const resolvedLayer = layer || findButtonLayer(s, buttonId);
+      return patchScreenButtons(s, buttonId, updates, resolvedLayer);
+    }),
   });
 }
 
@@ -135,16 +161,11 @@ async function flushButtonSave(get, set, screenId, buttonId, chainKey) {
   try {
     const updated = await api.updateButton(screenId, buttonId, patch);
     set({
-      screens: get().screens.map((s) =>
-        s.id !== screenId
-          ? s
-          : {
-              ...s,
-              buttons: s.buttons.map((b) =>
-                b.id === buttonId ? { ...b, ...updated } : b
-              ),
-            }
-      ),
+      screens: get().screens.map((s) => {
+        if (s.id !== screenId) return s;
+        const layer = findButtonLayer(s, buttonId);
+        return patchScreenButtons(s, buttonId, updated, layer);
+      }),
     });
     resolve();
   } catch (err) {
@@ -283,6 +304,8 @@ const useStore = create((rawSet, get) => {
     serialStatus: 'disconnected',
     rmusStatus: 'disconnected',
     projectPlatform: 'lg',
+    /** Samsung Screen tab: edit base chrome or scroll strip ('base' | 'scroll'). */
+    editLayer: 'base',
     canUndo: historyCanUndo(),
     /**
      * Bumped each time the user asks the graph to focus on a section.
@@ -316,6 +339,7 @@ const useStore = create((rawSet, get) => {
         canUndo: false,
         locateSectionRequest: null,
         projectPlatform: 'lg',
+        editLayer: 'base',
         rmusStatus: 'disconnected',
       });
     },
@@ -366,8 +390,9 @@ const useStore = create((rawSet, get) => {
       const ids = (Array.isArray(screenIds) ? screenIds : [screenIds]).filter(Boolean);
       if (!ids.length) return;
       const imageVersions = { ...get().imageVersions };
+      const stamp = Date.now();
       for (const id of ids) {
-        imageVersions[id] = (imageVersions[id] ?? 0) + 1;
+        imageVersions[id] = stamp;
       }
       set({ imageVersions });
     },
@@ -636,6 +661,26 @@ const useStore = create((rawSet, get) => {
       await get().importScreen(screenId, file);
     },
 
+    replaceScrollImage: async (screenId, file) => {
+      markUndoAvailable(set, get);
+      set({ isCapturing: true });
+      try {
+        const updated = await api.importScreen(screenId, file, null, 'scroll');
+        set({
+          screens: get().screens.map((s) =>
+            s.id === screenId ? { ...s, ...updated } : s
+          ),
+        });
+        get().bumpImageVersions(`${screenId}:scroll`);
+        return updated;
+      } catch (err) {
+        console.error('Replace scroll image failed:', err);
+        throw err;
+      } finally {
+        set({ isCapturing: false });
+      }
+    },
+
     clearScreenImage: async (screenId) => {
       try {
         const updated = await api.updateScreen(screenId, { image: null });
@@ -649,6 +694,57 @@ const useStore = create((rawSet, get) => {
         console.error('Clear screen image failed:', err);
         throw err;
       }
+    },
+
+    clearScrollImage: async (screenId) => {
+      markUndoAvailable(set, get);
+      try {
+        const updated = await api.updateScreen(screenId, { scrollImage: null });
+        set({
+          screens: get().screens.map((s) =>
+            s.id === screenId ? { ...s, ...updated } : s
+          ),
+          editLayer:
+            get().editLayer === 'scroll' && get().selectedScreenId === screenId
+              ? 'base'
+              : get().editLayer,
+        });
+        get().bumpImageVersions(`${screenId}:scroll`);
+        return updated;
+      } catch (err) {
+        console.error('Clear scroll image failed:', err);
+        throw err;
+      }
+    },
+
+    updateScreenPreset: async (screenId, preset) => {
+      markUndoAvailable(set, get);
+      try {
+        const updated = await api.updateScreen(screenId, { preset });
+        set({
+          screens: get().screens.map((s) =>
+            s.id === screenId ? { ...s, ...updated } : s
+          ),
+          editLayer:
+            get().selectedScreenId === screenId &&
+            get().editLayer === 'scroll' &&
+            !String(preset || '').match(/^preset[4-8]$/)
+              ? 'base'
+              : get().editLayer,
+        });
+        return updated;
+      } catch (err) {
+        console.error('Update preset failed:', err);
+        throw err;
+      }
+    },
+
+    setEditLayer: (layer) => {
+      set({
+        editLayer: layer === 'scroll' ? 'scroll' : 'base',
+        selectedButtonId: null,
+        isAddingHotspot: false,
+      });
     },
 
     createScreenNode: async ({ id, sectionId = null, graphX, graphY }) => {
@@ -693,11 +789,31 @@ const useStore = create((rawSet, get) => {
     addButton: async (screenId, buttonData) => {
       markUndoAvailable(set, get);
       try {
-        const button = await api.addButton(screenId, buttonData);
+        const layer =
+          buttonData?.layer === 'scroll' || get().editLayer === 'scroll'
+            ? 'scroll'
+            : 'base';
+        const { layer: _ignored, ...rest } = buttonData || {};
+        const button = await api.addButton(screenId, { ...rest, layer });
         set({
-          screens: get().screens.map((s) =>
-            s.id !== screenId ? s : { ...s, buttons: [...s.buttons, button] }
-          ),
+          screens: get().screens.map((s) => {
+            if (s.id !== screenId) return s;
+            if (layer === 'scroll') {
+              const scrollArea = s.scrollArea || {
+                img_filename: '',
+                image: '',
+                buttons: [],
+              };
+              return {
+                ...s,
+                scrollArea: {
+                  ...scrollArea,
+                  buttons: [...(scrollArea.buttons || []), button],
+                },
+              };
+            }
+            return { ...s, buttons: [...s.buttons, button] };
+          }),
         });
         return button;
       } catch (err) {
@@ -709,17 +825,33 @@ const useStore = create((rawSet, get) => {
     importButtonsFromScreen: async (targetScreenId, sourceScreenId, options = {}) => {
       markUndoAvailable(set, get);
       try {
-        const buttons = await api.importButtons(
-          targetScreenId,
-          sourceScreenId,
-          options
-        );
+        const layer =
+          options.layer === 'scroll' || get().editLayer === 'scroll'
+            ? 'scroll'
+            : 'base';
+        const buttons = await api.importButtons(targetScreenId, sourceScreenId, {
+          ...options,
+          layer,
+        });
         set({
-          screens: get().screens.map((s) =>
-            s.id !== targetScreenId
-              ? s
-              : { ...s, buttons: [...s.buttons, ...buttons] }
-          ),
+          screens: get().screens.map((s) => {
+            if (s.id !== targetScreenId) return s;
+            if (layer === 'scroll') {
+              const scrollArea = s.scrollArea || {
+                img_filename: '',
+                image: '',
+                buttons: [],
+              };
+              return {
+                ...s,
+                scrollArea: {
+                  ...scrollArea,
+                  buttons: [...(scrollArea.buttons || []), ...buttons],
+                },
+              };
+            }
+            return { ...s, buttons: [...s.buttons, ...buttons] };
+          }),
         });
       } catch (err) {
         console.error('Import buttons failed:', err);
@@ -731,7 +863,9 @@ const useStore = create((rawSet, get) => {
       const chainKey = `${screenId}:${buttonId}`;
       markUndoAvailableKeyed(set, get, `btn:${screenId}:${buttonId}`);
 
-      applyButtonPatch(set, get, screenId, buttonId, updates);
+      const screen = get().screensById.get(screenId);
+      const layer = findButtonLayer(screen || {}, buttonId);
+      applyButtonPatch(set, get, screenId, buttonId, updates, layer);
 
       if (updates && Object.keys(updates).length > 0) {
         const prev = buttonPendingPatches.get(chainKey) || {};
@@ -745,11 +879,22 @@ const useStore = create((rawSet, get) => {
       markUndoAvailable(set, get);
       cancelButtonSave(screenId, buttonId);
       set({
-        screens: get().screens.map((s) =>
-          s.id !== screenId
-            ? s
-            : { ...s, buttons: s.buttons.filter((b) => b.id !== buttonId) }
-        ),
+        screens: get().screens.map((s) => {
+          if (s.id !== screenId) return s;
+          if (s.scrollArea?.buttons?.some((b) => b.id === buttonId)) {
+            return {
+              ...s,
+              scrollArea: {
+                ...s.scrollArea,
+                buttons: s.scrollArea.buttons.filter((b) => b.id !== buttonId),
+              },
+            };
+          }
+          return {
+            ...s,
+            buttons: s.buttons.filter((b) => b.id !== buttonId),
+          };
+        }),
         selectedButtonId:
           get().selectedButtonId === buttonId ? null : get().selectedButtonId,
       });
@@ -856,6 +1001,17 @@ const useStore = create((rawSet, get) => {
             if (next.backButtonTarget === oldId) {
               next = { ...next, backButtonTarget: newId };
             }
+            if (next.scrollArea?.buttons?.some((b) => b.target === oldId)) {
+              next = {
+                ...next,
+                scrollArea: {
+                  ...next.scrollArea,
+                  buttons: next.scrollArea.buttons.map((b) =>
+                    b.target === oldId ? { ...b, target: newId } : b
+                  ),
+                },
+              };
+            }
             return next;
           }),
           sections: get().sections.map((sec) =>
@@ -916,15 +1072,31 @@ const useStore = create((rawSet, get) => {
                 next = { ...next, backButtonTarget: '' };
               }
               if (!removeParentButtons) return next;
-              if (!next.buttons.some((b) => b.target && removed.has(b.target))) {
-                return next;
-              }
-              return {
+              const baseHit = next.buttons.some(
+                (b) => b.target && removed.has(b.target)
+              );
+              const scrollHit = next.scrollArea?.buttons?.some(
+                (b) => b.target && removed.has(b.target)
+              );
+              if (!baseHit && !scrollHit) return next;
+              next = {
                 ...next,
                 buttons: next.buttons.filter(
                   (b) => !b.target || !removed.has(b.target)
                 ),
               };
+              if (scrollHit && next.scrollArea) {
+                next = {
+                  ...next,
+                  scrollArea: {
+                    ...next.scrollArea,
+                    buttons: next.scrollArea.buttons.filter(
+                      (b) => !b.target || !removed.has(b.target)
+                    ),
+                  },
+                };
+              }
+              return next;
             }),
           sections: get().sections.map((sec) =>
             sec.rootScreenId && removed.has(sec.rootScreenId)
@@ -978,6 +1150,7 @@ const useStore = create((rawSet, get) => {
         isAddingHotspot: false,
         importCompareScreenId: null,
         importSourceButtonIds: [],
+        editLayer: 'base',
       });
     },
 
@@ -997,6 +1170,7 @@ const useStore = create((rawSet, get) => {
         isAddingHotspot: false,
         importCompareScreenId: null,
         importSourceButtonIds: [],
+        editLayer: 'base',
       });
     },
 

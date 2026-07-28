@@ -20,6 +20,10 @@ import {
   useImageFrameScale,
 } from '../../utils/imageFrameScale.js';
 import ScreenStack from './ScreenStack.jsx';
+import {
+  getScrollViewportRelative,
+  isSamsungScrollPreset,
+} from '../../data/samsungScrollPresets.js';
 import './ScreenViewer.css';
 
 function PaneCloseButton({ onClick, label }) {
@@ -352,15 +356,60 @@ function ComparePane({
   onHeaderClose,
 }) {
   const projectPlatform = useStore((s) => s.projectPlatform);
+  const editLayer = useStore((s) => s.editLayer);
+  const showScrollLayer =
+    editLayer === 'scroll' &&
+    Boolean(screen?.scrollArea?.image?.trim()) &&
+    (editable || pickable);
+  const hasScrollStrip = Boolean(screen?.scrollArea?.image?.trim());
+  const presetViewport =
+    hasScrollStrip &&
+    projectPlatform === 'samsung' &&
+    isSamsungScrollPreset(screen?.preset)
+      ? getScrollViewportRelative(screen.preset)
+      : null;
+  /** Overlay area from preset — not the strip image bounds. */
+  const scrollViewportGuide = presetViewport
+    ? showScrollLayer
+      ? {
+          // On strip canvas: window size only (visible overlay region at top).
+          left: 0,
+          top: 0,
+          width: presetViewport.width,
+          height: presetViewport.height,
+          borderRadius: presetViewport.borderRadius || 0,
+        }
+      : presetViewport
+    : null;
+  const activeButtons = showScrollLayer
+    ? screen.scrollArea?.buttons || []
+    : screen.buttons || [];
+  const activeImage = showScrollLayer
+    ? screen.scrollArea.image
+    : screen.image;
+  const imageVersionKey = showScrollLayer
+    ? `${screen?.id}:scroll`
+    : screen?.id;
   const imageVersion = useStore((s) =>
-    screen?.id ? (s.imageVersions[screen.id] ?? 0) : 0
+    imageVersionKey ? (s.imageVersions[imageVersionKey] ?? 0) : 0
   );
   const [sourceSize, setSourceSize] = useState({
-    width: screen?.sourceWidth || imageConfig.intrinsicWidth,
-    height: screen?.sourceHeight || imageConfig.intrinsicHeight,
+    width: showScrollLayer
+      ? imageConfig.intrinsicWidth
+      : screen?.sourceWidth || imageConfig.intrinsicWidth,
+    height: showScrollLayer
+      ? imageConfig.intrinsicHeight
+      : screen?.sourceHeight || imageConfig.intrinsicHeight,
   });
 
   useEffect(() => {
+    if (showScrollLayer) {
+      setSourceSize({
+        width: imageConfig.intrinsicWidth,
+        height: imageConfig.intrinsicHeight,
+      });
+      return;
+    }
     if (screen?.sourceWidth && screen?.sourceHeight) {
       setSourceSize({ width: screen.sourceWidth, height: screen.sourceHeight });
     } else {
@@ -369,13 +418,20 @@ function ComparePane({
         height: imageConfig.intrinsicHeight,
       });
     }
-  }, [screen?.id, screen?.sourceWidth, screen?.sourceHeight, imageConfig.intrinsicWidth, imageConfig.intrinsicHeight]);
+  }, [
+    screen?.id,
+    screen?.sourceWidth,
+    screen?.sourceHeight,
+    imageConfig.intrinsicWidth,
+    imageConfig.intrinsicHeight,
+    showScrollLayer,
+  ]);
 
   const handleLoad = (e) => {
     const { naturalWidth, naturalHeight } = e.currentTarget;
     if (!naturalWidth || !naturalHeight) return;
     setSourceSize({ width: naturalWidth, height: naturalHeight });
-    if (reportSourceSize && screen) {
+    if (!showScrollLayer && reportSourceSize && screen) {
       reportSourceSize(screen.id, naturalWidth, naturalHeight);
     }
   };
@@ -397,20 +453,36 @@ function ComparePane({
     [screen, sourceSize.width, sourceSize.height]
   );
 
+  const layerImageConfig = useMemo(() => {
+    // Scroll strip coords live in strip pixel space; main-screen Samsung coords stay in preset2 (imageConfig).
+    if (showScrollLayer) {
+      return {
+        intrinsicWidth: sourceSize.width,
+        intrinsicHeight: sourceSize.height,
+      };
+    }
+    return imageConfig;
+  }, [
+    showScrollLayer,
+    sourceSize.width,
+    sourceSize.height,
+    imageConfig,
+  ]);
+
   const buttonSourceRects = useMemo(() => {
-    if (!pickable || !screen?.buttons?.length) return new Map();
+    if (!pickable || !activeButtons.length) return new Map();
     return new Map(
-      screen.buttons.map((btn) => [
+      activeButtons.map((btn) => [
         btn.id,
         toDisplayRect(
           normalizeButton(btn),
           screenForCoords,
-          imageConfig,
+          layerImageConfig,
           projectPlatform
         ),
       ])
     );
-  }, [pickable, screen?.buttons, screenForCoords, imageConfig, projectPlatform]);
+  }, [pickable, activeButtons, screenForCoords, layerImageConfig, projectPlatform]);
 
   const selectedPickSet = useMemo(
     () => new Set(selectedButtonIds || []),
@@ -461,7 +533,7 @@ function ComparePane({
 
       if (didDrag && marqueeRef.current) {
         const box = marqueeRef.current;
-        const hits = screen.buttons
+        const hits = activeButtons
           .filter((btn) => {
             const rect = buttonSourceRects.get(btn.id);
             return rect && rectsIntersect(box, rect);
@@ -504,7 +576,7 @@ function ComparePane({
       )}
       <div
         ref={containerRef}
-        className={`screen-viewer__image-container ${isAddingHotspot ? 'screen-viewer--crosshair' : ''} ${!editable ? 'screen-viewer__image-container--readonly' : ''} ${pickable ? 'screen-viewer__image-container--pickable' : ''}`}
+        className={`screen-viewer__image-container ${isAddingHotspot ? 'screen-viewer--crosshair' : ''} ${!editable ? 'screen-viewer__image-container--readonly' : ''} ${pickable ? 'screen-viewer__image-container--pickable' : ''} ${showScrollLayer ? 'screen-viewer__image-container--scroll-layer' : ''}`}
         onClick={editable ? onSelectButton : undefined}
       >
         <ScreenStack
@@ -513,12 +585,12 @@ function ComparePane({
           stageRef={stageRef}
           frameRef={imageFrameRef}
           onFramePointerDown={pickable ? handlePickStagePointerDown : undefined}
-          buttons={screen.buttons.map((btn) => (
+          buttons={activeButtons.map((btn) => (
             <HotspotRegion
               key={btn.id}
               button={btn}
-              screen={screen}
-              imageConfig={imageConfig}
+              screen={screenForCoords}
+              imageConfig={layerImageConfig}
               imageSize={sourceSize}
               platform={projectPlatform}
               selected={
@@ -541,14 +613,29 @@ function ComparePane({
           ))}
           image={
             <img
-              key={`${screen.image}-${imageVersion}`}
-              src={screenshotUrl(screen.image, imageVersion)}
-              alt={screen.id}
+              key={`${activeImage}-${imageVersion}`}
+              src={screenshotUrl(activeImage, imageVersion)}
+              alt={showScrollLayer ? `${screen.id} scroll` : screen.id}
               className="screen-viewer__image"
-              onClick={editable ? (e) => onImageClick(e, screen, setSourceSize) : undefined}
+              onClick={editable ? (e) => onImageClick(e, screenForCoords, setSourceSize) : undefined}
               onLoad={handleLoad}
               draggable={false}
             />
+          }
+          overlay={
+            scrollViewportGuide ? (
+              <div
+                className="screen-viewer__scroll-viewport-guide"
+                style={{
+                  left: scrollViewportGuide.left,
+                  top: scrollViewportGuide.top,
+                  width: scrollViewportGuide.width,
+                  height: scrollViewportGuide.height,
+                  borderRadius: scrollViewportGuide.borderRadius || 0,
+                }}
+                aria-hidden="true"
+              />
+            ) : null
           }
           marquee={
             marquee ? (

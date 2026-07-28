@@ -44,6 +44,7 @@ app.get('/screenshots/:projectId/:filename', (req, res, next) => {
     'screenshots',
     filename
   );
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.sendFile(filePath, (err) => {
     if (err) next();
   });

@@ -106,6 +106,49 @@ function normalizeLgPreset(preset) {
  * @param {'lg' | 'samsung'} platform
  * @returns {Record<string, unknown>}
  */
+function scrollAreaToEmulator(scrollArea) {
+  if (!scrollArea || typeof scrollArea !== 'object') return null;
+  const hasImage = Boolean(
+    scrollArea.image?.trim() || scrollArea.img_filename?.trim()
+  );
+  if (!hasImage) return null;
+  const imgFilename =
+    scrollArea.img_filename ||
+    stripImageExtension(scrollArea.image) ||
+    '';
+  if (!imgFilename) return null;
+  return {
+    img_filename: imgFilename,
+    buttons: (scrollArea.buttons || []).map((b) =>
+      buttonToEmulator(b, 'samsung')
+    ),
+  };
+}
+
+function scrollAreaFromEmulator(screenId, entry, meta, scrollImageFilename) {
+  const raw = entry?.scroll_area;
+  if (!raw || typeof raw !== 'object') return null;
+  const imgFilename =
+    typeof raw.img_filename === 'string' && raw.img_filename.trim()
+      ? raw.img_filename.trim()
+      : '';
+  if (!imgFilename && !scrollImageFilename) return null;
+
+  const scrollButtonIds = meta?.scrollButtonIds || [];
+  const buttons = (raw.buttons || []).map((btn, i) =>
+    buttonFromEmulator(btn, {
+      id: scrollButtonIds[i] || '',
+      screenId,
+    })
+  );
+
+  return {
+    img_filename: imgFilename || stripImageExtension(scrollImageFilename) || '',
+    image: scrollImageFilename || '',
+    buttons,
+  };
+}
+
 export function screenToEmulator(screen, platform = 'lg') {
   const hasImage = Boolean(screen.image?.trim() || screen.img_filename?.trim());
   const imgFilename = !hasImage
@@ -113,7 +156,7 @@ export function screenToEmulator(screen, platform = 'lg') {
     : screen.img_filename || stripImageExtension(screen.image) || screen.id;
 
   if (platform === 'samsung') {
-    return {
+    const out = {
       img_filename: imgFilename,
       preset: normalizeSamsungPreset(screen.preset),
       model: screen.model || 'smart-tv',
@@ -123,6 +166,9 @@ export function screenToEmulator(screen, platform = 'lg') {
           typeof screen.backButtonTarget === 'string' ? screen.backButtonTarget : '',
       },
     };
+    const scrollArea = scrollAreaToEmulator(screen.scrollArea);
+    if (scrollArea) out.scroll_area = scrollArea;
+    return out;
   }
 
   return {
@@ -144,7 +190,8 @@ export function screenFromEmulator(
   entry,
   meta,
   imageFilename,
-  platform = 'lg'
+  platform = 'lg',
+  scrollImageFilename = ''
 ) {
   const buttonIds = meta?.buttonIds || [];
   const buttons = (entry.buttons || []).map((btn, i) =>
@@ -171,11 +218,18 @@ export function screenFromEmulator(
   };
 
   if (platform === 'samsung') {
+    const scrollArea = scrollAreaFromEmulator(
+      screenId,
+      entry,
+      meta,
+      scrollImageFilename
+    );
     return {
       ...base,
       preset: normalizeSamsungPreset(entry.preset),
       model: typeof entry.model === 'string' && entry.model ? entry.model : 'smart-tv',
       backButtonTarget: backTarget,
+      ...(scrollArea ? { scrollArea } : {}),
     };
   }
 

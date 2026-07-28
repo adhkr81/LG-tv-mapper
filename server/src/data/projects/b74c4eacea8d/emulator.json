@@ -83,7 +83,15 @@
     "img_filename": "homescreen_login",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 102,
+        "height": 29,
+        "x": 14,
+        "y": 39,
+        "target": "My_Account"
+      }
+    ],
     "back_button": {
       "target": "homescreen"
     }
@@ -622,6 +630,13 @@
         "x": 512,
         "y": 186,
         "target": "Vision_AI_settings_terms-conditions"
+      },
+      {
+        "width": 33,
+        "height": 20,
+        "x": 7,
+        "y": 331,
+        "target": "homescreen_vision-ai-2"
       }
     ],
     "back_button": {
@@ -664,7 +679,7 @@
   },
   "My_Account_long-1": {
     "img_filename": "My_Account_long-1",
-    "preset": "preset2",
+    "preset": "preset5",
     "model": "smart-tv",
     "buttons": [],
     "back_button": {
@@ -761,8 +776,8 @@
       "target": ""
     }
   },
-  "6-5": {
-    "img_filename": "6-5",
+  "connected_devices_tv": {
+    "img_filename": "connected_devices_tv",
     "preset": "preset2",
     "model": "smart-tv",
     "buttons": [],
@@ -770,8 +785,8 @@
       "target": ""
     }
   },
-  "6-6": {
-    "img_filename": "6-6",
+  "connected_devices_smartthings-favorites": {
+    "img_filename": "connected_devices_smartthings-favorites",
     "preset": "preset2",
     "model": "smart-tv",
     "buttons": [],
@@ -779,8 +794,8 @@
       "target": ""
     }
   },
-  "39-7": {
-    "img_filename": "39-7",
+  "connected_devices_smartthings-map-view": {
+    "img_filename": "connected_devices_smartthings-map-view",
     "preset": "preset2",
     "model": "smart-tv",
     "buttons": [],
@@ -788,13 +803,418 @@
       "target": ""
     }
   },
-  "39-8": {
-    "img_filename": "39-8",
+  "connected_devices_smartthings-devices": {
+    "img_filename": "connected_devices_smartthings-devices",
     "preset": "preset2",
     "model": "smart-tv",
     "buttons": [],
     "back_button": {
       "target": ""
+    }
+  },
+  "connected_devices_smartthings-routines": {
+    "img_filename": "connected_devices_smartthings-routines",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "connected_devices_smartthings-settings-1": {
+    "img_filename": "connected_devices_smartthings-settings-1",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "connected_devices_smartthings-settings-2": {
+    "img_filename": "connected_devices_smartthings-settings-2",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "connected_devices_smartthings-settings-3": {
+    "img_filename": "connected_devices_smartthings-settings-3",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "connected_devices_smartthings-settings-4": {
+    "img_filename": "connected_devices_smartthings-settings-4",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "connected_devices_smartthings-settings-5": {
+    "img_filename": "connected_devices_smartthings-settings-5",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "connected_devices_smartthings-settings-6": {
+    "img_filename": "connected_devices_smartthings-settings-6",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "connected_devices_smartthings-settings-7": {
+    "img_filename": "connected_devices_smartthings-settings-7",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "connected_devices_connection-guide-1": {
+    "img_filename": "connected_devices_connection-guide-1",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "connected_devices_connection-guide-2": {
+    "img_filename": "connected_devices_connection-guide-2",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "connected_devices_connection-guide-3": {
+    "img_filename": "connected_devices_connection-guide-3",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "connected_devices_connection-guide-4": {
+    "img_filename": "connected_devices_connection-guide-4",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "connected_devices_connection-guide-5": {
+    "img_filename": "connected_devices_connection-guide-5",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "connected_devices_connection-guide-6": {
+    "img_filename": "connected_devices_connection-guide-6",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "connected_devices_connection-guide-7": {
+    "img_filename": "connected_devices_connection-guide-7",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "connected_devices_universal-remote": {
+    "img_filename": "connected_devices_universal-remote",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "connected_devices_universal-remote_new-device": {
+    "img_filename": "connected_devices_universal-remote_new-device",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "connected_devices_universal-remote_samsung": {
+    "img_filename": "connected_devices_universal-remote_samsung",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_bluetooth": {
+    "img_filename": "settings_bluetooth",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_network": {
+    "img_filename": "settings_network",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_network_network-settings": {
+    "img_filename": "settings_network_network-settings",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_network_network-status": {
+    "img_filename": "settings_network_network-status",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_brightness": {
+    "img_filename": "settings_brightness",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_brightness-long-2": {
+    "img_filename": "settings_brightness-long-2",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_brightness-long-1": {
+    "img_filename": "settings_brightness-long-1",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_picture-mode": {
+    "img_filename": "settings_picture-mode",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_sound-mode": {
+    "img_filename": "settings_sound-mode",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_sound-output": {
+    "img_filename": "settings_sound-output",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_ai-mode": {
+    "img_filename": "settings_ai-mode",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_multi-view": {
+    "img_filename": "settings_multi-view",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_live-translate": {
+    "img_filename": "settings_live-translate",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_live-translate-long-1": {
+    "img_filename": "settings_live-translate-long-1",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_live-translate-long-2": {
+    "img_filename": "settings_live-translate-long-2",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_sleep-timer": {
+    "img_filename": "settings_sleep-timer",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_digital-output": {
+    "img_filename": "settings_digital-output",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "homescreen_settings-opened": {
+    "img_filename": "homescreen_settings-opened",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "homescreen_settings-opened-long-1": {
+    "img_filename": "homescreen_settings-opened-long-1",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "homescreen_settings-opened-long-2": {
+    "img_filename": "homescreen_settings-opened-long-2",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_color-tone": {
+    "img_filename": "settings_color-tone",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_power-energy-saving": {
+    "img_filename": "settings_power-energy-saving",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_auracast": {
+    "img_filename": "settings_auracast",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_quick-share": {
+    "img_filename": "settings_quick-share",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "settings_support": {
+    "img_filename": "settings_support",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "Vision_AI_generative-wallpaper": {
+    "img_filename": "Vision_AI_generative-wallpaper",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "My_Account": {
+    "img_filename": "My_Account",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": "homescreen"
     }
   }
 }

@@ -43,7 +43,7 @@ export function scaleRect(rect, from, to) {
 export const BUTTON_DISPLAY_OFFSET = { left: -92, top: -5 };
 export const BUTTON_DISPLAY_OFFSET_NONE = { left: 0, top: 0 };
 
-/** Samsung preset2 screen size (simulator data.json). */
+/** Samsung preset2 screen size (simulator data.json). Button coords use this; images keep native resolution. */
 export const SAMSUNG_PRESET2_SIZE = { intrinsicWidth: 658, intrinsicHeight: 370 };
 
 export function displayOffsetForPlatform(platform) {

@@ -16,7 +16,6 @@ import {
   projectExists,
   touchProject,
 } from './projects.js';
-import { SAMSUNG_PRESET2 } from './samsung-preset2.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, '..', 'data');
@@ -203,8 +202,18 @@ function applyMetaMigrations(meta) {
 /* -------------------------------------------------------------------------- */
 
 /** Resolve `img_filename` → an existing screenshot file (probe extensions). */
-function resolveImageFilenameOnDisk(screenId, imgFilename) {
+function resolveImageFilenameOnDisk(screenId, imgFilename, preferredFilename = '') {
   if (imgFilename === '') return '';
+
+  const preferred = String(preferredFilename || '').trim();
+  if (
+    preferred &&
+    screenshotsDir &&
+    fs.existsSync(path.join(screenshotsDir, preferred))
+  ) {
+    return preferred;
+  }
+
   const base = imgFilename || screenId;
   for (const ext of ['.jpg', '.jpeg', '.png', '.webp']) {
     const name = base.includes('.') ? base : base + ext;
@@ -212,29 +221,127 @@ function resolveImageFilenameOnDisk(screenId, imgFilename) {
       return name;
     }
   }
-  return base.includes('.') ? base : `${base}.jpg`;
+  return preferred || (base.includes('.') ? base : `${base}.jpg`);
+}
+
+/** Remove other extension variants so a retake can't leave a stale .jpg beside a new .png. */
+function clearSiblingScreenshotExtensions(filename) {
+  const name = String(filename || '').trim();
+  if (!name || !screenshotsDir) return;
+  const stem = stripImageExtension(name);
+  if (!stem) return;
+  const keep = path.basename(name);
+  for (const ext of ['.jpg', '.jpeg', '.png', '.webp']) {
+    const sibling = `${stem}${ext}`;
+    if (sibling === keep) continue;
+    unlinkScreenshotFile(sibling);
+  }
 }
 
 /** Set the resolved `image` filename on an in-memory screen. */
-function applyResolvedImage(screen) {
-  screen.image = resolveImageFilenameOnDisk(screen.id, screen.img_filename);
+function applyResolvedImage(screen, preferredFilename = '') {
+  screen.image = resolveImageFilenameOnDisk(
+    screen.id,
+    screen.img_filename,
+    preferredFilename || screen.image
+  );
+}
+
+function defaultScrollImgFilename(screenId) {
+  return `${screenId}_scroll`;
+}
+
+/** Resolve and attach scroll strip image on an in-memory screen. */
+function applyResolvedScrollImage(screen) {
+  if (!screen.scrollArea) return;
+  const imgFilename =
+    screen.scrollArea.img_filename || defaultScrollImgFilename(screen.id);
+  screen.scrollArea.img_filename = imgFilename;
+  screen.scrollArea.image = resolveImageFilenameOnDisk(screen.id, imgFilename);
+}
+
+function ensureScrollArea(screen) {
+  if (!screen.scrollArea) {
+    screen.scrollArea = {
+      img_filename: defaultScrollImgFilename(screen.id),
+      image: '',
+      buttons: [],
+    };
+  }
+  if (!Array.isArray(screen.scrollArea.buttons)) {
+    screen.scrollArea.buttons = [];
+  }
+  return screen.scrollArea;
+}
+
+function isScrollLayer(layer) {
+  return layer === 'scroll';
+}
+
+function getButtonList(screen, layer) {
+  if (isScrollLayer(layer)) {
+    return ensureScrollArea(screen).buttons;
+  }
+  return screen.buttons;
+}
+
+function findButtonOnScreen(screen, buttonId) {
+  const baseIdx = screen.buttons.findIndex((b) => b.id === buttonId);
+  if (baseIdx !== -1) {
+    return { layer: 'base', list: screen.buttons, index: baseIdx, button: screen.buttons[baseIdx] };
+  }
+  const scrollButtons = screen.scrollArea?.buttons;
+  if (scrollButtons) {
+    const scrollIdx = scrollButtons.findIndex((b) => b.id === buttonId);
+    if (scrollIdx !== -1) {
+      return {
+        layer: 'scroll',
+        list: scrollButtons,
+        index: scrollIdx,
+        button: scrollButtons[scrollIdx],
+      };
+    }
+  }
+  return null;
 }
 
 /* -------------------------------------------------------------------------- */
 /* Conversion: emulator/meta JSON  <->  in-memory screen shape                */
 /* -------------------------------------------------------------------------- */
 
-function alignScreenButtonIds(screen, screenMeta) {
-  const storedIds = screenMeta?.buttonIds || [];
+function alignButtonList(buttons, storedIds) {
   let dirtyAlign = false;
-  const buttons = screen.buttons.map((btn, i) => {
+  const next = buttons.map((btn, i) => {
     const stableId = storedIds[i] || btn.id;
     if (stableId && stableId === btn.id) return btn;
     dirtyAlign = true;
     return { ...btn, id: stableId || uuidv4() };
   });
-  if (storedIds.length !== buttons.length) dirtyAlign = true;
-  return { screen: { ...screen, buttons }, dirty: dirtyAlign };
+  if (storedIds.length !== next.length) dirtyAlign = true;
+  return { buttons: next, dirty: dirtyAlign };
+}
+
+function alignScreenButtonIds(screen, screenMeta) {
+  const { buttons, dirty: baseDirty } = alignButtonList(
+    screen.buttons,
+    screenMeta?.buttonIds || []
+  );
+  let dirtyAlign = baseDirty;
+  let next = { ...screen, buttons };
+
+  if (screen.scrollArea) {
+    const { buttons: scrollButtons, dirty: scrollDirty } = alignButtonList(
+      screen.scrollArea.buttons || [],
+      screenMeta?.scrollButtonIds || []
+    );
+    dirtyAlign = dirtyAlign || scrollDirty;
+    next = {
+      ...next,
+      scrollArea: { ...screen.scrollArea, buttons: scrollButtons },
+    };
+  }
+
+  return { screen: next, dirty: dirtyAlign };
 }
 
 function emulatorAndMetaToScreens(emulatorMap, meta) {
@@ -245,17 +352,30 @@ function emulatorAndMetaToScreens(emulatorMap, meta) {
     const imgFilename =
       typeof entry.img_filename === 'string' ? entry.img_filename : screenId;
     const image = resolveImageFilenameOnDisk(screenId, imgFilename);
+    const scrollImgFilename =
+      typeof entry.scroll_area?.img_filename === 'string'
+        ? entry.scroll_area.img_filename
+        : screenMeta?.scrollImage
+          ? stripImageExtension(screenMeta.scrollImage)
+          : '';
+    const scrollImage = scrollImgFilename
+      ? resolveImageFilenameOnDisk(screenId, scrollImgFilename)
+      : '';
     const screen = screenFromEmulator(
       screenId,
       entry,
       screenMeta,
       image,
-      platform
+      platform,
+      scrollImage
     );
     const { screen: aligned, dirty: alignDirty } = alignScreenButtonIds(
       screen,
       screenMeta
     );
+    if (aligned.scrollArea) {
+      applyResolvedScrollImage(aligned);
+    }
     aligned.sourceWidth = screenMeta?.sourceWidth ?? null;
     aligned.sourceHeight = screenMeta?.sourceHeight ?? null;
     if (alignDirty) needsRepersist = true;
@@ -278,6 +398,16 @@ function screensToEmulatorAndMeta(screens, sections, imageConfig) {
       buttonIds: screen.buttons.map((b) => b.id),
       ...(screen.sourceWidth ? { sourceWidth: screen.sourceWidth } : {}),
       ...(screen.sourceHeight ? { sourceHeight: screen.sourceHeight } : {}),
+      ...(screen.scrollArea?.buttons?.length
+        ? { scrollButtonIds: screen.scrollArea.buttons.map((b) => b.id) }
+        : screen.scrollArea?.image || screen.scrollArea?.img_filename
+          ? {
+              scrollButtonIds: (screen.scrollArea.buttons || []).map((b) => b.id),
+            }
+          : {}),
+      ...(screen.scrollArea?.image
+        ? { scrollImage: screen.scrollArea.image }
+        : {}),
     };
   }
 
@@ -551,6 +681,11 @@ function renameScreenIdInTargets(screens, oldId, newId) {
     for (const btn of screen.buttons) {
       if (btn.target === oldId) btn.target = newId;
     }
+    if (screen.scrollArea?.buttons) {
+      for (const btn of screen.scrollArea.buttons) {
+        if (btn.target === oldId) btn.target = newId;
+      }
+    }
     if (screen.backButtonTarget === oldId) {
       screen.backButtonTarget = newId;
     }
@@ -571,6 +706,11 @@ function removeButtonsTargetingScreens(screens, targetIds) {
     screen.buttons = screen.buttons.filter(
       (btn) => !btn.target || !idSet.has(btn.target)
     );
+    if (screen.scrollArea?.buttons) {
+      screen.scrollArea.buttons = screen.scrollArea.buttons.filter(
+        (btn) => !btn.target || !idSet.has(btn.target)
+      );
+    }
   }
 }
 
@@ -600,7 +740,7 @@ function unlinkScreenshotFile(filename) {
   fs.unlinkSync(filePath);
 }
 
-function deleteScreenshotFiles(screen) {
+function deleteBaseScreenshotFiles(screen) {
   const names = new Set();
   if (screen.image?.trim()) names.add(screen.image.trim());
   const base = screen.img_filename || screen.id;
@@ -612,6 +752,55 @@ function deleteScreenshotFiles(screen) {
   for (const name of names) {
     unlinkScreenshotFile(name);
   }
+}
+
+function deleteScrollScreenshotFiles(screen) {
+  const names = new Set();
+  if (screen.scrollArea?.image?.trim()) {
+    names.add(screen.scrollArea.image.trim());
+  }
+  const scrollBase =
+    screen.scrollArea?.img_filename || defaultScrollImgFilename(screen.id);
+  if (scrollBase) {
+    for (const ext of ['.jpg', '.jpeg', '.png', '.webp']) {
+      names.add(scrollBase.includes('.') ? scrollBase : `${scrollBase}${ext}`);
+    }
+  }
+  for (const name of names) {
+    unlinkScreenshotFile(name);
+  }
+}
+
+function deleteScreenshotFiles(screen) {
+  deleteBaseScreenshotFiles(screen);
+  deleteScrollScreenshotFiles(screen);
+}
+
+function renameScrollScreenshotFiles(screen, oldId, newId) {
+  if (!screen.scrollArea) return;
+  const oldBase =
+    screen.scrollArea.img_filename || defaultScrollImgFilename(oldId);
+  const newBase = defaultScrollImgFilename(newId);
+  for (const ext of ['.jpg', '.jpeg', '.png', '.webp']) {
+    const oldName = oldBase.includes('.') ? oldBase : `${oldBase}${ext}`;
+    const newName = `${newBase}${ext}`;
+    const oldPath = getScreenshotPath(oldName);
+    if (!fs.existsSync(oldPath)) continue;
+    const newPath = getScreenshotPath(newName);
+    try {
+      if (oldPath !== newPath) {
+        if (fs.existsSync(newPath)) fs.unlinkSync(newPath);
+        fs.renameSync(oldPath, newPath);
+      }
+      screen.scrollArea.img_filename = newBase;
+      screen.scrollArea.image = newName;
+      return;
+    } catch {
+      /* try next extension */
+    }
+  }
+  screen.scrollArea.img_filename = newBase;
+  applyResolvedScrollImage(screen);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -766,12 +955,15 @@ export function createScreen({
       : {}),
     buttons: [],
     sectionId: sectionId || null,
-    sourceWidth: platform === 'samsung' ? SAMSUNG_PRESET2.width : null,
-    sourceHeight: platform === 'samsung' ? SAMSUNG_PRESET2.height : null,
+    sourceWidth: null,
+    sourceHeight: null,
     ...layout,
   };
 
-  applyResolvedImage(screen);
+  if (image?.trim()) {
+    clearSiblingScreenshotExtensions(image);
+  }
+  applyResolvedImage(screen, image);
   state.screens.push(screen);
   markDirty();
   return screen;
@@ -794,6 +986,13 @@ export function updateScreen(id, updates) {
     screen.id = newId;
     screen.img_filename = newId;
     screen.buttons = screen.buttons.map((b) => ({ ...b, screenId: newId }));
+    if (screen.scrollArea?.buttons) {
+      screen.scrollArea.buttons = screen.scrollArea.buttons.map((b) => ({
+        ...b,
+        screenId: newId,
+      }));
+      renameScrollScreenshotFiles(screen, id, newId);
+    }
 
     state.sections.forEach((sec) => {
       if (sec.rootScreenId === id) sec.rootScreenId = newId;
@@ -815,14 +1014,34 @@ export function updateScreen(id, updates) {
   }
   if (updates.image !== undefined) {
     if (updates.image === null || updates.image === '') {
-      deleteScreenshotFiles(screen);
+      deleteBaseScreenshotFiles(screen);
       screen.image = '';
       screen.img_filename = '';
     } else {
-      screen.image = updates.image;
       screen.img_filename =
         stripImageExtension(updates.image) || screen.id;
-      applyResolvedImage(screen);
+      clearSiblingScreenshotExtensions(updates.image);
+      applyResolvedImage(screen, updates.image);
+      // Force client to re-measure after a retake/replace.
+      screen.sourceWidth = null;
+      screen.sourceHeight = null;
+    }
+  }
+  if (updates.scrollImage !== undefined) {
+    if (updates.scrollImage === null || updates.scrollImage === '') {
+      deleteScrollScreenshotFiles(screen);
+      if (screen.scrollArea) {
+        screen.scrollArea.image = '';
+        screen.scrollArea.img_filename = '';
+        // Keep buttons so mapper work isn't lost; export omits empty strip.
+      }
+    } else {
+      const scrollArea = ensureScrollArea(screen);
+      scrollArea.image = updates.scrollImage;
+      scrollArea.img_filename =
+        stripImageExtension(updates.scrollImage) ||
+        defaultScrollImgFilename(screen.id);
+      applyResolvedScrollImage(screen);
     }
   }
   if (updates.sourceWidth !== undefined) {
@@ -856,10 +1075,14 @@ export function deleteScreen(id, { removeParentButtons = false } = {}) {
   markDirty();
 }
 
-export function getButtons(screenId) {
+export function getButtons(screenId, { layer = 'base' } = {}) {
   ensureLoaded();
   const screen = state.screens.find((s) => s.id === screenId);
-  return screen ? screen.buttons : [];
+  if (!screen) return [];
+  if (isScrollLayer(layer)) {
+    return screen.scrollArea?.buttons || [];
+  }
+  return screen.buttons;
 }
 
 export function addButton(screenId, data) {
@@ -867,7 +1090,9 @@ export function addButton(screenId, data) {
   const screen = state.screens.find((s) => s.id === screenId);
   if (!screen) throw new Error(`Screen "${screenId}" not found`);
 
-  const normalized = normalizeMapperButton(screenId, data);
+  const layer = isScrollLayer(data?.layer) ? 'scroll' : 'base';
+  const { layer: _layer, ...buttonData } = data || {};
+  const normalized = normalizeMapperButton(screenId, buttonData);
   const button = {
     id: uuidv4(),
     screenId,
@@ -881,7 +1106,7 @@ export function addButton(screenId, data) {
     ...(normalized.type ? { type: normalized.type } : {}),
   };
 
-  screen.buttons.push(button);
+  getButtonList(screen, layer).push(button);
   markDirty();
   return button;
 }
@@ -892,8 +1117,9 @@ export function updateButton(screenId, buttonId, updates) {
   const screen = state.screens.find((s) => s.id === screenId);
   if (!screen) throw new Error(`Screen "${screenId}" not found`);
 
-  const btn = screen.buttons.find((b) => b.id === buttonId);
-  if (!btn) throw new Error(`Button "${buttonId}" not found`);
+  const found = findButtonOnScreen(screen, buttonId);
+  if (!found) throw new Error(`Button "${buttonId}" not found`);
+  const btn = found.button;
 
   if (patch.label !== undefined) btn.label = patch.label;
   if (patch.target !== undefined) btn.target = patch.target;
@@ -934,17 +1160,17 @@ export function deleteButton(screenId, buttonId) {
   const screen = state.screens.find((s) => s.id === screenId);
   if (!screen) throw new Error(`Screen "${screenId}" not found`);
 
-  const idx = screen.buttons.findIndex((b) => b.id === buttonId);
-  if (idx === -1) throw new Error(`Button "${buttonId}" not found`);
+  const found = findButtonOnScreen(screen, buttonId);
+  if (!found) throw new Error(`Button "${buttonId}" not found`);
 
-  screen.buttons.splice(idx, 1);
+  found.list.splice(found.index, 1);
   markDirty();
 }
 
 export function importButtonsFromScreen(
   targetScreenId,
   sourceScreenId,
-  { includeTargets = true, buttonIds = null } = {}
+  { includeTargets = true, buttonIds = null, layer = 'base' } = {}
 ) {
   ensureLoaded();
   if (targetScreenId === sourceScreenId) {
@@ -954,18 +1180,24 @@ export function importButtonsFromScreen(
   const source = state.screens.find((s) => s.id === sourceScreenId);
   if (!target) throw new Error(`Screen "${targetScreenId}" not found`);
   if (!source) throw new Error(`Screen "${sourceScreenId}" not found`);
-  if (source.buttons.length === 0) {
+
+  const sourceLayer = isScrollLayer(layer) ? 'scroll' : 'base';
+  const sourceButtons = isScrollLayer(sourceLayer)
+    ? source.scrollArea?.buttons || []
+    : source.buttons;
+  if (sourceButtons.length === 0) {
     throw new Error(`Screen "${sourceScreenId}" has no buttons to import`);
   }
 
   const idSet = buttonIds?.length ? new Set(buttonIds) : null;
   const templates = idSet
-    ? source.buttons.filter((b) => idSet.has(b.id))
-    : source.buttons;
+    ? sourceButtons.filter((b) => idSet.has(b.id))
+    : sourceButtons;
   if (templates.length === 0) {
     throw new Error('No matching buttons to import');
   }
 
+  const targetList = getButtonList(target, sourceLayer);
   const imported = templates.map((template) => {
     const normalized = normalizeMapperButton(targetScreenId, template);
     const button = {
@@ -980,7 +1212,7 @@ export function importButtonsFromScreen(
       ...(normalized.popover ? { popover: normalized.popover } : {}),
       ...(normalized.type ? { type: normalized.type } : {}),
     };
-    target.buttons.push(button);
+    targetList.push(button);
     return button;
   });
 

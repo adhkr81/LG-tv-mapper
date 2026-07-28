@@ -124,12 +124,14 @@ router.post('/', async (req, res) => {
 router.post('/import', upload.single('file'), (req, res) => {
   try {
     const { screenId, sectionId } = req.body;
+    const kind = req.body.kind === 'scroll' ? 'scroll' : 'base';
     if (!screenId || !req.file) {
       return res.status(400).json({ error: 'screenId and file are required' });
     }
 
     const screen = registerScreenshotImport(screenId, req.file.path, {
       sectionId: sectionId || null,
+      kind,
     });
     res.json(screen);
   } catch (err) {

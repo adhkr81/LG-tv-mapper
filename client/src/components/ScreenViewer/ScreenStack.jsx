@@ -12,6 +12,7 @@ export default function ScreenStack({
   onFramePointerDown,
   image,
   buttons,
+  overlay,
   marquee,
 }) {
   const w = sourceSize.width || 1;
@@ -39,6 +40,7 @@ export default function ScreenStack({
         <div className="screen-viewer__screen-stack">
           {buttons}
           {image}
+          {overlay}
           {marquee}
         </div>
       </div>

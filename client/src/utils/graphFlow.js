@@ -78,6 +78,10 @@ export function graphLayoutSignature(screens, activeSectionId, sections) {
     );
   }
   for (const screen of screens) {
+    const navButtons = [
+      ...(screen.buttons || []),
+      ...(screen.scrollArea?.buttons || []),
+    ];
     parts.push(
       'p',
       screen.id,
@@ -85,9 +89,12 @@ export function graphLayoutSignature(screens, activeSectionId, sections) {
       screen.graphX ?? '',
       screen.graphY ?? '',
       screen.image ? '1' : '0',
-      String(screen.buttons.length)
+      screen.image || '',
+      String(navButtons.length),
+      screen.preset || '',
+      screen.scrollArea?.image ? '1' : '0'
     );
-    for (const btn of screen.buttons) {
+    for (const btn of navButtons) {
       parts.push('b', btn.id, btn.target || '');
     }
   }
@@ -213,12 +220,18 @@ export function buildSectionBandUpdates(nodes) {
   return updates;
 }
 
+function collectNavButtons(screen) {
+  const base = screen.buttons || [];
+  const scroll = screen.scrollArea?.buttons || [];
+  return [...base, ...scroll];
+}
+
 function collectSectionEdges(visibleScreens, screenIds, externalIds) {
   const edges = [];
   const connectedIds = new Set();
 
   visibleScreens.forEach((screen) => {
-    screen.buttons.forEach((btn) => {
+    collectNavButtons(screen).forEach((btn) => {
       if (btn.target && screenIds.has(btn.target)) {
         connectedIds.add(screen.id);
         connectedIds.add(btn.target);
@@ -274,7 +287,7 @@ function collectAllScreensEdges(screens, collapsedSectionIds = new Set()) {
   const grouped = new Map();
 
   screens.forEach((screen) => {
-    screen.buttons.forEach((btn) => {
+    collectNavButtons(screen).forEach((btn) => {
       if (!btn.target || !screenIds.has(btn.target)) return;
       const target = byId.get(btn.target);
       const sourceId = graphEndpointId(screen, collapsedSectionIds);

@@ -4,9 +4,16 @@ import { normalizeButton } from '../../utils/buttonRect.js';
 import { screenshotUrl } from '../../utils/screenshotUrl.js';
 import { toDisplayRect } from '../../utils/coords.js';
 import { emulatorButtonStyle, useImageFrameScale } from '../../utils/imageFrameScale.js';
+import {
+  getScrollButtonsRelative,
+  getScrollViewportRelative,
+  isSamsungScrollPreset,
+} from '../../data/samsungScrollPresets.js';
 import ScreenStack from '../ScreenViewer/ScreenStack.jsx';
 import '../ScreenViewer/ScreenViewer.css';
 import './ScreenPreview.css';
+
+const SCROLL_STEP = 190;
 
 export default function ScreenPreview() {
   const screensById = useStore((s) => s.screensById);
@@ -25,12 +32,16 @@ export default function ScreenPreview() {
     height: imageConfig.intrinsicHeight,
   });
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [scrollTop, setScrollTop] = useState(0);
   const imgRef = useRef(null);
   const containerRef = useRef(null);
   const frameScale = useImageFrameScale(containerRef, sourceSize);
   const reportScreenSourceSize = useStore((s) => s.reportScreenSourceSize);
   const imageVersion = useStore((s) =>
     currentScreenId ? (s.imageVersions[currentScreenId] ?? 0) : 0
+  );
+  const scrollImageVersion = useStore((s) =>
+    currentScreenId ? (s.imageVersions[`${currentScreenId}:scroll`] ?? 0) : 0
   );
 
   // Follow graph selection only when the user picks a visible node — not when
@@ -68,6 +79,7 @@ export default function ScreenPreview() {
 
   useEffect(() => {
     setImageLoaded(false);
+    setScrollTop(0);
     setSourceSize({
       width: screen?.sourceWidth || imageConfig.intrinsicWidth,
       height: screen?.sourceHeight || imageConfig.intrinsicHeight,
@@ -131,6 +143,21 @@ export default function ScreenPreview() {
     setHistory([]);
   }, [anchorScreenId]);
 
+  const scrollViewport = useMemo(
+    () => (isSamsung ? getScrollViewportRelative(screen?.preset) : null),
+    [isSamsung, screen?.preset]
+  );
+  const scrollArrows = useMemo(
+    () => (isSamsung ? getScrollButtonsRelative(screen?.preset) : null),
+    [isSamsung, screen?.preset]
+  );
+  const hasScrollPreview = Boolean(
+    isSamsung &&
+      isSamsungScrollPreset(screen?.preset) &&
+      screen?.scrollArea?.image?.trim() &&
+      scrollViewport
+  );
+
   if (!anchorScreenId) {
     return (
       <div className="screen-preview screen-preview--empty">
@@ -177,7 +204,11 @@ export default function ScreenPreview() {
           )}
         </div>
         <h3 className="screen-preview__title">{screen.id}</h3>
-        <span className="screen-preview__hint">Click hotspots to navigate</span>
+        <span className="screen-preview__hint">
+          {hasScrollPreview
+            ? `Click hotspots · scroll (${screen.preset})`
+            : 'Click hotspots to navigate'}
+        </span>
         {isSamsung && (
           <button
             type="button"
@@ -230,9 +261,156 @@ export default function ScreenPreview() {
               }}
             />
           }
+          overlay={
+            hasScrollPreview ? (
+              <ScrollPreviewOverlay
+                screen={screen}
+                viewport={scrollViewport}
+                arrows={scrollArrows}
+                scrollTop={scrollTop}
+                setScrollTop={setScrollTop}
+                imageVersion={scrollImageVersion}
+                onNavigate={navigateTo}
+                platform={projectPlatform}
+              />
+            ) : null
+          }
         />
       </div>
     </div>
+  );
+}
+
+function ScrollPreviewOverlay({
+  screen,
+  viewport,
+  arrows,
+  scrollTop,
+  setScrollTop,
+  imageVersion,
+  onNavigate,
+  platform,
+}) {
+  const scrollRef = useRef(null);
+  const [stripSize, setStripSize] = useState({
+    width: viewport.width,
+    height: viewport.height * 2,
+  });
+  const [maxScroll, setMaxScroll] = useState(0);
+
+  const stripConfig = useMemo(
+    () => ({
+      intrinsicWidth: stripSize.width || viewport.width,
+      intrinsicHeight: stripSize.height || viewport.height,
+    }),
+    [stripSize.width, stripSize.height, viewport.width, viewport.height]
+  );
+
+  const stripScreen = useMemo(
+    () => ({
+      ...screen,
+      sourceWidth: stripSize.width || viewport.width,
+      sourceHeight: stripSize.height || viewport.height,
+    }),
+    [screen, stripSize.width, stripSize.height, viewport.width, viewport.height]
+  );
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollTop;
+    }
+  }, [scrollTop, screen?.id]);
+
+  const atTop = scrollTop <= 0;
+  const atBottom = maxScroll > 0 ? scrollTop >= maxScroll - 1 : false;
+
+  const nudge = (delta) => {
+    const next = Math.max(0, Math.min(maxScroll, scrollTop + delta));
+    setScrollTop(next);
+  };
+
+  const handleWheel = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const delta = e.deltaY > 0 ? SCROLL_STEP : -SCROLL_STEP;
+    nudge(delta);
+  };
+
+  return (
+    <>
+      {arrows?.up && (
+        <button
+          type="button"
+          className="screen-preview__scroll-btn screen-preview__scroll-btn--up"
+          style={{ top: arrows.up.top, left: arrows.up.left }}
+          disabled={atTop}
+          onClick={(e) => {
+            e.stopPropagation();
+            nudge(-SCROLL_STEP);
+          }}
+          title="Scroll up"
+        >
+          ▲
+        </button>
+      )}
+      {arrows?.down && (
+        <button
+          type="button"
+          className="screen-preview__scroll-btn screen-preview__scroll-btn--down"
+          style={{ top: arrows.down.top, left: arrows.down.left }}
+          disabled={atBottom}
+          onClick={(e) => {
+            e.stopPropagation();
+            nudge(SCROLL_STEP);
+          }}
+          title="Scroll down"
+        >
+          ▼
+        </button>
+      )}
+      <div
+        ref={scrollRef}
+        className="screen-preview__scroll-viewport"
+        style={{
+          left: viewport.left,
+          top: viewport.top,
+          width: viewport.width,
+          height: viewport.height,
+          borderRadius: viewport.borderRadius || 0,
+        }}
+        onWheel={handleWheel}
+      >
+        <div
+          className="screen-preview__scroll-content"
+          style={{ width: viewport.width, position: 'relative' }}
+        >
+          {(screen.scrollArea?.buttons || []).map((btn) => (
+            <PreviewHotspot
+              key={btn.id}
+              button={btn}
+              screenForCoords={stripScreen}
+              imageConfig={stripConfig}
+              platform={platform}
+              onNavigate={onNavigate}
+            />
+          ))}
+          <img
+            key={`${screen.scrollArea.image}-${imageVersion}`}
+            src={screenshotUrl(screen.scrollArea.image, imageVersion)}
+            alt={`${screen.id} scroll`}
+            className="screen-preview__scroll-image"
+            draggable={false}
+            onLoad={(e) => {
+              const { naturalWidth, naturalHeight } = e.currentTarget;
+              setStripSize({ width: naturalWidth, height: naturalHeight });
+              const max = Math.max(0, naturalHeight - viewport.height);
+              setMaxScroll(max);
+              setScrollTop((prev) => Math.min(prev, max));
+            }}
+          />
+        </div>
+      </div>
+    </>
   );
 }
 

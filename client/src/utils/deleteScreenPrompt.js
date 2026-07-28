@@ -5,7 +5,11 @@ export function countInboundButtons(screens, deletedIds) {
   const parentScreenIds = new Set();
   for (const screen of screens) {
     if (idSet.has(screen.id)) continue;
-    for (const btn of screen.buttons) {
+    const buttons = [
+      ...(screen.buttons || []),
+      ...(screen.scrollArea?.buttons || []),
+    ];
+    for (const btn of buttons) {
       if (btn.target && idSet.has(btn.target)) {
         count += 1;
         parentScreenIds.add(screen.id);

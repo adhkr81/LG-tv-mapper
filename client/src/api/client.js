@@ -166,11 +166,12 @@ export async function captureScreenWithProgress(
   return result;
 }
 
-export const importScreen = async (screenId, file, sectionId = null) => {
+export const importScreen = async (screenId, file, sectionId = null, kind = 'base') => {
   const formData = new FormData();
   formData.append('screenId', screenId);
   formData.append('file', file);
   if (sectionId) formData.append('sectionId', sectionId);
+  if (kind === 'scroll') formData.append('kind', 'scroll');
   const res = await fetch(`${API}${projectPath('/capture/import')}`, {
     method: 'POST',
     body: formData,
