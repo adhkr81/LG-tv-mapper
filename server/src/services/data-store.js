@@ -776,6 +776,31 @@ function deleteScreenshotFiles(screen) {
   deleteScrollScreenshotFiles(screen);
 }
 
+function renameBaseScreenshotFiles(screen, oldId, newId) {
+  const oldBase =
+    stripImageExtension(screen.image) || screen.img_filename || oldId;
+  const newBase = newId;
+  for (const ext of ['.jpg', '.jpeg', '.png', '.webp']) {
+    const oldName = oldBase.includes('.') ? oldBase : `${oldBase}${ext}`;
+    const newName = `${newBase}${ext}`;
+    const oldPath = getScreenshotPath(oldName);
+    if (!fs.existsSync(oldPath)) continue;
+    const newPath = getScreenshotPath(newName);
+    try {
+      if (oldPath !== newPath) {
+        if (fs.existsSync(newPath)) fs.unlinkSync(newPath);
+        fs.renameSync(oldPath, newPath);
+      }
+      screen.img_filename = newBase;
+      screen.image = newName;
+      return;
+    } catch {
+      /* try next extension */
+    }
+  }
+  screen.img_filename = newBase;
+}
+
 function renameScrollScreenshotFiles(screen, oldId, newId) {
   if (!screen.scrollArea) return;
   const oldBase =
@@ -983,14 +1008,17 @@ export function updateScreen(id, updates) {
     }
 
     renameScreenIdInTargets(state.screens, id, newId);
+    renameBaseScreenshotFiles(screen, id, newId);
     screen.id = newId;
     screen.img_filename = newId;
     screen.buttons = screen.buttons.map((b) => ({ ...b, screenId: newId }));
-    if (screen.scrollArea?.buttons) {
-      screen.scrollArea.buttons = screen.scrollArea.buttons.map((b) => ({
-        ...b,
-        screenId: newId,
-      }));
+    if (screen.scrollArea) {
+      if (Array.isArray(screen.scrollArea.buttons)) {
+        screen.scrollArea.buttons = screen.scrollArea.buttons.map((b) => ({
+          ...b,
+          screenId: newId,
+        }));
+      }
       renameScrollScreenshotFiles(screen, id, newId);
     }
 

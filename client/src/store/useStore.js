@@ -1023,6 +1023,10 @@ const useStore = create((rawSet, get) => {
             id === oldId ? newId : id
           ),
         });
+        if (updated.image) get().bumpImageVersions(newId);
+        if (updated.scrollArea?.image) {
+          get().bumpImageVersions(`${newId}:scroll`);
+        }
         return updated;
       } catch (err) {
         console.error('Rename screen failed:', err);

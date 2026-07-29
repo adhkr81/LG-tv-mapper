@@ -165,6 +165,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const [assignSectionId, setAssignSectionId] = useState('');
   const [newGroupName, setNewGroupName] = useState('');
   const [isAssigningGroup, setIsAssigningGroup] = useState(false);
+  const [isRenaming, setIsRenaming] = useState(false);
   const replaceImageInputRef = useRef(null);
   const replaceScrollImageInputRef = useRef(null);
 
@@ -178,6 +179,15 @@ export default function SidebarEditor({ mode = 'viewer' }) {
       selectedScreenIds.filter((id) => {
         const s = screensById.get(id);
         return s && !s.sectionId;
+      }),
+    [selectedScreenIds, screensById]
+  );
+
+  const groupedSelectedIds = useMemo(
+    () =>
+      selectedScreenIds.filter((id) => {
+        const s = screensById.get(id);
+        return s && s.sectionId;
       }),
     [selectedScreenIds, screensById]
   );
@@ -361,6 +371,20 @@ export default function SidebarEditor({ mode = 'viewer' }) {
     }
   };
 
+  const handleRemoveSelectionFromGroup = async () => {
+    if (!groupedSelectedIds.length) return;
+    setIsAssigningGroup(true);
+    try {
+      for (const id of groupedSelectedIds) {
+        await assignScreenToSection(id, null);
+      }
+    } catch (err) {
+      alert('Remove from group failed: ' + err.message);
+    } finally {
+      setIsAssigningGroup(false);
+    }
+  };
+
   const handleCreateNode = async () => {
     const id = newNodeId.trim();
     if (!id) {
@@ -412,15 +436,18 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   };
 
   const handleRename = async () => {
-    if (!nameValue.trim() || nameValue === screen.id) {
+    if (!screen || !nameValue.trim() || nameValue === screen.id) {
       setEditingName(false);
       return;
     }
+    setIsRenaming(true);
     try {
       await updateScreenName(screen.id, nameValue.trim());
       setEditingName(false);
     } catch (err) {
       alert('Rename failed: ' + err.message);
+    } finally {
+      setIsRenaming(false);
     }
   };
 
@@ -586,10 +613,26 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                 value={nameValue}
                 onChange={(e) => setNameValue(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleRename()}
+                disabled={isRenaming}
                 autoFocus
               />
-              <button className="btn btn-sm btn-accent" onClick={handleRename}>Save</button>
-              <button className="btn btn-sm" onClick={() => setEditingName(false)}>✕</button>
+              <button
+                className="btn btn-sm btn-accent"
+                onClick={handleRename}
+                disabled={isRenaming}
+              >
+                {isRenaming ? 'Saving…' : 'Save'}
+              </button>
+              <button
+                className="btn btn-sm"
+                onClick={() => {
+                  setEditingName(false);
+                  setNameValue(screen.id);
+                }}
+                disabled={isRenaming}
+              >
+                ✕
+              </button>
             </div>
           ) : (
             <div className="sidebar__screen-name" onClick={() => setEditingName(true)}>
@@ -868,6 +911,60 @@ export default function SidebarEditor({ mode = 'viewer' }) {
           <p className="sidebar__flow-select-hint">
             Ctrl+click or drag a box to multi-select. Drag selected nodes together.
           </p>
+          {selectedScreenIds.length === 1 && screen && (
+            <div className="sidebar__rename-node">
+              <label className="label" htmlFor="sidebar-rename-node-id">
+                Rename node
+              </label>
+              {editingName ? (
+                <div className="sidebar__rename">
+                  <input
+                    id="sidebar-rename-node-id"
+                    className="input"
+                    value={nameValue}
+                    onChange={(e) => setNameValue(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleRename()}
+                    disabled={isRenaming}
+                    autoFocus
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-accent"
+                    onClick={handleRename}
+                    disabled={isRenaming}
+                  >
+                    {isRenaming ? 'Saving…' : 'Save'}
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-sm"
+                    onClick={() => {
+                      setEditingName(false);
+                      setNameValue(screen.id);
+                    }}
+                    disabled={isRenaming}
+                  >
+                    ✕
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  className="btn btn-sm sidebar__rename-node-btn"
+                  onClick={() => {
+                    setNameValue(screen.id);
+                    setEditingName(true);
+                  }}
+                  title="Also renames the screenshot file to match"
+                >
+                  Rename…
+                </button>
+              )}
+              <p className="sidebar__flow-select-hint">
+                Renames the node id and its screenshot file.
+              </p>
+            </div>
+          )}
           {ungroupedSelectedIds.length > 0 && (
             <div className="sidebar__add-to-group">
               <div className="sidebar__section-title sidebar__section-title--nested">
@@ -923,6 +1020,20 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                 </button>
               </div>
             </div>
+          )}
+          {groupedSelectedIds.length > 0 && (
+            <button
+              type="button"
+              className="btn btn-sm sidebar__remove-from-group"
+              onClick={handleRemoveSelectionFromGroup}
+              disabled={isAssigningGroup}
+            >
+              {isAssigningGroup
+                ? 'Working…'
+                : groupedSelectedIds.length === 1
+                  ? 'Remove from group'
+                  : `Remove ${groupedSelectedIds.length} from group`}
+            </button>
           )}
           {inboundToSelection.count > 0 && (
             <label className="sidebar__delete-parent-option">

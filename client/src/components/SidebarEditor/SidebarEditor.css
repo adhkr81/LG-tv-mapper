@@ -80,10 +80,14 @@
 .sidebar__rename {
   display: flex;
   gap: var(--space-xs);
+  align-items: stretch;
   margin-bottom: var(--space-md);
 }
 
-.sidebar__rename .input { flex: 1; }
+.sidebar__rename .input {
+  flex: 1;
+  min-width: 0;
+}
 
 /* ── New node ────────────────────────────────── */
 .sidebar__new-node-input {
@@ -172,6 +176,28 @@
 
 .sidebar__add-to-group-row .btn {
   flex-shrink: 0;
+}
+
+.sidebar__remove-from-group {
+  width: 100%;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+}
+
+.sidebar__rename-node {
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar__rename-node .sidebar__flow-select-hint {
+  margin-bottom: 0;
+  margin-top: var(--space-xs);
+}
+
+.sidebar__rename-node-btn {
+  width: 100%;
+  justify-content: center;
 }
 
 /* ── Selection actions ───────────────────────── */
