@@ -92,8 +92,8 @@
       "name": "g&p",
       "rootScreenId": "g&p",
       "collapsed": true,
-      "bandX": -382,
-      "bandY": 209
+      "bandX": 424,
+      "bandY": 201
     },
     {
       "id": "g_p_accessibility",
@@ -114,13 +114,24 @@
     {
       "id": "g_p_power-energy",
       "name": "g&p_power-energy",
-      "rootScreenId": "g&p_power-energy"
+      "rootScreenId": "g&p_power-energy",
+      "collapsed": true,
+      "bandX": 439,
+      "bandY": 993
+    },
+    {
+      "id": "support",
+      "name": "support",
+      "rootScreenId": "support",
+      "collapsed": true,
+      "bandX": 728,
+      "bandY": 365
     }
   ],
   "screens": {
     "homescreen": {
-      "graphX": -486,
-      "graphY": -333,
+      "graphX": -1156,
+      "graphY": -299,
       "sectionId": null,
       "buttonIds": [
         "60d1a190-4c13-40de-b86e-4167f7aae6d7",
@@ -1252,26 +1263,26 @@
       "buttonIds": []
     },
     "g&p": {
-      "graphX": 1100,
-      "graphY": 156,
+      "graphX": 309,
+      "graphY": 176,
       "sectionId": "general-privacy",
       "buttonIds": []
     },
     "g&p_long-1": {
-      "graphX": 1382,
-      "graphY": 149,
+      "graphX": 550,
+      "graphY": 183,
       "sectionId": "general-privacy",
       "buttonIds": []
     },
     "g&p_long-2": {
-      "graphX": 1386,
-      "graphY": 319,
+      "graphX": 546,
+      "graphY": 363,
       "sectionId": "general-privacy",
       "buttonIds": []
     },
     "g&p_long-3": {
-      "graphX": 1386,
-      "graphY": 499,
+      "graphX": 559,
+      "graphY": 554,
       "sectionId": "general-privacy",
       "buttonIds": []
     },
@@ -1339,6 +1350,174 @@
       "graphX": 4,
       "graphY": 395,
       "sectionId": "g_p_power-energy",
+      "buttonIds": []
+    },
+    "g&p_parental-settings": {
+      "graphX": 880,
+      "graphY": 148,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_parental-settings_program-rating": {
+      "graphX": 934,
+      "graphY": 338,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_parental-settings_program-rating_on": {
+      "graphX": 935,
+      "graphY": 517,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_parental-settings_tv-rating": {
+      "graphX": 1247,
+      "graphY": 145,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_parental-settings_movie-rating": {
+      "graphX": 1263,
+      "graphY": 334,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_parental-settings_canadian-english": {
+      "graphX": 1266,
+      "graphY": 513,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_parental-settings_canadian-french": {
+      "graphX": 1259,
+      "graphY": 690,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_parental-settings_app-lock": {
+      "graphX": 1237,
+      "graphY": 891,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_external-device-manager": {
+      "graphX": 1546,
+      "graphY": 0,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_external-device-manager_input-signal": {
+      "graphX": 1541,
+      "graphY": 198,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_time": {
+      "graphX": 1599,
+      "graphY": 396,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_time_long-1": {
+      "graphX": 1615,
+      "graphY": 573,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_time_long-2": {
+      "graphX": 1625,
+      "graphY": 793,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_time_clock-mode": {
+      "graphX": 1905,
+      "graphY": 0,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_time_time-offset": {
+      "graphX": 1931,
+      "graphY": 191,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_menu-style": {
+      "graphX": 1946,
+      "graphY": 488,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_keyboard-mouse": {
+      "graphX": 2226,
+      "graphY": 0,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_keyboard-mouse_keyboard-settings": {
+      "graphX": 2255,
+      "graphY": 192,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_keyboard-mouse_mouse-settings": {
+      "graphX": 2257,
+      "graphY": 406,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_remote-control": {
+      "graphX": 2537,
+      "graphY": 0,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_sound-feedback": {
+      "graphX": 2549,
+      "graphY": 214,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_usage-mode": {
+      "graphX": 2549,
+      "graphY": 425,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_pin-settings": {
+      "graphX": 2261,
+      "graphY": 795,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_pin-settings_change-pin": {
+      "graphX": 2829,
+      "graphY": 0,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_pin-settings_samsung-account": {
+      "graphX": 2842,
+      "graphY": 188,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_data-factory-reset": {
+      "graphX": 2884,
+      "graphY": 412,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_restart": {
+      "graphX": 2870,
+      "graphY": 616,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "support": {
+      "graphX": 660,
+      "graphY": 9435,
+      "sectionId": "support",
       "buttonIds": []
     }
   },
