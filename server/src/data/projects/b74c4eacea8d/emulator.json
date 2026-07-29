@@ -1797,5 +1797,365 @@
     "back_button": {
       "target": ""
     }
+  },
+  "advanced-features": {
+    "img_filename": "advanced-features",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_long-1": {
+    "img_filename": "advanced_features_long-1",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_long-2": {
+    "img_filename": "advanced_features_long-2",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_live-translate": {
+    "img_filename": "advanced_features_live-translate",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_live-translate-long-1": {
+    "img_filename": "advanced_features_live-translate-long-1",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_live-translate-long-2": {
+    "img_filename": "advanced_features_live-translate-long-2",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_ai-mode": {
+    "img_filename": "advanced_features_ai-mode",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_ai-mode-long-1": {
+    "img_filename": "advanced_features_ai-mode-long-1",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_ai-mode-long-2": {
+    "img_filename": "advanced_features_ai-mode-long-2",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_ai-mode_ai-sound-mode": {
+    "img_filename": "advanced_features_ai-mode_ai-sound-mode",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_ai-mode_sound-controller": {
+    "img_filename": "advanced_features_ai-mode_sound-controller",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_voice": {
+    "img_filename": "advanced_features_voice",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_voice_voice-assistant": {
+    "img_filename": "advanced_features_voice_voice-assistant",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_voice_hands-free": {
+    "img_filename": "advanced_features_voice_hands-free",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_voice_bixby-settings-1": {
+    "img_filename": "advanced_features_voice_bixby-settings-1",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_voice_bixby-settings-2": {
+    "img_filename": "advanced_features_voice_bixby-settings-2",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_voice_bixby-settings-3": {
+    "img_filename": "advanced_features_voice_bixby-settings-3",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_voice_bixby-settings-4": {
+    "img_filename": "advanced_features_voice_bixby-settings-4",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_voice_bixby-settings-5": {
+    "img_filename": "advanced_features_voice_bixby-settings-5",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_voice_bixby-settings-6": {
+    "img_filename": "advanced_features_voice_bixby-settings-6",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_voice_bixby-settings-7": {
+    "img_filename": "advanced_features_voice_bixby-settings-7",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_gesture": {
+    "img_filename": "advanced_features_gesture",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_gesture_learn-gesture": {
+    "img_filename": "advanced_features_gesture_learn-gesture",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_now-brief": {
+    "img_filename": "advanced_features_now-brief",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "advanced_features_start-screen-option": {
+    "img_filename": "advanced_features_start-screen-option",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "g&p": {
+    "img_filename": "g&p",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "g&p_long-1": {
+    "img_filename": "g&p_long-1",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "g&p_long-2": {
+    "img_filename": "g&p_long-2",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "g&p_long-3": {
+    "img_filename": "g&p_long-3",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "g&p_accessibility": {
+    "img_filename": "g&p_accessibility",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "g_p_accessibility_long-1": {
+    "img_filename": "g_p_accessibility_long-1",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "g_p_accessibility_long-2": {
+    "img_filename": "g_p_accessibility_long-2",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "g_p_accessibility_long-3": {
+    "img_filename": "g_p_accessibility_long-3",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "g_p_accessibility_long-4": {
+    "img_filename": "g_p_accessibility_long-4",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "g&p_t&p": {
+    "img_filename": "g&p_t&p",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "g&p_t&p_long-1": {
+    "img_filename": "g&p_t&p_long-1",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "g&p_t&p_long-2": {
+    "img_filename": "g&p_t&p_long-2",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "g&p_power-energy": {
+    "img_filename": "g&p_power-energy",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "g&p_power-energy_long-1": {
+    "img_filename": "g&p_power-energy_long-1",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "g&p_power-energy_long-2": {
+    "img_filename": "g&p_power-energy_long-2",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
   }
 }

@@ -60,24 +60,61 @@
       "name": "picture",
       "rootScreenId": "picture",
       "collapsed": true,
-      "bandX": -31,
-      "bandY": 390
+      "bandX": -777,
+      "bandY": 297
     },
     {
       "id": "sound",
       "name": "sound",
       "rootScreenId": "sound",
       "collapsed": true,
-      "bandX": 204,
-      "bandY": 430
+      "bandX": -547,
+      "bandY": 340
     },
     {
       "id": "connections",
       "name": "connections",
       "rootScreenId": "connections",
       "collapsed": true,
-      "bandX": 238,
-      "bandY": 291
+      "bandX": -486,
+      "bandY": 198
+    },
+    {
+      "id": "advanced_features",
+      "name": "advanced features",
+      "rootScreenId": "advanced-features",
+      "collapsed": true,
+      "bandX": -355,
+      "bandY": 148
+    },
+    {
+      "id": "general-privacy",
+      "name": "g&p",
+      "rootScreenId": "g&p",
+      "collapsed": true,
+      "bandX": -382,
+      "bandY": 209
+    },
+    {
+      "id": "g_p_accessibility",
+      "name": "g&p_accessibility",
+      "rootScreenId": "g&p_accessibility",
+      "collapsed": true,
+      "bandX": -75,
+      "bandY": 448
+    },
+    {
+      "id": "g_p_t_p",
+      "name": "g&p_t&p",
+      "rootScreenId": "g&p_t&p",
+      "collapsed": true,
+      "bandX": 427,
+      "bandY": 792
+    },
+    {
+      "id": "g_p_power-energy",
+      "name": "g&p_power-energy",
+      "rootScreenId": "g&p_power-energy"
     }
   ],
   "screens": {
@@ -663,20 +700,20 @@
       "sourceHeight": 1080
     },
     "all settings": {
-      "graphX": -765,
-      "graphY": 239,
+      "graphX": -1109,
+      "graphY": 221,
       "sectionId": null,
       "buttonIds": []
     },
     "all_settings_long-1": {
-      "graphX": -766,
-      "graphY": 442,
+      "graphX": -1110,
+      "graphY": 424,
       "sectionId": null,
       "buttonIds": []
     },
     "all_settings_long-2": {
-      "graphX": -483,
-      "graphY": 442,
+      "graphX": -1103,
+      "graphY": 640,
       "sectionId": null,
       "buttonIds": []
     },
@@ -1062,6 +1099,246 @@
       "graphX": 2085,
       "graphY": 871,
       "sectionId": "connections",
+      "buttonIds": []
+    },
+    "advanced-features": {
+      "graphX": 788,
+      "graphY": 222,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_long-1": {
+      "graphX": 1104,
+      "graphY": 226,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_long-2": {
+      "graphX": 1104,
+      "graphY": 424,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_live-translate": {
+      "graphX": 1384,
+      "graphY": 0,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_live-translate-long-1": {
+      "graphX": 1434,
+      "graphY": 207,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_live-translate-long-2": {
+      "graphX": 1454,
+      "graphY": 393,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_ai-mode": {
+      "graphX": 1734,
+      "graphY": 0,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_ai-mode-long-1": {
+      "graphX": 1774,
+      "graphY": 203,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_ai-mode-long-2": {
+      "graphX": 1768,
+      "graphY": 386,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_ai-mode_ai-sound-mode": {
+      "graphX": 2054,
+      "graphY": 0,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_ai-mode_sound-controller": {
+      "graphX": 2057,
+      "graphY": 193,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_voice": {
+      "graphX": 2337,
+      "graphY": 0,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_voice_voice-assistant": {
+      "graphX": 2417,
+      "graphY": 183,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_voice_hands-free": {
+      "graphX": 2427,
+      "graphY": 363,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_voice_bixby-settings-1": {
+      "graphX": 2707,
+      "graphY": 0,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_voice_bixby-settings-2": {
+      "graphX": 2717,
+      "graphY": 200,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_voice_bixby-settings-3": {
+      "graphX": 2717,
+      "graphY": 403,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_voice_bixby-settings-4": {
+      "graphX": 2719,
+      "graphY": 603,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_voice_bixby-settings-5": {
+      "graphX": 2721,
+      "graphY": 827,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_voice_bixby-settings-6": {
+      "graphX": 2728,
+      "graphY": 1018,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_voice_bixby-settings-7": {
+      "graphX": 2726,
+      "graphY": 1208,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_gesture": {
+      "graphX": 3008,
+      "graphY": 0,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_gesture_learn-gesture": {
+      "graphX": 3053,
+      "graphY": 207,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_now-brief": {
+      "graphX": 3333,
+      "graphY": 0,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "advanced_features_start-screen-option": {
+      "graphX": 3613,
+      "graphY": 0,
+      "sectionId": "advanced_features",
+      "buttonIds": []
+    },
+    "g&p": {
+      "graphX": 1100,
+      "graphY": 156,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_long-1": {
+      "graphX": 1382,
+      "graphY": 149,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_long-2": {
+      "graphX": 1386,
+      "graphY": 319,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_long-3": {
+      "graphX": 1386,
+      "graphY": 499,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_accessibility": {
+      "graphX": 793,
+      "graphY": 129,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g_p_accessibility_long-1": {
+      "graphX": 1073,
+      "graphY": 0,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g_p_accessibility_long-2": {
+      "graphX": 1087,
+      "graphY": 177,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g_p_accessibility_long-3": {
+      "graphX": 1103,
+      "graphY": 354,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g_p_accessibility_long-4": {
+      "graphX": 1112,
+      "graphY": 542,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_t&p": {
+      "graphX": 162,
+      "graphY": 17,
+      "sectionId": "g_p_t_p",
+      "buttonIds": []
+    },
+    "g&p_t&p_long-1": {
+      "graphX": 269,
+      "graphY": 229,
+      "sectionId": "g_p_t_p",
+      "buttonIds": []
+    },
+    "g&p_t&p_long-2": {
+      "graphX": 281,
+      "graphY": 453,
+      "sectionId": "g_p_t_p",
+      "buttonIds": []
+    },
+    "g&p_power-energy": {
+      "graphX": -103,
+      "graphY": -5,
+      "sectionId": "g_p_power-energy",
+      "buttonIds": []
+    },
+    "g&p_power-energy_long-1": {
+      "graphX": -3,
+      "graphY": 193,
+      "sectionId": "g_p_power-energy",
+      "buttonIds": []
+    },
+    "g&p_power-energy_long-2": {
+      "graphX": 4,
+      "graphY": 395,
+      "sectionId": "g_p_power-energy",
       "buttonIds": []
     }
   },
