@@ -38,8 +38,8 @@
       "name": "connected devices",
       "rootScreenId": "homescreen_connected-devices",
       "collapsed": true,
-      "bandX": 375,
-      "bandY": 4
+      "bandX": 396,
+      "bandY": -42
     },
     {
       "id": "settings",
@@ -92,16 +92,16 @@
       "name": "g&p",
       "rootScreenId": "g&p",
       "collapsed": true,
-      "bandX": 424,
-      "bandY": 201
+      "bandX": 138,
+      "bandY": 193
     },
     {
       "id": "g_p_accessibility",
       "name": "g&p_accessibility",
       "rootScreenId": "g&p_accessibility",
       "collapsed": true,
-      "bandX": -75,
-      "bandY": 448
+      "bandX": 426,
+      "bandY": 593
     },
     {
       "id": "g_p_t_p",
@@ -124,8 +124,8 @@
       "name": "support",
       "rootScreenId": "support",
       "collapsed": true,
-      "bandX": 728,
-      "bandY": 365
+      "bandX": 757,
+      "bandY": 184
     }
   ],
   "screens": {
@@ -167,10 +167,17 @@
       "sourceHeight": 1080
     },
     "homescreen_connected-devices": {
-      "graphX": 162,
-      "graphY": -8,
+      "graphX": -475,
+      "graphY": 57,
       "sectionId": "connected_devices",
-      "buttonIds": [],
+      "buttonIds": [
+        "56219760-d7c8-4ead-b46d-4e5c42b57e2b",
+        "3d67d849-23a3-4dc3-b259-40f296beb8a5",
+        "33a5985d-1638-4997-afaa-38a4bf50d7eb",
+        "4ab6be6b-609b-4596-9494-e88d150d799b",
+        "dc87eb68-4ed7-4b61-929c-fb0afff0604d",
+        "7846d761-f433-4bb3-bfb1-5668b790d827"
+      ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
     },
@@ -421,138 +428,305 @@
       "buttonIds": []
     },
     "connected_devices_tv": {
-      "graphX": 180,
-      "graphY": 216,
+      "graphX": 113,
+      "graphY": 357,
       "sectionId": "connected_devices",
       "buttonIds": [],
-      "sourceWidth": 658,
-      "sourceHeight": 370
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_smartthings-favorites": {
-      "graphX": 467,
-      "graphY": 196,
+      "graphX": 421,
+      "graphY": 361,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "e2f53eb5-d5cd-48f6-9914-4c0497d29b9d",
+        "95649b76-b6de-4d1b-9809-2c34bfb7ea36",
+        "4582a0d7-84e5-4253-9d7d-7b24704f0f47",
+        "a4c14f05-b3e2-4e95-80a5-d4240d6bcd9a",
+        "661b9ff5-f58a-458b-8c0e-c951b1036967"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_smartthings-map-view": {
-      "graphX": 450,
-      "graphY": 386,
+      "graphX": 280,
+      "graphY": 547,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "b5f4e02e-4c7d-4da0-aad6-b99d21da8e7a",
+        "85186b3c-8687-42b0-8137-50f91415daf3",
+        "a69de0d9-77fc-4dc3-9d40-e47d9369abb8",
+        "92e208ea-9a0f-42d8-920e-679c85bd3510",
+        "d102a541-bf9e-4d2b-87ff-aa686dbb7a79"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_smartthings-devices": {
       "graphX": 280,
       "graphY": 740,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "f2289b31-7b94-42ff-a2ba-da8908acf70c",
+        "216c3e2b-6c26-403d-a047-42fca17e5a60",
+        "4c93cdc8-a25b-4c5b-992c-f678d60d5f94",
+        "fe5fa0c9-79e9-4e6e-b41e-698025715710",
+        "bceaeb99-99da-481c-aee8-9cbb6e77f0a0"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_smartthings-routines": {
       "graphX": 280,
       "graphY": 925,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "764e1a75-7108-4436-9eba-eced8ce733ca",
+        "ec184da0-dfac-4bad-bc8c-1efbd617b46e",
+        "377523c0-8d49-4dd4-84be-e51009b8ac74",
+        "de41f8f8-7e2b-437e-83a4-7cb1ec763d9d",
+        "c689f028-feaa-4561-8893-41b26fe23640"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_smartthings-settings-1": {
-      "graphX": 733,
-      "graphY": 193,
+      "graphX": 548,
+      "graphY": 541,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "7a4a42bb-52bc-4642-992e-2b4d902c7911",
+        "2565dda3-f507-4855-9148-766763e22add",
+        "246ae71f-52e3-4985-ba72-4150d65b9412",
+        "faf6af38-1a8a-4d09-b442-b346503e1ada",
+        "5239ff73-979f-4059-965b-05443deef173",
+        "c288f9a7-7523-405d-a969-85f743777d52"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_smartthings-settings-2": {
-      "graphX": 727,
-      "graphY": 373,
+      "graphX": 557,
+      "graphY": 748,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "3e00efda-bc23-4472-881a-26a15f0bbefa",
+        "4b1aa7c3-09a6-4fb0-adec-f461768cac2e",
+        "8d1bc11a-1fe1-4087-bf6d-d28d2c6a3d82",
+        "9dea79b6-07a9-480d-9389-13fc661f24c4",
+        "842d7636-d507-4f76-b041-35efb199fd83",
+        "fd4ef646-89a8-4707-8924-c8754b6b9ed5"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_smartthings-settings-3": {
-      "graphX": 722,
-      "graphY": 540,
+      "graphX": 560,
+      "graphY": 939,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "2402a038-3037-47ac-aaa7-ceb076b5e6ac",
+        "eab09e7f-4562-4e7f-ae8f-2d698b3ac0cb",
+        "6de43ea5-3a21-4169-a955-05c07f1cd4fa",
+        "22c30982-fdf7-4b7e-a3f4-6a12226c2eb3",
+        "eef43264-1fb9-4399-955c-9eb09fc52368",
+        "046f78bb-aa2f-4d6d-a1b5-61111ae6043e"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_smartthings-settings-4": {
-      "graphX": 725,
-      "graphY": 741,
+      "graphX": 562,
+      "graphY": 1118,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "d9bfed67-dcf2-4c61-b1ea-06206e9cfeb7",
+        "ff8cf00d-781e-4c6d-b5fc-c0d61177cd07",
+        "94e9340f-812b-4031-8abe-df1d3357cdc7",
+        "d202dc7d-927d-4939-b116-6cc8c7f5dfc1",
+        "d3d9cd8e-08d9-4ee8-a407-ef0da1b6194f",
+        "37bdae5c-e1ac-41b2-b427-4b5923d8fcc7"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_smartthings-settings-5": {
-      "graphX": 714,
-      "graphY": 942,
+      "graphX": 551,
+      "graphY": 1319,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "3955b47d-7dba-4352-8a46-595fe4d3cfa1",
+        "722fc1c5-5748-4f1e-93aa-faebb532a44c",
+        "eea53c40-5733-4ad9-a892-ed7e43cc9b77",
+        "3592a2b1-f7f8-4861-94e1-c1e78bd0e090",
+        "8f6f3e4d-18e4-479a-a603-336e69c539ce",
+        "da2ea946-5818-4063-aec5-886308deb9c0"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_smartthings-settings-6": {
-      "graphX": 715,
-      "graphY": 1132,
+      "graphX": 552,
+      "graphY": 1509,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "80a72e92-6e5c-4750-b880-616439161dbc",
+        "72d41010-d3aa-4aa3-ba35-0c4e206b7945",
+        "b2fc42e3-13ed-4a07-9a01-96bdd5b295b9",
+        "17b6be84-eaeb-4015-bc44-d8bb4960fcac",
+        "0f3edb3d-3f2f-4b5a-9f7e-e4f56a481d8c",
+        "75c6377a-e11d-49bb-bf86-4344693d0d86"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_smartthings-settings-7": {
-      "graphX": 717,
-      "graphY": 1299,
+      "graphX": 556,
+      "graphY": 1698,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "044af450-ef9f-4495-9654-7561cd5e8053",
+        "caba59d9-22a2-4f20-8268-127d84eeb2cd",
+        "c384d420-a444-4cc4-a4e4-922d16ea6e0a",
+        "3397f52d-eda8-4605-a2bd-599848a1445f",
+        "8881b3be-a77e-4893-9663-66ad8b5e8af0",
+        "d68bc64f-8769-4567-86fe-9139033f8c5b"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_connection-guide-1": {
-      "graphX": 1013,
-      "graphY": 0,
+      "graphX": 823,
+      "graphY": 116,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "60cd01df-d3e8-42c8-8ffb-5162e08d65a7",
+        "542c3c54-6cd8-48aa-990d-49724fa51e8f",
+        "57ddcfdb-a80f-410f-8442-918e3fdf717e",
+        "eeb04fac-1d92-4fd1-a593-96b31fd97969",
+        "b04fb44d-c184-4873-bf9a-269332632b4d",
+        "59bf6527-cf84-4c4c-91a4-44036818d4ed"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_connection-guide-2": {
-      "graphX": 1010,
-      "graphY": 200,
+      "graphX": 820,
+      "graphY": 316,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "700b8f38-9157-403f-b665-9ea65da59b34",
+        "22fd3172-2114-4613-9011-32f68cba280b",
+        "a5d55aac-dbf7-481b-9ab8-607ab65b4db1",
+        "3fd22bab-dfda-46f2-b065-00d78068d481",
+        "92c9c2bc-7c62-4b3e-8036-a1b8834daffd",
+        "bea8a514-3ea6-4836-a52e-b73559cbef26"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_connection-guide-3": {
-      "graphX": 1006,
-      "graphY": 394,
+      "graphX": 816,
+      "graphY": 510,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "b9eb9637-7176-4ceb-b6dc-17ed55b92367",
+        "47d88ccb-cfb9-4232-b0af-83ea98f2e89a",
+        "c56216aa-5315-42c0-9a02-7ae9c2257cb3",
+        "47117a13-d148-4a3e-80c5-e9e0dce5c1b9",
+        "3937d9a7-8c63-4a41-a504-319b01cb8e3e",
+        "8526ad26-0f1b-441c-93df-fc0a0933b4b4"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_connection-guide-4": {
-      "graphX": 997,
-      "graphY": 579,
+      "graphX": 815,
+      "graphY": 704,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "0712d1e3-3870-4bfb-a332-eea23b9f8a49",
+        "4273059d-537d-48bb-9689-fd1c96a0e176",
+        "bf55d073-778e-46cd-b739-8335713a87e7",
+        "d318570b-83d9-4765-bb2d-7e51c06985d7",
+        "dfe607d6-bf7b-43f7-b79c-b22ecf66db8d",
+        "a7ccb0bb-c0d8-4866-9f82-675ddb943ad2"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_connection-guide-5": {
-      "graphX": 1020,
-      "graphY": 776,
+      "graphX": 822,
+      "graphY": 914,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "7587011c-2277-44f5-b6aa-d9e75810e69c",
+        "94969190-066c-449f-a889-c98d5c2c7260",
+        "66ce27c7-8173-488d-afaa-0bd7cdaa4777",
+        "31c16dbb-791d-4228-b6cf-4d39ee71fe39",
+        "ccb68d5e-1319-491b-91c0-8b8e61847e83",
+        "f630352a-1b85-4a8b-b0f0-ea1fa918c685"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_connection-guide-6": {
-      "graphX": 1025,
-      "graphY": 1000,
+      "graphX": 835,
+      "graphY": 1116,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "03e6abef-232a-4acb-aa6a-43ace82a369f",
+        "1aa08011-60f0-432d-8ef2-ea38e61596d1",
+        "10fd7432-daa7-4b3d-966d-602f1e883346",
+        "4553df88-7d6b-46c7-ac3a-40fe5e1a2365",
+        "184e97b2-4f40-4687-82ca-d1adff671dae",
+        "068702c2-cbe3-440b-9650-2d344b497751"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_connection-guide-7": {
-      "graphX": 1012,
-      "graphY": 1211,
+      "graphX": 822,
+      "graphY": 1327,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "930ed269-4134-4f55-9591-a4a4188d5935",
+        "bda76a1c-1c91-4840-8c6b-44265f11fa44",
+        "ef4b7b74-fe13-4f69-828d-58c5f2b8e09a",
+        "1ba4c60b-0c0c-48e1-bf37-3309f0bb68b6",
+        "ef133738-8775-4d96-b787-532a50b8498e",
+        "1a7f308f-b30a-4831-854e-dcfc043f0972"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_universal-remote": {
-      "graphX": 1305,
-      "graphY": 0,
+      "graphX": -206,
+      "graphY": 744,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [
+        "7c6c440b-19b3-4aaf-a078-57e380cb83a3",
+        "a7d7faf6-32e1-42ca-ab3d-b843927d650e"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_universal-remote_new-device": {
-      "graphX": 1306,
-      "graphY": 199,
+      "graphX": -205,
+      "graphY": 943,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_universal-remote_samsung": {
-      "graphX": 1299,
-      "graphY": 399,
+      "graphX": -212,
+      "graphY": 1143,
       "sectionId": "connected_devices",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "settings_bluetooth": {
       "graphX": -298,
@@ -1287,34 +1461,38 @@
       "buttonIds": []
     },
     "g&p_accessibility": {
-      "graphX": 793,
-      "graphY": 129,
+      "graphX": 15,
+      "graphY": -116,
       "sectionId": "g_p_accessibility",
       "buttonIds": []
     },
     "g_p_accessibility_long-1": {
-      "graphX": 1073,
-      "graphY": 0,
+      "graphX": 289,
+      "graphY": 203,
       "sectionId": "g_p_accessibility",
       "buttonIds": []
     },
     "g_p_accessibility_long-2": {
-      "graphX": 1087,
-      "graphY": 177,
+      "graphX": 280,
+      "graphY": 0,
       "sectionId": "g_p_accessibility",
       "buttonIds": []
     },
     "g_p_accessibility_long-3": {
-      "graphX": 1103,
-      "graphY": 354,
+      "graphX": 273,
+      "graphY": 383,
       "sectionId": "g_p_accessibility",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g_p_accessibility_long-4": {
-      "graphX": 1112,
-      "graphY": 542,
+      "graphX": 269,
+      "graphY": 565,
       "sectionId": "g_p_accessibility",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_t&p": {
       "graphX": 162,
@@ -1515,10 +1693,284 @@
       "buttonIds": []
     },
     "support": {
-      "graphX": 660,
-      "graphY": 9435,
+      "graphX": 476,
+      "graphY": 98,
       "sectionId": "support",
       "buttonIds": []
+    },
+    "g&p_accessibility_voice-guide": {
+      "graphX": 569,
+      "graphY": 0,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_accessibility_voice-guide-on": {
+      "graphX": 572,
+      "graphY": 200,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_voice-guide_volume": {
+      "graphX": 559,
+      "graphY": 390,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_voice-guide_speed": {
+      "graphX": 561,
+      "graphY": 563,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_voice-guide_pitch": {
+      "graphX": 555,
+      "graphY": 731,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_voice-guide_tv-background": {
+      "graphX": 563,
+      "graphY": 925,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_relumino": {
+      "graphX": 852,
+      "graphY": 0,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_relumino_on": {
+      "graphX": 864,
+      "graphY": 214,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_relumino_intensity": {
+      "graphX": 866,
+      "graphY": 412,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_relumino_edge-color": {
+      "graphX": 856,
+      "graphY": 606,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_audio-screen": {
+      "graphX": 1146,
+      "graphY": 0,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_sign-language": {
+      "graphX": 1162,
+      "graphY": 322,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_sign-language_on": {
+      "graphX": 1153,
+      "graphY": 524,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_sign-language_edit": {
+      "graphX": 1156,
+      "graphY": 732,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_zoom-menu-text": {
+      "graphX": 1442,
+      "graphY": 0,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_grayscale": {
+      "graphX": 1444,
+      "graphY": 235,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_color-inversion": {
+      "graphX": 1461,
+      "graphY": 426,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_seecolors-mode": {
+      "graphX": 1453,
+      "graphY": 661,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_learn-tv-remote": {
+      "graphX": 1456,
+      "graphY": 861,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_learn-menu-screen": {
+      "graphX": 1474,
+      "graphY": 1088,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_caption-settings": {
+      "graphX": 1754,
+      "graphY": 0,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_accessibility_caption-settings-on": {
+      "graphX": 1748,
+      "graphY": 230,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_accessibility_caption-settings_caption-mode": {
+      "graphX": 1761,
+      "graphY": 465,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_caption-settings_digital-caption": {
+      "graphX": 2041,
+      "graphY": 0,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_caption-settings_digital-caption_long-1": {
+      "graphX": 1997,
+      "graphY": 252,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_caption-settings_digital-caption_long-2": {
+      "graphX": 2021,
+      "graphY": 473,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_caption-settings_digital-caption_long-3": {
+      "graphX": 2025,
+      "graphY": 726,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_multi-output-audio": {
+      "graphX": 2321,
+      "graphY": 0,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_remote-button-repeat": {
+      "graphX": 2343,
+      "graphY": 354,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_remote-button-repeat-on": {
+      "graphX": 2349,
+      "graphY": 588,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_accessibility-shortcut": {
+      "graphX": 2629,
+      "graphY": 0,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_time-to-take-action": {
+      "graphX": 2630,
+      "graphY": 245,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_accessibility_moving-text-image": {
+      "graphX": 2638,
+      "graphY": 487,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": []
+    },
+    "g&p_power-energy_auto-power-off": {
+      "graphX": 220,
+      "graphY": 0,
+      "sectionId": "g_p_power-energy",
+      "buttonIds": []
+    },
+    "g&p_broadcasting": {
+      "graphX": 3170,
+      "graphY": 192,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "g&p_media-switching-settings": {
+      "graphX": 0,
+      "graphY": 0,
+      "sectionId": "general-privacy",
+      "buttonIds": []
+    },
+    "support_device-care": {
+      "graphX": 783,
+      "graphY": 101,
+      "sectionId": "support",
+      "buttonIds": []
+    },
+    "support_maintenance-mode": {
+      "graphX": 782,
+      "graphY": -85,
+      "sectionId": "support",
+      "buttonIds": []
+    },
+    "support_software-update": {
+      "graphX": 781,
+      "graphY": 334,
+      "sectionId": "support",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "support_software-update_update-now": {
+      "graphX": 784,
+      "graphY": 523,
+      "sectionId": "support",
+      "buttonIds": []
+    },
+    "connected_devices_hdmi": {
+      "graphX": -189,
+      "graphY": 351,
+      "sectionId": "connected_devices",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "connected_devices_usb": {
+      "graphX": -484,
+      "graphY": 360,
+      "sectionId": "connected_devices",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "connected_devices_smartthings-select": {
+      "graphX": 0,
+      "graphY": 0,
+      "sectionId": "connected_devices",
+      "buttonIds": [
+        "7e9a6201-8b57-430a-b40f-e2752d3f2bcc"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     }
   },
   "config": {
