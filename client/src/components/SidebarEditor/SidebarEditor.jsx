@@ -16,7 +16,9 @@ import ImageConfigSection from '../ImageConfig/ImageConfigSection.jsx';
 import SectionBar from '../SectionBar/SectionBar.jsx';
 import '../SectionBar/SectionBar.css';
 import {
+  buildEmulatorDisplayPreset,
   isSamsungScrollPreset,
+  resolveScrollPreset,
   SAMSUNG_PRESET_OPTIONS,
 } from '../../data/samsungScrollPresets.js';
 import './SidebarEditor.css';
@@ -47,7 +49,10 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const clearScrollImage = useStore((s) => s.clearScrollImage);
   const editLayer = useStore((s) => s.editLayer);
   const setEditLayer = useStore((s) => s.setEditLayer);
+  const samsungScrollPresets = useStore((s) => s.samsungScrollPresets);
+  const updateSamsungScrollPreset = useStore((s) => s.updateSamsungScrollPreset);
   const createScreenNode = useStore((s) => s.createScreenNode);
+  const duplicateScreens = useStore((s) => s.duplicateScreens);
   const captureScreen = useStore((s) => s.captureScreen);
   const isCapturing = useStore((s) => s.isCapturing);
   const serialStatus = useStore((s) => s.serialStatus);
@@ -129,6 +134,13 @@ export default function SidebarEditor({ mode = 'viewer' }) {
 
   const canEditScroll = isSamsung && isSamsungScrollPreset(screen?.preset);
   const hasScrollImage = Boolean(screen?.scrollArea?.image?.trim());
+  const scrollPresetDef = useMemo(
+    () =>
+      canEditScroll
+        ? resolveScrollPreset(screen.preset, samsungScrollPresets)
+        : null,
+    [canEditScroll, screen?.preset, samsungScrollPresets]
+  );
 
   const importSourceOptions = useMemo(() => {
     if (!screen?.id) return [];
@@ -166,6 +178,8 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const [newGroupName, setNewGroupName] = useState('');
   const [isAssigningGroup, setIsAssigningGroup] = useState(false);
   const [isRenaming, setIsRenaming] = useState(false);
+  const [duplicateSuffix, setDuplicateSuffix] = useState('-copy');
+  const [isDuplicating, setIsDuplicating] = useState(false);
   const replaceImageInputRef = useRef(null);
   const replaceScrollImageInputRef = useRef(null);
 
@@ -291,6 +305,51 @@ export default function SidebarEditor({ mode = 'viewer' }) {
       await updateScreenPreset(screen.id, e.target.value);
     } catch (err) {
       alert('Update preset failed: ' + err.message);
+    }
+  };
+
+  const handleScrollGeometryField = async (path, raw) => {
+    if (!screen?.preset || !scrollPresetDef) return;
+    const n = Math.round(Number(raw));
+    if (!Number.isFinite(n)) return;
+    const next = structuredClone(scrollPresetDef);
+    if (path[0] === 'scroll') {
+      next.scroll[path[1]] = path[1] === 'borderRadius' ? Math.max(0, n) : n;
+      if (path[1] === 'width' || path[1] === 'height') {
+        next.scroll[path[1]] = Math.max(1, n);
+      }
+    } else if (path[0] === 'up' || path[0] === 'down') {
+      next.scroll_buttons[path[0]][path[1]] = n;
+    }
+    try {
+      await updateSamsungScrollPreset(screen.preset, next);
+    } catch (err) {
+      alert('Update scroll geometry failed: ' + err.message);
+    }
+  };
+
+  const handleResetScrollGeometry = async () => {
+    if (!screen?.preset) return;
+    if (!confirm(`Reset ${screen.preset} scroll geometry to default?`)) return;
+    try {
+      await updateSamsungScrollPreset(screen.preset, null);
+    } catch (err) {
+      alert('Reset failed: ' + err.message);
+    }
+  };
+
+  const handleCopyScrollPresetJson = async () => {
+    if (!screen?.preset) return;
+    const fragment = buildEmulatorDisplayPreset(
+      screen.preset,
+      samsungScrollPresets
+    );
+    const text = JSON.stringify({ [screen.preset]: fragment }, null, 2);
+    try {
+      await navigator.clipboard.writeText(text);
+      alert(`Copied ${screen.preset} JSON for EmulatorDisplay presets.`);
+    } catch {
+      prompt('Copy this JSON:', text);
     }
   };
 
@@ -448,6 +507,22 @@ export default function SidebarEditor({ mode = 'viewer' }) {
       alert('Rename failed: ' + err.message);
     } finally {
       setIsRenaming(false);
+    }
+  };
+
+  const handleDuplicateSelection = async () => {
+    if (!selectedScreenIds.length) return;
+    const suffix = duplicateSuffix.trim() || '-copy';
+    setIsDuplicating(true);
+    try {
+      await duplicateScreens({
+        screenIds: selectedScreenIds,
+        suffix,
+      });
+    } catch (err) {
+      alert('Duplicate failed: ' + err.message);
+    } finally {
+      setIsDuplicating(false);
     }
   };
 
@@ -781,6 +856,102 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                       simulator viewport only.
                     </p>
                   )}
+                  {scrollPresetDef && editLayer === 'base' && (
+                    <div className="sidebar__scroll-geometry">
+                      <div className="sidebar__section-title">
+                        Scroll geometry ({screen.preset})
+                      </div>
+                      <p className="sidebar__import-pick-hint">
+                        EmulatorDisplay canvas coords. Drag the blue box / arrows on the
+                        image, or edit numbers here.
+                      </p>
+                      <div className="sidebar__scroll-geo-grid">
+                        {[
+                          ['left', 'Left'],
+                          ['top', 'Top'],
+                          ['width', 'Width'],
+                          ['height', 'Height'],
+                          ['borderRadius', 'Radius'],
+                        ].map(([key, label]) => (
+                          <label key={key} className="sidebar__scroll-geo-field">
+                            <span className="label">{label}</span>
+                            <input
+                              className="input"
+                              type="number"
+                              value={scrollPresetDef.scroll[key]}
+                              onChange={(e) =>
+                                handleScrollGeometryField(['scroll', key], e.target.value)
+                              }
+                            />
+                          </label>
+                        ))}
+                      </div>
+                      <div className="sidebar__scroll-geo-grid">
+                        <label className="sidebar__scroll-geo-field">
+                          <span className="label">Up L</span>
+                          <input
+                            className="input"
+                            type="number"
+                            value={scrollPresetDef.scroll_buttons.up.left}
+                            onChange={(e) =>
+                              handleScrollGeometryField(['up', 'left'], e.target.value)
+                            }
+                          />
+                        </label>
+                        <label className="sidebar__scroll-geo-field">
+                          <span className="label">Up T</span>
+                          <input
+                            className="input"
+                            type="number"
+                            value={scrollPresetDef.scroll_buttons.up.top}
+                            onChange={(e) =>
+                              handleScrollGeometryField(['up', 'top'], e.target.value)
+                            }
+                          />
+                        </label>
+                        <label className="sidebar__scroll-geo-field">
+                          <span className="label">Down L</span>
+                          <input
+                            className="input"
+                            type="number"
+                            value={scrollPresetDef.scroll_buttons.down.left}
+                            onChange={(e) =>
+                              handleScrollGeometryField(['down', 'left'], e.target.value)
+                            }
+                          />
+                        </label>
+                        <label className="sidebar__scroll-geo-field">
+                          <span className="label">Down T</span>
+                          <input
+                            className="input"
+                            type="number"
+                            value={scrollPresetDef.scroll_buttons.down.top}
+                            onChange={(e) =>
+                              handleScrollGeometryField(['down', 'top'], e.target.value)
+                            }
+                          />
+                        </label>
+                      </div>
+                      <div className="sidebar__image-actions">
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-accent"
+                          onClick={handleCopyScrollPresetJson}
+                        >
+                          Copy preset JSON
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-sm"
+                          onClick={handleResetScrollGeometry}
+                          disabled={!samsungScrollPresets?.[screen.preset]}
+                          title="Clear project override"
+                        >
+                          Reset default
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </>
@@ -965,6 +1136,44 @@ export default function SidebarEditor({ mode = 'viewer' }) {
               </p>
             </div>
           )}
+          <div className="sidebar__duplicate-node">
+            <div className="sidebar__section-title sidebar__section-title--nested">
+              Duplicate
+            </div>
+            <label className="label" htmlFor="sidebar-duplicate-suffix">
+              Name suffix
+            </label>
+            <div className="sidebar__add-to-group-row">
+              <input
+                id="sidebar-duplicate-suffix"
+                className="input"
+                value={duplicateSuffix}
+                onChange={(e) => setDuplicateSuffix(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleDuplicateSelection();
+                }}
+                disabled={isDuplicating}
+                placeholder="-copy"
+                aria-label="Duplicate name suffix"
+              />
+              <button
+                type="button"
+                className="btn btn-sm btn-accent"
+                onClick={handleDuplicateSelection}
+                disabled={isDuplicating || !selectedScreenIds.length}
+              >
+                {isDuplicating
+                  ? 'Working…'
+                  : selectedScreenIds.length === 1
+                    ? 'Duplicate'
+                    : `Duplicate ${selectedScreenIds.length}`}
+              </button>
+            </div>
+            <p className="sidebar__flow-select-hint">
+              Creates copies with this ending (e.g. node{duplicateSuffix.trim() || '-copy'})
+              and duplicates screenshot files.
+            </p>
+          </div>
           {ungroupedSelectedIds.length > 0 && (
             <div className="sidebar__add-to-group">
               <div className="sidebar__section-title sidebar__section-title--nested">

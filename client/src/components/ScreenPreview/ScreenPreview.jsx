@@ -7,13 +7,30 @@ import { emulatorButtonStyle, useImageFrameScale } from '../../utils/imageFrameS
 import {
   getScrollButtonsRelative,
   getScrollViewportRelative,
+  getScrollControlSize,
   isSamsungScrollPreset,
+  SAMSUNG_SCREEN_FRAME,
 } from '../../data/samsungScrollPresets.js';
 import ScreenStack from '../ScreenViewer/ScreenStack.jsx';
 import '../ScreenViewer/ScreenViewer.css';
 import './ScreenPreview.css';
 
 const SCROLL_STEP = 190;
+
+/** Same chevron used by EmulatorDisplay scroll controls. */
+function ScrollArrowIcon({ size = 14 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M6 14l6-6 6 6"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 export default function ScreenPreview() {
   const screensById = useStore((s) => s.screensById);
@@ -127,6 +144,7 @@ export default function ScreenPreview() {
   }, [selectScreen]);
 
   const isSamsung = projectPlatform === 'samsung';
+  const samsungScrollPresets = useStore((s) => s.samsungScrollPresets);
   const backButtonTarget = String(screen?.backButtonTarget || '').trim();
   const canUseBackButton = Boolean(
     backButtonTarget && screensById.has(backButtonTarget)
@@ -144,12 +162,38 @@ export default function ScreenPreview() {
   }, [anchorScreenId]);
 
   const scrollViewport = useMemo(
-    () => (isSamsung ? getScrollViewportRelative(screen?.preset) : null),
-    [isSamsung, screen?.preset]
+    () =>
+      isSamsung
+        ? getScrollViewportRelative(
+            screen?.preset,
+            sourceSize,
+            samsungScrollPresets
+          )
+        : null,
+    [
+      isSamsung,
+      screen?.preset,
+      sourceSize.width,
+      sourceSize.height,
+      samsungScrollPresets,
+    ]
   );
   const scrollArrows = useMemo(
-    () => (isSamsung ? getScrollButtonsRelative(screen?.preset) : null),
-    [isSamsung, screen?.preset]
+    () =>
+      isSamsung
+        ? getScrollButtonsRelative(
+            screen?.preset,
+            sourceSize,
+            samsungScrollPresets
+          )
+        : null,
+    [
+      isSamsung,
+      screen?.preset,
+      sourceSize.width,
+      sourceSize.height,
+      samsungScrollPresets,
+    ]
   );
   const hasScrollPreview = Boolean(
     isSamsung &&
@@ -272,6 +316,7 @@ export default function ScreenPreview() {
                 imageVersion={scrollImageVersion}
                 onNavigate={navigateTo}
                 platform={projectPlatform}
+                sourceSize={sourceSize}
               />
             ) : null
           }
@@ -290,6 +335,7 @@ function ScrollPreviewOverlay({
   imageVersion,
   onNavigate,
   platform,
+  sourceSize,
 }) {
   const scrollRef = useRef(null);
   const [stripSize, setStripSize] = useState({
@@ -315,9 +361,21 @@ function ScrollPreviewOverlay({
     [screen, stripSize.width, stripSize.height, viewport.width, viewport.height]
   );
 
+  // EmulatorDisplay uses 30px controls on the preset canvas; scale with screenshot.
+  const btnSize = getScrollControlSize(sourceSize);
+  const iconSize = Math.max(10, Math.round(btnSize * (14 / 30)));
+  const scrollStep = Math.round(
+    SCROLL_STEP *
+      Math.max(
+        0.5,
+        (sourceSize?.width || SAMSUNG_SCREEN_FRAME.width) /
+          SAMSUNG_SCREEN_FRAME.width
+      )
+  );
+
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollTop;
+      scrollRef.current.scrollTo({ top: scrollTop, left: 0, behavior: 'smooth' });
     }
   }, [scrollTop, screen?.id]);
 
@@ -325,6 +383,8 @@ function ScrollPreviewOverlay({
   const atBottom = maxScroll > 0 ? scrollTop >= maxScroll - 1 : false;
 
   const nudge = (delta) => {
+    if (delta < 0 && atTop) return;
+    if (delta > 0 && atBottom) return;
     const next = Math.max(0, Math.min(maxScroll, scrollTop + delta));
     setScrollTop(next);
   };
@@ -332,7 +392,7 @@ function ScrollPreviewOverlay({
   const handleWheel = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const delta = e.deltaY > 0 ? SCROLL_STEP : -SCROLL_STEP;
+    const delta = e.deltaY > 0 ? scrollStep : -scrollStep;
     nudge(delta);
   };
 
@@ -341,31 +401,41 @@ function ScrollPreviewOverlay({
       {arrows?.up && (
         <button
           type="button"
-          className="screen-preview__scroll-btn screen-preview__scroll-btn--up"
-          style={{ top: arrows.up.top, left: arrows.up.left }}
-          disabled={atTop}
+          className={`screen-preview__scroll-btn screen-preview__scroll-btn--up${atTop ? ' screen-preview__scroll-btn--dim' : ''}`}
+          style={{
+            top: arrows.up.top,
+            left: arrows.up.left,
+            width: btnSize,
+            height: btnSize,
+          }}
           onClick={(e) => {
+            e.preventDefault();
             e.stopPropagation();
-            nudge(-SCROLL_STEP);
+            nudge(-scrollStep);
           }}
           title="Scroll up"
         >
-          ▲
+          <ScrollArrowIcon size={iconSize} />
         </button>
       )}
       {arrows?.down && (
         <button
           type="button"
-          className="screen-preview__scroll-btn screen-preview__scroll-btn--down"
-          style={{ top: arrows.down.top, left: arrows.down.left }}
-          disabled={atBottom}
+          className={`screen-preview__scroll-btn screen-preview__scroll-btn--down${atBottom ? ' screen-preview__scroll-btn--dim' : ''}`}
+          style={{
+            top: arrows.down.top,
+            left: arrows.down.left,
+            width: btnSize,
+            height: btnSize,
+          }}
           onClick={(e) => {
+            e.preventDefault();
             e.stopPropagation();
-            nudge(SCROLL_STEP);
+            nudge(scrollStep);
           }}
           title="Scroll down"
         >
-          ▼
+          <ScrollArrowIcon size={iconSize} />
         </button>
       )}
       <div

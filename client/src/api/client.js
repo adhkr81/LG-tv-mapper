@@ -188,6 +188,11 @@ export const getScreens = () => request(projectPath('/screens'));
 export const getScreen = (id) => request(projectPath(`/screens/${id}`));
 export const createScreen = (data) =>
   request(projectPath('/screens'), { method: 'POST', body: JSON.stringify(data) });
+export const duplicateScreens = (data) =>
+  request(projectPath('/screens/duplicate'), {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
 export const updateScreen = (id, data) =>
   request(projectPath(`/screens/${id}`), { method: 'PUT', body: JSON.stringify(data) });
 export const deleteScreen = (id, { removeParentButtons = false } = {}) => {
@@ -232,11 +237,16 @@ export const restoreMapperState = (screens, sections) =>
 
 // Config
 export const getConfig = () => request(projectPath('/config'));
-export const updateConfig = (imageSize) =>
+export const updateConfig = (payload) =>
   request(projectPath('/config'), {
     method: 'PUT',
-    body: JSON.stringify({ imageSize }),
+    body: JSON.stringify(payload),
   });
+/** @deprecated Prefer updateConfig({ imageSize }) */
+export const updateImageConfig = (imageSize) =>
+  updateConfig({ imageSize });
+export const updateSamsungScrollPresets = (samsungScrollPresets) =>
+  updateConfig({ samsungScrollPresets });
 
 // Sections
 export const getSections = () => request(projectPath('/sections'));

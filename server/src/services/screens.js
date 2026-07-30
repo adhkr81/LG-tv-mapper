@@ -2,6 +2,7 @@ export {
   getAllScreens,
   getScreen,
   createScreen,
+  duplicateScreens,
   updateScreen,
   deleteScreen,
   getScreenshotPath,

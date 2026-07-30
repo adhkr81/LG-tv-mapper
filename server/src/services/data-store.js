@@ -16,6 +16,8 @@ import {
   projectExists,
   touchProject,
 } from './projects.js';
+import { SAMSUNG_PRESET2 } from './samsung-preset2.js';
+import { normalizeSamsungScrollPresets } from './samsung-scroll-presets.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, '..', 'data');
@@ -53,6 +55,8 @@ const state = {
   screens: /** @type {object[]} */ ([]),
   sections: /** @type {Section[]} */ ([]),
   imageConfig: { ...DEFAULT_IMAGE_CONFIG },
+  /** Project overrides for Samsung scroll presets (EmulatorDisplay canvas shape). */
+  samsungScrollPresets: /** @type {Record<string, object>} */ ({}),
   /** Monotonic counter, bumped on every mutation; powers ETag/304 responses. */
   version: 0,
   loaded: false,
@@ -147,7 +151,7 @@ function readMetaFileFromDisk() {
       version: META_VERSION,
       sections: [],
       screens: {},
-      config: { imageSize: { ...DEFAULT_IMAGE_CONFIG } },
+      config: { imageSize: { ...DEFAULT_IMAGE_CONFIG }, samsungScrollPresets: {} },
     };
   }
   const parsed = readJson(mapperMetaPath, { sections: [], screens: {} });
@@ -157,6 +161,9 @@ function readMetaFileFromDisk() {
     screens: parsed.screens || {},
     config: {
       imageSize: normalizeImageConfig(parsed.config?.imageSize),
+      samsungScrollPresets: normalizeSamsungScrollPresets(
+        parsed.config?.samsungScrollPresets
+      ),
     },
   };
 }
@@ -384,7 +391,7 @@ function emulatorAndMetaToScreens(emulatorMap, meta) {
   return { screens, needsRepersist };
 }
 
-function screensToEmulatorAndMeta(screens, sections, imageConfig) {
+function screensToEmulatorAndMeta(screens, sections, imageConfig, samsungScrollPresets) {
   const platform = getActivePlatform();
   const emulatorMap = {};
   const metaScreens = {};
@@ -411,13 +418,19 @@ function screensToEmulatorAndMeta(screens, sections, imageConfig) {
     };
   }
 
+  const scrollPresets = normalizeSamsungScrollPresets(samsungScrollPresets);
   return {
     emulatorMap,
     meta: {
       version: META_VERSION,
       sections,
       screens: metaScreens,
-      config: { imageSize: imageConfig },
+      config: {
+        imageSize: imageConfig,
+        ...(Object.keys(scrollPresets).length
+          ? { samsungScrollPresets: scrollPresets }
+          : {}),
+      },
     },
   };
 }
@@ -486,6 +499,7 @@ function loadStateFromDisk() {
   const metaMigrated = applyMetaMigrations(meta);
 
   state.imageConfig = meta.config.imageSize;
+  state.samsungScrollPresets = meta.config.samsungScrollPresets || {};
   state.sections = meta.sections;
 
   if (emulatorMap === null) {
@@ -520,7 +534,8 @@ function persistToDisk() {
   const { emulatorMap, meta } = screensToEmulatorAndMeta(
     state.screens,
     state.sections,
-    state.imageConfig
+    state.imageConfig,
+    state.samsungScrollPresets
   );
   atomicWrite(emulatorDataPath, emulatorMap);
   atomicWrite(mapperMetaPath, meta);
@@ -863,6 +878,7 @@ export function activateProject(projectId) {
   state.screens = [];
   state.sections = [];
   state.imageConfig = { ...DEFAULT_IMAGE_CONFIG };
+  state.samsungScrollPresets = {};
   state.version = 0;
   state.loaded = false;
   dirty = false;
@@ -891,6 +907,7 @@ export function clearActiveProject() {
   state.screens = [];
   state.sections = [];
   state.imageConfig = { ...DEFAULT_IMAGE_CONFIG };
+  state.samsungScrollPresets = {};
   state.version = 0;
   state.loaded = false;
   dirty = false;
@@ -926,7 +943,8 @@ export function replaceMapperState(screens, sections) {
   const { emulatorMap, meta } = screensToEmulatorAndMeta(
     screens,
     sections,
-    state.imageConfig
+    state.imageConfig,
+    state.samsungScrollPresets
   );
   const { screens: normalized } = emulatorAndMetaToScreens(emulatorMap, meta);
   state.screens = normalized;
@@ -992,6 +1010,158 @@ export function createScreen({
   state.screens.push(screen);
   markDirty();
   return screen;
+}
+
+function copyScreenshotFileAs(oldFilename, newBasename) {
+  const name = String(oldFilename || '').trim();
+  if (!name || !newBasename) return '';
+  const oldPath = getScreenshotPath(name);
+  if (!fs.existsSync(oldPath) || !fs.statSync(oldPath).isFile()) return '';
+  const ext = path.extname(name) || '.jpg';
+  const newName = `${newBasename}${ext}`;
+  const newPath = getScreenshotPath(newName);
+  if (oldPath !== newPath) {
+    if (fs.existsSync(newPath)) fs.unlinkSync(newPath);
+    fs.copyFileSync(oldPath, newPath);
+  }
+  return newName;
+}
+
+function findExistingScreenshotName(base) {
+  const stem = String(base || '').trim();
+  if (!stem) return '';
+  for (const ext of ['.jpg', '.jpeg', '.png', '.webp']) {
+    const name = stem.includes('.') ? stem : `${stem}${ext}`;
+    const filePath = getScreenshotPath(name);
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) return name;
+  }
+  return '';
+}
+
+function cloneButtonsForScreen(buttons, newScreenId, idMap) {
+  return (buttons || []).map((btn) => {
+    const target = typeof btn.target === 'string' ? btn.target : '';
+    const next = {
+      id: uuidv4(),
+      screenId: newScreenId,
+      label: btn.label || '',
+      target: idMap.has(target) ? idMap.get(target) : target,
+      left: btn.left,
+      top: btn.top,
+      width: btn.width,
+      height: btn.height,
+    };
+    if (btn.popover) {
+      next.popover = JSON.parse(JSON.stringify(btn.popover));
+    }
+    if (btn.type) next.type = btn.type;
+    return next;
+  });
+}
+
+/**
+ * Duplicate one or more screens: new ids with a suffix, copied screenshot files,
+ * cloned buttons (targets remapped within the duplicated set).
+ */
+export function duplicateScreens({ screenIds, suffix = '-copy' } = {}) {
+  ensureLoaded();
+  const ids = [...new Set((screenIds || []).filter(Boolean))];
+  if (!ids.length) throw new Error('Select at least one screen to duplicate');
+
+  let suffixTrim = String(suffix ?? '-copy').trim();
+  if (!suffixTrim) suffixTrim = '-copy';
+  if (/[\\/]/.test(suffixTrim) || suffixTrim.includes('..')) {
+    throw new Error('Invalid name suffix');
+  }
+
+  for (const id of ids) {
+    if (!state.screens.some((s) => s.id === id)) {
+      throw new Error(`Screen "${id}" not found`);
+    }
+  }
+
+  const existingIds = new Set(state.screens.map((s) => s.id));
+  const idMap = new Map();
+  for (const oldId of ids) {
+    let newId = `${oldId}${suffixTrim}`;
+    let n = 2;
+    while (existingIds.has(newId)) {
+      newId = `${oldId}${suffixTrim}${n}`;
+      n += 1;
+    }
+    idMap.set(oldId, newId);
+    existingIds.add(newId);
+  }
+
+  const OFFSET = 48;
+  const created = [];
+
+  for (const oldId of ids) {
+    const source = state.screens.find((s) => s.id === oldId);
+    const newId = idMap.get(oldId);
+
+    const sourceImage =
+      findExistingScreenshotName(source.image) ||
+      findExistingScreenshotName(source.img_filename || oldId);
+    const newImage = sourceImage
+      ? copyScreenshotFileAs(sourceImage, newId)
+      : '';
+
+    const remapId = (value) => {
+      if (typeof value !== 'string' || !value) return value || '';
+      return idMap.has(value) ? idMap.get(value) : value;
+    };
+
+    const screen = {
+      id: newId,
+      image: newImage || '',
+      img_filename: newImage ? stripImageExtension(newImage) || newId : '',
+      preset: source.preset,
+      buttons: cloneButtonsForScreen(source.buttons, newId, idMap),
+      sectionId: source.sectionId || null,
+      sourceWidth: source.sourceWidth ?? null,
+      sourceHeight: source.sourceHeight ?? null,
+      graphX: Math.round((Number(source.graphX) || 0) + OFFSET),
+      graphY: Math.round((Number(source.graphY) || 0) + OFFSET),
+    };
+
+    if (source.model !== undefined) screen.model = source.model;
+    if (source.backButtonTarget !== undefined) {
+      screen.backButtonTarget = remapId(source.backButtonTarget);
+    }
+
+    if (source.scrollArea) {
+      const sourceScrollImage =
+        findExistingScreenshotName(source.scrollArea.image) ||
+        findExistingScreenshotName(
+          source.scrollArea.img_filename || defaultScrollImgFilename(oldId)
+        );
+      const newScrollImage = sourceScrollImage
+        ? copyScreenshotFileAs(sourceScrollImage, defaultScrollImgFilename(newId))
+        : '';
+      screen.scrollArea = {
+        img_filename: newScrollImage
+          ? stripImageExtension(newScrollImage) || defaultScrollImgFilename(newId)
+          : defaultScrollImgFilename(newId),
+        image: newScrollImage || '',
+        buttons: cloneButtonsForScreen(
+          source.scrollArea.buttons,
+          newId,
+          idMap
+        ),
+      };
+    }
+
+    if (newImage) clearSiblingScreenshotExtensions(newImage);
+    applyResolvedImage(screen, newImage);
+    if (screen.scrollArea) applyResolvedScrollImage(screen);
+
+    state.screens.push(screen);
+    created.push(screen);
+  }
+
+  markDirty();
+  return created;
 }
 
 export function updateScreen(id, updates) {
@@ -1338,4 +1508,37 @@ export function updateImageConfig(updates) {
   });
   markDirty();
   return state.imageConfig;
+}
+
+export function getSamsungScrollPresets() {
+  ensureLoaded();
+  return state.samsungScrollPresets;
+}
+
+/**
+ * Replace or merge Samsung scroll preset overrides.
+ * Pass `null` for a preset key to clear that override back to default.
+ */
+export function updateSamsungScrollPresets(updates) {
+  ensureLoaded();
+  if (updates == null) {
+    state.samsungScrollPresets = {};
+    markDirty();
+    return state.samsungScrollPresets;
+  }
+  if (typeof updates !== 'object') {
+    throw new Error('samsungScrollPresets must be an object');
+  }
+  const next = { ...state.samsungScrollPresets };
+  for (const [key, value] of Object.entries(updates)) {
+    if (value == null) {
+      delete next[key];
+      continue;
+    }
+    const normalized = normalizeSamsungScrollPresets({ [key]: value });
+    if (normalized[key]) next[key] = normalized[key];
+  }
+  state.samsungScrollPresets = normalizeSamsungScrollPresets(next);
+  markDirty();
+  return state.samsungScrollPresets;
 }

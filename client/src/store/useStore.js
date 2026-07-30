@@ -286,6 +286,8 @@ const useStore = create((rawSet, get) => {
     screensById: new Map(),
     sections: [],
     imageConfig: { ...DEFAULT_IMAGE_CONFIG },
+    /** Project overrides for Samsung scroll presets (canvas-absolute EmulatorDisplay shape). */
+    samsungScrollPresets: {},
     /** Per-screen cache-bust counter when screenshot file is replaced (same filename). */
     imageVersions: {},
 
@@ -325,6 +327,7 @@ const useStore = create((rawSet, get) => {
         screensById: new Map(),
         sections: [],
         imageConfig: { ...DEFAULT_IMAGE_CONFIG },
+        samsungScrollPresets: {},
         imageVersions: {},
         activeSectionId: loadActiveSectionId(),
         selectedScreenId: null,
@@ -419,16 +422,34 @@ const useStore = create((rawSet, get) => {
     fetchConfig: async () => {
       try {
         const data = await api.getConfig();
-        set({ imageConfig: normalizeImageConfig(data.imageSize) });
+        set({
+          imageConfig: normalizeImageConfig(data.imageSize),
+          samsungScrollPresets: data.samsungScrollPresets || {},
+        });
       } catch (err) {
         console.error('Failed to fetch config:', err);
       }
     },
 
     updateImageConfig: async (imageSize) => {
-      const data = await api.updateConfig(imageSize);
-      set({ imageConfig: normalizeImageConfig(data.imageSize) });
+      const data = await api.updateConfig({ imageSize });
+      set({
+        imageConfig: normalizeImageConfig(data.imageSize),
+        samsungScrollPresets:
+          data.samsungScrollPresets ?? get().samsungScrollPresets,
+      });
       return data.imageSize;
+    },
+
+    updateSamsungScrollPreset: async (presetKey, defOrNull) => {
+      markUndoAvailable(set, get);
+      const data = await api.updateConfig({
+        samsungScrollPresets: { [presetKey]: defOrNull },
+      });
+      set({
+        samsungScrollPresets: data.samsungScrollPresets || {},
+      });
+      return data.samsungScrollPresets;
     },
 
     reportScreenSourceSize: async (screenId, sourceWidth, sourceHeight) => {
@@ -759,6 +780,21 @@ const useStore = create((rawSet, get) => {
       set({ screens: [...get().screens, screen] });
       get().selectScreen(id);
       return screen;
+    },
+
+    duplicateScreens: async ({ screenIds, suffix = '-copy' }) => {
+      const ids = [...new Set((screenIds || []).filter(Boolean))];
+      if (!ids.length) throw new Error('Select at least one screen to duplicate');
+      markUndoAvailable(set, get);
+      const created = await api.duplicateScreens({ screenIds: ids, suffix });
+      set({ screens: [...get().screens, ...created] });
+      const newIds = created.map((s) => s.id);
+      get().bumpImageVersions(newIds);
+      for (const s of created) {
+        if (s.scrollArea?.image) get().bumpImageVersions(`${s.id}:scroll`);
+      }
+      get().setSelectedScreenIds(newIds);
+      return created;
     },
 
     importScreens: async (entries) => {

@@ -20,9 +20,14 @@ import {
   useImageFrameScale,
 } from '../../utils/imageFrameScale.js';
 import ScreenStack from './ScreenStack.jsx';
+import ScrollPresetEditorOverlay from './ScrollPresetEditorOverlay.jsx';
 import {
+  getScrollButtonsRelative,
+  getScrollViewportOnStrip,
   getScrollViewportRelative,
   isSamsungScrollPreset,
+  patchScrollButtonFromSource,
+  patchScrollFromSourceViewport,
 } from '../../data/samsungScrollPresets.js';
 import './ScreenViewer.css';
 
@@ -357,30 +362,13 @@ function ComparePane({
 }) {
   const projectPlatform = useStore((s) => s.projectPlatform);
   const editLayer = useStore((s) => s.editLayer);
+  const samsungScrollPresets = useStore((s) => s.samsungScrollPresets);
+  const updateSamsungScrollPreset = useStore((s) => s.updateSamsungScrollPreset);
   const showScrollLayer =
     editLayer === 'scroll' &&
     Boolean(screen?.scrollArea?.image?.trim()) &&
     (editable || pickable);
   const hasScrollStrip = Boolean(screen?.scrollArea?.image?.trim());
-  const presetViewport =
-    hasScrollStrip &&
-    projectPlatform === 'samsung' &&
-    isSamsungScrollPreset(screen?.preset)
-      ? getScrollViewportRelative(screen.preset)
-      : null;
-  /** Overlay area from preset — not the strip image bounds. */
-  const scrollViewportGuide = presetViewport
-    ? showScrollLayer
-      ? {
-          // On strip canvas: window size only (visible overlay region at top).
-          left: 0,
-          top: 0,
-          width: presetViewport.width,
-          height: presetViewport.height,
-          borderRadius: presetViewport.borderRadius || 0,
-        }
-      : presetViewport
-    : null;
   const activeButtons = showScrollLayer
     ? screen.scrollArea?.buttons || []
     : screen.buttons || [];
@@ -401,6 +389,116 @@ function ComparePane({
       ? imageConfig.intrinsicHeight
       : screen?.sourceHeight || imageConfig.intrinsicHeight,
   });
+  const scrollSaveTimerRef = useRef(null);
+
+  /** Overlay area from preset, scaled to the displayed image (not strip file bounds). */
+  const scrollViewportGuide = useMemo(() => {
+    if (
+      !hasScrollStrip ||
+      projectPlatform !== 'samsung' ||
+      !isSamsungScrollPreset(screen?.preset)
+    ) {
+      return null;
+    }
+    if (showScrollLayer) {
+      return getScrollViewportOnStrip(
+        screen.preset,
+        sourceSize,
+        samsungScrollPresets
+      );
+    }
+    return getScrollViewportRelative(
+      screen.preset,
+      sourceSize,
+      samsungScrollPresets
+    );
+  }, [
+    hasScrollStrip,
+    projectPlatform,
+    screen?.preset,
+    showScrollLayer,
+    sourceSize.width,
+    sourceSize.height,
+    samsungScrollPresets,
+  ]);
+
+  const scrollArrowGuide = useMemo(() => {
+    if (
+      showScrollLayer ||
+      !hasScrollStrip ||
+      projectPlatform !== 'samsung' ||
+      !isSamsungScrollPreset(screen?.preset)
+    ) {
+      return null;
+    }
+    return getScrollButtonsRelative(
+      screen.preset,
+      sourceSize,
+      samsungScrollPresets
+    );
+  }, [
+    showScrollLayer,
+    hasScrollStrip,
+    projectPlatform,
+    screen?.preset,
+    sourceSize.width,
+    sourceSize.height,
+    samsungScrollPresets,
+  ]);
+
+  const persistScrollPreset = useCallback(
+    (nextDef) => {
+      if (!screen?.preset || !nextDef) return;
+      // Optimistic local merge so dragging stays smooth.
+      useStore.setState((state) => ({
+        samsungScrollPresets: {
+          ...state.samsungScrollPresets,
+          [screen.preset]: nextDef,
+        },
+      }));
+      if (scrollSaveTimerRef.current) clearTimeout(scrollSaveTimerRef.current);
+      scrollSaveTimerRef.current = setTimeout(() => {
+        updateSamsungScrollPreset(screen.preset, nextDef).catch((err) => {
+          console.error('Save scroll preset failed:', err);
+        });
+      }, 350);
+    },
+    [screen?.preset, updateSamsungScrollPreset]
+  );
+
+  const handleViewportGuideChange = useCallback(
+    (nextViewport) => {
+      const patched = patchScrollFromSourceViewport(
+        screen.preset,
+        nextViewport,
+        sourceSize,
+        samsungScrollPresets
+      );
+      persistScrollPreset(patched);
+    },
+    [screen?.preset, sourceSize, samsungScrollPresets, persistScrollPreset]
+  );
+
+  const handleArrowGuideChange = useCallback(
+    (which, point) => {
+      const patched = patchScrollButtonFromSource(
+        screen.preset,
+        which,
+        point,
+        sourceSize,
+        samsungScrollPresets
+      );
+      persistScrollPreset(patched);
+    },
+    [screen?.preset, sourceSize, samsungScrollPresets, persistScrollPreset]
+  );
+
+  useEffect(
+    () => () => {
+      if (scrollSaveTimerRef.current) clearTimeout(scrollSaveTimerRef.current);
+    },
+    []
+  );
 
   useEffect(() => {
     if (showScrollLayer) {
@@ -624,17 +722,28 @@ function ComparePane({
           }
           overlay={
             scrollViewportGuide ? (
-              <div
-                className="screen-viewer__scroll-viewport-guide"
-                style={{
-                  left: scrollViewportGuide.left,
-                  top: scrollViewportGuide.top,
-                  width: scrollViewportGuide.width,
-                  height: scrollViewportGuide.height,
-                  borderRadius: scrollViewportGuide.borderRadius || 0,
-                }}
-                aria-hidden="true"
-              />
+              editable && !showScrollLayer && !pickable && scrollArrowGuide ? (
+                <ScrollPresetEditorOverlay
+                  viewport={scrollViewportGuide}
+                  arrows={scrollArrowGuide}
+                  frameScale={frameScale}
+                  sourceSize={sourceSize}
+                  onViewportChange={handleViewportGuideChange}
+                  onArrowChange={handleArrowGuideChange}
+                />
+              ) : (
+                <div
+                  className="screen-viewer__scroll-viewport-guide"
+                  style={{
+                    left: scrollViewportGuide.left,
+                    top: scrollViewportGuide.top,
+                    width: scrollViewportGuide.width,
+                    height: scrollViewportGuide.height,
+                    borderRadius: scrollViewportGuide.borderRadius || 0,
+                  }}
+                  aria-hidden="true"
+                />
+              )
             ) : null
           }
           marquee={

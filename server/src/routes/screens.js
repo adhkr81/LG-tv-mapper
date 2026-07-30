@@ -19,6 +19,16 @@ router.get('/', (req, res) => {
   res.json(screenService.getAllScreens());
 });
 
+// POST /api/screens/duplicate
+router.post('/duplicate', (req, res) => {
+  try {
+    const screens = screenService.duplicateScreens(req.body || {});
+    res.status(201).json(screens);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 // GET /api/screens/:id
 router.get('/:id', (req, res) => {
   const screen = screenService.getScreen(req.params.id);

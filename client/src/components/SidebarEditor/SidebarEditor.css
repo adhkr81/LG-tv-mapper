@@ -200,6 +200,21 @@
   justify-content: center;
 }
 
+.sidebar__duplicate-node {
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar__duplicate-node .sidebar__flow-select-hint {
+  margin-bottom: 0;
+  margin-top: var(--space-xs);
+}
+
+.sidebar__duplicate-node .label {
+  margin-bottom: var(--space-xs);
+}
+
 /* ── Selection actions ───────────────────────── */
 .sidebar__selection-actions {
   display: flex;
@@ -381,6 +396,31 @@
 
 .sidebar__layer-toggle .btn {
   flex: 1;
+}
+
+.sidebar__scroll-geometry {
+  margin-top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.sidebar__scroll-geo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xs);
+}
+
+.sidebar__scroll-geo-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.sidebar__scroll-geo-field .input {
+  font-size: 12px;
+  padding: 4px 6px;
 }
 
 .sidebar-screen-picker {
