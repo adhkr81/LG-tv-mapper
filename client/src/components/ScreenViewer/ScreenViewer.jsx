@@ -23,6 +23,7 @@ import ScreenStack from './ScreenStack.jsx';
 import ScrollPresetEditorOverlay from './ScrollPresetEditorOverlay.jsx';
 import {
   getScrollButtonsRelative,
+  getScrollStripCoordSize,
   getScrollViewportOnStrip,
   getScrollViewportRelative,
   isSamsungScrollPreset,
@@ -88,6 +89,18 @@ function normalizeMarqueeRect(a, b) {
 const MIN_HOTSPOT_SIZE = 20;
 /** Screen pixels the pointer must move before a move/resize drag starts (avoids jitter on click). */
 const DRAG_ACTIVATION_THRESHOLD = 8;
+const VIEW_ZOOM_MIN = 0.25;
+const VIEW_ZOOM_MAX = 8;
+const VIEW_ZOOM_STEP = 1.25;
+
+function clampViewZoom(zoom) {
+  return Math.min(VIEW_ZOOM_MAX, Math.max(VIEW_ZOOM_MIN, zoom));
+}
+
+function formatViewZoom(zoom) {
+  const pct = Math.round(zoom * 100);
+  return `${pct}%`;
+}
 
 export default function ScreenViewer() {
   const screensById = useStore((s) => s.screensById);
@@ -389,7 +402,20 @@ function ComparePane({
       ? imageConfig.intrinsicHeight
       : screen?.sourceHeight || imageConfig.intrinsicHeight,
   });
+  const [naturalStripSize, setNaturalStripSize] = useState(null);
   const scrollSaveTimerRef = useRef(null);
+
+  const applyScrollStripSize = useCallback(
+    (naturalWidth, naturalHeight) => {
+      const nw = Math.round(Number(naturalWidth) || 0);
+      const nh = Math.round(Number(naturalHeight) || 0);
+      if (!nw || !nh) return;
+      setNaturalStripSize((prev) =>
+        prev?.width === nw && prev?.height === nh ? prev : { width: nw, height: nh }
+      );
+    },
+    []
+  );
 
   /** Overlay area from preset, scaled to the displayed image (not strip file bounds). */
   const scrollViewportGuide = useMemo(() => {
@@ -501,11 +527,22 @@ function ComparePane({
   );
 
   useEffect(() => {
+    setNaturalStripSize(null);
+  }, [screen?.id, showScrollLayer]);
+
+  useEffect(() => {
     if (showScrollLayer) {
-      setSourceSize({
-        width: imageConfig.intrinsicWidth,
-        height: imageConfig.intrinsicHeight,
-      });
+      if (!naturalStripSize?.width || !naturalStripSize?.height) return;
+      const coordSize = getScrollStripCoordSize(
+        screen?.preset,
+        naturalStripSize.width,
+        naturalStripSize.height,
+        samsungScrollPresets
+      );
+      const next = coordSize || naturalStripSize;
+      setSourceSize((prev) =>
+        prev.width === next.width && prev.height === next.height ? prev : next
+      );
       return;
     }
     if (screen?.sourceWidth && screen?.sourceHeight) {
@@ -520,16 +557,23 @@ function ComparePane({
     screen?.id,
     screen?.sourceWidth,
     screen?.sourceHeight,
+    screen?.preset,
     imageConfig.intrinsicWidth,
     imageConfig.intrinsicHeight,
     showScrollLayer,
+    naturalStripSize,
+    samsungScrollPresets,
   ]);
 
   const handleLoad = (e) => {
     const { naturalWidth, naturalHeight } = e.currentTarget;
     if (!naturalWidth || !naturalHeight) return;
+    if (showScrollLayer) {
+      applyScrollStripSize(naturalWidth, naturalHeight);
+      return;
+    }
     setSourceSize({ width: naturalWidth, height: naturalHeight });
-    if (!showScrollLayer && reportSourceSize && screen) {
+    if (reportSourceSize && screen) {
       reportSourceSize(screen.id, naturalWidth, naturalHeight);
     }
   };
@@ -537,10 +581,38 @@ function ComparePane({
   const containerRef = useRef(null);
   const stageRef = useRef(null);
   const imageFrameRef = useRef(null);
-  const frameScale = useImageFrameScale(containerRef, sourceSize);
+  const fitScale = useImageFrameScale(containerRef, sourceSize);
+  const [viewZoom, setViewZoom] = useState(1);
+  const frameScale = fitScale * viewZoom;
   const [marquee, setMarquee] = useState(null);
   const marqueeRef = useRef(null);
   const pickInteractionRef = useRef(null);
+
+  useEffect(() => {
+    setViewZoom(1);
+  }, [screen?.id, showScrollLayer]);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return undefined;
+
+    const onWheel = (e) => {
+      if (!(e.ctrlKey || e.metaKey)) return;
+      e.preventDefault();
+      const factor = e.deltaY > 0 ? 1 / VIEW_ZOOM_STEP : VIEW_ZOOM_STEP;
+      setViewZoom((z) => clampViewZoom(z * factor));
+    };
+
+    container.addEventListener('wheel', onWheel, { passive: false });
+    return () => container.removeEventListener('wheel', onWheel);
+  }, [screen?.id, showScrollLayer]);
+
+  const zoomOut = () =>
+    setViewZoom((z) => clampViewZoom(z / VIEW_ZOOM_STEP));
+  const zoomIn = () =>
+    setViewZoom((z) => clampViewZoom(z * VIEW_ZOOM_STEP));
+  const zoomReset = () => setViewZoom(1);
+  const isZoomed = Math.abs(viewZoom - 1) > 0.001;
 
   const screenForCoords = useMemo(
     () => ({
@@ -552,7 +624,7 @@ function ComparePane({
   );
 
   const layerImageConfig = useMemo(() => {
-    // Scroll strip coords live in strip pixel space; main-screen Samsung coords stay in preset2 (imageConfig).
+    // Scroll strip coords use EmulatorDisplay preset.scroll space (see getScrollStripCoordSize).
     if (showScrollLayer) {
       return {
         intrinsicWidth: sourceSize.width,
@@ -674,9 +746,44 @@ function ComparePane({
       )}
       <div
         ref={containerRef}
-        className={`screen-viewer__image-container ${isAddingHotspot ? 'screen-viewer--crosshair' : ''} ${!editable ? 'screen-viewer__image-container--readonly' : ''} ${pickable ? 'screen-viewer__image-container--pickable' : ''} ${showScrollLayer ? 'screen-viewer__image-container--scroll-layer' : ''}`}
+        className={`screen-viewer__image-container ${isAddingHotspot ? 'screen-viewer--crosshair' : ''} ${!editable ? 'screen-viewer__image-container--readonly' : ''} ${pickable ? 'screen-viewer__image-container--pickable' : ''} ${showScrollLayer ? 'screen-viewer__image-container--scroll-layer' : ''} ${isZoomed ? 'screen-viewer__image-container--zoomed' : ''}`}
         onClick={editable ? onSelectButton : undefined}
       >
+        <div
+          className="screen-viewer__zoom-controls"
+          onClick={(e) => e.stopPropagation()}
+          onPointerDown={(e) => e.stopPropagation()}
+        >
+          <button
+            type="button"
+            className="btn btn-sm screen-viewer__zoom-btn"
+            onClick={zoomOut}
+            disabled={viewZoom <= VIEW_ZOOM_MIN}
+            title="Zoom out (Ctrl+scroll)"
+            aria-label="Zoom out"
+          >
+            −
+          </button>
+          <button
+            type="button"
+            className="btn btn-sm screen-viewer__zoom-label"
+            onClick={zoomReset}
+            title="Reset zoom to fit"
+            aria-label={`Zoom ${formatViewZoom(viewZoom)}. Click to reset.`}
+          >
+            {formatViewZoom(viewZoom)}
+          </button>
+          <button
+            type="button"
+            className="btn btn-sm screen-viewer__zoom-btn"
+            onClick={zoomIn}
+            disabled={viewZoom >= VIEW_ZOOM_MAX}
+            title="Zoom in (Ctrl+scroll)"
+            aria-label="Zoom in"
+          >
+            +
+          </button>
+        </div>
         <ScreenStack
           sourceSize={sourceSize}
           frameScale={frameScale}

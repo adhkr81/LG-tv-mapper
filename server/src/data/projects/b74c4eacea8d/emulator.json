@@ -85,11 +85,18 @@
     "model": "smart-tv",
     "buttons": [
       {
-        "width": 102,
-        "height": 29,
+        "width": 34,
+        "height": 28,
         "x": 14,
         "y": 39,
         "target": "My_Account"
+      },
+      {
+        "width": 34,
+        "height": 29,
+        "x": 14,
+        "y": 69,
+        "target": "My_Account_sign-in_qr-code"
       }
     ],
     "back_button": {
@@ -742,40 +749,21 @@
       "target": "Vision_AI_settings"
     }
   },
-  "My_Account_long-1": {
-    "img_filename": "My_Account_long-1",
-    "preset": "preset5",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "My_Account_long-2": {
-    "img_filename": "My_Account_long-2",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "My_Account_long-3": {
-    "img_filename": "My_Account_long-3",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
   "My_Account_edit-profile": {
     "img_filename": "My_Account_edit-profile",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 147,
+        "height": 28,
+        "x": 187,
+        "y": 321,
+        "target": "My_Account"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "My_Account"
     }
   },
   "My_Account_payment": {
@@ -784,7 +772,7 @@
     "model": "smart-tv",
     "buttons": [],
     "back_button": {
-      "target": ""
+      "target": "My_Account"
     }
   },
   "My_Account_subscriptions": {
@@ -793,7 +781,7 @@
     "model": "smart-tv",
     "buttons": [],
     "back_button": {
-      "target": ""
+      "target": "My_Account"
     }
   },
   "My_Account_pin-setting": {
@@ -802,7 +790,7 @@
     "model": "smart-tv",
     "buttons": [],
     "back_button": {
-      "target": ""
+      "target": "My_Account"
     }
   },
   "My_Account_security-prrivacy": {
@@ -811,34 +799,58 @@
     "model": "smart-tv",
     "buttons": [],
     "back_button": {
-      "target": ""
+      "target": "My_Account"
     }
   },
   "My_Account_product-registration": {
     "img_filename": "My_Account_product-registration",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 91,
+        "height": 23,
+        "x": 283,
+        "y": 279,
+        "target": "My_Account"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "My_Account"
     }
   },
   "My_Account_backup": {
     "img_filename": "My_Account_backup",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 175,
+        "height": 28,
+        "x": 242,
+        "y": 322,
+        "target": "My_Account"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "My_Account"
     }
   },
   "My_Account_about-samsung-account": {
     "img_filename": "My_Account_about-samsung-account",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 134,
+        "height": 27,
+        "x": 261,
+        "y": 273,
+        "target": "My_Account"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "My_Account"
     }
   },
   "connected_devices_tv": {
@@ -2018,11 +2030,72 @@
   },
   "My_Account": {
     "img_filename": "My_Account",
-    "preset": "preset2",
+    "preset": "preset7",
     "model": "smart-tv",
     "buttons": [],
     "back_button": {
-      "target": "homescreen"
+      "target": "homescreen_login"
+    },
+    "scroll_area": {
+      "img_filename": "My_Account_scroll",
+      "buttons": [
+        {
+          "width": 299,
+          "height": 42,
+          "x": 6,
+          "y": 399,
+          "target": "My_Account_about-samsung-account"
+        },
+        {
+          "width": 299,
+          "height": 42,
+          "x": 6,
+          "y": 18,
+          "target": "My_Account_edit-profile"
+        },
+        {
+          "width": 299,
+          "height": 42,
+          "x": 6,
+          "y": 81,
+          "target": "My_Account_payment"
+        },
+        {
+          "width": 299,
+          "height": 42,
+          "x": 6,
+          "y": 124,
+          "target": "My_Account_subscriptions"
+        },
+        {
+          "width": 299,
+          "height": 42,
+          "x": 6,
+          "y": 188,
+          "target": "My_Account_pin-setting"
+        },
+        {
+          "width": 299,
+          "height": 42,
+          "x": 6,
+          "y": 229,
+          "target": "My_Account_security-prrivacy"
+        },
+        {
+          "width": 299,
+          "height": 42,
+          "x": 6,
+          "y": 294,
+          "target": "My_Account_product-registration"
+        },
+        {
+          "width": 299,
+          "height": 42,
+          "x": 6,
+          "y": 336,
+          "target": "My_Account_backup"
+        }
+      ]
     }
   },
   "all-settings_background": {
@@ -2037,46 +2110,53 @@
       "img_filename": "all-settings_background_scroll",
       "buttons": [
         {
-          "width": 453,
-          "height": 89,
-          "x": 17,
-          "y": 233,
+          "width": 157,
+          "height": 30,
+          "x": 4,
+          "y": 80,
           "target": "picture"
         },
         {
-          "width": 453,
-          "height": 89,
-          "x": 17,
-          "y": 335,
-          "target": "sound"
+          "width": 157,
+          "height": 30,
+          "x": 4,
+          "y": 115,
+          "target": "picture"
         },
         {
-          "width": 453,
-          "height": 89,
-          "x": 18,
-          "y": 439,
-          "target": "connections"
+          "width": 157,
+          "height": 30,
+          "x": 4,
+          "y": 150,
+          "target": "picture"
         },
         {
-          "width": 453,
-          "height": 89,
-          "x": 18,
-          "y": 545,
-          "target": "advanced-features"
+          "width": 157,
+          "height": 30,
+          "x": 4,
+          "y": 185,
+          "target": "picture"
         },
         {
-          "width": 453,
-          "height": 89,
-          "x": 18,
-          "y": 650,
-          "target": "g&p"
+          "width": 157,
+          "height": 30,
+          "x": 4,
+          "y": 220,
+          "target": "picture"
         },
         {
-          "width": 453,
-          "height": 89,
-          "x": 18,
-          "y": 753,
-          "target": "support"
+          "width": 157,
+          "height": 30,
+          "x": 4,
+          "y": 257,
+          "target": "picture"
+        },
+        {
+          "width": 163,
+          "height": 41,
+          "x": 0,
+          "y": 4,
+          "target": "My_Account_sign-in"
         }
       ]
     }
@@ -3650,45 +3730,345 @@
     "img_filename": "My_Account_sign-in",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 60,
+        "height": 60,
+        "x": 258,
+        "y": 189,
+        "target": "My_Account_sign-in_my-account"
+      },
+      {
+        "width": 60,
+        "height": 60,
+        "x": 340,
+        "y": 188,
+        "target": "My_Account_sign-in_qr-code_all-settings"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "all-settings_background"
     }
   },
   "My_Account_sign-in_my-account": {
     "img_filename": "My_Account_sign-in_my-account",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 81,
+        "height": 28,
+        "x": 247,
+        "y": 272,
+        "target": "My_Account_all-settings"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "My_Account_sign-in"
     }
   },
-  "My_Account_sign-in_qr-code": {
-    "img_filename": "My_Account_sign-in_qr-code",
+  "My_Account_sign-in_qr-code_all-settings": {
+    "img_filename": "My_Account_sign-in_qr-code_all-settings",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 135,
+        "height": 26,
+        "x": 261,
+        "y": 323,
+        "target": "My_Account_sign-in"
+      },
+      {
+        "width": 153,
+        "height": 28,
+        "x": 363,
+        "y": 206,
+        "target": "My_Account_sign-in_email_all-settings"
+      },
+      {
+        "width": 153,
+        "height": 28,
+        "x": 363,
+        "y": 234,
+        "target": "My_Account_sign-in_website_all-settings"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "My_Account_sign-in"
     }
   },
   "My_Account_sign-in_email": {
     "img_filename": "My_Account_sign-in_email",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 100,
+        "height": 26,
+        "x": 279,
+        "y": 323,
+        "target": "My_Account_sign-in_qr-code"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "My_Account_sign-in_qr-code"
     }
   },
   "My_Account_sign-in_website": {
     "img_filename": "My_Account_sign-in_website",
     "preset": "preset2",
     "model": "smart-tv",
+    "buttons": [
+      {
+        "width": 146,
+        "height": 29,
+        "x": 256,
+        "y": 321,
+        "target": "My_Account_sign-in_qr-code"
+      }
+    ],
+    "back_button": {
+      "target": "My_Account_sign-in_qr-code"
+    }
+  },
+  "My_Account_edit-profile_all-settings": {
+    "img_filename": "My_Account_edit-profile_all-settings",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [
+      {
+        "width": 147,
+        "height": 28,
+        "x": 187,
+        "y": 321,
+        "target": "My_Account_all-settings"
+      }
+    ],
+    "back_button": {
+      "target": "My_Account_all-settings"
+    }
+  },
+  "My_Account_payment_all-settings": {
+    "img_filename": "My_Account_payment_all-settings",
+    "preset": "preset2",
+    "model": "smart-tv",
     "buttons": [],
     "back_button": {
-      "target": ""
+      "target": "My_Account_all-settings"
+    }
+  },
+  "My_Account_subscriptions_all-settings": {
+    "img_filename": "My_Account_subscriptions_all-settings",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": "My_Account_all-settings"
+    }
+  },
+  "My_Account_pin-setting_all-settings": {
+    "img_filename": "My_Account_pin-setting_all-settings",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": "My_Account_all-settings"
+    }
+  },
+  "My_Account_security-prrivacy_all-settings": {
+    "img_filename": "My_Account_security-prrivacy_all-settings",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": "My_Account_all-settings"
+    }
+  },
+  "My_Account_product-registration_all-settings": {
+    "img_filename": "My_Account_product-registration_all-settings",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [
+      {
+        "width": 91,
+        "height": 23,
+        "x": 283,
+        "y": 279,
+        "target": "My_Account_all-settings"
+      }
+    ],
+    "back_button": {
+      "target": "My_Account_all-settings"
+    }
+  },
+  "My_Account_backup_all-settings": {
+    "img_filename": "My_Account_backup_all-settings",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [
+      {
+        "width": 175,
+        "height": 28,
+        "x": 242,
+        "y": 322,
+        "target": "My_Account_all-settings"
+      }
+    ],
+    "back_button": {
+      "target": "My_Account_all-settings"
+    }
+  },
+  "My_Account_about-samsung-account_all-settings": {
+    "img_filename": "My_Account_about-samsung-account_all-settings",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [
+      {
+        "width": 134,
+        "height": 27,
+        "x": 261,
+        "y": 273,
+        "target": "My_Account_all-settings"
+      }
+    ],
+    "back_button": {
+      "target": "My_Account_all-settings"
+    }
+  },
+  "My_Account_all-settings": {
+    "img_filename": "My_Account_all-settings",
+    "preset": "preset7",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": "My_Account_sign-in"
+    },
+    "scroll_area": {
+      "img_filename": "My_Account_all-settings_scroll",
+      "buttons": [
+        {
+          "width": 299,
+          "height": 42,
+          "x": 6,
+          "y": 18,
+          "target": "My_Account_edit-profile_all-settings"
+        },
+        {
+          "width": 299,
+          "height": 42,
+          "x": 6,
+          "y": 81,
+          "target": "My_Account_payment_all-settings"
+        },
+        {
+          "width": 299,
+          "height": 42,
+          "x": 6,
+          "y": 124,
+          "target": "My_Account_subscriptions_all-settings"
+        },
+        {
+          "width": 299,
+          "height": 42,
+          "x": 6,
+          "y": 188,
+          "target": "My_Account_pin-setting_all-settings"
+        },
+        {
+          "width": 299,
+          "height": 42,
+          "x": 6,
+          "y": 229,
+          "target": "My_Account_security-prrivacy_all-settings"
+        },
+        {
+          "width": 299,
+          "height": 42,
+          "x": 6,
+          "y": 294,
+          "target": "My_Account_product-registration_all-settings"
+        },
+        {
+          "width": 299,
+          "height": 42,
+          "x": 6,
+          "y": 336,
+          "target": "My_Account_backup_all-settings"
+        },
+        {
+          "width": 299,
+          "height": 42,
+          "x": 6,
+          "y": 399,
+          "target": "My_Account_about-samsung-account_all-settings"
+        }
+      ]
+    }
+  },
+  "My_Account_sign-in_qr-code": {
+    "img_filename": "My_Account_sign-in_qr-code",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [
+      {
+        "width": 135,
+        "height": 26,
+        "x": 261,
+        "y": 323,
+        "target": "homescreen_login"
+      },
+      {
+        "width": 153,
+        "height": 28,
+        "x": 363,
+        "y": 206,
+        "target": "My_Account_sign-in_email"
+      },
+      {
+        "width": 153,
+        "height": 28,
+        "x": 363,
+        "y": 234,
+        "target": "My_Account_sign-in_website"
+      }
+    ],
+    "back_button": {
+      "target": "homescreen_login"
+    }
+  },
+  "My_Account_sign-in_email_all-settings": {
+    "img_filename": "My_Account_sign-in_email_all-settings",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [
+      {
+        "width": 100,
+        "height": 26,
+        "x": 279,
+        "y": 323,
+        "target": "My_Account_sign-in_qr-code_all-settings"
+      }
+    ],
+    "back_button": {
+      "target": "My_Account_sign-in_qr-code_all-settings"
+    }
+  },
+  "My_Account_sign-in_website_all-settings": {
+    "img_filename": "My_Account_sign-in_website_all-settings",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [
+      {
+        "width": 146,
+        "height": 29,
+        "x": 256,
+        "y": 321,
+        "target": "My_Account_sign-in_qr-code_all-settings"
+      }
+    ],
+    "back_button": {
+      "target": "My_Account_sign-in_qr-code_all-settings"
     }
   }
 }

@@ -7,6 +7,7 @@ import { emulatorButtonStyle, useImageFrameScale } from '../../utils/imageFrameS
 import {
   getScrollButtonsRelative,
   getScrollViewportRelative,
+  getScrollStripCoordSize,
   getScrollControlSize,
   isSamsungScrollPreset,
   SAMSUNG_SCREEN_FRAME,
@@ -317,6 +318,7 @@ export default function ScreenPreview() {
                 onNavigate={navigateTo}
                 platform={projectPlatform}
                 sourceSize={sourceSize}
+                scrollPresets={samsungScrollPresets}
               />
             ) : null
           }
@@ -336,29 +338,68 @@ function ScrollPreviewOverlay({
   onNavigate,
   platform,
   sourceSize,
+  scrollPresets,
 }) {
   const scrollRef = useRef(null);
-  const [stripSize, setStripSize] = useState({
+  const [stripNatural, setStripNatural] = useState({
     width: viewport.width,
     height: viewport.height * 2,
   });
   const [maxScroll, setMaxScroll] = useState(0);
 
+  // EmulatorDisplay authors buttons in preset.scroll.width space; preview may
+  // scale that window to the main screenshot, so map storage → display size.
+  const storageSize = useMemo(() => {
+    const sized = getScrollStripCoordSize(
+      screen?.preset,
+      stripNatural.width,
+      stripNatural.height,
+      scrollPresets
+    );
+    return sized || {
+      width: stripNatural.width || viewport.width,
+      height: stripNatural.height || viewport.height,
+    };
+  }, [
+    screen?.preset,
+    stripNatural.width,
+    stripNatural.height,
+    scrollPresets,
+    viewport.width,
+    viewport.height,
+  ]);
+
+  const displaySize = useMemo(() => {
+    const nw = stripNatural.width || storageSize.width;
+    const nh = stripNatural.height || storageSize.height;
+    const dw = Math.max(1, Math.round(viewport.width));
+    return {
+      width: dw,
+      height: Math.max(1, Math.round((nh * dw) / nw)),
+    };
+  }, [
+    stripNatural.width,
+    stripNatural.height,
+    storageSize.width,
+    storageSize.height,
+    viewport.width,
+  ]);
+
   const stripConfig = useMemo(
     () => ({
-      intrinsicWidth: stripSize.width || viewport.width,
-      intrinsicHeight: stripSize.height || viewport.height,
+      intrinsicWidth: storageSize.width,
+      intrinsicHeight: storageSize.height,
     }),
-    [stripSize.width, stripSize.height, viewport.width, viewport.height]
+    [storageSize.width, storageSize.height]
   );
 
   const stripScreen = useMemo(
     () => ({
       ...screen,
-      sourceWidth: stripSize.width || viewport.width,
-      sourceHeight: stripSize.height || viewport.height,
+      sourceWidth: displaySize.width,
+      sourceHeight: displaySize.height,
     }),
-    [screen, stripSize.width, stripSize.height, viewport.width, viewport.height]
+    [screen, displaySize.width, displaySize.height]
   );
 
   // EmulatorDisplay uses 30px controls on the preset canvas; scale with screenshot.
@@ -378,6 +419,12 @@ function ScrollPreviewOverlay({
       scrollRef.current.scrollTo({ top: scrollTop, left: 0, behavior: 'smooth' });
     }
   }, [scrollTop, screen?.id]);
+
+  useEffect(() => {
+    const max = Math.max(0, displaySize.height - viewport.height);
+    setMaxScroll(max);
+    setScrollTop((prev) => Math.min(prev, max));
+  }, [displaySize.height, viewport.height, setScrollTop]);
 
   const atTop = scrollTop <= 0;
   const atBottom = maxScroll > 0 ? scrollTop >= maxScroll - 1 : false;
@@ -452,7 +499,7 @@ function ScrollPreviewOverlay({
       >
         <div
           className="screen-preview__scroll-content"
-          style={{ width: viewport.width, position: 'relative' }}
+          style={{ width: displaySize.width, height: displaySize.height, position: 'relative' }}
         >
           {(screen.scrollArea?.buttons || []).map((btn) => (
             <PreviewHotspot
@@ -472,10 +519,7 @@ function ScrollPreviewOverlay({
             draggable={false}
             onLoad={(e) => {
               const { naturalWidth, naturalHeight } = e.currentTarget;
-              setStripSize({ width: naturalWidth, height: naturalHeight });
-              const max = Math.max(0, naturalHeight - viewport.height);
-              setMaxScroll(max);
-              setScrollTop((prev) => Math.min(prev, max));
+              setStripNatural({ width: naturalWidth, height: naturalHeight });
             }}
           />
         </div>

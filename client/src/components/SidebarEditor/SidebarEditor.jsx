@@ -148,7 +148,10 @@ export default function SidebarEditor({ mode = 'viewer' }) {
       .filter((s) => {
         if (s.id === screen.id) return false;
         if (editLayer === 'scroll') {
-          return (s.scrollArea?.buttons || []).length > 0;
+          return (
+            Boolean(s.scrollArea?.image?.trim()) &&
+            (s.scrollArea?.buttons || []).length > 0
+          );
         }
         return s.buttons.length > 0;
       })
@@ -217,6 +220,11 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   useEffect(() => {
     setImportCompareScreenId(null);
   }, [screen?.id, setImportCompareScreenId]);
+
+  useEffect(() => {
+    setImportCompareScreenId(null);
+    setImportSourceButtonIds([]);
+  }, [editLayer, setImportCompareScreenId, setImportSourceButtonIds]);
 
   useEffect(() => {
     if (!isEditMode) return undefined;
@@ -852,8 +860,9 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                   </div>
                   {editLayer === 'scroll' && (
                     <p className="sidebar__import-pick-hint">
-                      Editing the tall strip full-height. Preset {screen.preset} sets the
-                      simulator viewport only.
+                      Strip editor uses {screen.preset} scroll width (
+                      {scrollPresetDef?.scroll?.width ?? '—'}px) — same coords as
+                      EmulatorDisplay. Zoom in to place buttons precisely.
                     </p>
                   )}
                   {scrollPresetDef && editLayer === 'base' && (
@@ -959,16 +968,27 @@ export default function SidebarEditor({ mode = 'viewer' }) {
         </div>
       )}
 
-      {screen && isEditMode && importSourceOptions.length > 0 && (
+      {screen &&
+        isEditMode &&
+        (editLayer !== 'scroll' || hasScrollImage) &&
+        importSourceOptions.length > 0 && (
         <div className="sidebar__section">
-          <div className="sidebar__section-title">Import buttons</div>
+          <div className="sidebar__section-title">
+            {editLayer === 'scroll' ? 'Import strip buttons' : 'Import buttons'}
+          </div>
           <div className="sidebar__button-import">
-            <label className="label">From screen</label>
+            <label className="label">
+              {editLayer === 'scroll' ? 'From strip' : 'From screen'}
+            </label>
             <div className="sidebar__button-import-row">
               <ScreenPickerSelect
                 value={importCompareScreenId || ''}
                 onChange={(screenId) => setImportCompareScreenId(screenId || null)}
-                placeholder="— select screen —"
+                placeholder={
+                  editLayer === 'scroll'
+                    ? '— select strip —'
+                    : '— select screen —'
+                }
                 disabled={isImportingButtons}
                 isParent={isParentScreen}
                 showPreviewOnHover
@@ -1021,9 +1041,8 @@ export default function SidebarEditor({ mode = 'viewer' }) {
             {importCompareScreenId && (
               <p className="sidebar__import-pick-hint">
                 {importSourceButtonIds.length > 0
-                  ? `${importSourceButtonIds.length} button${importSourceButtonIds.length === 1 ? '' : 's'} selected on the import screen.`
-                  : 'Drag on the import screen to select an area, or Ctrl+click buttons.'}
-                {editLayer === 'scroll' ? ' (scroll layer)' : ''}
+                  ? `${importSourceButtonIds.length} button${importSourceButtonIds.length === 1 ? '' : 's'} selected on the import ${editLayer === 'scroll' ? 'strip' : 'screen'}.`
+                  : `Drag on the import ${editLayer === 'scroll' ? 'strip' : 'screen'} to select an area, or Ctrl+click buttons.`}
               </p>
             )}
           </div>

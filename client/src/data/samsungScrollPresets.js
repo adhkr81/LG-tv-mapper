@@ -270,7 +270,8 @@ export function getScrollViewportRelative(
 }
 
 /**
- * Visible overlay window in scroll-strip pixel space.
+ * Visible overlay window in scroll-strip coordinate space.
+ * Strip editors use preset.scroll.width (EmulatorDisplay space), so scale is usually 1.
  */
 export function getScrollViewportOnStrip(preset, stripSize, overrides = null) {
   const viewport = getScrollViewportRelative(preset, null, overrides);
@@ -282,6 +283,30 @@ export function getScrollViewportOnStrip(preset, stripSize, overrides = null) {
     width: stripSize.width,
     height: Math.round(viewport.height * scale),
     borderRadius: viewport.borderRadius || 0,
+  };
+}
+
+/**
+ * EmulatorDisplay scroll content size: strip image is shown at preset.scroll.width,
+ * height keeps the strip aspect ratio. Button x/y/w/h are authored in this space.
+ */
+export function getScrollStripCoordSize(
+  preset,
+  naturalWidth,
+  naturalHeight,
+  overrides = null
+) {
+  const nw = Math.round(Number(naturalWidth) || 0);
+  const nh = Math.round(Number(naturalHeight) || 0);
+  if (!nw || !nh) return null;
+  const def = resolveScrollPreset(preset, overrides);
+  const scrollW = Math.max(1, Math.round(Number(def?.scroll?.width) || 0));
+  if (!scrollW) {
+    return { width: nw, height: nh };
+  }
+  return {
+    width: scrollW,
+    height: Math.max(1, Math.round((nh * scrollW) / nw)),
   };
 }
 

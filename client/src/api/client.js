@@ -209,10 +209,19 @@ export const addButton = (screenId, data) =>
     body: JSON.stringify(data),
   });
 export const importButtons = (screenId, fromScreenId, options = {}) => {
-  const { includeTargets = true, buttonIds = null } = options;
+  const {
+    includeTargets = true,
+    buttonIds = null,
+    layer = 'base',
+  } = options;
   return request(projectPath(`/screens/${screenId}/buttons/import`), {
     method: 'POST',
-    body: JSON.stringify({ fromScreenId, includeTargets, buttonIds }),
+    body: JSON.stringify({
+      fromScreenId,
+      includeTargets,
+      buttonIds,
+      layer: layer === 'scroll' ? 'scroll' : 'base',
+    }),
   });
 };
 export const updateButton = (screenId, buttonId, data) =>

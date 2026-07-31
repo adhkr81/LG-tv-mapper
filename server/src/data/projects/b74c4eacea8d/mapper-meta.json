@@ -21,8 +21,8 @@
       "id": "My_Account",
       "name": "My Account",
       "rootScreenId": "homescreen_login",
-      "bandX": -573,
-      "bandY": -291,
+      "bandX": -596,
+      "bandY": -333,
       "collapsed": true
     },
     {
@@ -149,11 +149,12 @@
       "sourceHeight": 1080
     },
     "homescreen_login": {
-      "graphX": -1742,
-      "graphY": 36,
+      "graphX": -1752,
+      "graphY": -327,
       "sectionId": "My_Account",
       "buttonIds": [
-        "5fbf1742-fcab-4832-92f6-631de1e07a7e"
+        "5fbf1742-fcab-4832-92f6-631de1e07a7e",
+        "6a3b9558-d14b-4e23-9e38-6ad4bea4872f"
       ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
@@ -363,71 +364,77 @@
       "sourceWidth": 1920,
       "sourceHeight": 1080
     },
-    "My_Account_long-1": {
-      "graphX": -1377,
-      "graphY": 133,
-      "sectionId": "My_Account",
-      "buttonIds": []
-    },
-    "My_Account_long-2": {
-      "graphX": -1381,
-      "graphY": 320,
-      "sectionId": "My_Account",
-      "buttonIds": []
-    },
-    "My_Account_long-3": {
-      "graphX": -1373,
-      "graphY": 501,
-      "sectionId": "My_Account",
-      "buttonIds": []
-    },
     "My_Account_edit-profile": {
-      "graphX": -1095,
-      "graphY": 229,
+      "graphX": -1776,
+      "graphY": 351,
       "sectionId": "My_Account",
-      "buttonIds": []
+      "buttonIds": [
+        "7c58a4c0-14fa-4c5d-adfb-f0b335352ba2"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "My_Account_payment": {
-      "graphX": -1095,
-      "graphY": 414,
+      "graphX": -1776,
+      "graphY": 536,
       "sectionId": "My_Account",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "My_Account_subscriptions": {
-      "graphX": -1095,
-      "graphY": 599,
+      "graphX": -1480,
+      "graphY": 147,
       "sectionId": "My_Account",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "My_Account_pin-setting": {
-      "graphX": -1095,
-      "graphY": 784,
+      "graphX": -1480,
+      "graphY": 332,
       "sectionId": "My_Account",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "My_Account_security-prrivacy": {
-      "graphX": -1095,
-      "graphY": 969,
+      "graphX": -1480,
+      "graphY": 517,
       "sectionId": "My_Account",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "My_Account_product-registration": {
-      "graphX": -715,
-      "graphY": 44,
+      "graphX": -1211,
+      "graphY": 126,
       "sectionId": "My_Account",
-      "buttonIds": []
+      "buttonIds": [
+        "999dca72-44e0-4ced-8fa0-1ef731ae9513"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "My_Account_backup": {
-      "graphX": -715,
-      "graphY": 229,
+      "graphX": -1211,
+      "graphY": 311,
       "sectionId": "My_Account",
-      "buttonIds": []
+      "buttonIds": [
+        "5190efff-7802-49f2-be1f-c053a11a8141"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "My_Account_about-samsung-account": {
-      "graphX": -721,
-      "graphY": 442,
+      "graphX": -1217,
+      "graphY": 524,
       "sectionId": "My_Account",
-      "buttonIds": []
+      "buttonIds": [
+        "df9791e9-3291-4ec6-bc4e-bc761531e79f"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_tv": {
       "graphX": 113,
@@ -879,12 +886,23 @@
       "sourceHeight": 1080
     },
     "My_Account": {
-      "graphX": -1743,
-      "graphY": 330,
+      "graphX": -1774,
+      "graphY": 139,
       "sectionId": "My_Account",
       "buttonIds": [],
       "sourceWidth": 1920,
-      "sourceHeight": 1080
+      "sourceHeight": 1080,
+      "scrollButtonIds": [
+        "1fa0cff0-51b5-497f-b59f-139bc36bb91f",
+        "c84ac811-f1bd-4a61-81d1-8870171b3606",
+        "ab16a01d-bd8c-4bbf-926c-338cc1528876",
+        "bd61fa24-b4e6-44c5-8e8b-c44936d51a82",
+        "7021776d-dd35-4f2f-919c-98ac4417b264",
+        "0c3b18b4-b0b8-4d30-84c4-c38a55d5df9a",
+        "b4fcda42-a34e-4f28-9a4e-31db52f92aa3",
+        "f893bd67-f21b-4396-b189-51c425cdfb81"
+      ],
+      "scrollImage": "My_Account_scroll.jpg"
     },
     "all-settings_background": {
       "graphX": -408,
@@ -895,11 +913,12 @@
       "sourceHeight": 1080,
       "scrollButtonIds": [
         "2790427e-a6d3-460b-8d6a-eb4d5496380a",
-        "285075f1-6a07-4c23-987d-383f0b714faa",
-        "5a95aa5d-fcc4-4f1d-8282-b403aefe9ad9",
-        "f4a1614d-75f0-4d03-9820-6ef4167d8987",
-        "d418294c-2e14-4d97-b1f9-5bce6e658d43",
-        "7187e516-461e-4ae5-b859-41d3783caeb5"
+        "2270630c-e0b7-48d3-85eb-9aa71e840737",
+        "a6fd5706-1400-4f72-acf0-20a8879226b3",
+        "df836778-5852-4394-bd04-819d5950bcfc",
+        "1ebe0cdc-0aa4-463d-a65a-c3c01a5a6c3a",
+        "566ccc1a-c03b-4b37-ae76-41cabde9fd80",
+        "bf2ba9cc-e212-4851-b96c-8428a3160249"
       ],
       "scrollImage": "all-settings_background_scroll.jpg"
     },
@@ -1978,36 +1997,180 @@
       "sourceHeight": 1080
     },
     "My_Account_sign-in": {
-      "graphX": -208,
-      "graphY": 123,
+      "graphX": 458,
+      "graphY": -207,
+      "sectionId": "My_Account",
+      "buttonIds": [
+        "a548fe60-59d4-401c-8f4f-c4b6377212b4",
+        "c8185a8c-8074-465f-82e9-2b8f8e17aa1e"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "My_Account_sign-in_my-account": {
+      "graphX": 721,
+      "graphY": -204,
+      "sectionId": "My_Account",
+      "buttonIds": [
+        "dfa9cbfe-cd53-48f2-a03d-4e8026f9a833"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "My_Account_sign-in_qr-code_all-settings": {
+      "graphX": 1068,
+      "graphY": 136,
+      "sectionId": "My_Account",
+      "buttonIds": [
+        "8b77446f-5d25-4d45-9003-1300c70ab00d",
+        "4e1a89a8-50eb-4c08-896e-247509eb93fd",
+        "2dd37c88-94df-4f55-9c26-af25175252eb"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "My_Account_sign-in_email": {
+      "graphX": -734,
+      "graphY": 358,
+      "sectionId": "My_Account",
+      "buttonIds": [
+        "49f64c82-4982-4beb-a1d8-5416ac31cb35"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "My_Account_sign-in_website": {
+      "graphX": -728,
+      "graphY": 547,
+      "sectionId": "My_Account",
+      "buttonIds": [
+        "d2177773-8e9d-4285-8740-c58157203bf0"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "My_Account_edit-profile_all-settings": {
+      "graphX": 24,
+      "graphY": 343,
+      "sectionId": "My_Account",
+      "buttonIds": [
+        "d603afdc-4fb7-4fd0-95a6-e1ecf9e1b06b"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "My_Account_payment_all-settings": {
+      "graphX": 9,
+      "graphY": 557,
       "sectionId": "My_Account",
       "buttonIds": [],
       "sourceWidth": 1920,
       "sourceHeight": 1080
     },
-    "My_Account_sign-in_my-account": {
-      "graphX": -204,
-      "graphY": 324,
+    "My_Account_subscriptions_all-settings": {
+      "graphX": 321,
+      "graphY": 140,
       "sectionId": "My_Account",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "My_Account_pin-setting_all-settings": {
+      "graphX": 321,
+      "graphY": 345,
+      "sectionId": "My_Account",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "My_Account_security-prrivacy_all-settings": {
+      "graphX": 297,
+      "graphY": 554,
+      "sectionId": "My_Account",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "My_Account_product-registration_all-settings": {
+      "graphX": 622,
+      "graphY": 128,
+      "sectionId": "My_Account",
+      "buttonIds": [
+        "67a8510f-f585-41f8-abf8-1ad16d0529d1"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "My_Account_backup_all-settings": {
+      "graphX": 623,
+      "graphY": 349,
+      "sectionId": "My_Account",
+      "buttonIds": [
+        "5f835d5d-ea5b-4869-ac25-0ed01c9c7c4e"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "My_Account_about-samsung-account_all-settings": {
+      "graphX": 598,
+      "graphY": 559,
+      "sectionId": "My_Account",
+      "buttonIds": [
+        "352d785f-64f4-497f-acb7-c4a88adaf166"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "My_Account_all-settings": {
+      "graphX": 32,
+      "graphY": 137,
+      "sectionId": "My_Account",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "scrollButtonIds": [
+        "323c5c50-1ff3-4cce-8103-0cb869480332",
+        "7645474c-eff2-4072-bcbf-406304848e28",
+        "e3f3d418-2683-45b9-a21b-21108c22244f",
+        "0afc44d3-e7f1-45a9-a997-4304112e9852",
+        "2ae46b2d-7209-4638-ac5e-1499d02b4b04",
+        "f5acb057-bf16-433f-89a8-5502fb7fcd4b",
+        "956e4bdf-17e8-46c3-8b58-f772d9f44d84",
+        "df74d28b-2d92-4b76-9aaa-1ef4a81fe4ed"
+      ],
+      "scrollImage": "My_Account_all-settings_scroll.jpg"
     },
     "My_Account_sign-in_qr-code": {
-      "graphX": -199,
-      "graphY": 530,
+      "graphX": -743,
+      "graphY": 118,
       "sectionId": "My_Account",
-      "buttonIds": []
+      "buttonIds": [
+        "ef54c4ef-60f9-401b-afa4-cabb79df5204",
+        "46e3a89d-fb45-4916-9407-d1438a45f5d7",
+        "59261bb7-02a1-420f-a760-83d204eab7ee"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
-    "My_Account_sign-in_email": {
-      "graphX": 0,
-      "graphY": 0,
+    "My_Account_sign-in_email_all-settings": {
+      "graphX": 1071,
+      "graphY": 369,
       "sectionId": "My_Account",
-      "buttonIds": []
+      "buttonIds": [
+        "cc1e8076-6165-4788-805c-3dd825548b36"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
-    "My_Account_sign-in_website": {
-      "graphX": -187,
-      "graphY": 928,
+    "My_Account_sign-in_website_all-settings": {
+      "graphX": 1071,
+      "graphY": 554,
       "sectionId": "My_Account",
-      "buttonIds": []
+      "buttonIds": [
+        "33bad829-66df-4b9a-97a3-ba87ac1a20a8"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     }
   },
   "config": {
@@ -2039,6 +2202,32 @@
           "down": {
             "top": 312,
             "left": 223
+          }
+        }
+      },
+      "preset7": {
+        "screen": {
+          "height": 370,
+          "left": 125,
+          "src": "homescreen",
+          "top": 17,
+          "width": 658
+        },
+        "scroll": {
+          "left": 427,
+          "top": 115,
+          "width": 312,
+          "height": 271,
+          "borderRadius": 5
+        },
+        "scroll_buttons": {
+          "up": {
+            "top": 135,
+            "left": 744
+          },
+          "down": {
+            "top": 352,
+            "left": 744
           }
         }
       }
