@@ -3673,47 +3673,72 @@
   },
   "advanced_features_ai-mode": {
     "img_filename": "advanced_features_ai-mode",
-    "preset": "preset2",
+    "preset": "preset6",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 24,
+        "y": 58,
+        "target": "advanced-features"
+      }
+    ],
     "back_button": {
-      "target": ""
-    }
-  },
-  "advanced_features_ai-mode-long-1": {
-    "img_filename": "advanced_features_ai-mode-long-1",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "advanced_features_ai-mode-long-2": {
-    "img_filename": "advanced_features_ai-mode-long-2",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
+      "target": "advanced-features"
+    },
+    "scroll_area": {
+      "img_filename": "advanced_features_ai-mode_scroll",
+      "buttons": [
+        {
+          "width": 162,
+          "height": 29,
+          "x": 3,
+          "y": 249,
+          "target": "advanced_features_ai-mode_ai-sound-mode"
+        },
+        {
+          "width": 162,
+          "height": 29,
+          "x": 3,
+          "y": 280,
+          "target": "advanced_features_ai-mode_sound-controller"
+        }
+      ]
     }
   },
   "advanced_features_ai-mode_ai-sound-mode": {
     "img_filename": "advanced_features_ai-mode_ai-sound-mode",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "advanced_features_ai-mode"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "advanced_features_ai-mode"
     }
   },
   "advanced_features_ai-mode_sound-controller": {
     "img_filename": "advanced_features_ai-mode_sound-controller",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "advanced_features_ai-mode"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "advanced_features_ai-mode"
     }
   },
   "advanced_features_voice": {

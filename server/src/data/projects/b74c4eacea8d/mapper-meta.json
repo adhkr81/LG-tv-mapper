@@ -1558,46 +1558,47 @@
       "scrollImage": "advanced_features_live-translate_scroll.jpg"
     },
     "advanced_features_ai-mode": {
-      "graphX": 1339,
+      "graphX": 1413,
       "graphY": 22,
       "sectionId": "advanced_features",
-      "buttonIds": [],
-      "sourceWidth": 1920,
-      "sourceHeight": 1080
-    },
-    "advanced_features_ai-mode-long-1": {
-      "graphX": 1184,
-      "graphY": 238,
-      "sectionId": "advanced_features",
-      "buttonIds": [],
-      "sourceWidth": 1920,
-      "sourceHeight": 1080
-    },
-    "advanced_features_ai-mode-long-2": {
-      "graphX": 1233,
-      "graphY": 458,
-      "sectionId": "advanced_features",
-      "buttonIds": []
+      "buttonIds": [
+        "864128a1-efc2-40ca-9d32-ad892c68abb9"
+      ],
+      "sourceWidth": 1067,
+      "sourceHeight": 600,
+      "scrollButtonIds": [
+        "d61958a5-56f2-4cad-9142-b90132340006",
+        "c999f60f-e239-4943-b7fd-eb29b7892e5f"
+      ],
+      "scrollImage": "advanced_features_ai-mode_scroll.jpg"
     },
     "advanced_features_ai-mode_ai-sound-mode": {
-      "graphX": 1498,
-      "graphY": 218,
+      "graphX": 1239,
+      "graphY": 257,
       "sectionId": "advanced_features",
-      "buttonIds": [],
+      "buttonIds": [
+        "e32d37fa-c41c-4ec4-bb2e-0e94d7576f9d"
+      ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
     },
     "advanced_features_ai-mode_sound-controller": {
-      "graphX": 1549,
-      "graphY": 422,
+      "graphX": 1529,
+      "graphY": 254,
       "sectionId": "advanced_features",
-      "buttonIds": []
+      "buttonIds": [
+        "2c15b18f-ab5e-44dc-84f6-43db116cdae6"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "advanced_features_voice": {
       "graphX": 2271,
       "graphY": 29,
       "sectionId": "advanced_features",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "advanced_features_voice_voice-assistant": {
       "graphX": 2247,
