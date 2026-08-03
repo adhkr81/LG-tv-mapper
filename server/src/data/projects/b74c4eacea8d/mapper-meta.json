@@ -22,7 +22,7 @@
       "name": "My Account",
       "rootScreenId": "homescreen_login",
       "bandX": -596,
-      "bandY": -333,
+      "bandY": -306,
       "collapsed": true
     },
     {
@@ -621,8 +621,8 @@
       "sourceHeight": 1080
     },
     "connected_devices_connection-guide-2": {
-      "graphX": 820,
-      "graphY": 316,
+      "graphX": 955,
+      "graphY": 320,
       "sectionId": "connected_devices",
       "buttonIds": [
         "700b8f38-9157-403f-b665-9ea65da59b34",
@@ -636,8 +636,8 @@
       "sourceHeight": 1080
     },
     "connected_devices_connection-guide-3": {
-      "graphX": 816,
-      "graphY": 510,
+      "graphX": 1169,
+      "graphY": 503,
       "sectionId": "connected_devices",
       "buttonIds": [
         "b9eb9637-7176-4ceb-b6dc-17ed55b92367",
@@ -651,8 +651,8 @@
       "sourceHeight": 1080
     },
     "connected_devices_connection-guide-4": {
-      "graphX": 815,
-      "graphY": 704,
+      "graphX": 1424,
+      "graphY": 693,
       "sectionId": "connected_devices",
       "buttonIds": [
         "0712d1e3-3870-4bfb-a332-eea23b9f8a49",
@@ -666,8 +666,8 @@
       "sourceHeight": 1080
     },
     "connected_devices_connection-guide-5": {
-      "graphX": 822,
-      "graphY": 914,
+      "graphX": 1673,
+      "graphY": 878,
       "sectionId": "connected_devices",
       "buttonIds": [
         "7587011c-2277-44f5-b6aa-d9e75810e69c",
@@ -681,8 +681,8 @@
       "sourceHeight": 1080
     },
     "connected_devices_connection-guide-6": {
-      "graphX": 835,
-      "graphY": 1116,
+      "graphX": 1896,
+      "graphY": 1087,
       "sectionId": "connected_devices",
       "buttonIds": [
         "03e6abef-232a-4acb-aa6a-43ace82a369f",
@@ -696,8 +696,8 @@
       "sourceHeight": 1080
     },
     "connected_devices_connection-guide-7": {
-      "graphX": 822,
-      "graphY": 1327,
+      "graphX": 1923,
+      "graphY": 1360,
       "sectionId": "connected_devices",
       "buttonIds": [
         "930ed269-4134-4f55-9591-a4a4188d5935",
@@ -905,8 +905,8 @@
       "scrollImage": "My_Account_scroll.jpg"
     },
     "all-settings_background": {
-      "graphX": -408,
-      "graphY": -68,
+      "graphX": -439,
+      "graphY": -58,
       "sectionId": null,
       "buttonIds": [],
       "sourceWidth": 1920,
@@ -923,48 +923,80 @@
       "scrollImage": "all-settings_background_scroll.jpg"
     },
     "picture": {
-      "graphX": -955,
-      "graphY": 69,
+      "graphX": -1012,
+      "graphY": 17,
       "sectionId": "picture",
-      "buttonIds": [],
+      "buttonIds": [
+        "a8d30250-ad79-4ef2-9918-571f89466800",
+        "6e3d706a-ecdb-4895-ad95-f9ca5d5e737f",
+        "2b116be9-28a1-4f74-bbf7-a9e6e360a004",
+        "b01bf1e1-3998-4dbf-9270-abe5f2182a12",
+        "76d78182-835f-4479-a120-3a2a03ae6365"
+      ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
     },
     "picture_picture-mode": {
-      "graphX": -689,
-      "graphY": 62,
+      "graphX": -746,
+      "graphY": 10,
       "sectionId": "picture",
-      "buttonIds": []
+      "buttonIds": [
+        "fdd0b09b-8075-4162-93eb-a5669b159982"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "picture_eyecomfort": {
-      "graphX": -690,
-      "graphY": 283,
+      "graphX": -747,
+      "graphY": 231,
       "sectionId": "picture",
-      "buttonIds": []
+      "buttonIds": [
+        "e6977e93-5e77-4332-bd59-fc5e44fabd25",
+        "634bd67a-7bf2-4b24-bc08-cab1ce21db42"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "picture_eyecomfort-on": {
-      "graphX": -689,
-      "graphY": 478,
+      "graphX": -746,
+      "graphY": 426,
       "sectionId": "picture",
-      "buttonIds": []
+      "buttonIds": [
+        "8168ac39-3700-4d33-92f0-c9b40448a5e2",
+        "8e1d4c9b-db55-44d4-9956-8e9480844f08",
+        "506fef50-a589-4ef6-8cc2-b716e583979a",
+        "38c3e06c-dc8d-4bb8-a6c6-b54d38ec245f"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "picture_eyecomfort_mode-duration": {
-      "graphX": -340,
-      "graphY": 64,
+      "graphX": -397,
+      "graphY": 12,
       "sectionId": "picture",
-      "buttonIds": []
+      "buttonIds": [
+        "cd5a437c-f35b-4ed4-8391-5645d3bb30f8"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "picture_eyecomfort_mode-level": {
-      "graphX": -337,
-      "graphY": 265,
+      "graphX": -394,
+      "graphY": 213,
       "sectionId": "picture",
-      "buttonIds": []
+      "buttonIds": [
+        "b66202c7-005e-4744-b567-3bc4d805e3db"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "picture_smart-calibration": {
-      "graphX": -339,
-      "graphY": 470,
+      "graphX": -396,
+      "graphY": 418,
       "sectionId": "picture",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "picture_expert-settings": {
       "graphX": -57,
@@ -1080,7 +1112,9 @@
       "graphX": -270,
       "graphY": 552,
       "sectionId": "sound",
-      "buttonIds": [],
+      "buttonIds": [
+        "691030be-56de-4e15-8490-bad5d2fbd85e"
+      ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
     },
@@ -1190,7 +1224,11 @@
       "graphX": 591,
       "graphY": 171,
       "sectionId": "connections",
-      "buttonIds": []
+      "buttonIds": [
+        "d11ae53b-5829-4817-8651-2685fcb6981d"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connections_long-1": {
       "graphX": 867,
@@ -1314,7 +1352,11 @@
       "graphX": 788,
       "graphY": 222,
       "sectionId": "advanced_features",
-      "buttonIds": []
+      "buttonIds": [
+        "bcb9672f-2f51-4395-816d-538fc710a983"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "advanced_features_long-1": {
       "graphX": 1104,
@@ -1464,7 +1506,11 @@
       "graphX": 309,
       "graphY": 176,
       "sectionId": "general-privacy",
-      "buttonIds": []
+      "buttonIds": [
+        "76f659a8-344f-4654-b726-ea7c019849cd"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_long-1": {
       "graphX": 550,
@@ -1720,7 +1766,11 @@
       "graphX": 476,
       "graphY": 98,
       "sectionId": "support",
-      "buttonIds": []
+      "buttonIds": [
+        "2bf5b555-0f3a-4987-88fc-f47a4681488b"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_accessibility_voice-guide": {
       "graphX": 569,
