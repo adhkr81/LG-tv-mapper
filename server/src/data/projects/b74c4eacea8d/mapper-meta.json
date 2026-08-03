@@ -999,114 +999,107 @@
       "sourceHeight": 1080
     },
     "picture_expert-settings": {
-      "graphX": -57,
-      "graphY": 0,
+      "graphX": -94,
+      "graphY": 8,
       "sectionId": "picture",
-      "buttonIds": [],
-      "sourceWidth": 1920,
-      "sourceHeight": 1080
-    },
-    "picture_expert-settings-long-1": {
-      "graphX": 280,
-      "graphY": 0,
-      "sectionId": "picture",
-      "buttonIds": [],
-      "sourceWidth": 1920,
-      "sourceHeight": 1080
-    },
-    "picture_expert-settings-long-2": {
-      "graphX": 271,
-      "graphY": 215,
-      "sectionId": "picture",
-      "buttonIds": []
-    },
-    "picture_expert-settings-long-3": {
-      "graphX": 274,
-      "graphY": 417,
-      "sectionId": "picture",
-      "buttonIds": []
-    },
-    "picture_expert-settings-long-4": {
-      "graphX": 282,
-      "graphY": 619,
-      "sectionId": "picture",
-      "buttonIds": []
-    },
-    "picture_expert-settings-long-5": {
-      "graphX": 285,
-      "graphY": 818,
-      "sectionId": "picture",
-      "buttonIds": []
-    },
-    "picture_expert-settings-long-6": {
-      "graphX": 287,
-      "graphY": 1010,
-      "sectionId": "picture",
-      "buttonIds": []
+      "buttonIds": [
+        "2eaabdb3-4e46-4b5e-be1c-d18f53066614"
+      ],
+      "sourceWidth": 1067,
+      "sourceHeight": 600,
+      "scrollButtonIds": [
+        "360c7008-5b85-4ac2-9831-c59544629515",
+        "aaa0cf18-8a28-4bfe-9aa9-b86876b2377d",
+        "8d268022-d262-41a3-9a10-5cab75c4b920",
+        "f611c5e8-6298-4b8d-abf6-5ea252ac5171",
+        "51135e33-4091-42ec-ae2b-c0f9515ad39d",
+        "c190da07-5cbb-4c90-83b9-cf7b8df331a0",
+        "48342512-06ae-4d33-9f05-b6945dae9c43",
+        "b33893f2-a0ea-42b0-ac97-49ff9467c4d0"
+      ],
+      "scrollImage": "picture_expert-settings_scroll.jpg"
     },
     "picture_expert-settings_contrast-enhancer": {
-      "graphX": 567,
-      "graphY": 0,
+      "graphX": 230,
+      "graphY": 226,
       "sectionId": "picture",
-      "buttonIds": []
+      "buttonIds": [
+        "45e190fa-329a-4b88-9aa6-e1162e40525a"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "picture_expert-settings_gamma": {
-      "graphX": 561,
-      "graphY": 212,
+      "graphX": 224,
+      "graphY": 438,
       "sectionId": "picture",
-      "buttonIds": []
+      "buttonIds": [
+        "36123d2d-ebeb-430c-9422-79098cc167a8"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "picture_expert-settings_apply-picture-settings": {
-      "graphX": 554,
-      "graphY": 417,
+      "graphX": 217,
+      "graphY": 643,
       "sectionId": "picture",
-      "buttonIds": []
+      "buttonIds": [
+        "56651452-2fe0-4eb6-9a15-2459ee01df6c"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "picture_expert-settings_local-dimming": {
-      "graphX": 553,
-      "graphY": 630,
+      "graphX": 508,
+      "graphY": 20,
       "sectionId": "picture",
-      "buttonIds": [],
+      "buttonIds": [
+        "3d64bb15-8f0c-40f1-a67d-a9ac07ecb697"
+      ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
     },
     "picture_expert-settings_color-space-settings": {
-      "graphX": 847,
-      "graphY": 0,
+      "graphX": 235,
+      "graphY": 16,
       "sectionId": "picture",
-      "buttonIds": [],
+      "buttonIds": [
+        "6bb9dfdf-f9e1-486f-9384-70afb64d86b0"
+      ],
+      "sourceWidth": 1067,
+      "sourceHeight": 600,
+      "scrollButtonIds": [],
+      "scrollImage": "picture_expert-settings_color-space-settings_scroll.jpg"
+    },
+    "picture_expert-settings_color-booster-pro": {
+      "graphX": 509,
+      "graphY": 211,
+      "sectionId": "picture",
+      "buttonIds": [
+        "ab17bc46-0410-4f5f-8aea-6ce80df3e5a5"
+      ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
     },
-    "picture_expert-settings_color-space-settings-long-1": {
-      "graphX": 847,
-      "graphY": 204,
-      "sectionId": "picture",
-      "buttonIds": []
-    },
-    "picture_expert-settings_color-space-settings-long-2": {
-      "graphX": 846,
-      "graphY": 420,
-      "sectionId": "picture",
-      "buttonIds": []
-    },
-    "picture_expert-settings_color-booster-pro": {
-      "graphX": 552,
-      "graphY": 819,
-      "sectionId": "picture",
-      "buttonIds": []
-    },
     "picture_expert-settings_white-balance": {
-      "graphX": 843,
-      "graphY": 639,
+      "graphX": 526,
+      "graphY": 439,
       "sectionId": "picture",
-      "buttonIds": []
+      "buttonIds": [
+        "aab75fd3-a13e-4b5f-a4aa-4968c444657f"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "picture_expert-settings_reset-picture": {
-      "graphX": 840,
-      "graphY": 834,
+      "graphX": 523,
+      "graphY": 634,
       "sectionId": "picture",
-      "buttonIds": []
+      "buttonIds": [
+        "718c8ae2-50f8-406e-8c74-b942cf0ae3bc"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "sound": {
       "graphX": -270,
@@ -2252,6 +2245,32 @@
           "down": {
             "top": 312,
             "left": 223
+          }
+        }
+      },
+      "preset6": {
+        "screen": {
+          "height": 370,
+          "left": 125,
+          "src": "homescreen",
+          "top": 17,
+          "width": 658
+        },
+        "scroll": {
+          "left": 157,
+          "top": 100,
+          "width": 169,
+          "height": 202,
+          "borderRadius": 0
+        },
+        "scroll_buttons": {
+          "up": {
+            "top": 41,
+            "left": 224
+          },
+          "down": {
+            "top": 312,
+            "left": 224
           }
         }
       },

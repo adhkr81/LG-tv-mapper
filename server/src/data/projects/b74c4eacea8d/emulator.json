@@ -2330,135 +2330,184 @@
   },
   "picture_expert-settings": {
     "img_filename": "picture_expert-settings",
-    "preset": "preset2",
+    "preset": "preset6",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "picture"
+      }
+    ],
     "back_button": {
-      "target": ""
-    }
-  },
-  "picture_expert-settings-long-1": {
-    "img_filename": "picture_expert-settings-long-1",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "picture_expert-settings-long-2": {
-    "img_filename": "picture_expert-settings-long-2",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "picture_expert-settings-long-3": {
-    "img_filename": "picture_expert-settings-long-3",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "picture_expert-settings-long-4": {
-    "img_filename": "picture_expert-settings-long-4",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "picture_expert-settings-long-5": {
-    "img_filename": "picture_expert-settings-long-5",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "picture_expert-settings-long-6": {
-    "img_filename": "picture_expert-settings-long-6",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
+      "target": "picture"
+    },
+    "scroll_area": {
+      "img_filename": "picture_expert-settings_scroll",
+      "buttons": [
+        {
+          "width": 165,
+          "height": 40,
+          "x": 2,
+          "y": 294,
+          "target": "picture_expert-settings_contrast-enhancer"
+        },
+        {
+          "width": 165,
+          "height": 40,
+          "x": 2,
+          "y": 377,
+          "target": "picture_expert-settings_gamma"
+        },
+        {
+          "width": 165,
+          "height": 40,
+          "x": 2,
+          "y": 462,
+          "target": "picture_expert-settings_apply-picture-settings"
+        },
+        {
+          "width": 165,
+          "height": 40,
+          "x": 2,
+          "y": 505,
+          "target": "picture_expert-settings_local-dimming"
+        },
+        {
+          "width": 165,
+          "height": 40,
+          "x": 2,
+          "y": 589,
+          "target": "picture_expert-settings_color-space-settings"
+        },
+        {
+          "width": 165,
+          "height": 40,
+          "x": 2,
+          "y": 631,
+          "target": "picture_expert-settings_color-booster-pro"
+        },
+        {
+          "width": 165,
+          "height": 31,
+          "x": 2,
+          "y": 716,
+          "target": "picture_expert-settings_white-balance"
+        },
+        {
+          "width": 165,
+          "height": 31,
+          "x": 2,
+          "y": 866,
+          "target": "picture_expert-settings_reset-picture"
+        }
+      ]
     }
   },
   "picture_expert-settings_contrast-enhancer": {
     "img_filename": "picture_expert-settings_contrast-enhancer",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 111,
+        "height": 28,
+        "x": 80,
+        "y": 194,
+        "target": "picture_expert-settings"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "picture_expert-settings"
     }
   },
   "picture_expert-settings_gamma": {
     "img_filename": "picture_expert-settings_gamma",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 111,
+        "height": 28,
+        "x": 80,
+        "y": 192,
+        "target": "picture_expert-settings"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "picture_expert-settings"
     }
   },
   "picture_expert-settings_apply-picture-settings": {
     "img_filename": "picture_expert-settings_apply-picture-settings",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 111,
+        "height": 28,
+        "x": 80,
+        "y": 153,
+        "target": "picture_expert-settings"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "picture_expert-settings"
     }
   },
   "picture_expert-settings_local-dimming": {
     "img_filename": "picture_expert-settings_local-dimming",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 111,
+        "height": 28,
+        "x": 80,
+        "y": 167,
+        "target": "picture_expert-settings"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "picture_expert-settings"
     }
   },
   "picture_expert-settings_color-space-settings": {
     "img_filename": "picture_expert-settings_color-space-settings",
-    "preset": "preset2",
+    "preset": "preset6",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "picture_expert-settings"
+      }
+    ],
     "back_button": {
-      "target": ""
-    }
-  },
-  "picture_expert-settings_color-space-settings-long-1": {
-    "img_filename": "picture_expert-settings_color-space-settings-long-1",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "picture_expert-settings_color-space-settings-long-2": {
-    "img_filename": "picture_expert-settings_color-space-settings-long-2",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
+      "target": "picture_expert-settings"
+    },
+    "scroll_area": {
+      "img_filename": "picture_expert-settings_color-space-settings_scroll",
+      "buttons": []
     }
   },
   "picture_expert-settings_color-booster-pro": {
     "img_filename": "picture_expert-settings_color-booster-pro",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "picture_expert-settings"
+      }
+    ],
     "back_button": {
       "target": ""
     }
@@ -2467,18 +2516,34 @@
     "img_filename": "picture_expert-settings_white-balance",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "picture_expert-settings"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "picture_expert-settings"
     }
   },
   "picture_expert-settings_reset-picture": {
     "img_filename": "picture_expert-settings_reset-picture",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 80,
+        "height": 23,
+        "x": 115,
+        "y": 180,
+        "target": "picture_expert-settings"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "picture_expert-settings"
     }
   },
   "sound": {
