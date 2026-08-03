@@ -76,16 +76,16 @@
       "name": "connections",
       "rootScreenId": "connections",
       "collapsed": true,
-      "bandX": -894,
-      "bandY": 11
+      "bandX": -1885,
+      "bandY": 184
     },
     {
       "id": "advanced_features",
       "name": "advanced features",
       "rootScreenId": "advanced-features",
       "collapsed": true,
-      "bandX": -763,
-      "bandY": -39
+      "bandX": -1318,
+      "bandY": 136
     },
     {
       "id": "general-privacy",
@@ -1339,218 +1339,275 @@
       "sourceHeight": 1080
     },
     "connections": {
-      "graphX": 591,
-      "graphY": 171,
+      "graphX": 826,
+      "graphY": -176,
       "sectionId": "connections",
       "buttonIds": [
         "d11ae53b-5829-4817-8651-2685fcb6981d"
       ],
       "sourceWidth": 1920,
-      "sourceHeight": 1080
-    },
-    "connections_long-1": {
-      "graphX": 867,
-      "graphY": 181,
-      "sectionId": "connections",
-      "buttonIds": []
-    },
-    "connections_long-2": {
-      "graphX": 280,
-      "graphY": 0,
-      "sectionId": "connections",
-      "buttonIds": []
+      "sourceHeight": 1080,
+      "scrollButtonIds": [
+        "84f14363-93d4-418e-b27f-82f7a175bbdb",
+        "ab2603d7-6da6-4d25-8239-a1bac86cdb5d",
+        "e95ebae0-b85d-4181-b127-b5981c6cfe1f",
+        "747bf607-fb18-4759-9525-1b44e97ec370",
+        "9395e757-6916-4305-9f5b-d2c8e807ba41",
+        "9c310b3c-a2f1-41aa-99b0-1c1dc1e1cb9a",
+        "290a7f48-2aa6-4efb-8835-e298809e9d33",
+        "c096af1d-ed3d-48d3-8790-5ef2718ebbca",
+        "4b61c936-927b-465e-a775-fef80753744d"
+      ],
+      "scrollImage": "connections_scroll.jpg"
     },
     "connections_network": {
-      "graphX": 1139,
-      "graphY": 158,
+      "graphX": 1095,
+      "graphY": 206,
       "sectionId": "connections",
-      "buttonIds": []
-    },
-    "connections_network_network-status": {
-      "graphX": 1148,
-      "graphY": 353,
-      "sectionId": "connections",
-      "buttonIds": []
-    },
-    "connections_network_network-settings": {
-      "graphX": 280,
-      "graphY": 185,
-      "sectionId": "connections",
-      "buttonIds": []
-    },
-    "connections_network_reset-network": {
-      "graphX": 1128,
-      "graphY": 711,
-      "sectionId": "connections",
-      "buttonIds": []
-    },
-    "connections_network_expert-settings": {
-      "graphX": 1126,
-      "graphY": 905,
-      "sectionId": "connections",
-      "buttonIds": []
-    },
-    "connections_bluetooth": {
-      "graphX": 1426,
-      "graphY": 146,
-      "sectionId": "connections",
-      "buttonIds": []
-    },
-    "connections_quick-share": {
-      "graphX": 1434,
-      "graphY": 430,
-      "sectionId": "connections",
-      "buttonIds": []
-    },
-    "connections_quick-share_who-can-share_long-1": {
-      "graphX": 280,
-      "graphY": 370,
-      "sectionId": "connections",
-      "buttonIds": [],
+      "buttonIds": [
+        "7c83d296-33b3-4c0e-b48d-ade3575b7d5b",
+        "78722213-cca5-4d83-af2d-da2ad945322d",
+        "16bfe205-3815-428f-8e3e-4e97a95e5851",
+        "bbd8f46b-4ae0-469b-b557-3aece5901dcd",
+        "eead4317-187c-43e4-add5-890c5430fe7d"
+      ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
     },
-    "connections_quick-share_who-can-share_long-2": {
-      "graphX": 1495,
-      "graphY": 781,
+    "connections_network_network-status": {
+      "graphX": 585,
+      "graphY": 525,
       "sectionId": "connections",
-      "buttonIds": []
+      "buttonIds": [
+        "216ab127-cbf6-4c00-af9e-683e0a9a5b5c"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "connections_network_network-settings": {
+      "graphX": 863,
+      "graphY": 522,
+      "sectionId": "connections",
+      "buttonIds": [
+        "9a57e0a6-13ea-4107-a563-833d62d53dd2"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "connections_network_reset-network": {
+      "graphX": 1103,
+      "graphY": 528,
+      "sectionId": "connections",
+      "buttonIds": [
+        "11d108eb-b780-4d80-974e-f4a57572801a"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "connections_network_expert-settings": {
+      "graphX": 1357,
+      "graphY": 527,
+      "sectionId": "connections",
+      "buttonIds": [
+        "1760de59-468a-432b-9399-ebc2ae1d93f3"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "connections_bluetooth": {
+      "graphX": 771,
+      "graphY": 196,
+      "sectionId": "connections",
+      "buttonIds": [
+        "4f2a8252-7ff6-4e62-9865-1c7d03854032"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "connections_quick-share": {
+      "graphX": -266,
+      "graphY": 206,
+      "sectionId": "connections",
+      "buttonIds": [
+        "7306b9ba-425b-4901-9e51-0c4d8b5267e8",
+        "c30b684e-7376-4762-a860-5e2c84898e2b"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "connections_quick-share_who-can-share": {
+      "graphX": -502,
+      "graphY": 494,
+      "sectionId": "connections",
+      "buttonIds": [
+        "f8b99308-7739-4d4c-b48a-a2db6fbc7d10"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connections_multi-control": {
-      "graphX": 1757,
-      "graphY": 139,
+      "graphX": 1679,
+      "graphY": 202,
       "sectionId": "connections",
-      "buttonIds": []
+      "buttonIds": [
+        "1a22736f-ba14-4dec-b3ff-1fd7c9cff784"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connections_storage-share-settings": {
-      "graphX": 1757,
-      "graphY": 344,
+      "graphX": 2360,
+      "graphY": 209,
       "sectionId": "connections",
-      "buttonIds": []
+      "buttonIds": [
+        "5fdac268-80c5-4bca-b256-fddbc2927132"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connections_link-to-galaxy-watch": {
-      "graphX": 1775,
-      "graphY": 535,
+      "graphX": 1397,
+      "graphY": 211,
       "sectionId": "connections",
-      "buttonIds": []
+      "buttonIds": [
+        "2fb91afb-43e4-4fd8-b903-735f6325a4b6"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connections_device-connection-manager": {
-      "graphX": 2029,
-      "graphY": 126,
+      "graphX": 1987,
+      "graphY": 203,
       "sectionId": "connections",
-      "buttonIds": [],
+      "buttonIds": [
+        "e17f6b58-7bcc-41ff-b8bb-0c1fba01ec26",
+        "bd6d9c71-b60a-49e9-b148-01a45c7ce0db",
+        "22eebab5-dc5d-4d46-9264-879f9d2ddda3"
+      ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
     },
     "connections_device-connection-manager_access-notification": {
-      "graphX": 2078,
-      "graphY": 319,
+      "graphX": 1819,
+      "graphY": 509,
       "sectionId": "connections",
-      "buttonIds": []
+      "buttonIds": [
+        "e81fcb4b-7846-44d1-a1cd-8219c1a71f3e"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connections_device-connection-manager_device-list": {
-      "graphX": 280,
-      "graphY": 555,
+      "graphX": 2169,
+      "graphY": 512,
       "sectionId": "connections",
-      "buttonIds": []
+      "buttonIds": [
+        "c7c3c70c-09fe-4901-bed3-8bee8458c7b2"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connections_device-connection-manager_airplay-settings": {
-      "graphX": 2084,
-      "graphY": 674,
+      "graphX": 119,
+      "graphY": 202,
       "sectionId": "connections",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connections_device-connection-manager_google-cast": {
-      "graphX": 2085,
-      "graphY": 871,
+      "graphX": 460,
+      "graphY": 191,
       "sectionId": "connections",
-      "buttonIds": []
+      "buttonIds": [
+        "8057391c-5948-4866-92b2-466e7c015b49"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "advanced-features": {
-      "graphX": 788,
-      "graphY": 222,
+      "graphX": 2425,
+      "graphY": -285,
       "sectionId": "advanced_features",
       "buttonIds": [
         "bcb9672f-2f51-4395-816d-538fc710a983"
       ],
       "sourceWidth": 1920,
-      "sourceHeight": 1080
-    },
-    "advanced_features_long-1": {
-      "graphX": 1104,
-      "graphY": 226,
-      "sectionId": "advanced_features",
-      "buttonIds": []
-    },
-    "advanced_features_long-2": {
-      "graphX": 1104,
-      "graphY": 424,
-      "sectionId": "advanced_features",
-      "buttonIds": []
+      "sourceHeight": 1080,
+      "scrollButtonIds": [
+        "edaa8c41-45f9-4cb8-af18-63afca565540",
+        "ec08997e-5126-43f0-94ab-f0f5010b71ba",
+        "8da5aaa7-b1de-49d2-bd59-270a48ae811c",
+        "bfe97430-0a38-441c-a6d0-0fcae333555f",
+        "aaa5347f-22a8-4878-8dbe-52ce06284c11",
+        "b7a12823-cc2b-497b-a8fd-cc7a7002700c",
+        "d58efcb0-ee72-41e2-9262-198a5bb361a6"
+      ],
+      "scrollImage": "advanced-features_scroll.jpg"
     },
     "advanced_features_live-translate": {
-      "graphX": 1384,
-      "graphY": 0,
+      "graphX": 974,
+      "graphY": 15,
       "sectionId": "advanced_features",
-      "buttonIds": []
-    },
-    "advanced_features_live-translate-long-1": {
-      "graphX": 1434,
-      "graphY": 207,
-      "sectionId": "advanced_features",
-      "buttonIds": []
-    },
-    "advanced_features_live-translate-long-2": {
-      "graphX": 1454,
-      "graphY": 393,
-      "sectionId": "advanced_features",
-      "buttonIds": []
+      "buttonIds": [
+        "9cf02799-f3d1-4866-a1d7-f9af8f6f8a20"
+      ],
+      "sourceWidth": 1067,
+      "sourceHeight": 600,
+      "scrollButtonIds": [],
+      "scrollImage": "advanced_features_live-translate_scroll.jpg"
     },
     "advanced_features_ai-mode": {
-      "graphX": 1734,
-      "graphY": 0,
+      "graphX": 1339,
+      "graphY": 22,
       "sectionId": "advanced_features",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "advanced_features_ai-mode-long-1": {
-      "graphX": 1774,
-      "graphY": 203,
+      "graphX": 1184,
+      "graphY": 238,
       "sectionId": "advanced_features",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "advanced_features_ai-mode-long-2": {
-      "graphX": 1768,
-      "graphY": 386,
+      "graphX": 1233,
+      "graphY": 458,
       "sectionId": "advanced_features",
       "buttonIds": []
     },
     "advanced_features_ai-mode_ai-sound-mode": {
-      "graphX": 2054,
-      "graphY": 0,
+      "graphX": 1498,
+      "graphY": 218,
       "sectionId": "advanced_features",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "advanced_features_ai-mode_sound-controller": {
-      "graphX": 2057,
-      "graphY": 193,
+      "graphX": 1549,
+      "graphY": 422,
       "sectionId": "advanced_features",
       "buttonIds": []
     },
     "advanced_features_voice": {
-      "graphX": 2337,
-      "graphY": 0,
+      "graphX": 2271,
+      "graphY": 29,
       "sectionId": "advanced_features",
       "buttonIds": []
     },
     "advanced_features_voice_voice-assistant": {
-      "graphX": 2417,
-      "graphY": 183,
+      "graphX": 2247,
+      "graphY": 235,
       "sectionId": "advanced_features",
       "buttonIds": []
     },
     "advanced_features_voice_hands-free": {
-      "graphX": 2427,
-      "graphY": 363,
+      "graphX": 2238,
+      "graphY": 432,
       "sectionId": "advanced_features",
       "buttonIds": []
     },
@@ -2339,6 +2396,32 @@
       ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
+    },
+    "advanced_features_ai-soccer": {
+      "graphX": 1866,
+      "graphY": 12,
+      "sectionId": "advanced_features",
+      "buttonIds": [
+        "fae8e841-70ef-4990-b913-ae1ae8c562b8"
+      ],
+      "sourceWidth": 1067,
+      "sourceHeight": 600
+    },
+    "advanced_features_ai-soccer-on": {
+      "graphX": 1853,
+      "graphY": 212,
+      "sectionId": "advanced_features",
+      "buttonIds": [],
+      "sourceWidth": 1067,
+      "sourceHeight": 600
+    },
+    "advanced_features_ai-soccer_controller": {
+      "graphX": 1863,
+      "graphY": 426,
+      "sectionId": "advanced_features",
+      "buttonIds": [],
+      "sourceWidth": 1067,
+      "sourceHeight": 600
     }
   },
   "config": {
