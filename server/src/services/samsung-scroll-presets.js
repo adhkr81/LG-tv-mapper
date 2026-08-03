@@ -28,6 +28,20 @@ export function buildSamsungPresetScreen(src = 'homescreen') {
 }
 
 export const SAMSUNG_SCROLL_PRESET_DEFAULTS = {
+  preset3: {
+    screen: buildSamsungPresetScreen(),
+    scroll: {
+      left: 159,
+      top: 134,
+      height: 203,
+      width: 164,
+      borderRadius: 5,
+    },
+    scroll_buttons: {
+      up: { top: 70, left: 225 },
+      down: { top: 353, left: 225 },
+    },
+  },
   preset4: {
     screen: buildSamsungPresetScreen(),
     scroll: {

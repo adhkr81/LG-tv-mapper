@@ -25,6 +25,7 @@ export function getScrollControlSize(sourceSize) {
 
 export const SAMSUNG_PRESET_OPTIONS = [
   { value: 'preset2', label: 'preset2 (no scroll)' },
+  { value: 'preset3', label: 'preset3 (scroll)' },
   { value: 'preset4', label: 'preset4 (narrow list)' },
   { value: 'preset5', label: 'preset5 (taller list)' },
   { value: 'preset6', label: 'preset6 (narrow lower)' },
@@ -44,6 +45,20 @@ export function buildSamsungPresetScreen(src = 'homescreen') {
 }
 
 export const SAMSUNG_SCROLL_PRESETS = {
+  preset3: {
+    screen: buildSamsungPresetScreen(),
+    scroll: {
+      left: 159,
+      top: 134,
+      height: 203,
+      width: 164,
+      borderRadius: 5,
+    },
+    scroll_buttons: {
+      up: { top: 70, left: 225 },
+      down: { top: 353, left: 225 },
+    },
+  },
   preset4: {
     screen: buildSamsungPresetScreen(),
     scroll: {
