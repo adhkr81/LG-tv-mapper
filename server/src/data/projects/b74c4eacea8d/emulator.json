@@ -2225,7 +2225,15 @@
         "width": 164,
         "height": 30,
         "x": 35,
-        "y": 146
+        "y": 146,
+        "target": "g&p_power-energy-from-quick"
+      },
+      {
+        "width": 24,
+        "height": 24,
+        "x": 27,
+        "y": 59,
+        "target": "homescreen_settings-opened"
       }
     ],
     "back_button": {
@@ -2258,7 +2266,8 @@
         "width": 165,
         "height": 38,
         "x": 34,
-        "y": 243
+        "y": 243,
+        "target": "support-from-quick"
       }
     ],
     "back_button": {
@@ -4289,7 +4298,7 @@
           "width": 163,
           "height": 28,
           "x": 3,
-          "y": 66,
+          "y": 65,
           "target": "g&p_power-energy"
         },
         {
@@ -4986,6 +4995,27 @@
         "x": 25,
         "y": 58,
         "target": "all-settings_background"
+      },
+      {
+        "width": 160,
+        "height": 27,
+        "x": 36,
+        "y": 88,
+        "target": "support_device-care"
+      },
+      {
+        "width": 160,
+        "height": 27,
+        "x": 36,
+        "y": 118,
+        "target": "support_maintenance-mode"
+      },
+      {
+        "width": 160,
+        "height": 27,
+        "x": 36,
+        "y": 178,
+        "target": "support_software-update"
       }
     ],
     "back_button": {
@@ -5323,7 +5353,7 @@
     "model": "smart-tv",
     "buttons": [],
     "back_button": {
-      "target": ""
+      "target": "support"
     }
   },
   "support_maintenance-mode": {
@@ -5332,25 +5362,48 @@
     "model": "smart-tv",
     "buttons": [],
     "back_button": {
-      "target": ""
+      "target": "support"
     }
   },
   "support_software-update": {
     "img_filename": "support_software-update",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "support"
+      },
+      {
+        "width": 160,
+        "height": 27,
+        "x": 36,
+        "y": 88,
+        "target": "support_software-update_update-now"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "support"
     }
   },
   "support_software-update_update-now": {
     "img_filename": "support_software-update_update-now",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 146,
+        "height": 27,
+        "x": 256,
+        "y": 333,
+        "target": "support_software-update"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "support_software-update"
     }
   },
   "connected_devices_hdmi": {
@@ -5803,6 +5856,149 @@
     ],
     "back_button": {
       "target": "advanced_features_ai-soccer-on"
+    }
+  },
+  "g&p_power-energy-from-quick": {
+    "img_filename": "g&p_power-energy-from-quick",
+    "preset": "preset6",
+    "model": "smart-tv",
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 24,
+        "y": 58,
+        "target": "settings_power-energy-saving"
+      }
+    ],
+    "back_button": {
+      "target": ""
+    },
+    "scroll_area": {
+      "img_filename": "g&p_power-energy-from-quick_scroll",
+      "buttons": [
+        {
+          "width": 163,
+          "height": 40,
+          "x": 3,
+          "y": 206,
+          "target": "g&p_power-energy_auto-power-off-from-quick"
+        }
+      ]
+    }
+  },
+  "g&p_power-energy_auto-power-off-from-quick": {
+    "img_filename": "g&p_power-energy_auto-power-off-from-quick",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [
+      {
+        "width": 110,
+        "height": 27,
+        "x": 81,
+        "y": 148,
+        "target": "g&p_power-energy-from-quick"
+      }
+    ],
+    "back_button": {
+      "target": "g&p_power-energy-from-quick"
+    }
+  },
+  "support-from-quick": {
+    "img_filename": "support-from-quick",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "settings_support"
+      },
+      {
+        "width": 160,
+        "height": 27,
+        "x": 36,
+        "y": 88,
+        "target": "support_device-care-from-quick"
+      },
+      {
+        "width": 160,
+        "height": 27,
+        "x": 36,
+        "y": 118,
+        "target": "support_maintenance-mode-from-quick"
+      },
+      {
+        "width": 160,
+        "height": 27,
+        "x": 36,
+        "y": 178,
+        "target": "support_software-update-from-quick"
+      }
+    ],
+    "back_button": {
+      "target": "settings_support"
+    }
+  },
+  "support_device-care-from-quick": {
+    "img_filename": "support_device-care-from-quick",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": "support-from-quick"
+    }
+  },
+  "support_maintenance-mode-from-quick": {
+    "img_filename": "support_maintenance-mode-from-quick",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": "support-from-quick"
+    }
+  },
+  "support_software-update-from-quick": {
+    "img_filename": "support_software-update-from-quick",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "support-from-quick"
+      },
+      {
+        "width": 160,
+        "height": 27,
+        "x": 36,
+        "y": 88,
+        "target": "support_software-update_update-now-from-quick"
+      }
+    ],
+    "back_button": {
+      "target": "support-from-quick"
+    }
+  },
+  "support_software-update_update-now-from-quick": {
+    "img_filename": "support_software-update_update-now-from-quick",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [
+      {
+        "width": 146,
+        "height": 27,
+        "x": 256,
+        "y": 333,
+        "target": "support_software-update-from-quick"
+      }
+    ],
+    "back_button": {
+      "target": "support_software-update-from-quick"
     }
   }
 }

@@ -50,12 +50,6 @@
       "bandY": -334
     },
     {
-      "id": "all_settings",
-      "name": "all settings",
-      "rootScreenId": "all-settings_background",
-      "collapsed": true
-    },
-    {
       "id": "picture",
       "name": "picture",
       "rootScreenId": "picture",
@@ -92,32 +86,24 @@
       "name": "g&p",
       "rootScreenId": "g&p",
       "collapsed": true,
-      "bandX": -2385,
-      "bandY": 193
+      "bandX": -2355,
+      "bandY": -63
     },
     {
       "id": "g_p_accessibility",
       "name": "g&p_accessibility",
       "rootScreenId": "g&p_accessibility",
       "collapsed": true,
-      "bandX": -761,
-      "bandY": 436
-    },
-    {
-      "id": "g_p_power-energy",
-      "name": "g&p_power-energy",
-      "rootScreenId": "g&p_power-energy",
-      "collapsed": true,
-      "bandX": 241,
-      "bandY": 433
+      "bandX": -742,
+      "bandY": 438
     },
     {
       "id": "support",
       "name": "support",
       "rootScreenId": "support",
       "collapsed": true,
-      "bandX": 371,
-      "bandY": 10
+      "bandX": 402,
+      "bandY": 55
     }
   ],
   "screens": {
@@ -902,7 +888,8 @@
       "graphY": -350,
       "sectionId": "settings",
       "buttonIds": [
-        "def2a7f5-7e72-4858-b110-138fb58ef065"
+        "def2a7f5-7e72-4858-b110-138fb58ef065",
+        "1fe803b3-b65f-4ba1-9d8b-110e0c59a87c"
       ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
@@ -2095,11 +2082,14 @@
       "sourceHeight": 1080
     },
     "support": {
-      "graphX": 476,
-      "graphY": 98,
+      "graphX": 411,
+      "graphY": 100,
       "sectionId": "support",
       "buttonIds": [
-        "2bf5b555-0f3a-4987-88fc-f47a4681488b"
+        "2bf5b555-0f3a-4987-88fc-f47a4681488b",
+        "4c649297-6a11-4f0f-96db-286ee7ad332b",
+        "b80260f6-b341-488c-9944-1bae4edf9a7a",
+        "5c0d50e5-47f1-498c-9ec1-747afa693f3b"
       ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
@@ -2325,30 +2315,41 @@
       "sourceHeight": 1080
     },
     "support_device-care": {
-      "graphX": 783,
-      "graphY": 101,
-      "sectionId": "support",
-      "buttonIds": []
-    },
-    "support_maintenance-mode": {
-      "graphX": 782,
-      "graphY": -85,
-      "sectionId": "support",
-      "buttonIds": []
-    },
-    "support_software-update": {
-      "graphX": 781,
-      "graphY": 334,
+      "graphX": 786,
+      "graphY": -44,
       "sectionId": "support",
       "buttonIds": [],
       "sourceWidth": 1920,
       "sourceHeight": 1080
     },
-    "support_software-update_update-now": {
+    "support_maintenance-mode": {
       "graphX": 784,
-      "graphY": 523,
+      "graphY": 145,
       "sectionId": "support",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "support_software-update": {
+      "graphX": 781,
+      "graphY": 334,
+      "sectionId": "support",
+      "buttonIds": [
+        "7e5df6fe-586f-4af6-b895-8993239ea4ca",
+        "f117e3bc-88b8-4add-ae0f-cb202247577e"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "support_software-update_update-now": {
+      "graphX": 1070,
+      "graphY": 342,
+      "sectionId": "support",
+      "buttonIds": [
+        "2884a103-bb0b-4dc5-978d-daa491c37dbc"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "connected_devices_hdmi": {
       "graphX": -189,
@@ -2584,6 +2585,80 @@
       ],
       "sourceWidth": 1067,
       "sourceHeight": 600
+    },
+    "g&p_power-energy-from-quick": {
+      "graphX": 2291,
+      "graphY": -187,
+      "sectionId": "general-privacy",
+      "buttonIds": [
+        "6c0a3f32-8fcc-47a0-8260-be4fc0d98f10"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "scrollButtonIds": [
+        "eb104831-a810-4914-81f9-f131569f185d"
+      ],
+      "scrollImage": "g&p_power-energy-from-quick_scroll.jpg"
+    },
+    "g&p_power-energy_auto-power-off-from-quick": {
+      "graphX": 2287,
+      "graphY": 72,
+      "sectionId": "general-privacy",
+      "buttonIds": [
+        "e8396760-b3e0-42de-bb78-704fc6f722f9"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "support-from-quick": {
+      "graphX": 1584,
+      "graphY": 130,
+      "sectionId": "support",
+      "buttonIds": [
+        "12808935-9ced-49f8-8bdf-61b16a99a312",
+        "d11084bf-03d6-4aa5-ab8a-353b76192cc1",
+        "b8d14370-6e3d-4136-8cee-7b5c1725ea11",
+        "65b1c3f4-a042-4385-bc5d-3f895c2a303c"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "support_device-care-from-quick": {
+      "graphX": 1897,
+      "graphY": -7,
+      "sectionId": "support",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "support_maintenance-mode-from-quick": {
+      "graphX": 1897,
+      "graphY": 178,
+      "sectionId": "support",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "support_software-update-from-quick": {
+      "graphX": 1897,
+      "graphY": 363,
+      "sectionId": "support",
+      "buttonIds": [
+        "bcc33a49-d6ac-491d-8bc7-92ee2eec404c",
+        "0dd75474-fc76-4a28-8868-32efc5e54eb0"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "support_software-update_update-now-from-quick": {
+      "graphX": 2136,
+      "graphY": 366,
+      "sectionId": "support",
+      "buttonIds": [
+        "204da1c2-e212-49f8-a4c8-f46fd6f5b430"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     }
   },
   "config": {
