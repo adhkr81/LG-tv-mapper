@@ -92,16 +92,16 @@
       "name": "g&p",
       "rootScreenId": "g&p",
       "collapsed": true,
-      "bandX": -1855,
-      "bandY": 184
+      "bandX": -2385,
+      "bandY": 193
     },
     {
       "id": "g_p_accessibility",
       "name": "g&p_accessibility",
       "rootScreenId": "g&p_accessibility",
       "collapsed": true,
-      "bandX": -997,
-      "bandY": 440
+      "bandX": -761,
+      "bandY": 436
     },
     {
       "id": "g_p_power-energy",
@@ -116,8 +116,8 @@
       "name": "support",
       "rootScreenId": "support",
       "collapsed": true,
-      "bandX": 349,
-      "bandY": -3
+      "bandX": 371,
+      "bandY": 10
     }
   ],
   "screens": {
@@ -1805,8 +1805,8 @@
       "scrollImage": "g&p_accessibility_scroll.jpg"
     },
     "g&p_t&p": {
-      "graphX": -325,
-      "graphY": 429,
+      "graphX": -852,
+      "graphY": 437,
       "sectionId": "general-privacy",
       "buttonIds": [
         "ba73d5a2-c689-4ef3-8895-065b875d8a72"
@@ -1817,9 +1817,9 @@
       "scrollImage": "g&p_t&p_scroll.jpg"
     },
     "g&p_power-energy": {
-      "graphX": -103,
-      "graphY": -5,
-      "sectionId": "g_p_power-energy",
+      "graphX": -473,
+      "graphY": 401,
+      "sectionId": "general-privacy",
       "buttonIds": [
         "a5c6df6c-e90e-4e68-8044-bcc7c184baf4"
       ],
@@ -1831,8 +1831,8 @@
       "scrollImage": "g&p_power-energy_scroll.jpg"
     },
     "g&p_parental-settings": {
-      "graphX": -710,
-      "graphY": 411,
+      "graphX": -1237,
+      "graphY": 419,
       "sectionId": "general-privacy",
       "buttonIds": [
         "0489082f-82a3-4647-a1d8-dd9992fab27e",
@@ -1843,8 +1843,8 @@
       "sourceHeight": 1080
     },
     "g&p_parental-settings_program-rating": {
-      "graphX": -854,
-      "graphY": 673,
+      "graphX": -1381,
+      "graphY": 681,
       "sectionId": "general-privacy",
       "buttonIds": [
         "a31d9b46-9e35-4e36-85d7-c85aed30816c",
@@ -1854,8 +1854,8 @@
       "sourceHeight": 1080
     },
     "g&p_parental-settings_program-rating_on": {
-      "graphX": -721,
-      "graphY": 891,
+      "graphX": -1248,
+      "graphY": 899,
       "sectionId": "general-privacy",
       "buttonIds": [
         "630a585b-ede4-4675-91ba-5cc526479205",
@@ -1869,8 +1869,8 @@
       "sourceHeight": 1080
     },
     "g&p_parental-settings_tv-rating": {
-      "graphX": -889,
-      "graphY": 1165,
+      "graphX": -1416,
+      "graphY": 1173,
       "sectionId": "general-privacy",
       "buttonIds": [
         "8bd4f218-972d-4f41-a3c1-79511d7f9a19"
@@ -1879,8 +1879,8 @@
       "sourceHeight": 1080
     },
     "g&p_parental-settings_movie-rating": {
-      "graphX": -1136,
-      "graphY": 1161,
+      "graphX": -1663,
+      "graphY": 1169,
       "sectionId": "general-privacy",
       "buttonIds": [
         "649f4967-65e4-4d28-bf66-ae01c3a792d4"
@@ -1889,8 +1889,8 @@
       "sourceHeight": 1080
     },
     "g&p_parental-settings_canadian-english": {
-      "graphX": -326,
-      "graphY": 1166,
+      "graphX": -853,
+      "graphY": 1174,
       "sectionId": "general-privacy",
       "buttonIds": [
         "94f117d8-729f-42ab-b203-00a5cb3c1354"
@@ -1899,8 +1899,8 @@
       "sourceHeight": 1080
     },
     "g&p_parental-settings_canadian-french": {
-      "graphX": -588,
-      "graphY": 1159,
+      "graphX": -1115,
+      "graphY": 1167,
       "sectionId": "general-privacy",
       "buttonIds": [
         "5d28699c-a6bb-49b2-8443-c7a010bdd177"
@@ -1909,8 +1909,8 @@
       "sourceHeight": 1080
     },
     "g&p_parental-settings_app-lock": {
-      "graphX": -566,
-      "graphY": 676,
+      "graphX": -1093,
+      "graphY": 684,
       "sectionId": "general-privacy",
       "buttonIds": [],
       "sourceWidth": 1920,
@@ -2295,9 +2295,9 @@
       "buttonIds": []
     },
     "g&p_power-energy_auto-power-off": {
-      "graphX": 220,
-      "graphY": 0,
-      "sectionId": "g_p_power-energy",
+      "graphX": -477,
+      "graphY": 660,
+      "sectionId": "general-privacy",
       "buttonIds": [
         "79f668c8-0527-4018-b0a9-d6781aeeae78"
       ],
@@ -2305,8 +2305,8 @@
       "sourceHeight": 1080
     },
     "g&p_broadcasting": {
-      "graphX": -1320,
-      "graphY": 422,
+      "graphX": -1847,
+      "graphY": 430,
       "sectionId": "general-privacy",
       "buttonIds": [
         "c0ab4d7f-d726-4279-856e-ffdb36f43c4b"
