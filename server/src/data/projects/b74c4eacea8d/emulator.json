@@ -3745,131 +3745,516 @@
     "img_filename": "advanced_features_voice",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "advanced-features"
+      },
+      {
+        "width": 160,
+        "height": 37,
+        "x": 36,
+        "y": 88,
+        "target": "advanced_features_voice_voice-assistant"
+      },
+      {
+        "width": 160,
+        "height": 28,
+        "x": 37,
+        "y": 200,
+        "target": "advanced_features_voice_bixby-settings-1"
+      },
+      {
+        "width": 160,
+        "height": 37,
+        "x": 35,
+        "y": 129,
+        "target": "advanced_features_voice_hands-free"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "advanced-features"
     }
   },
   "advanced_features_voice_voice-assistant": {
     "img_filename": "advanced_features_voice_voice-assistant",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 110,
+        "height": 27,
+        "x": 81,
+        "y": 79,
+        "target": "advanced_features_voice"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "advanced_features_voice"
     }
   },
   "advanced_features_voice_hands-free": {
     "img_filename": "advanced_features_voice_hands-free",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 110,
+        "height": 27,
+        "x": 81,
+        "y": 134,
+        "target": "advanced_features_voice"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "advanced_features_voice"
     }
   },
   "advanced_features_voice_bixby-settings-1": {
     "img_filename": "advanced_features_voice_bixby-settings-1",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 84,
+        "target": "advanced_features_voice_bixby-settings-2"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 117,
+        "target": "advanced_features_voice_bixby-settings-3"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 150,
+        "target": "advanced_features_voice_bixby-settings-4"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 183,
+        "target": "advanced_features_voice_bixby-settings-5"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 217,
+        "target": "advanced_features_voice_bixby-settings-6"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 250,
+        "target": "advanced_features_voice_bixby-settings-7"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "advanced_features_voice"
     }
   },
   "advanced_features_voice_bixby-settings-2": {
     "img_filename": "advanced_features_voice_bixby-settings-2",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 51,
+        "target": "advanced_features_voice_bixby-settings-1"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 117,
+        "target": "advanced_features_voice_bixby-settings-3"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 150,
+        "target": "advanced_features_voice_bixby-settings-4"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 183,
+        "target": "advanced_features_voice_bixby-settings-5"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 217,
+        "target": "advanced_features_voice_bixby-settings-6"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 250,
+        "target": "advanced_features_voice_bixby-settings-7"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "advanced_features_voice"
     }
   },
   "advanced_features_voice_bixby-settings-3": {
     "img_filename": "advanced_features_voice_bixby-settings-3",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 51,
+        "target": "advanced_features_voice_bixby-settings-1"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 84,
+        "target": "advanced_features_voice_bixby-settings-2"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 150,
+        "target": "advanced_features_voice_bixby-settings-4"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 183,
+        "target": "advanced_features_voice_bixby-settings-5"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 217,
+        "target": "advanced_features_voice_bixby-settings-6"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 250,
+        "target": "advanced_features_voice_bixby-settings-7"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "advanced_features_voice"
     }
   },
   "advanced_features_voice_bixby-settings-4": {
     "img_filename": "advanced_features_voice_bixby-settings-4",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 51,
+        "target": "advanced_features_voice_bixby-settings-1"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 84,
+        "target": "advanced_features_voice_bixby-settings-2"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 117,
+        "target": "advanced_features_voice_bixby-settings-3"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 183,
+        "target": "advanced_features_voice_bixby-settings-5"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 217,
+        "target": "advanced_features_voice_bixby-settings-6"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 250,
+        "target": "advanced_features_voice_bixby-settings-7"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "advanced_features_voice"
     }
   },
   "advanced_features_voice_bixby-settings-5": {
     "img_filename": "advanced_features_voice_bixby-settings-5",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 51,
+        "target": "advanced_features_voice_bixby-settings-1"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 84,
+        "target": "advanced_features_voice_bixby-settings-2"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 117,
+        "target": "advanced_features_voice_bixby-settings-3"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 150,
+        "target": "advanced_features_voice_bixby-settings-4"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 217,
+        "target": "advanced_features_voice_bixby-settings-6"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 250,
+        "target": "advanced_features_voice_bixby-settings-7"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "advanced_features_voice"
     }
   },
   "advanced_features_voice_bixby-settings-6": {
     "img_filename": "advanced_features_voice_bixby-settings-6",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 51,
+        "target": "advanced_features_voice_bixby-settings-1"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 84,
+        "target": "advanced_features_voice_bixby-settings-2"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 117,
+        "target": "advanced_features_voice_bixby-settings-3"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 150,
+        "target": "advanced_features_voice_bixby-settings-4"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 183,
+        "target": "advanced_features_voice_bixby-settings-5"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 250,
+        "target": "advanced_features_voice_bixby-settings-7"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "advanced_features_voice"
     }
   },
   "advanced_features_voice_bixby-settings-7": {
     "img_filename": "advanced_features_voice_bixby-settings-7",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 51,
+        "target": "advanced_features_voice_bixby-settings-1"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 84,
+        "target": "advanced_features_voice_bixby-settings-2"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 117,
+        "target": "advanced_features_voice_bixby-settings-3"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 150,
+        "target": "advanced_features_voice_bixby-settings-4"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 183,
+        "target": "advanced_features_voice_bixby-settings-5"
+      },
+      {
+        "width": 129,
+        "height": 28,
+        "x": 18,
+        "y": 216,
+        "target": "advanced_features_voice_bixby-settings-6"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "advanced_features_voice"
     }
   },
   "advanced_features_gesture": {
     "img_filename": "advanced_features_gesture",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 24,
+        "y": 58,
+        "target": "advanced-features"
+      },
+      {
+        "width": 160,
+        "height": 28,
+        "x": 36,
+        "y": 178,
+        "target": "advanced_features_gesture_learn-gesture"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "advanced-features"
     }
   },
   "advanced_features_gesture_learn-gesture": {
     "img_filename": "advanced_features_gesture_learn-gesture",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 117,
+        "height": 26,
+        "x": 328,
+        "y": 323,
+        "target": "advanced_features_gesture"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "advanced_features_gesture"
     }
   },
   "advanced_features_now-brief": {
     "img_filename": "advanced_features_now-brief",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 24,
+        "y": 58,
+        "target": "advanced-features"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "advanced-features"
     }
   },
   "advanced_features_start-screen-option": {
     "img_filename": "advanced_features_start-screen-option",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 24,
+        "y": 58,
+        "target": "advanced-features"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "advanced-features"
     }
   },
   "g&p": {
     "img_filename": "g&p",
-    "preset": "preset2",
+    "preset": "preset6",
     "model": "smart-tv",
     "buttons": [
       {
@@ -3882,78 +4267,144 @@
     ],
     "back_button": {
       "target": "all-settings_background"
-    }
-  },
-  "g&p_long-1": {
-    "img_filename": "g&p_long-1",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "g&p_long-2": {
-    "img_filename": "g&p_long-2",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "g&p_long-3": {
-    "img_filename": "g&p_long-3",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
+    },
+    "scroll_area": {
+      "img_filename": "g&p_scroll",
+      "buttons": [
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 2,
+          "target": "g&p_accessibility"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 34,
+          "target": "g&p_t&p"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 66,
+          "target": "g&p_power-energy"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 97,
+          "target": "g&p_broadcasting"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 129,
+          "target": "g&p_parental-settings"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 161,
+          "target": "g&p_external-device-manager"
+        },
+        {
+          "width": 163,
+          "height": 26,
+          "x": 3,
+          "y": 193,
+          "target": "g&p_media-switching-settings"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 224,
+          "target": "g&p_time"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 298,
+          "target": "g&p_menu-style"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 330,
+          "target": "g&p_keyboard-mouse"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 361,
+          "target": "g&p_remote-control"
+        },
+        {
+          "width": 163,
+          "height": 36,
+          "x": 3,
+          "y": 394,
+          "target": "g&p_sound-feedback"
+        },
+        {
+          "width": 163,
+          "height": 42,
+          "x": 3,
+          "y": 434,
+          "target": "g&p_usage-mode"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 480,
+          "target": "g&p_pin-settings"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 512,
+          "target": "g&p_data-factory-reset"
+        },
+        {
+          "width": 163,
+          "height": 26,
+          "x": 3,
+          "y": 544,
+          "target": "g&p_restart"
+        }
+      ]
     }
   },
   "g&p_accessibility": {
     "img_filename": "g&p_accessibility",
-    "preset": "preset2",
+    "preset": "preset6",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 24,
+        "y": 58,
+        "target": "g&p"
+      }
+    ],
     "back_button": {
-      "target": ""
-    }
-  },
-  "g_p_accessibility_long-1": {
-    "img_filename": "g_p_accessibility_long-1",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "g_p_accessibility_long-2": {
-    "img_filename": "g_p_accessibility_long-2",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "g_p_accessibility_long-3": {
-    "img_filename": "g_p_accessibility_long-3",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "g_p_accessibility_long-4": {
-    "img_filename": "g_p_accessibility_long-4",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
+      "target": "g&p"
+    },
+    "scroll_area": {
+      "img_filename": "g&p_accessibility_scroll",
+      "buttons": []
     }
   },
   "g&p_t&p": {
@@ -4014,63 +4465,174 @@
     "img_filename": "g&p_parental-settings",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "g&p"
+      },
+      {
+        "width": 160,
+        "height": 27,
+        "x": 36,
+        "y": 118,
+        "target": "g&p_parental-settings_program-rating"
+      },
+      {
+        "width": 160,
+        "height": 27,
+        "x": 36,
+        "y": 149,
+        "target": "g&p_parental-settings_app-lock"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p"
     }
   },
   "g&p_parental-settings_program-rating": {
     "img_filename": "g&p_parental-settings_program-rating",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58
+      },
+      {
+        "width": 163,
+        "height": 28,
+        "x": 35,
+        "y": 87,
+        "target": "g&p_parental-settings_program-rating_on"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p_parental-settings"
     }
   },
   "g&p_parental-settings_program-rating_on": {
     "img_filename": "g&p_parental-settings_program-rating_on",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "g&p_parental-settings"
+      },
+      {
+        "width": 163,
+        "height": 28,
+        "x": 35,
+        "y": 87,
+        "target": "g&p_parental-settings_program-rating"
+      },
+      {
+        "width": 158,
+        "height": 27,
+        "x": 37,
+        "y": 118,
+        "target": "g&p_parental-settings_tv-rating"
+      },
+      {
+        "width": 158,
+        "height": 27,
+        "x": 37,
+        "y": 148,
+        "target": "g&p_parental-settings_movie-rating"
+      },
+      {
+        "width": 158,
+        "height": 27,
+        "x": 37,
+        "y": 178,
+        "target": "g&p_parental-settings_canadian-english"
+      },
+      {
+        "width": 158,
+        "height": 27,
+        "x": 37,
+        "y": 209,
+        "target": "g&p_parental-settings_canadian-french"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p_parental-settings"
     }
   },
   "g&p_parental-settings_tv-rating": {
     "img_filename": "g&p_parental-settings_tv-rating",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 28,
+        "y": 56,
+        "target": "g&p_parental-settings_program-rating_on"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p_parental-settings_program-rating_on"
     }
   },
   "g&p_parental-settings_movie-rating": {
     "img_filename": "g&p_parental-settings_movie-rating",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 28,
+        "y": 56,
+        "target": "g&p_parental-settings_program-rating_on"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p_parental-settings_program-rating_on"
     }
   },
   "g&p_parental-settings_canadian-english": {
     "img_filename": "g&p_parental-settings_canadian-english",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 28,
+        "y": 56,
+        "target": "g&p_parental-settings_program-rating_on"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p_parental-settings_program-rating_on"
     }
   },
   "g&p_parental-settings_canadian-french": {
     "img_filename": "g&p_parental-settings_canadian-french",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 28,
+        "y": 56,
+        "target": "g&p_parental-settings_program-rating_on"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p_parental-settings_program-rating_on"
     }
   },
   "g&p_parental-settings_app-lock": {
@@ -4079,151 +4641,299 @@
     "model": "smart-tv",
     "buttons": [],
     "back_button": {
-      "target": ""
+      "target": "g&p_parental-settings"
     }
   },
   "g&p_external-device-manager": {
     "img_filename": "g&p_external-device-manager",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "g&p"
+      },
+      {
+        "width": 160,
+        "height": 27,
+        "x": 36,
+        "y": 118,
+        "target": "g&p_external-device-manager_input-signal"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p"
     }
   },
   "g&p_external-device-manager_input-signal": {
     "img_filename": "g&p_external-device-manager_input-signal",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "g&p_external-device-manager"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p_external-device-manager"
     }
   },
   "g&p_time": {
     "img_filename": "g&p_time",
-    "preset": "preset2",
+    "preset": "preset6",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "g&p"
+      }
+    ],
     "back_button": {
-      "target": ""
-    }
-  },
-  "g&p_time_long-1": {
-    "img_filename": "g&p_time_long-1",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "g&p_time_long-2": {
-    "img_filename": "g&p_time_long-2",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
+      "target": "g&p"
+    },
+    "scroll_area": {
+      "img_filename": "g&p_time_scroll",
+      "buttons": [
+        {
+          "width": 163,
+          "height": 40,
+          "x": 3,
+          "y": 4,
+          "target": "g&p_time_clock-mode"
+        },
+        {
+          "width": 163,
+          "height": 40,
+          "x": 3,
+          "y": 134,
+          "target": "g&p_time_time-offset"
+        }
+      ]
     }
   },
   "g&p_time_clock-mode": {
     "img_filename": "g&p_time_clock-mode",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 110,
+        "height": 28,
+        "x": 81,
+        "y": 79,
+        "target": "g&p_time"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p_time"
     }
   },
   "g&p_time_time-offset": {
     "img_filename": "g&p_time_time-offset",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 110,
+        "height": 28,
+        "x": 81,
+        "y": 198,
+        "target": "g&p_time"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p_time"
     }
   },
   "g&p_menu-style": {
     "img_filename": "g&p_menu-style",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "g&p"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p"
     }
   },
   "g&p_keyboard-mouse": {
     "img_filename": "g&p_keyboard-mouse",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "g&p"
+      },
+      {
+        "width": 160,
+        "height": 27,
+        "x": 36,
+        "y": 118,
+        "target": "g&p_keyboard-mouse_mouse-settings"
+      },
+      {
+        "width": 160,
+        "height": 27,
+        "x": 36,
+        "y": 88,
+        "target": "g&p_keyboard-mouse_keyboard-settings"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p"
     }
   },
   "g&p_keyboard-mouse_keyboard-settings": {
     "img_filename": "g&p_keyboard-mouse_keyboard-settings",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "g&p_keyboard-mouse"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p_keyboard-mouse"
     }
   },
   "g&p_keyboard-mouse_mouse-settings": {
     "img_filename": "g&p_keyboard-mouse_mouse-settings",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "g&p_keyboard-mouse"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p_keyboard-mouse"
     }
   },
   "g&p_remote-control": {
     "img_filename": "g&p_remote-control",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "g&p"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p"
     }
   },
   "g&p_sound-feedback": {
     "img_filename": "g&p_sound-feedback",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 110,
+        "height": 27,
+        "x": 81,
+        "y": 175,
+        "target": "g&p"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p"
     }
   },
   "g&p_usage-mode": {
     "img_filename": "g&p_usage-mode",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 110,
+        "height": 27,
+        "x": 81,
+        "y": 145,
+        "target": "g&p"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p"
     }
   },
   "g&p_pin-settings": {
     "img_filename": "g&p_pin-settings",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "g&p"
+      },
+      {
+        "width": 160,
+        "height": 27,
+        "x": 36,
+        "y": 118,
+        "target": "g&p_pin-settings_samsung-account"
+      },
+      {
+        "width": 160,
+        "height": 27,
+        "x": 36,
+        "y": 88,
+        "target": "g&p_pin-settings_change-pin"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p"
     }
   },
   "g&p_pin-settings_change-pin": {
     "img_filename": "g&p_pin-settings_change-pin",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 83,
+        "height": 20,
+        "x": 75,
+        "y": 194,
+        "target": "g&p_pin-settings"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p_pin-settings"
     }
   },
   "g&p_pin-settings_samsung-account": {
@@ -4232,25 +4942,41 @@
     "model": "smart-tv",
     "buttons": [],
     "back_button": {
-      "target": ""
+      "target": "g&p_pin-settings"
     }
   },
   "g&p_data-factory-reset": {
     "img_filename": "g&p_data-factory-reset",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 83,
+        "height": 20,
+        "x": 75,
+        "y": 194,
+        "target": "g&p"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p"
     }
   },
   "g&p_restart": {
     "img_filename": "g&p_restart",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 81,
+        "height": 22,
+        "x": 114,
+        "y": 181,
+        "target": "g&p"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p"
     }
   },
   "support": {
@@ -4479,38 +5205,15 @@
   },
   "g&p_accessibility_caption-settings_digital-caption": {
     "img_filename": "g&p_accessibility_caption-settings_digital-caption",
-    "preset": "preset2",
+    "preset": "preset6",
     "model": "smart-tv",
     "buttons": [],
     "back_button": {
       "target": ""
-    }
-  },
-  "g&p_accessibility_caption-settings_digital-caption_long-1": {
-    "img_filename": "g&p_accessibility_caption-settings_digital-caption_long-1",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "g&p_accessibility_caption-settings_digital-caption_long-2": {
-    "img_filename": "g&p_accessibility_caption-settings_digital-caption_long-2",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "g&p_accessibility_caption-settings_digital-caption_long-3": {
-    "img_filename": "g&p_accessibility_caption-settings_digital-caption_long-3",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
+    },
+    "scroll_area": {
+      "img_filename": "g&p_accessibility_caption-settings_digital-caption_scroll",
+      "buttons": []
     }
   },
   "g&p_accessibility_multi-output-audio": {
@@ -4580,18 +5283,34 @@
     "img_filename": "g&p_broadcasting",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "g&p"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p"
     }
   },
   "g&p_media-switching-settings": {
     "img_filename": "g&p_media-switching-settings",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 25,
+        "y": 58,
+        "target": "g&p"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p"
     }
   },
   "support_device-care": {
@@ -5021,6 +5740,13 @@
         "x": 24,
         "y": 57,
         "target": "advanced-features"
+      },
+      {
+        "width": 160,
+        "height": 28,
+        "x": 36,
+        "y": 88,
+        "target": "advanced_features_ai-soccer-on"
       }
     ],
     "back_button": {
@@ -5031,18 +5757,48 @@
     "img_filename": "advanced_features_ai-soccer-on",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 24,
+        "y": 57,
+        "target": "advanced-features"
+      },
+      {
+        "width": 160,
+        "height": 28,
+        "x": 36,
+        "y": 88,
+        "target": "advanced_features_ai-soccer"
+      },
+      {
+        "width": 160,
+        "height": 28,
+        "x": 36,
+        "y": 117,
+        "target": "advanced_features_ai-soccer_controller"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "advanced-features"
     }
   },
   "advanced_features_ai-soccer_controller": {
     "img_filename": "advanced_features_ai-soccer_controller",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 24,
+        "y": 58,
+        "target": "advanced_features_ai-soccer-on"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "advanced_features_ai-soccer-on"
     }
   }
 }
