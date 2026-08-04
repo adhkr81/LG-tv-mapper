@@ -28,7 +28,7 @@ export function buildSamsungPresetScreen(src = 'homescreen') {
 }
 
 export const SAMSUNG_SCROLL_PRESET_DEFAULTS = {
-  preset3: {
+  preset2: {
     screen: buildSamsungPresetScreen(),
     scroll: {
       left: 159,

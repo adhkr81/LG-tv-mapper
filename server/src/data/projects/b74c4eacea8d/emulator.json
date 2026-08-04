@@ -2081,7 +2081,7 @@
   },
   "homescreen_settings-opened": {
     "img_filename": "homescreen_settings-opened",
-    "preset": "preset3",
+    "preset": "preset2",
     "model": "smart-tv",
     "buttons": [
       {

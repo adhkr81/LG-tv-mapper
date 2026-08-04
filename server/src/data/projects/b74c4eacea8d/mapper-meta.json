@@ -2667,7 +2667,7 @@
       "intrinsicHeight": 370
     },
     "samsungScrollPresets": {
-      "preset3": {
+      "preset2": {
         "screen": {
           "height": 370,
           "left": 125,
@@ -2692,6 +2692,17 @@
             "left": 225
           }
         }
+      },
+      "preset3": {
+        "screen": {
+          "height": 535,
+          "left": 20,
+          "src": "homescreen",
+          "top": -32,
+          "width": 870
+        },
+        "scroll": false,
+        "transform": {}
       },
       "preset4": {
         "screen": {
