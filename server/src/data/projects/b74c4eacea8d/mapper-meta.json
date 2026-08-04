@@ -1816,19 +1816,13 @@
       "graphX": 162,
       "graphY": 17,
       "sectionId": "g_p_t_p",
-      "buttonIds": []
-    },
-    "g&p_t&p_long-1": {
-      "graphX": 269,
-      "graphY": 229,
-      "sectionId": "g_p_t_p",
-      "buttonIds": []
-    },
-    "g&p_t&p_long-2": {
-      "graphX": 281,
-      "graphY": 453,
-      "sectionId": "g_p_t_p",
-      "buttonIds": []
+      "buttonIds": [
+        "ba73d5a2-c689-4ef3-8895-065b875d8a72"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "scrollButtonIds": [],
+      "scrollImage": "g&p_t&p_scroll.jpg"
     },
     "g&p_power-energy": {
       "graphX": -103,

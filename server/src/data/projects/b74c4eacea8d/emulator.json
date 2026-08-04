@@ -4409,29 +4409,23 @@
   },
   "g&p_t&p": {
     "img_filename": "g&p_t&p",
-    "preset": "preset2",
+    "preset": "preset6",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 24,
+        "y": 58,
+        "target": "g&p"
+      }
+    ],
     "back_button": {
-      "target": ""
-    }
-  },
-  "g&p_t&p_long-1": {
-    "img_filename": "g&p_t&p_long-1",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "g&p_t&p_long-2": {
-    "img_filename": "g&p_t&p_long-2",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
+      "target": "g&p"
+    },
+    "scroll_area": {
+      "img_filename": "g&p_t&p_scroll",
+      "buttons": []
     }
   },
   "g&p_power-energy": {
