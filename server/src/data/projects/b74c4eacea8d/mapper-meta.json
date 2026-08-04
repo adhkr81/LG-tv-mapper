@@ -100,24 +100,16 @@
       "name": "g&p_accessibility",
       "rootScreenId": "g&p_accessibility",
       "collapsed": true,
-      "bandX": -884,
-      "bandY": 376
-    },
-    {
-      "id": "g_p_t_p",
-      "name": "g&p_t&p",
-      "rootScreenId": "g&p_t&p",
-      "collapsed": true,
-      "bandX": 45,
-      "bandY": 570
+      "bandX": -997,
+      "bandY": 440
     },
     {
       "id": "g_p_power-energy",
       "name": "g&p_power-energy",
       "rootScreenId": "g&p_power-energy",
       "collapsed": true,
-      "bandX": 57,
-      "bandY": 771
+      "bandX": 241,
+      "bandY": 433
     },
     {
       "id": "support",
@@ -1813,9 +1805,9 @@
       "scrollImage": "g&p_accessibility_scroll.jpg"
     },
     "g&p_t&p": {
-      "graphX": 162,
-      "graphY": 17,
-      "sectionId": "g_p_t_p",
+      "graphX": -325,
+      "graphY": 429,
+      "sectionId": "general-privacy",
       "buttonIds": [
         "ba73d5a2-c689-4ef3-8895-065b875d8a72"
       ],
@@ -1828,19 +1820,15 @@
       "graphX": -103,
       "graphY": -5,
       "sectionId": "g_p_power-energy",
-      "buttonIds": []
-    },
-    "g&p_power-energy_long-1": {
-      "graphX": -3,
-      "graphY": 193,
-      "sectionId": "g_p_power-energy",
-      "buttonIds": []
-    },
-    "g&p_power-energy_long-2": {
-      "graphX": 4,
-      "graphY": 395,
-      "sectionId": "g_p_power-energy",
-      "buttonIds": []
+      "buttonIds": [
+        "a5c6df6c-e90e-4e68-8044-bcc7c184baf4"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "scrollButtonIds": [
+        "7dc4ef10-d640-44a8-ba33-ff3b5bc0824e"
+      ],
+      "scrollImage": "g&p_power-energy_scroll.jpg"
     },
     "g&p_parental-settings": {
       "graphX": -710,
@@ -2310,7 +2298,11 @@
       "graphX": 220,
       "graphY": 0,
       "sectionId": "g_p_power-energy",
-      "buttonIds": []
+      "buttonIds": [
+        "79f668c8-0527-4018-b0a9-d6781aeeae78"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_broadcasting": {
       "graphX": -1320,

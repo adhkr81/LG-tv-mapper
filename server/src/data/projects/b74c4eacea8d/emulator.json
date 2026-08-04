@@ -4430,29 +4430,31 @@
   },
   "g&p_power-energy": {
     "img_filename": "g&p_power-energy",
-    "preset": "preset2",
+    "preset": "preset6",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 26,
+        "height": 26,
+        "x": 24,
+        "y": 58,
+        "target": "g&p"
+      }
+    ],
     "back_button": {
-      "target": ""
-    }
-  },
-  "g&p_power-energy_long-1": {
-    "img_filename": "g&p_power-energy_long-1",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
-    }
-  },
-  "g&p_power-energy_long-2": {
-    "img_filename": "g&p_power-energy_long-2",
-    "preset": "preset2",
-    "model": "smart-tv",
-    "buttons": [],
-    "back_button": {
-      "target": ""
+      "target": "g&p"
+    },
+    "scroll_area": {
+      "img_filename": "g&p_power-energy_scroll",
+      "buttons": [
+        {
+          "width": 163,
+          "height": 40,
+          "x": 3,
+          "y": 206,
+          "target": "g&p_power-energy_auto-power-off"
+        }
+      ]
     }
   },
   "g&p_parental-settings": {
@@ -5268,9 +5270,17 @@
     "img_filename": "g&p_power-energy_auto-power-off",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 110,
+        "height": 27,
+        "x": 81,
+        "y": 148,
+        "target": "g&p_power-energy"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "g&p_power-energy"
     }
   },
   "g&p_broadcasting": {
