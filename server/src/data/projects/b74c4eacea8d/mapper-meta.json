@@ -1780,15 +1780,29 @@
       "scrollImage": "g&p_scroll.jpg"
     },
     "g&p_accessibility": {
-      "graphX": 1489,
-      "graphY": -233,
+      "graphX": 1457,
+      "graphY": -388,
       "sectionId": "g_p_accessibility",
       "buttonIds": [
         "2c2bab4f-eb63-4f99-9279-0bffe58a4d52"
       ],
       "sourceWidth": 1920,
       "sourceHeight": 1080,
-      "scrollButtonIds": [],
+      "scrollButtonIds": [
+        "97f87cd2-7aa0-4367-af42-452e462b557b",
+        "9f4067f3-0b30-4062-8a93-c28ed5884734",
+        "f4b85eac-081b-4b05-9b94-44b74ded7e4d",
+        "1dfc859d-5ddf-4696-bc41-fdf26d71ddf8",
+        "64231927-b14b-42aa-8fc9-2345a24ee48c",
+        "305e8b7a-2386-4e40-a8a4-48f4cf355b91",
+        "c0959241-07b9-475b-b514-3bd4ec4e5c27",
+        "9af8dd8f-8c07-4822-a958-15e049521a31",
+        "bcae3458-e9db-462a-8435-85aaffdcc2d0",
+        "cba7ee65-357c-44a5-902a-fa5f123205a0",
+        "1ca794ee-6ce2-4e30-b30f-778b5964b1ba",
+        "2eee29f0-a1a7-4103-9155-b4fc1980ea91",
+        "d28059ba-6e4f-4d8b-a2b0-2d158f59e7ee"
+      ],
       "scrollImage": "g&p_accessibility_scroll.jpg"
     },
     "g&p_t&p": {
@@ -2095,194 +2109,313 @@
       "sourceHeight": 1080
     },
     "g&p_accessibility_voice-guide": {
-      "graphX": 569,
-      "graphY": 0,
+      "graphX": 294,
+      "graphY": 23,
       "sectionId": "g_p_accessibility",
-      "buttonIds": [],
+      "buttonIds": [
+        "394ecc5f-974a-4640-9ba2-ead957f52c72",
+        "37628f95-ffc9-4895-829f-2630c82773fa"
+      ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
     },
     "g&p_accessibility_voice-guide-on": {
-      "graphX": 572,
-      "graphY": 200,
+      "graphX": -104,
+      "graphY": 226,
       "sectionId": "g_p_accessibility",
-      "buttonIds": []
+      "buttonIds": [
+        "36610149-fd86-4fcb-b04b-89c827808943",
+        "8b5a63d5-b696-4e6c-8a10-eb608f2894ef",
+        "8acdc59a-aa7e-435e-a5f9-dd541eaf2952",
+        "2226e658-1874-49f5-85bd-d67f4fcda7f7",
+        "d0f70a01-2ddd-4dca-b4c1-b69dab471436",
+        "e9b36a5a-eb16-49ec-a46b-68f70a8317e1"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_accessibility_voice-guide_volume": {
-      "graphX": 559,
-      "graphY": 390,
+      "graphX": -289,
+      "graphY": 612,
       "sectionId": "g_p_accessibility",
-      "buttonIds": []
+      "buttonIds": [
+        "bf77598d-a436-4e0f-8b24-2691a197b059"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_accessibility_voice-guide_speed": {
-      "graphX": 553,
-      "graphY": 991,
+      "graphX": 1,
+      "graphY": 616,
       "sectionId": "g_p_accessibility",
-      "buttonIds": []
+      "buttonIds": [
+        "d94a8c04-0a20-4b46-a403-daa160e96e2d"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_accessibility_voice-guide_pitch": {
-      "graphX": 555,
-      "graphY": 606,
+      "graphX": 273,
+      "graphY": 624,
       "sectionId": "g_p_accessibility",
-      "buttonIds": []
+      "buttonIds": [
+        "c8bc4914-7071-48d3-bf99-a1d3c8f7aff2"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_accessibility_voice-guide_tv-background": {
-      "graphX": 563,
-      "graphY": 800,
+      "graphX": -575,
+      "graphY": 631,
       "sectionId": "g_p_accessibility",
-      "buttonIds": []
+      "buttonIds": [
+        "6c89d0e1-32dd-46f9-8ee9-7a6e592dcc06"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_accessibility_relumino": {
       "graphX": 852,
       "graphY": 0,
       "sectionId": "g_p_accessibility",
-      "buttonIds": []
+      "buttonIds": [
+        "c4d6cd90-d9f1-4800-ba03-51de8eb3d41c",
+        "623a0c8b-1aed-4e35-99be-b5baf532f885"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_accessibility_relumino_on": {
-      "graphX": 864,
-      "graphY": 214,
-      "sectionId": "g_p_accessibility",
-      "buttonIds": []
-    },
-    "g&p_accessibility_relumino_intensity": {
-      "graphX": 866,
-      "graphY": 412,
-      "sectionId": "g_p_accessibility",
-      "buttonIds": []
-    },
-    "g&p_accessibility_relumino_edge-color": {
-      "graphX": 856,
-      "graphY": 606,
-      "sectionId": "g_p_accessibility",
-      "buttonIds": []
-    },
-    "g&p_accessibility_audio-screen": {
-      "graphX": 1146,
-      "graphY": 0,
-      "sectionId": "g_p_accessibility",
-      "buttonIds": []
-    },
-    "g&p_accessibility_sign-language": {
-      "graphX": 1162,
-      "graphY": 322,
-      "sectionId": "g_p_accessibility",
-      "buttonIds": []
-    },
-    "g&p_accessibility_sign-language_on": {
-      "graphX": 1153,
-      "graphY": 524,
-      "sectionId": "g_p_accessibility",
-      "buttonIds": []
-    },
-    "g&p_accessibility_sign-language_edit": {
-      "graphX": 1156,
-      "graphY": 732,
-      "sectionId": "g_p_accessibility",
-      "buttonIds": []
-    },
-    "g&p_accessibility_zoom-menu-text": {
-      "graphX": 1442,
-      "graphY": 0,
-      "sectionId": "g_p_accessibility",
-      "buttonIds": []
-    },
-    "g&p_accessibility_grayscale": {
-      "graphX": 1444,
+      "graphX": 834,
       "graphY": 235,
       "sectionId": "g_p_accessibility",
-      "buttonIds": []
+      "buttonIds": [
+        "5d4a8011-b5c7-4660-9b99-237430dbe528",
+        "0b4562c8-5ec0-42be-92b0-32a246e232c3",
+        "a8ce813f-ae04-41fb-818d-04b4aedf7e8e",
+        "77e781e3-9dd7-4ba3-af28-deeb1271e4a4"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_accessibility_relumino_intensity": {
+      "graphX": 712,
+      "graphY": 421,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": [
+        "bb613b16-7732-4c99-9309-9211749aa82d"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_accessibility_relumino_edge-color": {
+      "graphX": 595,
+      "graphY": 610,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": [
+        "06f188b2-9e7d-41f0-863f-04902edf8faa"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_accessibility_audio-screen": {
+      "graphX": 587,
+      "graphY": 10,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": [
+        "42faac60-f9f4-4287-92a5-644691499b96"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_accessibility_sign-language": {
+      "graphX": 1778,
+      "graphY": -17,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": [
+        "5758cdb1-9d82-4cbf-82bd-44b9d78bd5e1",
+        "05f53922-3589-4964-aff6-96ffc92af0b3"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_accessibility_sign-language_on": {
+      "graphX": 1722,
+      "graphY": 228,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": [
+        "416346b6-9b7c-44e0-9728-bc54ba2d25e1",
+        "5ce5f05f-27aa-42d1-9951-66a2dfc74497",
+        "bb56abf0-513b-4bc4-bdca-d01035437178"
+      ],
+      "sourceWidth": 1067,
+      "sourceHeight": 600
+    },
+    "g&p_accessibility_sign-language_edit": {
+      "graphX": 1813,
+      "graphY": 453,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": [],
+      "sourceWidth": 1067,
+      "sourceHeight": 600
+    },
+    "g&p_accessibility_zoom-menu-text": {
+      "graphX": 2892,
+      "graphY": -433,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_accessibility_grayscale": {
+      "graphX": 2637,
+      "graphY": -420,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_accessibility_color-inversion": {
-      "graphX": 1461,
-      "graphY": 426,
+      "graphX": 2371,
+      "graphY": -431,
       "sectionId": "g_p_accessibility",
       "buttonIds": []
     },
     "g&p_accessibility_seecolors-mode": {
-      "graphX": 1453,
-      "graphY": 661,
+      "graphX": 1143,
+      "graphY": 18,
       "sectionId": "g_p_accessibility",
-      "buttonIds": []
+      "buttonIds": [
+        "56886d74-b2c6-441e-8a49-e77bb20752f1"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_accessibility_learn-tv-remote": {
-      "graphX": 1456,
-      "graphY": 861,
-      "sectionId": "g_p_accessibility",
-      "buttonIds": []
-    },
-    "g&p_accessibility_learn-menu-screen": {
-      "graphX": 1474,
-      "graphY": 1088,
-      "sectionId": "g_p_accessibility",
-      "buttonIds": []
-    },
-    "g&p_accessibility_caption-settings": {
-      "graphX": 1754,
-      "graphY": 0,
+      "graphX": 1146,
+      "graphY": 228,
       "sectionId": "g_p_accessibility",
       "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_accessibility_learn-menu-screen": {
+      "graphX": 1091,
+      "graphY": 472,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": [],
+      "sourceWidth": 1067,
+      "sourceHeight": 600,
+      "scrollButtonIds": [],
+      "scrollImage": "g&p_accessibility_learn-menu-screen_scroll.jpg"
+    },
+    "g&p_accessibility_caption-settings": {
+      "graphX": 1441,
+      "graphY": 236,
+      "sectionId": "g_p_accessibility",
+      "buttonIds": [
+        "6f086b5d-53c9-4f6f-b01b-772580a19e6b",
+        "61a7a299-ba53-4df1-a350-7b0ed119f9b5"
+      ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
     },
     "g&p_accessibility_caption-settings-on": {
-      "graphX": 1748,
-      "graphY": 230,
+      "graphX": 1438,
+      "graphY": 457,
       "sectionId": "g_p_accessibility",
-      "buttonIds": [],
+      "buttonIds": [
+        "85361d07-0059-4d78-ba17-fede27f4b7dd",
+        "abbebb49-f467-469b-b5e6-9de70cf9c693",
+        "e28b66c3-3521-42e6-86c2-3bc234c63336",
+        "46939168-599a-4556-94cf-e75bf7398981"
+      ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
     },
     "g&p_accessibility_caption-settings_caption-mode": {
-      "graphX": 1761,
-      "graphY": 465,
+      "graphX": 1580,
+      "graphY": 703,
       "sectionId": "g_p_accessibility",
-      "buttonIds": []
+      "buttonIds": [
+        "edfa734f-7df0-44f1-b0ae-10a5228c59bf"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_accessibility_caption-settings_digital-caption": {
-      "graphX": 2041,
-      "graphY": 0,
+      "graphX": 1310,
+      "graphY": 702,
       "sectionId": "g_p_accessibility",
-      "buttonIds": [],
+      "buttonIds": [
+        "bd3c461e-c389-434b-800c-78b3651b3913"
+      ],
       "sourceWidth": 1920,
       "sourceHeight": 1080,
       "scrollButtonIds": [],
       "scrollImage": "g&p_accessibility_caption-settings_digital-caption_scroll.jpg"
     },
     "g&p_accessibility_multi-output-audio": {
-      "graphX": 2321,
-      "graphY": 0,
+      "graphX": 2060,
+      "graphY": -18,
       "sectionId": "g_p_accessibility",
-      "buttonIds": []
+      "buttonIds": [
+        "3c61e46e-90d5-43be-8629-2e474647f905"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_accessibility_remote-button-repeat": {
-      "graphX": 2325,
-      "graphY": 300,
+      "graphX": 2378,
+      "graphY": -23,
       "sectionId": "g_p_accessibility",
-      "buttonIds": []
+      "buttonIds": [
+        "7bc2e71c-8888-4c91-b517-07c90e7c34a7",
+        "9175a0d8-8818-461d-8fd6-4a162128fab5"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_accessibility_remote-button-repeat-on": {
-      "graphX": 2331,
-      "graphY": 534,
+      "graphX": 2455,
+      "graphY": 198,
       "sectionId": "g_p_accessibility",
-      "buttonIds": []
+      "buttonIds": [
+        "86e6767e-e1d4-4851-bb00-21262ea85135",
+        "720b40f0-df4b-4a99-a85a-a1197ade5f0f"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_accessibility_accessibility-shortcut": {
-      "graphX": 2629,
-      "graphY": 0,
+      "graphX": 2698,
+      "graphY": -36,
       "sectionId": "g_p_accessibility",
-      "buttonIds": []
+      "buttonIds": [
+        "1e621b4e-98bd-4ede-be93-7a2574322cd3"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_accessibility_time-to-take-action": {
-      "graphX": 2630,
-      "graphY": 245,
+      "graphX": 2976,
+      "graphY": -35,
       "sectionId": "g_p_accessibility",
-      "buttonIds": []
+      "buttonIds": [
+        "3ced279a-d3ea-496a-9bbd-13897b60ccee"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_accessibility_moving-text-image": {
-      "graphX": 2638,
-      "graphY": 487,
+      "graphX": 3255,
+      "graphY": -39,
       "sectionId": "g_p_accessibility",
-      "buttonIds": []
+      "buttonIds": [
+        "b342db70-6a52-4c56-9ae3-585ab15aab48"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     },
     "g&p_power-energy_auto-power-off": {
       "graphX": -477,
@@ -2693,17 +2826,6 @@
           }
         }
       },
-      "preset3": {
-        "screen": {
-          "height": 535,
-          "left": 20,
-          "src": "homescreen",
-          "top": -32,
-          "width": 870
-        },
-        "scroll": false,
-        "transform": {}
-      },
       "preset4": {
         "screen": {
           "height": 370,
@@ -2805,6 +2927,32 @@
           "down": {
             "top": 352,
             "left": 744
+          }
+        }
+      },
+      "preset9": {
+        "screen": {
+          "height": 370,
+          "left": 125,
+          "src": "homescreen",
+          "top": 17,
+          "width": 658
+        },
+        "scroll": {
+          "left": 133,
+          "top": 60,
+          "width": 430,
+          "height": 327,
+          "borderRadius": 5
+        },
+        "scroll_buttons": {
+          "up": {
+            "top": 62,
+            "left": 570
+          },
+          "down": {
+            "top": 352,
+            "left": 570
           }
         }
       }

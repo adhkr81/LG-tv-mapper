@@ -112,6 +112,20 @@ export const SAMSUNG_SCROLL_PRESET_DEFAULTS = {
       down: { top: 377, left: 439 },
     },
   },
+  preset9: {
+    screen: buildSamsungPresetScreen(),
+    scroll: {
+      left: 159,
+      top: 134,
+      height: 203,
+      width: 164,
+      borderRadius: 5,
+    },
+    scroll_buttons: {
+      up: { top: 70, left: 225 },
+      down: { top: 353, left: 225 },
+    },
+  },
 };
 
 function finiteNum(value, fallback = 0) {

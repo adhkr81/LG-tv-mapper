@@ -30,6 +30,7 @@ export const SAMSUNG_PRESET_OPTIONS = [
   { value: 'preset6', label: 'preset6 (narrow lower)' },
   { value: 'preset7', label: 'preset7 (wide panel)' },
   { value: 'preset8', label: 'preset8 (full screen)' },
+  { value: 'preset9', label: 'preset9 (scroll)' },
 ];
 
 /** EmulatorDisplay canvas screen frame shared by all scroll presets. */
@@ -126,6 +127,20 @@ export const SAMSUNG_SCROLL_PRESETS = {
     scroll_buttons: {
       up: { top: 1, left: 439 },
       down: { top: 377, left: 439 },
+    },
+  },
+  preset9: {
+    screen: buildSamsungPresetScreen(),
+    scroll: {
+      left: 159,
+      top: 134,
+      height: 203,
+      width: 164,
+      borderRadius: 5,
+    },
+    scroll_buttons: {
+      up: { top: 70, left: 225 },
+      down: { top: 353, left: 225 },
     },
   },
 };
