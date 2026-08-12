@@ -638,6 +638,7 @@ function normalizeMapperButton(screenId, btn) {
       height: parsePx(btn.height),
       ...(btn.popover ? { popover: btn.popover } : {}),
       ...(btn.type ? { type: btn.type } : {}),
+      ...(btn.return === true ? { return: true } : {}),
     };
   }
 
@@ -1055,6 +1056,7 @@ function cloneButtonsForScreen(buttons, newScreenId, idMap) {
       next.popover = JSON.parse(JSON.stringify(btn.popover));
     }
     if (btn.type) next.type = btn.type;
+    if (btn.return === true) next.return = true;
     return next;
   });
 }
@@ -1302,6 +1304,7 @@ export function addButton(screenId, data) {
     height: normalized.height,
     ...(normalized.popover ? { popover: normalized.popover } : {}),
     ...(normalized.type ? { type: normalized.type } : {}),
+    ...(normalized.return === true ? { return: true } : {}),
   };
 
   getButtonList(screen, layer).push(button);
@@ -1336,6 +1339,10 @@ export function updateButton(screenId, buttonId, updates) {
     if (patch.type) btn.type = patch.type;
     else delete btn.type;
   }
+  if (patch.return !== undefined) {
+    if (patch.return === true) btn.return = true;
+    else delete btn.return;
+  }
 
   if (patch.x !== undefined || patch.y !== undefined) {
     const merged = normalizeMapperButton(screenId, {
@@ -1363,6 +1370,39 @@ export function deleteButton(screenId, buttonId) {
 
   found.list.splice(found.index, 1);
   markDirty();
+}
+
+/** Delete every button whose width×height matches (all screens, base + scroll). */
+export function deleteButtonsBySize(width, height) {
+  ensureLoaded();
+  const w = Math.round(Number(width));
+  const h = Math.round(Number(height));
+  if (!Number.isFinite(w) || !Number.isFinite(h) || w < 1 || h < 1) {
+    throw new Error('width and height must be positive numbers');
+  }
+
+  let deleted = 0;
+  const matches = (btn) => {
+    const n = normalizeMapperButton(btn.screenId || '', btn);
+    return n.width === w && n.height === h;
+  };
+
+  for (const screen of state.screens) {
+    const beforeBase = screen.buttons.length;
+    screen.buttons = screen.buttons.filter((btn) => !matches(btn));
+    deleted += beforeBase - screen.buttons.length;
+
+    if (screen.scrollArea?.buttons) {
+      const beforeScroll = screen.scrollArea.buttons.length;
+      screen.scrollArea.buttons = screen.scrollArea.buttons.filter(
+        (btn) => !matches(btn)
+      );
+      deleted += beforeScroll - screen.scrollArea.buttons.length;
+    }
+  }
+
+  if (deleted > 0) markDirty();
+  return { deleted, width: w, height: h };
 }
 
 export function importButtonsFromScreen(
@@ -1409,6 +1449,7 @@ export function importButtonsFromScreen(
       height: normalized.height,
       ...(normalized.popover ? { popover: normalized.popover } : {}),
       ...(normalized.type ? { type: normalized.type } : {}),
+      ...(normalized.return === true ? { return: true } : {}),
     };
     targetList.push(button);
     return button;

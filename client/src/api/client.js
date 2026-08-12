@@ -233,6 +233,11 @@ export const deleteButtonApi = (screenId, buttonId) =>
   request(projectPath(`/screens/${screenId}/buttons/${buttonId}`), {
     method: 'DELETE',
   });
+export const deleteButtonsBySizeApi = (screenId, width, height) =>
+  request(projectPath(`/screens/${screenId}/buttons/delete-by-size`), {
+    method: 'POST',
+    body: JSON.stringify({ width, height }),
+  });
 
 // Graph
 export const getGraph = () => request(projectPath('/graph'));

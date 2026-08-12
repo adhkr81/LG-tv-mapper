@@ -3,5 +3,6 @@ export {
   addButton,
   updateButton,
   deleteButton,
+  deleteButtonsBySize,
   importButtonsFromScreen,
 } from './data-store.js';

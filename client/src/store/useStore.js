@@ -18,6 +18,7 @@ import {
   popUndoSnapshot,
   recordUndo,
 } from '../utils/undoHistory.js';
+import { normalizeButton } from '../utils/buttonRect.js';
 
 const SECTION_STORAGE_KEY_PREFIX = 'lg-mapper-active-section';
 const BUTTON_RECT_CLIPBOARD_KEY = 'lg-mapper-button-rect-clipboard';
@@ -938,6 +939,58 @@ const useStore = create((rawSet, get) => {
         await api.deleteButtonApi(screenId, buttonId);
       } catch (err) {
         console.error('Delete button failed:', err);
+        await get().fetchScreens();
+        throw err;
+      }
+    },
+
+    deleteButtonsBySize: async (screenId, width, height) => {
+      const w = Math.round(Number(width));
+      const h = Math.round(Number(height));
+      if (!Number.isFinite(w) || !Number.isFinite(h) || w < 1 || h < 1) {
+        throw new Error('width and height must be positive numbers');
+      }
+
+      markUndoAvailable(set, get);
+      cancelAllButtonSaves();
+
+      const sizeMatches = (btn) => {
+        const n = normalizeButton(btn);
+        return n.width === w && n.height === h;
+      };
+
+      const selectedId = get().selectedButtonId;
+      let selectedRemoved = false;
+
+      set({
+        screens: get().screens.map((s) => {
+          const nextButtons = (s.buttons || []).filter((b) => {
+            const keep = !sizeMatches(b);
+            if (!keep && b.id === selectedId) selectedRemoved = true;
+            return keep;
+          });
+          const scrollButtons = s.scrollArea?.buttons;
+          if (!scrollButtons?.length) {
+            return { ...s, buttons: nextButtons };
+          }
+          const nextScroll = scrollButtons.filter((b) => {
+            const keep = !sizeMatches(b);
+            if (!keep && b.id === selectedId) selectedRemoved = true;
+            return keep;
+          });
+          return {
+            ...s,
+            buttons: nextButtons,
+            scrollArea: { ...s.scrollArea, buttons: nextScroll },
+          };
+        }),
+        selectedButtonId: selectedRemoved ? null : selectedId,
+      });
+
+      try {
+        return await api.deleteButtonsBySizeApi(screenId, w, h);
+      } catch (err) {
+        console.error('Delete buttons by size failed:', err);
         await get().fetchScreens();
         throw err;
       }

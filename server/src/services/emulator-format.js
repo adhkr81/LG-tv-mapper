@@ -29,7 +29,7 @@ function finiteNum(value, fallback = 0) {
 }
 
 /**
- * @param {{ left: number, top: number, width: number, height: number, target?: string, label?: string, popover?: object, type?: string }} btn
+ * @param {{ left: number, top: number, width: number, height: number, target?: string, label?: string, popover?: object, type?: string, return?: boolean }} btn
  * @param {'lg' | 'samsung'} platform
  * @returns {Record<string, unknown>}
  */
@@ -42,6 +42,7 @@ export function buttonToEmulator(btn, platform = 'lg') {
       y: finiteNum(btn.top, 0),
     };
     if (btn.target) out.target = btn.target;
+    if (btn.return === true) out.return = true;
     return out;
   }
 
@@ -54,6 +55,7 @@ export function buttonToEmulator(btn, platform = 'lg') {
   if (btn.target) out.target = btn.target;
   if (btn.type) out.type = btn.type;
   if (btn.popover) out.popover = btn.popover;
+  if (btn.return === true) out.return = true;
   return out;
 }
 
@@ -81,6 +83,7 @@ export function buttonFromEmulator(btn, { id, screenId }) {
     height,
     ...(btn.popover ? { popover: btn.popover } : {}),
     ...(btn.type ? { type: btn.type } : {}),
+    ...(btn.return === true ? { return: true } : {}),
   };
 }
 

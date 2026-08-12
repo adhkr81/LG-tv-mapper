@@ -37,6 +37,20 @@ router.post('/', async (req, res) => {
   }
 });
 
+// POST /api/screens/:id/buttons/delete-by-size
+// Deletes all buttons with matching width×height across the whole project.
+router.post('/delete-by-size', async (req, res) => {
+  try {
+    const result = buttonService.deleteButtonsBySize(
+      req.body?.width,
+      req.body?.height
+    );
+    res.json(result);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 // PUT /api/screens/:id/buttons/:buttonId
 router.put('/:buttonId', async (req, res) => {
   try {

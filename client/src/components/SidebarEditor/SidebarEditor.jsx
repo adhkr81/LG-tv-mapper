@@ -36,6 +36,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const createSectionFromScreens = useStore((s) => s.createSectionFromScreens);
   const deleteScreens = useStore((s) => s.deleteScreens);
   const deleteButton = useStore((s) => s.deleteButton);
+  const deleteButtonsBySize = useStore((s) => s.deleteButtonsBySize);
   const updateButton = useStore((s) => s.updateButton);
   const addButton = useStore((s) => s.addButton);
   const importButtonsFromScreen = useStore((s) => s.importButtonsFromScreen);
@@ -131,6 +132,23 @@ export default function SidebarEditor({ mode = 'viewer' }) {
       null
     );
   }, [screen, selectedButtonId]);
+
+  const sameSizeButtonCount = useMemo(() => {
+    if (!selectedButton) return 0;
+    const rect = normalizeButton(selectedButton);
+    let count = 0;
+    for (const s of screens) {
+      for (const b of s.buttons || []) {
+        const n = normalizeButton(b);
+        if (n.width === rect.width && n.height === rect.height) count += 1;
+      }
+      for (const b of s.scrollArea?.buttons || []) {
+        const n = normalizeButton(b);
+        if (n.width === rect.width && n.height === rect.height) count += 1;
+      }
+    }
+    return count;
+  }, [screens, selectedButton]);
 
   const canEditScroll = isSamsung && isSamsungScrollPreset(screen?.preset);
   const hasScrollImage = Boolean(screen?.scrollArea?.image?.trim());
@@ -575,6 +593,24 @@ export default function SidebarEditor({ mode = 'viewer' }) {
       await handleRectChange(buttonId, { ...buttonRectClipboard });
     } catch {
       /* handleRectChange alerts on failure */
+    }
+  };
+
+  const handleDeleteButtonsBySize = async (btn) => {
+    if (!screen || !btn) return;
+    const rect = normalizeButton(btn);
+    const count = sameSizeButtonCount;
+    const label = `${rect.width}×${rect.height}`;
+    const ok = window.confirm(
+      count === 1
+        ? `Delete this 1 button (${label})?`
+        : `Delete all ${count} buttons sized ${label} across the entire project?`
+    );
+    if (!ok) return;
+    try {
+      await deleteButtonsBySize(screen.id, rect.width, rect.height);
+    } catch (err) {
+      alert('Delete by size failed: ' + err.message);
     }
   };
 
@@ -1348,6 +1384,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
               <div className="sidebar__section-title">Button Details</div>
               {(() => {
                 const selectedBtn = selectedButton;
+                const selectedRect = normalizeButton(selectedBtn);
                 return (
                   <>
                     <div className="sidebar__button-target">
@@ -1397,6 +1434,18 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                       button={selectedBtn}
                       onUpdate={(updates) => handleRectChange(selectedBtn.id, updates)}
                     />
+                    <label className="sidebar__button-return">
+                      <input
+                        type="checkbox"
+                        checked={selectedBtn.return === true}
+                        onChange={(e) =>
+                          handleRectChange(selectedBtn.id, {
+                            return: e.target.checked ? true : null,
+                          })
+                        }
+                      />
+                      <span className="label" style={{ margin: 0 }}>Return</span>
+                    </label>
                     <div className="sidebar__rect-clipboard">
                       <button
                         type="button"
@@ -1418,6 +1467,15 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                         }
                       >
                         Paste size
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-danger"
+                        onClick={() => handleDeleteButtonsBySize(selectedBtn)}
+                        title={`Delete every button sized ${selectedRect.width}×${selectedRect.height} across the project (${sameSizeButtonCount} match${sameSizeButtonCount === 1 ? '' : 'es'})`}
+                      >
+                        Delete all {selectedRect.width}×{selectedRect.height}
+                        {sameSizeButtonCount > 1 ? ` (${sameSizeButtonCount})` : ''}
                       </button>
                     </div>
                     {buttonRectClipboard && (
