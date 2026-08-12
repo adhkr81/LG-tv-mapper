@@ -78,43 +78,50 @@
         "width": 42,
         "height": 42,
         "x": 23,
-        "y": 307
+        "y": 307,
+        "target": "apps_samsungtv-home"
       },
       {
         "width": 42,
         "height": 42,
         "x": 67,
-        "y": 307
+        "y": 307,
+        "target": "apps_livetv"
       },
       {
         "width": 42,
         "height": 42,
         "x": 111,
-        "y": 307
+        "y": 307,
+        "target": "apps_netflix"
       },
       {
         "width": 42,
         "height": 42,
         "x": 155,
-        "y": 307
+        "y": 307,
+        "target": "apps_prime"
       },
       {
         "width": 42,
         "height": 42,
         "x": 199,
-        "y": 307
+        "y": 307,
+        "target": "apps_disney"
       },
       {
         "width": 42,
         "height": 42,
         "x": 242,
-        "y": 307
+        "y": 307,
+        "target": "apps_appletv"
       },
       {
         "width": 42,
         "height": 42,
         "x": 286,
-        "y": 307
+        "y": 307,
+        "target": "apps_youtube"
       }
     ],
     "back_button": {
@@ -5763,11 +5770,92 @@
     "model": "smart-tv",
     "buttons": [],
     "back_button": {
-      "target": ""
+      "target": "homescreen"
     }
   },
   "apps_disney": {
-    "img_filename": "",
+    "img_filename": "apps_disney",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": "homescreen"
+    }
+  },
+  "apps_livetv": {
+    "img_filename": "apps_livetv",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": "homescreen"
+    }
+  },
+  "apps_netflix": {
+    "img_filename": "apps_netflix",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": "homescreen"
+    }
+  },
+  "apps_prime": {
+    "img_filename": "apps_prime",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": "homescreen"
+    }
+  },
+  "apps_youtube": {
+    "img_filename": "apps_youtube",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": "homescreen"
+    }
+  },
+  "apps_samsungtv-guide": {
+    "img_filename": "apps_samsungtv-guide",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "apps_samsungtv-home": {
+    "img_filename": "apps_samsungtv-home",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": "homescreen"
+    }
+  },
+  "apps_samsungtv-kids": {
+    "img_filename": "apps_samsungtv-kids",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "apps_samsungtv-movies": {
+    "img_filename": "apps_samsungtv-movies",
+    "preset": "preset2",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": ""
+    }
+  },
+  "apps_samsungtv-music": {
+    "img_filename": "apps_samsungtv-music",
     "preset": "preset2",
     "model": "smart-tv",
     "buttons": [],

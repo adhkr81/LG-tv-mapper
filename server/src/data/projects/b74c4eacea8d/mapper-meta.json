@@ -108,7 +108,10 @@
     {
       "id": "apps",
       "name": "apps",
-      "rootScreenId": "apps_appletv"
+      "rootScreenId": "apps_appletv",
+      "bandX": -1466,
+      "bandY": -297,
+      "collapsed": true
     }
   ],
   "screens": {
@@ -2650,18 +2653,92 @@
       "sourceHeight": 1080
     },
     "apps_appletv": {
-      "graphX": -133,
-      "graphY": 532,
+      "graphX": -3896,
+      "graphY": 732,
       "sectionId": "apps",
       "buttonIds": [],
       "sourceWidth": 1672,
       "sourceHeight": 941
     },
     "apps_disney": {
-      "graphX": 315,
-      "graphY": 454,
+      "graphX": -3602,
+      "graphY": 719,
       "sectionId": "apps",
-      "buttonIds": []
+      "buttonIds": [],
+      "sourceWidth": 1000,
+      "sourceHeight": 563
+    },
+    "apps_livetv": {
+      "graphX": -3321,
+      "graphY": 708,
+      "sectionId": "apps",
+      "buttonIds": [],
+      "sourceWidth": 1000,
+      "sourceHeight": 563
+    },
+    "apps_netflix": {
+      "graphX": -3041,
+      "graphY": 708,
+      "sectionId": "apps",
+      "buttonIds": [],
+      "sourceWidth": 1000,
+      "sourceHeight": 563
+    },
+    "apps_prime": {
+      "graphX": -2761,
+      "graphY": 708,
+      "sectionId": "apps",
+      "buttonIds": [],
+      "sourceWidth": 1000,
+      "sourceHeight": 563
+    },
+    "apps_youtube": {
+      "graphX": -2481,
+      "graphY": 708,
+      "sectionId": "apps",
+      "buttonIds": [],
+      "sourceWidth": 1000,
+      "sourceHeight": 563
+    },
+    "apps_samsungtv-guide": {
+      "graphX": -3321,
+      "graphY": 1021,
+      "sectionId": "apps",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "apps_samsungtv-home": {
+      "graphX": -3619,
+      "graphY": 1027,
+      "sectionId": "apps",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "apps_samsungtv-kids": {
+      "graphX": -3048,
+      "graphY": 1028,
+      "sectionId": "apps",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "apps_samsungtv-movies": {
+      "graphX": -2768,
+      "graphY": 1028,
+      "sectionId": "apps",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "apps_samsungtv-music": {
+      "graphX": -2488,
+      "graphY": 1028,
+      "sectionId": "apps",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     }
   },
   "config": {
