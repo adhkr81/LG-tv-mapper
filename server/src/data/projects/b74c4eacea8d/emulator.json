@@ -2313,6 +2313,7 @@
     "img_filename": "settings_support",
     "preset": "preset2",
     "model": "smart-tv",
+    "track_origin": true,
     "buttons": [
       {
         "width": 165,
@@ -2444,6 +2445,7 @@
     "img_filename": "all-settings_background",
     "preset": "preset5",
     "model": "smart-tv",
+    "track_origin": true,
     "buttons": [],
     "back_button": {
       "target": "homescreen_settings"
