@@ -879,11 +879,28 @@
       "graphX": 1613,
       "graphY": -560,
       "sectionId": "settings",
-      "buttonIds": [
-        "def2a7f5-7e72-4858-b110-138fb58ef065"
-      ],
+      "buttonIds": [],
       "sourceWidth": 1920,
-      "sourceHeight": 1080
+      "sourceHeight": 1080,
+      "scrollButtonIds": [
+        "80c1e973-540b-4aa5-807b-856a65c0b697",
+        "a88a6fb0-9a77-4060-b8de-690d6c7b2bad",
+        "46939063-9d55-4ed7-98dc-14a028b7bd85",
+        "39732777-a003-4aaf-ba93-fa92287dcad0",
+        "609b5ceb-5920-4fb5-a438-04003ea3b63a",
+        "b3ff93ec-0a9b-40a2-bb12-b2b0acb1d04b",
+        "07e81e53-25cb-4f36-a762-a42da7f52847",
+        "b5148fc7-ebbf-41a0-bdbf-279d6172a07d",
+        "e5207339-a5b6-4cff-8abd-bda93615a7d9",
+        "819132a0-5983-44f6-902a-0bd3414b039b",
+        "4e739410-bb4e-4e56-ab24-7d17d6b839ed",
+        "5f084df1-7625-4316-a690-0701d7a0d94d",
+        "52e4874e-23a7-4c6f-8a05-2de4ecffb344",
+        "c1bbdb82-8ad9-4e7f-953f-0c7336b0c8d7",
+        "b8fc31fa-875c-4cc7-9e2b-21fad3542d86",
+        "ed6605cb-e33f-4777-bf4c-feb31eeea35f"
+      ],
+      "scrollImage": "settings_power-energy-saving_scroll.jpg"
     },
     "settings_quick-share": {
       "graphX": 1526,
@@ -936,8 +953,8 @@
       "scrollImage": "My_Account_scroll.jpg"
     },
     "all-settings_background": {
-      "graphX": -391,
-      "graphY": -96,
+      "graphX": -364,
+      "graphY": -102,
       "sectionId": null,
       "buttonIds": [],
       "sourceWidth": 1920,
@@ -2769,6 +2786,24 @@
       ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
+    },
+    "all-settings_background-copy": {
+      "graphX": -106,
+      "graphY": -107,
+      "sectionId": null,
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "scrollButtonIds": [
+        "f81ec4d4-f592-4806-8af8-5e553a7a2fd8",
+        "c89f0e70-5b3c-4e60-9d0b-20cd38bd0598",
+        "29d7028c-107d-42e0-9f1a-76bbb5dbbd6a",
+        "05a41ad1-facf-4f0c-a2a2-0f1fc7c40f9e",
+        "e90b44e1-59ed-4be3-9cb5-e1f31fc392b1",
+        "10b56ce4-196b-4a17-a5ea-e3e4ff1d7614",
+        "1b7be0db-0496-44b6-8054-1a64b9b44edc"
+      ],
+      "scrollImage": "all-settings_background-copy_scroll.jpg"
     }
   },
   "config": {

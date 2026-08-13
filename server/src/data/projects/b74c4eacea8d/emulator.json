@@ -2175,19 +2175,129 @@
   },
   "settings_power-energy-saving": {
     "img_filename": "settings_power-energy-saving",
-    "preset": "preset2",
+    "preset": "preset6",
     "model": "smart-tv",
-    "buttons": [
-      {
-        "width": 164,
-        "height": 30,
-        "x": 35,
-        "y": 146,
-        "target": "g&p_power-energy-from-quick"
-      }
-    ],
+    "track_origin": true,
+    "buttons": [],
     "back_button": {
       "target": "homescreen_settings-opened"
+    },
+    "scroll_area": {
+      "img_filename": "settings_power-energy-saving_scroll",
+      "buttons": [
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 2,
+          "target": "g&p_accessibility"
+        },
+        {
+          "width": 163,
+          "height": 27,
+          "x": 3,
+          "y": 34,
+          "target": "g&p_t&p"
+        },
+        {
+          "width": 166,
+          "height": 30,
+          "x": 1,
+          "y": 64,
+          "target": "g&p_power-energy"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 97,
+          "target": "g&p_broadcasting"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 129,
+          "target": "g&p_parental-settings"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 161,
+          "target": "g&p_external-device-manager"
+        },
+        {
+          "width": 163,
+          "height": 26,
+          "x": 3,
+          "y": 193,
+          "target": "g&p_media-switching-settings"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 224,
+          "target": "g&p_time"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 298,
+          "target": "g&p_menu-style"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 330,
+          "target": "g&p_keyboard-mouse"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 361,
+          "target": "g&p_remote-control"
+        },
+        {
+          "width": 163,
+          "height": 36,
+          "x": 3,
+          "y": 394,
+          "target": "g&p_sound-feedback"
+        },
+        {
+          "width": 163,
+          "height": 42,
+          "x": 3,
+          "y": 434,
+          "target": "g&p_usage-mode"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 480,
+          "target": "g&p_pin-settings"
+        },
+        {
+          "width": 163,
+          "height": 28,
+          "x": 3,
+          "y": 512,
+          "target": "g&p_data-factory-reset"
+        },
+        {
+          "width": 163,
+          "height": 26,
+          "x": 3,
+          "y": 544,
+          "target": "g&p_restart"
+        }
+      ]
     }
   },
   "settings_quick-share": {
@@ -3950,9 +4060,10 @@
     "img_filename": "g&p",
     "preset": "preset6",
     "model": "smart-tv",
+    "track_origin": true,
     "buttons": [],
     "back_button": {
-      "target": "all-settings_background"
+      "target": "all-settings_background-copy"
     },
     "scroll_area": {
       "img_filename": "g&p_scroll",
@@ -6041,6 +6152,69 @@
     ],
     "back_button": {
       "target": "homescreen"
+    }
+  },
+  "all-settings_background-copy": {
+    "img_filename": "all-settings_background-copy",
+    "preset": "preset5",
+    "model": "smart-tv",
+    "buttons": [],
+    "back_button": {
+      "target": "homescreen_settings"
+    },
+    "scroll_area": {
+      "img_filename": "all-settings_background-copy_scroll",
+      "buttons": [
+        {
+          "width": 157,
+          "height": 30,
+          "x": 4,
+          "y": 80,
+          "target": "picture"
+        },
+        {
+          "width": 157,
+          "height": 30,
+          "x": 4,
+          "y": 115,
+          "target": "sound"
+        },
+        {
+          "width": 157,
+          "height": 30,
+          "x": 4,
+          "y": 150,
+          "target": "connections"
+        },
+        {
+          "width": 157,
+          "height": 30,
+          "x": 4,
+          "y": 185,
+          "target": "advanced-features"
+        },
+        {
+          "width": 157,
+          "height": 30,
+          "x": 4,
+          "y": 220,
+          "target": "g&p"
+        },
+        {
+          "width": 157,
+          "height": 30,
+          "x": 4,
+          "y": 257,
+          "target": "support"
+        },
+        {
+          "width": 163,
+          "height": 41,
+          "x": 0,
+          "y": 4,
+          "target": "My_Account_sign-in"
+        }
+      ]
     }
   }
 }
