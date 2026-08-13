@@ -86,8 +86,8 @@
       "name": "g&p",
       "rootScreenId": "g&p",
       "collapsed": true,
-      "bandX": -2347,
-      "bandY": -71
+      "bandX": -2189,
+      "bandY": -74
     },
     {
       "id": "g_p_accessibility",
@@ -189,8 +189,8 @@
         "6c41bf63-cb07-4798-a69a-f54bec141a1c",
         "8838a12c-ba56-4379-8df5-5a686067c807"
       ],
-      "sourceWidth": 1920,
-      "sourceHeight": 1080
+      "sourceWidth": 1000,
+      "sourceHeight": 563
     },
     "homescreen_vision-ai-1": {
       "graphX": 695,
@@ -848,8 +848,8 @@
         "d40d3cd8-7527-40c4-b6d9-093e636b256f",
         "5c2c0025-9754-43fb-ad2c-f505677896bb"
       ],
-      "sourceWidth": 1067,
-      "sourceHeight": 600,
+      "sourceWidth": 1000,
+      "sourceHeight": 562,
       "scrollButtonIds": [
         "dc84089c-fb14-423a-afc5-0711d33ecb9b",
         "90e63c3e-015a-4f89-98e7-8c8b1fa656c6",
@@ -880,8 +880,8 @@
       "graphY": -560,
       "sectionId": "settings",
       "buttonIds": [],
-      "sourceWidth": 1920,
-      "sourceHeight": 1080,
+      "sourceWidth": 1000,
+      "sourceHeight": 563,
       "scrollButtonIds": [
         "80c1e973-540b-4aa5-807b-856a65c0b697",
         "a88a6fb0-9a77-4060-b8de-690d6c7b2bad",
@@ -920,10 +920,10 @@
         "22f58321-1d3b-4d66-b97f-c37066455c9b",
         "b1e1afa6-47c2-4cce-a2ed-9c74c3a56190",
         "ebc9a5cf-ef83-432b-8795-2890cfa3d0a7",
-        "b555a7a8-6791-4836-be01-0265d59dc000"
+        "1d8f62bb-30b7-4fa3-aedf-c24b3e47efa3"
       ],
-      "sourceWidth": 1920,
-      "sourceHeight": 1080
+      "sourceWidth": 1000,
+      "sourceHeight": 563
     },
     "Vision_AI_generative-wallpaper": {
       "graphX": 675,
@@ -957,8 +957,8 @@
       "graphY": -102,
       "sectionId": null,
       "buttonIds": [],
-      "sourceWidth": 1920,
-      "sourceHeight": 1080,
+      "sourceWidth": 1000,
+      "sourceHeight": 563,
       "scrollButtonIds": [
         "2790427e-a6d3-460b-8d6a-eb4d5496380a",
         "2270630c-e0b7-48d3-85eb-9aa71e840737",
@@ -1302,8 +1302,8 @@
       "graphY": -176,
       "sectionId": "connections",
       "buttonIds": [],
-      "sourceWidth": 1920,
-      "sourceHeight": 1080,
+      "sourceWidth": 1000,
+      "sourceHeight": 563,
       "scrollButtonIds": [
         "84f14363-93d4-418e-b27f-82f7a175bbdb",
         "ab2603d7-6da6-4d25-8239-a1bac86cdb5d",
@@ -2604,28 +2604,6 @@
       "sourceWidth": 1067,
       "sourceHeight": 600
     },
-    "g&p_power-energy-from-quick": {
-      "graphX": 2291,
-      "graphY": -187,
-      "sectionId": "general-privacy",
-      "buttonIds": [],
-      "sourceWidth": 1920,
-      "sourceHeight": 1080,
-      "scrollButtonIds": [
-        "eb104831-a810-4914-81f9-f131569f185d"
-      ],
-      "scrollImage": "g&p_power-energy-from-quick_scroll.jpg"
-    },
-    "g&p_power-energy_auto-power-off-from-quick": {
-      "graphX": 2287,
-      "graphY": 72,
-      "sectionId": "general-privacy",
-      "buttonIds": [
-        "e8396760-b3e0-42de-bb78-704fc6f722f9"
-      ],
-      "sourceWidth": 1920,
-      "sourceHeight": 1080
-    },
     "support-from-quick": {
       "graphX": 1584,
       "graphY": 130,
@@ -2635,8 +2613,8 @@
         "b8d14370-6e3d-4136-8cee-7b5c1725ea11",
         "65b1c3f4-a042-4385-bc5d-3f895c2a303c"
       ],
-      "sourceWidth": 1920,
-      "sourceHeight": 1080
+      "sourceWidth": 1000,
+      "sourceHeight": 563
     },
     "support_device-care-from-quick": {
       "graphX": 1897,
@@ -2788,8 +2766,8 @@
       "sourceHeight": 1080
     },
     "all-settings_background-copy": {
-      "graphX": -106,
-      "graphY": -107,
+      "graphX": -96,
+      "graphY": -99,
       "sectionId": null,
       "buttonIds": [],
       "sourceWidth": 1920,
@@ -2804,6 +2782,319 @@
         "1b7be0db-0496-44b6-8054-1a64b9b44edc"
       ],
       "scrollImage": "all-settings_background-copy_scroll.jpg"
+    },
+    "g&p-copy": {
+      "graphX": 640,
+      "graphY": 1704,
+      "sectionId": "general-privacy",
+      "buttonIds": [],
+      "sourceWidth": 1000,
+      "sourceHeight": 563,
+      "scrollButtonIds": [
+        "9dd4070f-999d-40bd-ab97-f4d02a8132b2",
+        "7baecc1d-ca11-43cf-b80f-fc88827fb267",
+        "1bd70cdf-6422-458e-b271-38b793e1a76c",
+        "c5f86924-8cc0-46f2-a53a-183283cfa14d",
+        "a8b08c81-7439-41da-a5a7-e884917fe461",
+        "7e29d391-376a-426e-b3d8-dfb1e4ccc7b2",
+        "09887697-4ea7-496d-8559-1e2b63c765d0",
+        "4d36a77c-926a-4464-9ed2-8323dca690bf",
+        "623c204c-9a79-48b9-98dd-2031d7c9138d",
+        "61882b3c-2cf4-4665-ab86-04291b8355cd",
+        "1aca0d68-8db0-40ab-9b1f-4db658c138c7",
+        "279e2c48-f08f-4074-a14e-cdc699bd0b24",
+        "5442a300-e965-4e8b-b69f-6ef9840a6273",
+        "6462c487-19b3-4cc8-909c-869b2079bdc4",
+        "e4c75434-f780-4b3f-b884-3ffe90fa4f45",
+        "2635cf53-bcc9-4d97-b02b-b42848a7a850"
+      ],
+      "scrollImage": "g&p-copy_scroll.jpg"
+    },
+    "g&p_t&p-copy": {
+      "graphX": -793,
+      "graphY": 2067,
+      "sectionId": "general-privacy",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "scrollButtonIds": [],
+      "scrollImage": "g&p_t&p-copy_scroll.jpg"
+    },
+    "g&p_power-energy-copy": {
+      "graphX": -414,
+      "graphY": 2031,
+      "sectionId": "general-privacy",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "scrollButtonIds": [
+        "9d8468d8-b610-4939-9677-67fafeb5d3a9"
+      ],
+      "scrollImage": "g&p_power-energy-copy_scroll.jpg"
+    },
+    "g&p_parental-settings-copy": {
+      "graphX": -1178,
+      "graphY": 2049,
+      "sectionId": "general-privacy",
+      "buttonIds": [
+        "81be05f1-d518-4b28-9cf7-498d410ba677",
+        "40beb4d4-dd2c-4286-924b-45c9eec245fb"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_parental-settings_program-rating-copy": {
+      "graphX": -1322,
+      "graphY": 2311,
+      "sectionId": "general-privacy",
+      "buttonIds": [
+        "759f44f0-a1fd-4a2d-92a1-3fd8f8902dc9"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_parental-settings_program-rating_on-copy": {
+      "graphX": -1189,
+      "graphY": 2529,
+      "sectionId": "general-privacy",
+      "buttonIds": [
+        "abcad5e2-2349-4cbd-be3d-dd894d66f313",
+        "73b7f236-706d-487d-bbf7-c3a8b05ffefc",
+        "53e89e87-03cc-478f-8125-4da4c98b4b55",
+        "f04afc2a-882c-4803-a4c4-9a5c5123399a",
+        "09cec961-0f4a-4918-95ea-419ad1ffa528"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_parental-settings_tv-rating-copy": {
+      "graphX": -1357,
+      "graphY": 2803,
+      "sectionId": "general-privacy",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_parental-settings_movie-rating-copy": {
+      "graphX": -1604,
+      "graphY": 2799,
+      "sectionId": "general-privacy",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_parental-settings_canadian-english-copy": {
+      "graphX": -794,
+      "graphY": 2804,
+      "sectionId": "general-privacy",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_parental-settings_canadian-french-copy": {
+      "graphX": -1056,
+      "graphY": 2797,
+      "sectionId": "general-privacy",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_parental-settings_app-lock-copy": {
+      "graphX": -1034,
+      "graphY": 2314,
+      "sectionId": "general-privacy",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_external-device-manager-copy": {
+      "graphX": 46,
+      "graphY": 2064,
+      "sectionId": "general-privacy",
+      "buttonIds": [
+        "5e125cb2-d9b7-4856-9b52-2d68c9040e9b"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_external-device-manager_input-signal-copy": {
+      "graphX": 41,
+      "graphY": 2262,
+      "sectionId": "general-privacy",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_time-copy": {
+      "graphX": 803,
+      "graphY": 2032,
+      "sectionId": "general-privacy",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "scrollButtonIds": [
+        "00e9de5c-da6b-4daf-8e92-fc3a73d6c955",
+        "ef7dc03d-4f1a-418e-9c65-20d8379b2dc0"
+      ],
+      "scrollImage": "g&p_time-copy_scroll.jpg"
+    },
+    "g&p_time_clock-mode-copy": {
+      "graphX": 775,
+      "graphY": 2217,
+      "sectionId": "general-privacy",
+      "buttonIds": [
+        "33b71139-1637-4460-8230-d114d0bc5a51"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_time_time-offset-copy": {
+      "graphX": 801,
+      "graphY": 2408,
+      "sectionId": "general-privacy",
+      "buttonIds": [
+        "d5528e7b-d379-4100-8e25-0e575e8d4a00"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_menu-style-copy": {
+      "graphX": 1110,
+      "graphY": 2040,
+      "sectionId": "general-privacy",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_keyboard-mouse-copy": {
+      "graphX": 1420,
+      "graphY": 2035,
+      "sectionId": "general-privacy",
+      "buttonIds": [
+        "68caf0aa-8e29-41b2-ac15-30c253d7e394",
+        "b63a99ac-3381-4848-aaac-9f423abb16b6"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_keyboard-mouse_keyboard-settings-copy": {
+      "graphX": 1449,
+      "graphY": 2227,
+      "sectionId": "general-privacy",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_keyboard-mouse_mouse-settings-copy": {
+      "graphX": 1451,
+      "graphY": 2441,
+      "sectionId": "general-privacy",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_remote-control-copy": {
+      "graphX": 1785,
+      "graphY": 2033,
+      "sectionId": "general-privacy",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_sound-feedback-copy": {
+      "graphX": 2109,
+      "graphY": 2027,
+      "sectionId": "general-privacy",
+      "buttonIds": [
+        "4262a71c-0d56-4636-ba43-98269017cf86"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_usage-mode-copy": {
+      "graphX": 2390,
+      "graphY": 2030,
+      "sectionId": "general-privacy",
+      "buttonIds": [
+        "aa9a9e72-be7a-4a62-8fb8-451404c90d0b"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_pin-settings-copy": {
+      "graphX": 2710,
+      "graphY": 2035,
+      "sectionId": "general-privacy",
+      "buttonIds": [
+        "dd17e1ca-387f-4e17-bc2d-7a9309245245",
+        "82e42bf4-5689-47a7-ac36-557218d19ed9"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_pin-settings_change-pin-copy": {
+      "graphX": 2571,
+      "graphY": 2315,
+      "sectionId": "general-privacy",
+      "buttonIds": [
+        "9a06405c-2c09-46d0-b6ca-9e7f11e2b220"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_pin-settings_samsung-account-copy": {
+      "graphX": 2823,
+      "graphY": 2310,
+      "sectionId": "general-privacy",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_data-factory-reset-copy": {
+      "graphX": 2994,
+      "graphY": 2040,
+      "sectionId": "general-privacy",
+      "buttonIds": [
+        "abe6618f-1b92-4bf6-ac2f-8d658aced80d"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_restart-copy": {
+      "graphX": 3286,
+      "graphY": 2025,
+      "sectionId": "general-privacy",
+      "buttonIds": [
+        "26e94f80-694c-4ea8-9f95-d4f634deb56f"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_power-energy_auto-power-off-copy": {
+      "graphX": -418,
+      "graphY": 2290,
+      "sectionId": "general-privacy",
+      "buttonIds": [
+        "64ea1a48-6f0e-4adc-8ec1-fddabb7f7685"
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_broadcasting-copy": {
+      "graphX": -1788,
+      "graphY": 2060,
+      "sectionId": "general-privacy",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
+    },
+    "g&p_media-switching-settings-copy": {
+      "graphX": 418,
+      "graphY": 2043,
+      "sectionId": "general-privacy",
+      "buttonIds": [],
+      "sourceWidth": 1920,
+      "sourceHeight": 1080
     }
   },
   "config": {
