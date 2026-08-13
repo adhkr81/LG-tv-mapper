@@ -4729,7 +4729,6 @@
     "img_filename": "support",
     "preset": "preset2",
     "model": "smart-tv",
-    "track_origin": true,
     "buttons": [
       {
         "width": 160,
