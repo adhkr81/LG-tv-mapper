@@ -2210,6 +2210,41 @@
         "x": 34,
         "y": 243,
         "target": "support-from-quick"
+      },
+      {
+        "width": 165,
+        "height": 30,
+        "x": 33,
+        "y": 174,
+        "target": "advanced-features"
+      },
+      {
+        "width": 165,
+        "height": 30,
+        "x": 33,
+        "y": 70,
+        "target": "picture"
+      },
+      {
+        "width": 165,
+        "height": 30,
+        "x": 33,
+        "y": 104,
+        "target": "sound"
+      },
+      {
+        "width": 165,
+        "height": 30,
+        "x": 33,
+        "y": 139,
+        "target": "connections"
+      },
+      {
+        "width": 165,
+        "height": 30,
+        "x": 33,
+        "y": 209,
+        "target": "g&p"
       }
     ],
     "back_button": {
@@ -5822,16 +5857,74 @@
     "img_filename": "apps_samsungtv-guide",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 50,
+        "height": 25,
+        "x": 26,
+        "y": 63,
+        "target": "apps_samsungtv-home"
+      },
+      {
+        "width": 50,
+        "height": 25,
+        "x": 242,
+        "y": 63,
+        "target": "apps_samsungtv-music"
+      },
+      {
+        "width": 40,
+        "height": 25,
+        "x": 295,
+        "y": 63,
+        "target": "apps_samsungtv-kids"
+      },
+      {
+        "width": 106,
+        "height": 25,
+        "x": 133,
+        "y": 63,
+        "target": "apps_samsungtv-movies"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "homescreen"
     }
   },
   "apps_samsungtv-home": {
     "img_filename": "apps_samsungtv-home",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 50,
+        "height": 25,
+        "x": 79,
+        "y": 63,
+        "target": "apps_samsungtv-guide"
+      },
+      {
+        "width": 50,
+        "height": 25,
+        "x": 242,
+        "y": 63,
+        "target": "apps_samsungtv-music"
+      },
+      {
+        "width": 40,
+        "height": 25,
+        "x": 295,
+        "y": 63,
+        "target": "apps_samsungtv-kids"
+      },
+      {
+        "width": 106,
+        "height": 25,
+        "x": 133,
+        "y": 63,
+        "target": "apps_samsungtv-movies"
+      }
+    ],
     "back_button": {
       "target": "homescreen"
     }
@@ -5840,27 +5933,114 @@
     "img_filename": "apps_samsungtv-kids",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 50,
+        "height": 25,
+        "x": 79,
+        "y": 63,
+        "target": "apps_samsungtv-guide"
+      },
+      {
+        "width": 50,
+        "height": 25,
+        "x": 242,
+        "y": 63,
+        "target": "apps_samsungtv-music"
+      },
+      {
+        "width": 106,
+        "height": 25,
+        "x": 133,
+        "y": 63,
+        "target": "apps_samsungtv-movies"
+      },
+      {
+        "width": 50,
+        "height": 25,
+        "x": 26,
+        "y": 63,
+        "target": "apps_samsungtv-home"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "homescreen"
     }
   },
   "apps_samsungtv-movies": {
     "img_filename": "apps_samsungtv-movies",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 50,
+        "height": 25,
+        "x": 79,
+        "y": 63,
+        "target": "apps_samsungtv-guide"
+      },
+      {
+        "width": 50,
+        "height": 25,
+        "x": 242,
+        "y": 63,
+        "target": "apps_samsungtv-music"
+      },
+      {
+        "width": 40,
+        "height": 25,
+        "x": 295,
+        "y": 63,
+        "target": "apps_samsungtv-kids"
+      },
+      {
+        "width": 50,
+        "height": 25,
+        "x": 26,
+        "y": 63,
+        "target": "apps_samsungtv-home"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "homescreen"
     }
   },
   "apps_samsungtv-music": {
     "img_filename": "apps_samsungtv-music",
     "preset": "preset2",
     "model": "smart-tv",
-    "buttons": [],
+    "buttons": [
+      {
+        "width": 50,
+        "height": 25,
+        "x": 26,
+        "y": 63,
+        "target": "apps_samsungtv-home"
+      },
+      {
+        "width": 40,
+        "height": 25,
+        "x": 295,
+        "y": 63,
+        "target": "apps_samsungtv-kids"
+      },
+      {
+        "width": 106,
+        "height": 25,
+        "x": 133,
+        "y": 63,
+        "target": "apps_samsungtv-movies"
+      },
+      {
+        "width": 50,
+        "height": 25,
+        "x": 79,
+        "y": 63,
+        "target": "apps_samsungtv-guide"
+      }
+    ],
     "back_button": {
-      "target": ""
+      "target": "homescreen"
     }
   }
 }

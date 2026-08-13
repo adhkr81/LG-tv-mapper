@@ -109,8 +109,8 @@
       "id": "apps",
       "name": "apps",
       "rootScreenId": "apps_appletv",
-      "bandX": -1466,
-      "bandY": -297,
+      "bandX": -1176,
+      "bandY": -89,
       "collapsed": true
     }
   ],
@@ -876,8 +876,8 @@
       "sourceHeight": 1080
     },
     "settings_power-energy-saving": {
-      "graphX": 1526,
-      "graphY": -350,
+      "graphX": 1613,
+      "graphY": -560,
       "sectionId": "settings",
       "buttonIds": [
         "def2a7f5-7e72-4858-b110-138fb58ef065"
@@ -898,7 +898,12 @@
       "graphY": 84,
       "sectionId": "settings",
       "buttonIds": [
-        "227671ed-0448-4f59-af91-05e4332baed4"
+        "227671ed-0448-4f59-af91-05e4332baed4",
+        "a7a118a1-c54d-43a2-872b-2c4ed6db4783",
+        "22f58321-1d3b-4d66-b97f-c37066455c9b",
+        "b1e1afa6-47c2-4cce-a2ed-9c74c3a56190",
+        "ebc9a5cf-ef83-432b-8795-2890cfa3d0a7",
+        "b555a7a8-6791-4836-be01-0265d59dc000"
       ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
@@ -2653,8 +2658,8 @@
       "sourceHeight": 1080
     },
     "apps_appletv": {
-      "graphX": -3896,
-      "graphY": 732,
+      "graphX": -3893,
+      "graphY": 727,
       "sectionId": "apps",
       "buttonIds": [],
       "sourceWidth": 1672,
@@ -2704,7 +2709,12 @@
       "graphX": -3321,
       "graphY": 1021,
       "sectionId": "apps",
-      "buttonIds": [],
+      "buttonIds": [
+        "65d2de8e-2050-4f8d-8f73-a7c03a9b1d22",
+        "6fd51fc8-a81f-4163-9795-591b6db29f7c",
+        "d62c714f-9b12-4dea-97c2-492d02ef4620",
+        "757d4374-f9ea-47de-8237-f4e5d3ef29bd"
+      ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
     },
@@ -2712,7 +2722,12 @@
       "graphX": -3619,
       "graphY": 1027,
       "sectionId": "apps",
-      "buttonIds": [],
+      "buttonIds": [
+        "d7a8ece5-ffb6-4194-8096-10d607b7d652",
+        "3b1ffee4-ea48-4121-b8d7-7eca1cb39d4d",
+        "265a796a-4c2c-4b26-bfa1-61cdf957b303",
+        "b3cf720a-d3f8-4cbb-9d7e-fe970d9c26b3"
+      ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
     },
@@ -2720,7 +2735,12 @@
       "graphX": -3048,
       "graphY": 1028,
       "sectionId": "apps",
-      "buttonIds": [],
+      "buttonIds": [
+        "1cb6254a-7d6f-4b81-95da-5ef3701a9a19",
+        "e4dd5bb0-d88d-497c-8fce-68eeb0567a62",
+        "3f02db43-0b7e-4816-beaa-639e3acd57b8",
+        "62b90308-fd32-4498-9bda-2a984de93f58"
+      ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
     },
@@ -2728,7 +2748,12 @@
       "graphX": -2768,
       "graphY": 1028,
       "sectionId": "apps",
-      "buttonIds": [],
+      "buttonIds": [
+        "4293ff97-7634-45c9-9679-0411dd5c1a94",
+        "0d1bc29e-1e7e-4f34-b19b-c0ce323c244d",
+        "15c762dd-98c9-4fbc-8717-d91d66942536",
+        "f2ff5ae3-118b-45a9-b354-e42f8657889b"
+      ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
     },
@@ -2736,7 +2761,12 @@
       "graphX": -2488,
       "graphY": 1028,
       "sectionId": "apps",
-      "buttonIds": [],
+      "buttonIds": [
+        "2764b1c8-d417-4c17-81c3-499fef402a1a",
+        "6e2c3af9-e535-4cd0-a548-51b86fdf01bf",
+        "200814da-80ce-40c8-b775-0959397ec05d",
+        "86d97bad-0414-4801-82ac-8a460692713a"
+      ],
       "sourceWidth": 1920,
       "sourceHeight": 1080
     }
