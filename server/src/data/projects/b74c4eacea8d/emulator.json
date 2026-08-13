@@ -2177,7 +2177,6 @@
     "img_filename": "settings_power-energy-saving",
     "preset": "preset6",
     "model": "smart-tv",
-    "track_origin": true,
     "buttons": [],
     "back_button": {
       "target": "homescreen_settings-opened"
@@ -2313,7 +2312,6 @@
     "img_filename": "settings_support",
     "preset": "preset2",
     "model": "smart-tv",
-    "track_origin": true,
     "buttons": [
       {
         "width": 165,
@@ -2445,7 +2443,6 @@
     "img_filename": "all-settings_background",
     "preset": "preset5",
     "model": "smart-tv",
-    "track_origin": true,
     "buttons": [],
     "back_button": {
       "target": "homescreen_settings"
@@ -2540,7 +2537,7 @@
       }
     ],
     "back_button": {
-      "target": "all-settings_background"
+      "target": "all-settings_background-copy"
     }
   },
   "picture_picture-mode": {
@@ -2869,7 +2866,7 @@
       }
     ],
     "back_button": {
-      "target": "all-settings_background"
+      "target": "all-settings_background-copy"
     }
   },
   "sound_sound-output": {
@@ -3148,7 +3145,7 @@
     "model": "smart-tv",
     "buttons": [],
     "back_button": {
-      "target": "all-settings_background"
+      "target": "all-settings_background-copy"
     },
     "scroll_area": {
       "img_filename": "connections_scroll",
@@ -3461,7 +3458,7 @@
     "model": "smart-tv",
     "buttons": [],
     "back_button": {
-      "target": "all-settings_background"
+      "target": "all-settings_background-copy"
     },
     "scroll_area": {
       "img_filename": "advanced-features_scroll",
@@ -4062,7 +4059,6 @@
     "img_filename": "g&p",
     "preset": "preset6",
     "model": "smart-tv",
-    "track_origin": true,
     "buttons": [],
     "back_button": {
       "target": "all-settings_background-copy"
@@ -4753,7 +4749,7 @@
       }
     ],
     "back_button": {
-      "target": "all-settings_background"
+      "target": "all-settings_background-copy"
     }
   },
   "g&p_accessibility_voice-guide": {
