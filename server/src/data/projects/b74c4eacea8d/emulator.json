@@ -2445,6 +2445,7 @@
     "img_filename": "all-settings_background",
     "preset": "preset5",
     "model": "smart-tv",
+    "track_origin": true,
     "buttons": [],
     "back_button": {
       "target": "homescreen_settings"
