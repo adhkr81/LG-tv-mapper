@@ -1141,6 +1141,28 @@ const useStore = create((rawSet, get) => {
       }
     },
 
+    updateScreenTrackOrigin: async (screenId, trackOrigin) => {
+      markUndoAvailable(set, get);
+      try {
+        const updated = await api.updateScreen(screenId, {
+          track_origin: trackOrigin ? true : null,
+        });
+        set({
+          screens: get().screens.map((s) => {
+            if (s.id !== screenId) return s;
+            const next = { ...s, ...updated };
+            if (trackOrigin) next.track_origin = true;
+            else delete next.track_origin;
+            return next;
+          }),
+        });
+        return updated;
+      } catch (err) {
+        console.error('Update track origin failed:', err);
+        throw err;
+      }
+    },
+
     deleteScreen: async (screenId, options) => {
       return get().deleteScreens([screenId], options);
     },

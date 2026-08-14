@@ -169,6 +169,7 @@ export function screenToEmulator(screen, platform = 'lg') {
           typeof screen.backButtonTarget === 'string' ? screen.backButtonTarget : '',
       },
     };
+    if (screen.track_origin === true) out.track_origin = true;
     const scrollArea = scrollAreaToEmulator(screen.scrollArea);
     if (scrollArea) out.scroll_area = scrollArea;
     return out;
@@ -232,6 +233,7 @@ export function screenFromEmulator(
       preset: normalizeSamsungPreset(entry.preset),
       model: typeof entry.model === 'string' && entry.model ? entry.model : 'smart-tv',
       backButtonTarget: backTarget,
+      ...(entry.track_origin === true ? { track_origin: true } : {}),
       ...(scrollArea ? { scrollArea } : {}),
     };
   }

@@ -1131,6 +1131,7 @@ export function duplicateScreens({ screenIds, suffix = '-copy' } = {}) {
     if (source.backButtonTarget !== undefined) {
       screen.backButtonTarget = remapId(source.backButtonTarget);
     }
+    if (source.track_origin === true) screen.track_origin = true;
 
     if (source.scrollArea) {
       const sourceScrollImage =
@@ -1211,6 +1212,10 @@ export function updateScreen(id, updates) {
   if (updates.model !== undefined) screen.model = updates.model;
   if (updates.backButtonTarget !== undefined) {
     screen.backButtonTarget = updates.backButtonTarget;
+  }
+  if (updates.track_origin !== undefined) {
+    if (updates.track_origin === true) screen.track_origin = true;
+    else delete screen.track_origin;
   }
   if (updates.image !== undefined) {
     if (updates.image === null || updates.image === '') {

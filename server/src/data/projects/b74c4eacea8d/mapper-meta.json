@@ -980,8 +980,8 @@
         "2b116be9-28a1-4f74-bbf7-a9e6e360a004",
         "b01bf1e1-3998-4dbf-9270-abe5f2182a12"
       ],
-      "sourceWidth": 1920,
-      "sourceHeight": 1080
+      "sourceWidth": 1000,
+      "sourceHeight": 563
     },
     "picture_picture-mode": {
       "graphX": -746,
@@ -1146,8 +1146,8 @@
         "24a9ed85-3237-4c8c-ae38-3b8accb5a9f6",
         "f2c4e335-f2b5-4e11-a4b6-790772d19833"
       ],
-      "sourceWidth": 1920,
-      "sourceHeight": 1080
+      "sourceWidth": 1000,
+      "sourceHeight": 563
     },
     "sound_sound-output": {
       "graphX": 11,
@@ -1470,8 +1470,8 @@
       "graphY": -285,
       "sectionId": "advanced_features",
       "buttonIds": [],
-      "sourceWidth": 1920,
-      "sourceHeight": 1080,
+      "sourceWidth": 1000,
+      "sourceHeight": 563,
       "scrollButtonIds": [
         "edaa8c41-45f9-4cb8-af18-63afca565540",
         "ec08997e-5126-43f0-94ab-f0f5010b71ba",
@@ -1700,8 +1700,8 @@
       "graphY": 74,
       "sectionId": "general-privacy",
       "buttonIds": [],
-      "sourceWidth": 1920,
-      "sourceHeight": 1080,
+      "sourceWidth": 1000,
+      "sourceHeight": 563,
       "scrollButtonIds": [
         "74ba88d9-de88-425d-9497-00359818f7ee",
         "ffdd347a-75ea-4529-a388-76ed6fa87a2a",

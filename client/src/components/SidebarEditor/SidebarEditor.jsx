@@ -43,6 +43,7 @@ export default function SidebarEditor({ mode = 'viewer' }) {
   const imageConfig = useStore((s) => s.imageConfig);
   const updateScreenName = useStore((s) => s.updateScreenName);
   const updateScreenBackButton = useStore((s) => s.updateScreenBackButton);
+  const updateScreenTrackOrigin = useStore((s) => s.updateScreenTrackOrigin);
   const updateScreenPreset = useStore((s) => s.updateScreenPreset);
   const replaceScreenImage = useStore((s) => s.replaceScreenImage);
   const clearScreenImage = useStore((s) => s.clearScreenImage);
@@ -561,6 +562,15 @@ export default function SidebarEditor({ mode = 'viewer' }) {
     }
   };
 
+  const handleTrackOriginChange = async (checked) => {
+    if (!screen) return;
+    try {
+      await updateScreenTrackOrigin(screen.id, checked);
+    } catch (err) {
+      alert('Update failed: ' + err.message);
+    }
+  };
+
   const handleTargetChange = async (buttonId, newTarget) => {
     try {
       await updateButton(screen.id, buttonId, { target: newTarget });
@@ -826,6 +836,14 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                   ]}
                 />
               </div>
+              <label className="sidebar__button-flag sidebar__track-origin">
+                <input
+                  type="checkbox"
+                  checked={screen.track_origin === true}
+                  onChange={(e) => handleTrackOriginChange(e.target.checked)}
+                />
+                <span className="label" style={{ margin: 0 }}>Track origin</span>
+              </label>
               <div className="sidebar__button-target">
                 <label className="label" htmlFor="sidebar-preset">
                   Preset
@@ -1434,18 +1452,20 @@ export default function SidebarEditor({ mode = 'viewer' }) {
                       button={selectedBtn}
                       onUpdate={(updates) => handleRectChange(selectedBtn.id, updates)}
                     />
-                    <label className="sidebar__button-return">
-                      <input
-                        type="checkbox"
-                        checked={selectedBtn.return === true}
-                        onChange={(e) =>
-                          handleRectChange(selectedBtn.id, {
-                            return: e.target.checked ? true : null,
-                          })
-                        }
-                      />
-                      <span className="label" style={{ margin: 0 }}>Return</span>
-                    </label>
+                    <div className="sidebar__button-flags">
+                      <label className="sidebar__button-flag">
+                        <input
+                          type="checkbox"
+                          checked={selectedBtn.return === true}
+                          onChange={(e) =>
+                            handleRectChange(selectedBtn.id, {
+                              return: e.target.checked ? true : null,
+                            })
+                          }
+                        />
+                        <span className="label" style={{ margin: 0 }}>Return</span>
+                      </label>
+                    </div>
                     <div className="sidebar__rect-clipboard">
                       <button
                         type="button"
